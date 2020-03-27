@@ -1,0 +1,18 @@
+[submodule "lg3d-core"]
+	path = lg3d-core
+	url = https://github.com/Ed-Fernando/lg3d-core.git
+[submodule "lg3d-awt"]
+	path = lg3d-awt
+	url = https://github.com/Ed-Fernando/lg3d-awt.git
+[submodule "lg3d-demo-apps"]
+	path = lg3d-demo-apps
+	url = https://github.com/Ed-Fernando/lg3d-demo-apps.git
+[submodule "lg3d-escher"]
+	path = lg3d-escher
+	url = https://github.com/Ed-Fernando/lg3d-escher.git
+[submodule "lg3d-incubator"]
+	path = lg3d-incubator
+	url = https://github.com/Ed-Fernando/lg3d-incubator.git
+[submodule "lg3d-x11"]
+	path = lg3d-x11
+	url = https://github.com/Ed-Fernando/lg3d-x11.git
