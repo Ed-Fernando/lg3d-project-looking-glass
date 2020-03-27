@@ -1,0 +1,963 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<title>Software Design 2005.10 Project Looking Glass 徹底攻略 第 1 章</title>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<link href="../../preview.css" rel="stylesheet" type="text/css" />
+<meta name="Author" content="Hideya KAWAHARA, Yasuhiro FUJITSUKI, Tama KAMIYA" />
+</head>
+<body bgcolor="#FFFFFF"> 
+<div id="projectdocumentview" class="app" style="width: 550px;"> 
+  <p>次世代 Java ベースデスクトップ/3D アプリ開発環境 Project Looking Glass 徹底攻略</p> 
+  <h1>Project Looking Glass の世界へようこそ</h1> 
+  <h2>LG3D のインストール/実行</h2> 
+  <p>&nbsp;</p> 
+  <p>川原 英哉 KAWAHARA Hideya</p> 
+  <p>藤槻泰宏 FUJITSUKI Yasuhiro <a href="http://blogs.sun.com/thaniwa">http://blogs.sun.com/thaniwa</a></p> 
+  <p>かみやたま KAMIYA Tama</p> 
+  <p>初出: <a href="http://www.gihyo.co.jp/magazines/SD/archive/200510">Software Desing 2005 年 10 月号</a></p> 
+  <hr /> 
+  <h2 style="padding: 5px; background-color: #BDD633; font-size: x-large; font-weight: bold; text-align: center">LG3D の概要</h2> 
+  <div style="float:right"> 
+    <p>川原 英哉 KAWAHARA Hideya</p> 
+  </div> 
+  <h3>はじめに</h3> 
+  <h4>Project Looking Glass とは?</h4> 
+  <p>Project Looking Glass<sup><a href="#n1">注1</a></sup> は，次世代デスクトップおよびユーザインターフェースを探求するオープンソースプロジェクトです．</p> 
+  <p> その目的は，3 次元 (3D) 描画やアニメーションを活用し，表現力と使い勝手を向上することです．もともと，LG3D は Sun Microsystems, Inc.(以下<br /> 
+    Sun) の先進開発グループが推進していたプロジェクトでしたが，「技術革新をオープンソースコミュニティの手で」を合言葉に，2004 年 6 月にオープン<br /> 
+    ソース化したものです．</p> 
+  <p> 本特集では，読者の皆さんを LG3D の最新技術の世界へご案内いたします． </p> 
+  <p>&nbsp;</p> 
+  <p><a name="n1" id="n1"></a>注 1 Project Looking Glass は LG3D とも呼ばれています．本稿では，原則的に LG3D と表記します．</p> 
+  <p>&nbsp;</p> 
+  <h4>何がそんなにおもしろいの?</h4> 
+  <div style="float: right; padding: 10px; width: 208px;"> 
+    <table> 
+      <tr> 
+        <td nowrap="nowrap"><span style="padding: 1px; padding-right: 5px; padding-left: 5px; background: #333333; color:#FFFFFF; font-weight: bold;">図 1</span></td> 
+        <td style="font-weight: bold; background: #FFFFFF; color: #2682C5; padding-left: 10px;">LG3D プロジェクトの日本語 Web サイト (<a href="https://lg3d-core.dev.java.net/ja/">https://lg3d-core.dev.java.net/ja/</a>)</td> 
+      </tr> 
+    </table> 
+    <a href="sec1-fig/f01.jpg"><img src="sec1-fig/f01_t.jpg" alt="LG3D Project Page" width="208" height="204" border="0" /></a></div> 
+  <h5>3D の利点を効果的に利用</h5> 
+  <p>今日，PC の性能は飛躍的に向上しました．とくに 3D 描画の性能の向上には目を見張ります．ところが，PC のデスクトップやユーザインターフェー<br /> 
+    ス (UI) は，Apple の初代 Macintosh が発売されて以来 20 余年，本質的には変化していないと言えるのではないでしょうか．「何かできるはずだ」「何かしてみたい」とは思いませんか．LG3D も同じ想いを元にスタートしました．</p> 
+  <p> 3D を活用したデスクトップやUI に関する研究は，新しい話ではありません．ただ，操作性を無視して，バーチャルリアリティの世界にデスクトップを無意味に引きずり込もうとしていたものが多く見受けられました．研究色の強いプロジェクトも多かったと思います．</p> 
+  <p> LG3D は，あえて既存のデスクトップの UI を部分的に引き継ぎつつ，効果的に 3D が利用できると思われる点にだけ注力して，その部分に積極的に 3D を適用するというアプローチを取りました．この点が，LG3D がこれほど多くの人の支持を受けた大きな理由の 1 つであるという意見をよく耳にします．</p> 
+  <h5>オープンソース &amp; 活発な活動</h5> 
+  <p> また，LG3D はオープンソースであり，誰でも開発に参加できます．うれしいことに，プロジェクトの Web サイトには日本語版もあります (図 1)．</p> 
+  <p> 過去 20 年間，本質的に停滞していたデスクトップや UI の革新に誰でも参加できる，この点が，LG3D の魅力の1つではないでしょうか．</p> 
+  <p>&nbsp;</p> 
+  <h3>LG3D の世界を体験するには</h3> 
+  <h4>とりあえず見てみたい!</h4> 
+  <h5>デモクリップ</h5> 
+  <p>百聞は一見にしかず，LG3D の雰囲気を手っ取り早く知る方法は，デモビデオクリップを見ることでしょう．ちょっと古いものですが，次の 2 つのビ<br /> 
+    デオクリップが参考になると思います．</p> 
+  <p> クリップ 1: <a href="http://www.sun.com/software/looking_glass/demo.xml">http://www.sun.com/software/looking_glass/demo.xml</a></p> 
+  <p> クリップ 2: <a href="http://www.sun.com/directaccess/050405/view.html">http://www.sun.com/directaccess/050405/view.html</a></p> 
+  <p> クリップ 1 の最初の 2 分は英語での説明ですので，デモだけ見たい方はスキップしてください．</p> 
+  <div style="float: right; padding: 10px; width: 256px;"> 
+    <table> 
+      <tr> 
+        <td nowrap="nowrap"><span style="padding: 1px; padding-right: 5px; padding-left: 5px; background: #333333; color:#FFFFFF; font-weight: bold;">図 2</span></td> 
+        <td style="font-weight: bold; background: #FFFFFF; color: #2682C5; padding-left: 10px;">Windows 上で Java Web Start 版 LG3D を実行したところ</td> 
+      </tr> 
+    </table> 
+    <a href="sec1-fig/f02.jpg"><img src="sec1-fig/f02_t.jpg" alt="Windows 上で Java Web Start 版 LG3D を実行したところ" width="256" height="192" border="0" /></a></div> 
+  <h5>Java Web Start 版のLG3D</h5> 
+  <p>とりあえず少しでも自分で動かしたい，という方は，Java Web Start 版の LG3D を試されても良いかもしれません．すべての機能が使えるわけではないのですが，複雑なインストールなしにその雰囲気を手軽に味わうことができます<sup><a href="#n2">注2</a></sup>．</p> 
+  <p>利用するためには，まず使用する PC が 3D アクセラレータを搭載しており，3D 描画性能が出るようにきちんと設定されていることを確認してください． Windows マシンで試すのが一番お手軽でしょう．</p> 
+  <p>まず，JRE 5.0 もしくは JDK 5.0 がインストールされているか確認し，なければインストールしてください．続いて，<a href="https://lg3d-webstart.dev.java.net/">https://lg3d-webstart.dev.java.net/ </a>に Web ブラウザでアクセスし，「Downloads」の項目の「Core demo」もしくは「Core and Incubator demo」をクリックするだけで LG3D のウィンドウが開きます<sup><a href="#n3">注3</a></sup>．</p> 
+  <p>図 2 は Windows 上で Java Web Start 版 LG3D を実行したものです．まずは，手当たり次第にいじってみてください<sup><a href="#n4">注4</a></sup>．</p> 
+  <p>&nbsp;</p> 
+  <p><a name="n2" id="n2"></a>注 2 「認証」の扱いが甘いのが玉に瑕ですが．</p> 
+  <p><a name="n3" id="n3"></a>注 3 1 度実行した後は Java Web Start にキャッシュされますので，次回からはダウンロードを待つことなく起動できます．</p> 
+  <p><a name="n4" id="n4"></a>注 4 使い方の詳しい説明は本章の「LG3D とアプリの使い方/同梱アプリの説明」をご覧ください．なお，描画が極端に遅い場合は，3D アクセラレータの設定不備か 3D アクセラレータの性能不足の可能性があります．</p> 
+  <p>&nbsp;</p> 
+  <h4>きちんと動かすには何が必要?</h4> 
+  <p>既存アプリを 3D 空間内で動かすなど，LG3D の機能のすべてを利用するためには，Linux もしくは Solaris x86 が必要です．しかし，機能は限定されてしまうのですが，Windows でも動作させることは可能です．インストールの詳細と LG3D の使用方法は，この後で詳しく説明します．</p> 
+  <p>&nbsp;</p> 
+  <h4>どうやってプログラミングするの？</h4> 
+  <p>LG3D は，「次世代デスクトップおよびユーザインターフェースを探求するオープンソースプロジェクト」です．オープンソースというからには，皆さんにもどしどし開発に参加していただきたいのです．もちろんそのために，3D アプリケーションを開発するための API が用意してあります．これについては，2 章で詳しく説明します．</p> 
+  <p>&nbsp;</p> 
+  <h4>コミュニティ活動に参加するには?</h4> 
+  <p>新しい 3D UI のアイデアが沸いてきたり，とても Cool な 3D アプリケーションを開発したら，それを多くの人に見せて意見を聞いてみてはいかがでし<br /> 
+    ょうか．LG3D には活発なコミュニティが存在します．その活動への参加の第一歩について，4 章で説明します．コミュニティ活動に参加されている<br /> 
+    方々の生の声もお届けします．</p> 
+  <p>&nbsp;</p> 
+  <h2 style="padding: 5px; background-color: #BDD633; font-size: x-large; font-weight: bold; text-align: center">LG3D のインストール</h2> 
+  <div style="float:right"> 
+    <p>藤槻泰宏　FUJITSUKI Yasuhiro <a href="http://blogs.sun.com/thaniwa">http://blogs.sun.com/thaniwa</a></p> 
+  </div> 
+  <h3>はじめに</h3> 
+  <p>非常に Cool な次世代デスクトップ環境「LG3D」ですが，写真などで見るだけではあまりおもしろくありません．実際に動かしてみましょう! そして，LG3D の世界へどっぷりはまりましょう!</p> 
+  <p> ということで，LG3D 導入の第 1 歩目となるインストール方法および起動方法を解説したいと思います． </p> 
+  <p>&nbsp;</p> 
+  <h3>インストールの前に</h3> 
+  <h4>LG3D の動作プラットフォーム </h4> 
+  <p>LG3D のサポートプラットフォームは Linux および Solaris 10 x86 です<sup><a href="#n5">注5</a></sup>．また，Windows でも一部のモードを利用することができます．</p> 
+  <p> LG3D を動かすためには 24 ビットカラーおよび OpenGL 1.3 をサポートしたグラフィックス環境が必要になります．</p> 
+  <p>Linux では，</p> 
+  <ul> 
+    <li>NVIDIA 製 GeForce シリーズ</li> 
+    <li>ATI 製の Radeon 8500 以降</li> 
+  </ul> 
+  <p>Solaris 10 x86 では，</p> 
+  <ul> 
+    <li>NVIDIA 製 GeForce シリーズ，Quadro シリーズ</li> 
+  </ul> 
+  <p>のようなグラフィックスカードを搭載した PC が必要になります．</p> 
+  <p>&nbsp;</p> 
+  <p><a name="n5" id="n5"></a>注 5 本稿の内容は Fedora Core 3 および Sun Java Desktop System でテストしましたが，他のディストリビューションでも同様の方法でインストール可能です．</p> 
+  <p>&nbsp;</p> 
+  <h4>LG3D で必要となるコンポーネント</h4> 
+  <p>LG3D を実行するためには，あらかじめ次のコンポーネントをインストールしておく必要があります<sup>注6</sup>．</p> 
+  <ul> 
+    <li>JDK 5.0 もしくは JRE 5.0 以降 (本稿執筆時点の最新版: JDK 5.0 Update 4)</li> 
+    <li>Java3D 1.4.0<sup>注7</sup> (本稿執筆時点の最新版: Java3D 1.4.0 Beta5)</li> 
+    <li>Java Advanced Imaging AP （JAI) 1.1.2_01 以降</li> 
+  </ul> 
+  <p> 以降で，LG3D のインストールと併せて解説します． </p> 
+  <p>&nbsp;</p> 
+  <p>注 6 本稿では，Release 0.7.0 を対象にしています．</p> 
+  <p>注 7 Java3D 1.4.0 は現在ベータ版ですので，できるだけ最新のものをご利用ください．</p> 
+  <p>&nbsp;</p> 
+  <h3>LG3D のインストール</h3> 
+  <p>Linux，Solaris 10 x86 における LG3D のインストール手順は次のとおりです．</p> 
+  <ol> 
+    <li>グラフィックスドライバのインストールおよび 3D アクセラレーションの設定</li> 
+    <li>Java 実行環境 (JDK もしくは JRE)<sup><a href="#n8">注8</a></sup> および Java3D，JAI のインストール</li> 
+    <li>LG3D バイナリのインストール</li> 
+  </ol> 
+  <p>&nbsp;</p> 
+  <p><a name="n8" id="n8"></a>注 8 本稿では JDK を用いたインストール方法についての解説を行います．</p> 
+  <p>&nbsp;</p> 
+  <h4>グラフィックスドライバのインストール</h4> 
+  <p>3D アクセラレーション機能を利用するために，各メーカが提供するドライバをインストールする必要があります．これらのドライバはディストリビューションには含まれていないため，各メーカの Web サイトからダウンロードします．</p> 
+  <p> Linux 環境では，ドライバのインストールには GCC などの開発環境および kernel-source (もしくは kernel-headers) が必要となりますので，あらか<br /> 
+    じめインストールしておきます<sup><a href="#n9">注9</a></sup>．</p> 
+  <p> ここからは，ドライバのインストール方法を環境ごとにまとめます．</p> 
+  <p>&nbsp;</p> 
+  <p><a name="n9" id="n9"></a>注 9 NVIDIA 製ドライバのインストールの場合，Fedora Core 3 など一部のディストリビューションでは kernel-source が不要です．</p> 
+  <p>&nbsp;</p> 
+  <h5>ATI 製ドライバのインストール (Linux 編)</h5> 
+  <p>ATI 製のグラフィックスカードを利用している場合は，ATI の Web サイトからドライバをダウンロードします．<a href="http://www.ati.com/jp/">http://www.ati.com/jp/</a> から，「ドライバー」→「Linux Drivers and Software」→「RADEON 8500 Series and higher」とリンクをたどっていくと見つかります．</p> 
+  <p>&nbsp;</p> 
+  <p><strong>XFree86/Xorg のバージョンを確認</strong></p> 
+  <p>ATI 製のドライバは，XFree86/Xorg のバージョンごとに用意されていますので，ダウンロードを行う前に XFree86/Xorg のバージョンを確認しておきます．</p> 
+  <p> XFree86/Xorg のバージョンは端末エミュレータで，図 3 (1) のようにすることで確認できます．自分の環境に合ったものを選択してください．本稿では Xorg 6.8 用のドライバ (fglrx_6_8_0-8.16.20-1.i386.rpm) を利用します．</p> 
+  <p>&nbsp;</p> 
+  <p><strong>ドライバのインストール</strong></p> 
+  <p>ドライバのインストール作業は root ユーザで行います．ドライバのインストールを行う前に X を終了し，コンソールモードに移動しておきます (図 3 (2))．</p> 
+  <p> コンソールモードに移動したら，root ユーザで再度ログインし，rpm コマンドを利用してドライバのインストールを行います<sup><a href="#n10">注10</a></sup> (図 3 (3))．ドライバをインストールした直後は /etc/X11/xorg.conf がないため X の起動が行えませんので， fglrxconfig を利用して /etc/X11/xorg.conf を作成します (図 3 (4))．</p> 
+  <p> コンフィギュレーションを終了後，X の起動を行います (図 3 (5))．ドライバの設定が正しく行えた場合は，端末エミュレータで fglrxinfo を実行すること<br /> 
+    により，OpenGL のバージョンなどを確認できます (図 3 (6))．</p> 
+  <p>&nbsp;</p> 
+  <div style="display:table; padding-left: 20px; padding-right: 20px;"> 
+    <table> 
+      <tr> 
+        <td nowrap="nowrap"><span style="padding: 1px; padding-right: 5px; padding-left: 5px; background: #333333; color:#FFFFFF; font-weight: bold;">図 3</span></td> 
+        <td style="font-weight: bold; background: #FFFFFF; color: #2682C5; padding-left: 10px;">ATI ドライバのインストール</td> 
+      </tr> 
+    </table> 
+    <div style="background-color:#3366CC; color:#FFFFFF; padding: 10px;"> 
+      <pre><span style="background-color:#CCCCCC; color:#000000; margin-left: 10px; margin-bottom: 10px;">一般ユーザとrootユーザを見分けるためにコンソール表示に &gt; # を用いています．</span>
+ 
+<span style="background-color:#CCCCCC; color:#000000; margin-left: 10px; margin-bottom: 10px;">(1) X のバージョン確認</span>
+ 
+&gt; X -version
+X Window System Version 6.8.2
+Release Date: 18 December 2003
+X Protocol Version 11, Revision 0, Release 6.8
+Build Operating System: SuSE Linux [ELF] SuSE
+Current Operating System: Linux lacus 2.6.5-7.183-default #1 Tue Jun 7
+15:57:09 UTC 2005 i686
+Build Date: 10 May 2005
+Before reporting problems, check
+http://www.sun.com/service/sunjavasystem/jdsserviceguide.html
+to make sure that you have the latest version.
+Module Loader present
+ 
+<span style="background-color:#CCCCCC; color:#000000; margin-left: 10px; margin-bottom: 10px;">(2) コンソールモードへの変更</span>
+ 
+&gt; su -
+Password: <span style="background-color:#CCCCCC; color:#000000;">パスワードを入力</span>
+# init 3
+ 
+<span style="background-color:#CCCCCC; color:#000000; margin-left: 10px; margin-bottom: 10px;">(3) ATI 製のドライバのインストール</span>
+ 
+# rpm -ihv fglrx_6_8_0-8.16.20-1.i386.rpm
+ 
+<span style="background-color:#CCCCCC; color:#000000; margin-left: 10px; margin-bottom: 10px;">(4) fglrxconfig</span>
+ 
+# fglrxconfig
+=======================================================================
+ 
+This program will create the ATI &quot;xorg.conf&quot; file
+- based on your selections - for the following video cards...
+ 
+        - ATI Radeon 8500 / 9100
+        - ATI FireGL 8700 / 8800 / E1
+        - ATI FireGL T2
+        - ATI Radeon 9000
+        - ATI Radeon 9200
+        - ATI Radeon 9500
+        - ATI Radeon 9600
+        - ATI Radeon 9700
+        - ATI Radeon 9800
+        - ATI FireGL Z1 / X1 / X2
+        - ATI Mobility M9
+        - ATI Mobility FireGL 9000
+        - ATI Mobility M9PLUS
+        - ATI FireGL V3100 / V5100 / V7100
+
+The &quot;xorg.conf&quot; file usually resides in /etc/X11.
+ 
+  
+Press [Enter] to continue, press ‘q’&amp;[Enter] or [Ctrl]+’c’ to abort.
+ 
+<span style="background-color:#CCCCCC; color:#000000; margin-left: 10px; margin-bottom: 10px;">(5) X の起動</span>
+  
+# init 5
+ 
+<span style="background-color:#CCCCCC; color:#000000; margin-left: 10px; margin-bottom: 10px;">(6) fglrxinfoの出力 (X 起動中に実行してください)</span>
+ 
+&gt; fglrxinfo
+display: :0.0 screen: 0
+OpenGL vendor string: ATI Technologies Inc.
+OpenGL renderer string: MOBILITY RADEON 9600 Generic
+OpenGL version string: 1.3.5272 (X4.3.0-8.16.20)</pre> 
+    </div> 
+  </div> 
+  <p>&nbsp;</p> 
+  <p><a name="n10" id="n10"></a>注 10 RPM に対応していない環境では，シェル版インストーラ (ati-driver-installer-8.16.20.run) を利用して，ドライバのインストールを行ってください．</p> 
+  <h5>NVIDIA 製ドライバのインストール (Linux 編)</h5> 
+  <p>NVIDIA GeForce などのグラフィックスカードを利用している場合，NVIDIA の Web サイト (<a href="http://www.nvidia.com/object/unix.html">http://www.nvidia.com/object/unix.html</a>) からドライバをダウンロードします．</p> 
+  <p>インストールを行う前に X を終了し，コンソールモードに移動します (図 4 (1))．その後，ダウンロードしたファイルを実行します (図 4 (2))． </p> 
+  <p>ファイルを実行するとインストーラが起動しますので，画面の指示に従いインストールを行います．ドライバをインストール後，/etc/X11/xorg.conf をリスト 1 のように変更します．</p> 
+  <p>変更後，図 4 (3) のように X を起動します．</p> 
+  <p>&nbsp;</p> 
+  <div style="display:table; padding-left: 20px; padding-right: 20px;"> 
+    <table> 
+      <tr> 
+        <td nowrap="nowrap"><span style="padding: 1px; padding-right: 5px; padding-left: 5px; background: #333333; color:#FFFFFF; font-weight: bold;">図 4</span></td> 
+        <td style="font-weight: bold; background: #FFFFFF; color: #2682C5; padding-left: 10px;">NVIDIA 製ドライバのインストール (Linux 編)</td> 
+      </tr> 
+    </table> 
+    <div style="background-color:#3366CC; color:#FFFFFF; padding: 10px;"> 
+      <pre><span style="background-color:#CCCCCC; color:#000000; margin-left: 10px; margin-bottom: 10px;">(1) コンソールモードに移動</span>
+ 
+&gt; su -
+# init 3
+ 
+<span style="background-color:#CCCCCC; color:#000000; margin-left: 10px; margin-bottom: 10px;">(2) ドライバのインストール</span>
+ 
+&gt; su -
+Password: <span style="background-color:#CCCCCC; color:#000000;">パスワードを入力</span>
+# sh NVIDIA-Linux-x86-1.0-7676-pkg1.run
+ 
+<span style="background-color:#CCCCCC; color:#000000; margin-left: 10px; margin-bottom: 10px;">(3) X の再起動</span>
+ 
+# init 5</pre> 
+    </div> 
+  </div> 
+  <p>&nbsp;</p> 
+  <p>&nbsp;</p> 
+  <div style="display:table; padding-left: 20px; padding-right: 20px;"> 
+    <table> 
+      <tr> 
+        <td nowrap="nowrap"><span style="padding: 1px; padding-right: 5px; padding-left: 5px; background: #333333; color:#FFFFFF; font-weight: bold;">リスト 1</span></td> 
+        <td style="font-weight: bold; background: #FFFFFF; color: #2682C5; padding-left: 10px;">xorg.xonf の編集</td> 
+      </tr> 
+    </table> 
+    <div style="background-color:#D1DCFF; color:#2682c5; padding: 10px;"> 
+      <pre><span style="background-color:#FFFFFF; color:#000000; margin-left: 10px; margin-bottom: 10px;">※ コメントがある部分が追加/変更を行う場所です</span>
+ 
+<span style="background-color:#FFFFFF; color:#000000; margin-left: 10px; margin-bottom: 10px; padding-left: 10px; padding-right: 10px;">略</span>
+ 
+Section "Module"
+    Load        "glx"    <span style="background-color:#FFFFFF; color:#000000; padding-left: 5px; padding-right: 5px;">&lt;- ない場合は追加</span>
+#   Load        "dri"    <span style="background-color:#FFFFFF; color:#000000; padding-left: 5px; padding-right: 5px;">&lt;- ある場合は削除</span>
+#   Load        "GLcore" <span style="background-color:#FFFFFF; color:#000000; padding-left: 5px; padding-right: 5px;">&lt;- ある場合は削除</span>
+EndSection
+ 
+<span style="background-color:#FFFFFF; color:#000000; margin-left: 10px; margin-bottom: 10px; padding-left: 10px; padding-right: 10px;">略</span>
+ 
+Section "InputDevice"
+    Identifier  "Keyboard1"
+    Driver      "kbd"             <span style="background-color:#FFFFFF; color:#000000; padding-left: 5px; padding-right: 5px;">&lt;- "keyboard" と書かれていたら "kbd" に変更</span>
+    Option "AutoRepeat" "500 30"
+    Option "XkbRules"   "xfree86"
+    Option "XkbModel"   "jp106"
+    Option "XkbLayout"  "jp"
+EndSection
+ 
+<span style="background-color:#FFFFFF; color:#000000; margin-left: 10px; margin-bottom: 10px; padding-left: 10px; padding-right: 10px;">略</span>
+ 
+Section "Device"
+    Identifier  "NVIDIA"
+    Driver      "nvidia"                  <span style="background-color:#FFFFFF; color:#000000; padding-left: 5px; padding-right: 5px;">&lt;- "nv" から変更</span>
+    Option "AllowGLXWithComposite" "yes"  <span style="background-color:#FFFFFF; color:#000000; padding-left: 5px; padding-right: 5px;">&lt;- lg3d-session を利用するに場合は追加</span>
+EndSection
+ 
+<span style="background-color:#FFFFFF; color:#000000; margin-left: 10px; margin-bottom: 10px; padding-left: 10px; padding-right: 10px;">略</span>
+ 
+Section "Screen"
+    Identifier  "Screen0"
+    Device      "NVIDIA"
+    Monitor     "Monitor0"
+    DefaultDepth 24                       <span style="background-color:#FFFFFF; color:#000000; padding-left: 5px; padding-right: 5px;">&lt;- ない場合は追加．24 以外の場合は 24 に変更</span>
+    Subsection  "Display"
+        Depth   24
+        Modes   "1280x1024"
+        ViewPort 0 0 # initial origin if mode is smaller than desktop
+    EndSubsection
+EndSection</pre> 
+    </div> 
+  </div> 
+  <p>&nbsp;</p> 
+  <p>&nbsp;</p> 
+  <h5>NVIDIA 製ドライバのインストール (Solaris 編)</h5> 
+  <p>Solaris 10 x86 用の NVIDIA 製グラフィックスドライバは，Linux と同様に NVIDIA の Web サイトで公開されています．</p> 
+  <p> GeForce シリーズを利用する場合，グラフィックスカード情報をシステムに別途登録する必要があります (Quadro シリーズの場合は不要です）．GeForce FX5200 の場合，図 5 (1) のようになります．</p> 
+  <p> NVIDIA 製ドライバのインストールは root ユーザで行います．端末エミュレータで NVIDIA 製のドライバファイルを実行することにより，ドライバのインストールが行えます (図 5 (2))．この時点では /etc/X11/xorg.conf がないため，/etc/X11/xorg.conf.nvidia というあらかじめ設定が行われているサンプルファイルを /etc/X11/xorg.conf にコピーします (図 5 (3))．</p> 
+  <p> また，lg3d-session (後述) を利用したい場合は，Linux 用ドライバのインストールと同様に &quot;AllowGLXWithComposite&quot; オプションを有効にします． </p> 
+  <p>ドライバのインストール終了後にリブートします (図 5 (4))．</p> 
+  <p>&nbsp;</p> 
+  <div style="display:table; padding-left: 20px; padding-right: 20px;"> 
+    <table> 
+      <tr> 
+        <td nowrap="nowrap"><span style="padding: 1px; padding-right: 5px; padding-left: 5px; background: #333333; color:#FFFFFF; font-weight: bold;">図 5</span></td> 
+        <td style="font-weight: bold; background: #FFFFFF; color: #2682C5; padding-left: 10px;">NVIDIA 製ドライバのインストール (Solaris 編)</td> 
+      </tr> 
+    </table> 
+    <div style="background-color:#3366CC; color:#FFFFFF; padding: 10px;"> 
+      <pre><span style="background-color:#CCCCCC; color:#000000; margin-left: 10px; margin-bottom: 10px;">(1) コンソールモードに移動</span>
+ 
+# /usr/X11/bin/scanpci
+ 
+<span style="background-color:#CCCCCC; color:#000000; margin-left: 10px; margin-bottom: 10px; padding-left: 10px; padding-right: 10px;">略</span>
+ 
+pci bus 0x0001 cardnum 0x00 function 0x00: vendor
+0x10de device 0x0322
+ nVidia Corporation NV34 [GeForce FX 5200]
+[vendorとdeviceの値を登録に利用します]
+
+<span style="background-color:#CCCCCC; color:#000000; margin-left: 10px; margin-bottom: 10px; padding-left: 10px; padding-right: 10px;">略</span>
+  
+# update_drv -a -i '"pci10de,322"' nvidia  <span style="background-color:#CCCCCC; color:#000000; margin-left: 10px; margin-bottom: 10px;">&lt;- カード情報の登録</span>
+# reboot -- -r                             <span style="background-color:#CCCCCC; color:#000000; margin-left: 10px; margin-bottom: 10px;">&lt;- リコンフィグオプションでリブート</span>  
+  
+<span style="background-color:#CCCCCC; color:#000000; margin-left: 10px; margin-bottom: 10px;">(2) NVIDIA 製ドライバのインストール</span>
+ 
+# sh NVIDIA-Solaris-x86-1.0-7667.run
+ 
+<span style="background-color:#CCCCCC; color:#000000; margin-left: 10px; margin-bottom: 10px;">(3) サンプルファイルのコピー</span>
+ 
+# cp /etc/X11/xorg.conf.nvidia /etc/X11/xorg.conf
+ 
+<span style="background-color:#CCCCCC; color:#000000; margin-left: 10px; margin-bottom: 10px;">(4) リブート</span>
+ 
+# init 6</pre> 
+    </div> 
+  </div> 
+  <p>&nbsp;</p> 
+  <p>&nbsp;</p> 
+  <h4>Java 環境のセットアップ</h4> 
+  <h5>インストール前の注意</h5> 
+  <p> Java 環境のセットアップの解説は Linux をベースに行います．バイナリパッケージは原稿執筆時点で最新のものを利用しています．</p> 
+  <p> 本稿では例として，インストールに必要なファイルのダウンロード先を /tmp，インストール先ディレクトリを /opt/lg3d とします．Java3D のベータ<br /> 
+    版を利用しているので，Java 環境は LG3D 専用として /opt/lg3d/jdk1.5.0_04 以下にインストールするようにします．他のディレクトリにインストールし<br /> 
+    たい場合は，ディレクトリを読み替えてください．</p> 
+  <p> Solaris 10 x86 環境にインストールする場合は，ファイルを Solaris 10 x86 対応のもの<sup><a href="#n11">注11</a></sup>に置き換えることにより，同様の方法でインストールを行うことが可能です．</p> 
+  <p>&nbsp;</p> 
+  <p><a name="n11" id="n11"></a>注 11 jdk-1_5_0_04-solaris-i586.sh，java3d-1_4_0-build5-solaris-x86.zip，jai-1_1_2_01-lib-solaris-i586-jdk.bin の 3 ファイルです．</p> 
+  <p>&nbsp;</p> 
+  <h5>JDK のインストール</h5> 
+  <p><a href="http://java.sun.com/j2se/1.5.0/download.jsp">http://java.sun.com/j2se/1.5.0/download.jsp</a> から JDK の Linux self-extracting file (jdk-1_5_0_04-linux-i586.bin) をダウンロードします．</p> 
+  <p>ダウンロード後，インストール先のディレクトリ (/opt/lg3d) に移動し，ダウンロードしたファイルを実行します．すると，ライセンス表示が行われますので，ライセンスを受諾 (yes と入力) すれば JDK がインストールされます (図 6 (1))．</p> 
+  <h5>Java3D のインストール</h5> 
+  <p> <a href="https://java3d.dev.java.net/binary-builds.html">https://java3d.dev.java.net/binary-builds.html</a> からバイナリ (java3d-1_4_0-build5-linux-i586.zip) をダウンロードします．ダウンロードしたファイルを解凍すると，j3d-140-build5-linux-x86.zip ができます．このファイルを /opt/lg3d/jdk1.5.0_04/jre で解凍します (図 6 (2))．</p> 
+  <h5> JAI のインストール</h5> 
+  <p> <a href="http://java.sun.com/products/javamedia/jai/downloads/download-1_1_2_01.html">http://java.sun.com/products/javamedia/jai/downloads/download-1_1_2_01.html</a> から，JDK インストール用のバイナリ (jai-1_1_2_01-lib-linux-i586-jdk.bin) をダウンロードします．このファイルを JDK ディレクトリ (/opt/lg3d/jdk1.5.0_04) 内で実行します．ライセンス表示が行われますので <br /> 
+    yes と入力します (図 6 (3))． </p> 
+  <p>&nbsp;</p> 
+  <div style="display:table; padding-left: 20px; padding-right: 20px;"> 
+    <table> 
+      <tr> 
+        <td nowrap="nowrap"><span style="padding: 1px; padding-right: 5px; padding-left: 5px; background: #333333; color:#FFFFFF; font-weight: bold;">図 6</span></td> 
+        <td style="font-weight: bold; background: #FFFFFF; color: #2682C5; padding-left: 10px;">Java 環境のインストール</td> 
+      </tr> 
+    </table> 
+    <div style="background-color:#3366CC; color:#FFFFFF; padding: 10px;"> 
+      <pre><span style="background-color:#CCCCCC; color:#000000; margin-left: 10px; margin-bottom: 10px;">(1) ＪＤＫ のインストール</span>
+ 
+# cd /opt/lg3d
+# sh /tmp/jdk-1_5_0_04-linux-i586.bin
+Sun Microsystems, Inc. Binary Code License Agreement
+ 
+for the JAVA 2 PLATFORM STANDARD EDITION DEVELOPMENT KIT 5.0
+ 
+SUN MICROSYSTEMS, INC. ("SUN") IS WILLING TO LICENSE THE SOFTWARE
+IDENTIFIED BELOW TO YOU ONLY UPON THE CONDITION THAT YOU ACCEPT
+ 
+<span style="background-color:#CCCCCC; color:#000000; margin-left: 10px; margin-bottom: 10px; padding-left: 10px; padding-right: 10px;">略</span>
+ 
+For inquiries please contact: Sun Microsystems, Inc., 4150 Network
+Circle, Santa Clara, California 95054, U.S.A. (LFI#141623/Form
+ID#011801)
+ 
+Do you agree to the above license terms? [yes or no]
+
+<span style="background-color:#CCCCCC; color:#000000; margin-left: 10px; margin-bottom: 10px;">ここで「yes」と入力</span>
+ 
+<span style="background-color:#CCCCCC; color:#000000; margin-left: 10px; margin-bottom: 10px;">(2) Java3D のインストール</span>
+ 
+# cd /tmp
+# unzip java3d-1_4_0-build5-linux-i586.zip
+Archive: java3d-1_4_0-build5-linux-i586.zip
+   creating: java3d-1_4_0-build5-linux-i586/
+  inflating: java3d-1_4_0-build5-linux-i586/HOW-TO-INSTALL.txt
+  inflating: java3d-1_4_0-build5-linux-i586/README.txt
+  inflating: java3d-1_4_0-build5-linux-i586/COPYRIGHT.txt
+  inflating: java3d-1_4_0-build5-linux-i586/LICENSE-JRL.txt
+  inflating: java3d-1_4_0-build5-linux-i586/LICENSE.txt
+extracting: java3d-1_4_0-build5-linux-i586/j3d-140-build5-linux-x86.zip
+# cd /opt/lg3d/jdk1.5.0_04/jre
+# unzip /tmp/java3d-1_4_0-build5-linux-i586/j3d-140-build5-linux-x86.zip
+Archive: j3d-140-build5-linux-x86.zip
+   creating: lib/
+   creating: lib/ext/
+  inflating: lib/ext/vecmath.jar
+  inflating: lib/ext/j3dcore.jar
+  inflating: lib/ext/j3dutils.jar
+   creating: lib/i386/
+  inflating: lib/i386/libj3dcore-ogl.so
+  inflating: lib/i386/libj3dutils.so
+ 
+<span style="background-color:#CCCCCC; color:#000000; margin-left: 10px; margin-bottom: 10px;">(3) JAI のインストール</span>
+ 
+# cd /opt/lg3d/jdk1.5.0_04
+# sh /tmp/jai-1_1_2_01-lib-linux-i586-jdk.bin
+ 
+Sun Microsystems, Inc.
+Binary Code License Agreement
+ 
+JAVA ADVANCED IMAGING API, VERSION 1.1.2
+ 
+<span style="background-color:#CCCCCC; color:#000000; margin-left: 10px; margin-bottom: 10px; padding-left: 10px; padding-right: 10px;">略</span>
+  
+For inquiries please contact: Sun Microsystems, Inc., 4150 Network
+Circle, Santa Clara, California 95054, U.S.A
+(LFI#143342/Form ID#011801)
+ 
+Do you agree to the above license terms? [yes or no]  
+  
+<span style="background-color:#CCCCCC; color:#000000; margin-left: 10px; margin-bottom: 10px;">ここで「yes」と入力</span></pre> 
+    </div> 
+  </div> 
+  <p>&nbsp;</p> 
+  <p>&nbsp;</p> 
+  <h4>LG3D のインストール</h4> 
+  <h5> LG3D のインストール</h5> 
+  <p><a href="https://lg3d-core.dev.java.net/binary-builds.html">https://lg3d-core.dev.java.net/binary-builds.html</a> から LG3D 0.7.0 Release (6 月 24 日に登録された Release 0.7.0) のパッケージをダウンロードします．Linux の場合は lg3d-fcs-rel-0-7-0-linux-i686-0506241329.tar.gz，Solarisの場合はlg3d-fcs-rel-0-7-0-solaris-i86pc-0506241338.tar.gz になります．ダウンロードしたバイナリを解凍すればインストールは完了します (図 7)．</p> 
+  <p>&nbsp; </p> 
+  <div style="display:table; padding-left: 20px; padding-right: 20px;"> 
+    <table> 
+      <tr> 
+        <td nowrap="nowrap"><span style="padding: 1px; padding-right: 5px; padding-left: 5px; background: #333333; color:#FFFFFF; font-weight: bold;">図 7</span></td> 
+        <td style="font-weight: bold; background: #FFFFFF; color: #2682C5; padding-left: 10px;">LG3D のインストール</td> 
+      </tr> 
+    </table> 
+    <div style="background-color:#3366CC; color:#FFFFFF; padding: 10px;"> 
+      <pre># cd /opt
+# gunzip -c /tmp/lg3d-fcs-rel-0-7-0-linux-i686-0506241329.tar.gz | tar xf -</pre> 
+    </div> 
+  </div> 
+  <p>&nbsp;</p> 
+  <p>&nbsp;</p> 
+  <h3>LG3D の実行</h3> 
+  <h4>3 つの実行コマンド</h4> 
+  <p>LG3D 0.7.0 Releaseでは，lg3d-dev/lg3d-session/lg3d-app の 3 つのコマンドが用意されています．</p> 
+  <p>lg3d-dev はデスクトップ上のアプリケーションとして動作し，LG3D アプリケーションのみが利用できます．</p> 
+  <p> lg3d-session はフルスクリーンのデスクトップ環境として動作し，LG3D アプリケーションと X アプリケーションの双方とも利用できます．</p> 
+  <p>lg3d-app は lg3d-dev と同様にデスクトップ上のアプリケーションとして動作しますが，X アプリケーションも利用できます．lg3d-session が動作しない<br /> 
+    環境でフル機能を利用するために LG3D 0.7.0 Release から追加されました．表 1 にはそれぞれの環境で利用できるコマンドをまとめています．</p> 
+  <p>&nbsp;</p> 
+  <div style="width: 400px; margin: auto; padding-left: 20px; padding-right: 20px;"> 
+    <table> 
+      <tr> 
+        <td nowrap="nowrap"><span style="padding: 1px; padding-right: 5px; padding-left: 5px; background: #333333; color:#FFFFFF; font-weight: bold;">表 1</span></td> 
+        <td style="font-weight: bold; background: #FFFFFF; color: #2682C5; padding-left: 10px;">プラットフォーム別 LG3D 動作モード</td> 
+      </tr> 
+    </table> 
+    <table style="border: 1 solid #FFFFFF;"> 
+      <tr> 
+        <th style="background-color:#666666; color:#FFFFFF;">&nbsp;</th> 
+        <th style="background-color:#666666; color:#FFFFFF;">lg3d-dev</th> 
+        <th style="background-color:#666666; color:#FFFFFF;">lg3d-session</th> 
+        <th style="background-color:#666666; color:#FFFFFF;">lg3d-app</th> 
+      </tr> 
+      <tr> 
+        <th style="background-color: #D0E072;">Linux (NVIDIA)</th> 
+        <td style="background-color: #D0E072; text-align: center;">○</td> 
+        <td style="background-color: #D0E072; text-align: center;">○</td> 
+        <td style="background-color: #D0E072; text-align: center;">○</td> 
+      </tr> 
+      <tr> 
+        <th style="background-color: #D0E072;">Linux (ATI)</th> 
+        <td style="background-color: #D0E072; text-align: center;">○</td> 
+        <td style="background-color: #D0E072; text-align: center;">×</td> 
+        <td style="background-color: #D0E072; text-align: center;">○</td> 
+      </tr> 
+      <tr> 
+        <th style="background-color: #D0E072;">Solaris 10 x86 (NVIDIA)</th> 
+        <td style="background-color: #D0E072; text-align: center;">○</td> 
+        <td style="background-color: #D0E072; text-align: center;">○</td> 
+        <td style="background-color: #D0E072; text-align: center;">○</td> 
+      </tr> 
+      <tr> 
+        <th style="background-color: #D0E072;">Windows</th> 
+        <td style="background-color: #D0E072; text-align: center;">○</td> 
+        <td style="background-color: #D0E072; text-align: center;">×</td> 
+        <td style="background-color: #D0E072; text-align: center;">×</td> 
+      </tr> 
+    </table> 
+  </div> 
+  <h5>lg3d-dev/lg3d-app の実行</h5> 
+  <p> bash を使用した場合，lg3d-dev/lg3d-app の実行は，端末エミュレータ上で図 8 (1) のように行います (図 9)．</p> 
+  <p> lg3d-dev/lg3d-app はデフォルトでは 800 × 600 で起動します．ウィンドウサイズを変更したい場合は，/opt/lg3d/etc/lg3d/displayconfig/j3d1x1 の数<br /> 
+    値を変更します (リスト 2)．</p> 
+  <h5>lg3d-session の実行</h5> 
+  <p> lg3d-session の実行はコンソールモードから行う必要があります．そのため，ドライバのインストール時と同様に X セッションをあらかじめ終了して<br /> 
+    おく必要があります．</p> 
+  <p> lg3d-session の起動は root ユーザで行います (図 8 (2))．実行画面は図 10 のようになります．</p> 
+  <p>&nbsp;</p> 
+  <div style="display:table; padding-left: 20px; padding-right: 20px;"> 
+    <table> 
+      <tr> 
+        <td nowrap="nowrap"><span style="padding: 1px; padding-right: 5px; padding-left: 5px; background: #333333; color:#FFFFFF; font-weight: bold;">図 8</span></td> 
+        <td style="font-weight: bold; background: #FFFFFF; color: #2682C5; padding-left: 10px;">LG3D の実行</td> 
+      </tr> 
+    </table> 
+    <div style="background-color:#3366CC; color:#FFFFFF; padding: 10px;"> 
+      <pre><span style="background-color:#CCCCCC; color:#000000; margin-left: 10px; margin-bottom: 10px;">(1) ｌｇ３ｄ-dev/lg3d-app の実行</span>
+ 
+&gt; export JAVA_HOME=&quot;/opt/lg3d/jdk1.5.0_04&quot;
+&gt; cd /opt/lg3d/bin
+&gt; ./lg3d-dev   <span style="background-color:#CCCCCC; color:#000000; margin-left: 10px; margin-bottom: 10px;">もしくは ./lg3d-app</span>
+ 
+<hr />
+  
+<span style="background-color:#CCCCCC; color:#000000; margin-left: 10px; margin-bottom: 10px;">(2) lg3d-session の起動</span>
+ 
+# export JAVA_HOME=&quot;/opt/lg3d/jdk1.5.0_04&quot;
+# cd /opt/lg3d/bin
+# ./lg3d-session</pre> 
+    </div> 
+  </div> 
+  <p>&nbsp;</p> 
+  <p>&nbsp;</p> 
+  <div style="display:table; padding-left: 20px; padding-right: 20px;"> 
+    <table> 
+      <tr> 
+        <td nowrap="nowrap"><span style="padding: 1px; padding-right: 5px; padding-left: 5px; background: #333333; color:#FFFFFF; font-weight: bold;">リスト 2</span></td> 
+        <td style="font-weight: bold; background: #FFFFFF; color: #2682C5; padding-left: 10px;">ウィンドウサイズを変更</td> 
+      </tr> 
+    </table> 
+    <div style="background-color:#D1DCFF; color:#2682c5; padding: 10px;"> 
+      <pre>(ScreenAttribute center WindowSize (800 600))  <span style="background-color:#FFFFFF; color:#000000; padding-left: 5px; padding-right: 5px;">&lt;- 数値を変更</span>
+    <span style="background-color:#FFFFFF; color:#000000; padding-left: 5px; padding-right: 5px;">(NoBorderFullScreen とすることでフルスクリーン表示にすることも可能)</span></pre> 
+    </div> 
+  </div> 
+  <p>&nbsp;</p> 
+  <div style="width: 552px; margin: auto;"> 
+    <div style="float: left; padding: 10px; width: 256px;"> 
+      <table> 
+        <tr> 
+          <td nowrap="nowrap"><span style="padding: 1px; padding-right: 5px; padding-left: 5px; background: #333333; color:#FFFFFF; font-weight: bold;">図 9</span></td> 
+          <td style="font-weight: bold; background: #FFFFFF; color: #2682C5; padding-left: 10px;">lg3d-dev の実行画面</td> 
+        </tr> 
+      </table> 
+      <a href="sec1-fig/f09.jpg"><img src="sec1-fig/f09_t.jpg" alt="lg3d-dev の実行画面" width="256" height="192" border="0" /></a></div> 
+    <div style="float: left; padding: 10px; width: 256px;"> 
+      <table> 
+        <tr> 
+          <td nowrap="nowrap"><span style="padding: 1px; padding-right: 5px; padding-left: 5px; background: #333333; color:#FFFFFF; font-weight: bold;">図 10</span></td> 
+          <td style="font-weight: bold; background: #FFFFFF; color: #2682C5; padding-left: 10px;">lg3d-session の実行画面</td> 
+        </tr> 
+      </table> 
+      <a href="sec1-fig/f10.jpg"><img src="sec1-fig/f10_t.jpg" alt="lg3d-session の実行画面" width="256" height="192" border="0" /></a></div> 
+  </div> 
+  <p style="clear: both;">&nbsp;</p> 
+  <h5>Windows での実行</h5> 
+  <p>本稿では説明を省略していますが，Windows に JDK (JRE)，Java3D，JAI をインストールすることで lg3d-dev を実行することができます．</p> 
+  <p> Windows 版の LG3D 0.7.0 Release バイナリに含まれている lg3d-dev.bat を利用します<sup><a href="#n12">注12</a></sup>．</p> 
+  <p> Linux や Solaris 10 x86 と比べると Windows 用のグラフィックスドライバの OpenGL のサポートが充実しています．そのため，lg3d-dev のみであれば，Linux や Solaris 10 x86 ではサポートしていない多くの環境で動かすことができます．</p> 
+  <p>&nbsp;</p> 
+  <p><a name="n12" id="n12"></a>注 12 Linux 版や Solaris 版の Release バイナリに含まれる lg3d-dev.bat を利用することもできます．</p> 
+  <p>&nbsp;</p> 
+  <h4>TwinView 機能で 2 画面 LG3D!?</h4> 
+  <div style="float: right; padding: 10px; width: 256px;"> 
+    <table> 
+      <tr> 
+        <td nowrap="nowrap"><span style="padding: 1px; padding-right: 5px; padding-left: 5px; background: #333333; color:#FFFFFF; font-weight: bold;">写真 1</span></td> 
+        <td style="font-weight: bold; background: #FFFFFF; color: #2682C5; padding-left: 10px;">TwinView を利用した LG3D</td> 
+      </tr> 
+    </table> 
+    <a href="sec1-fig/p1.jpg"><img src="sec1-fig/p1_t.jpg" alt="TwinView を利用した LG3D" width="256" height="192" border="0" /></a></div> 
+  <p>NVIDIA Quadro シリーズなどは 1 枚のグラフィックスカードで 2 つのディスプレイを利用することができます．この機能の利用方法はいくつかありま<br /> 
+    すが，このうちの 1 つである TwinView という機能を利用すると，2 つのディスプレイを 1 つの大きな画面として利用することができます．この機能を<br /> 
+    使うと，「2 画面 LG3D」のようなことができます．設定方法は次の通りです．</p> 
+  <ol> 
+    <li>xorg.conf を Section &quot;Device&quot; に TwinView の設定を追加します (リスト 3)．</li> 
+    <li>/opt/lg3d/etc/lg3d/displayconfig/j3d1x1をリスト 4 のように変更します．</li> 
+    <li>lg3d を実行します．</li> 
+  </ol> 
+  <p> 写真 1 は Solaris 10 x86 上で TwinView を利用した 2 画面 LG3D です．TwinView は LinuxのNVIDIA 製ドライバでも利用することが可能ですので，Linux でも 2 画面 LG3D を利用することができます． </p> 
+  <p>&nbsp;</p> 
+  <div style="display:table; padding-left: 20px; padding-right: 20px;"> 
+    <table> 
+      <tr> 
+        <td nowrap="nowrap"><span style="padding: 1px; padding-right: 5px; padding-left: 5px; background: #333333; color:#FFFFFF; font-weight: bold;">リスト 3</span></td> 
+        <td style="font-weight: bold; background: #FFFFFF; color: #2682C5; padding-left: 10px;">TwinView を有効にした xorg.conf</td> 
+      </tr> 
+    </table> 
+    <div style="background-color:#D1DCFF; color:#2682c5; padding: 10px;"> 
+      <pre><span style="background-color:#FFFFFF; color:#000000; padding-left: 5px; padding-right: 5px;">※ グレーの部分が TwinView の設定です</span>
+Section "Device"
+    Identifier "** NVIDIA "
+    Driver     "nvidia"
+    Option     "AllowGLXWithComposite" "yes"
+ <div style="background-color:#CCCCCC;">    Option "TwinView"
+    Option "Xinerama" "True"
+    Option "MetaModes" "1280x1024,1280x1024"
+    Option "NoTwinViewXineramaInfo"
+    Option "SecondMonitorHorizSync" "30.0-83"
+    Option "SecondMonitorVertRefresh" "55.0-100.0"
+    Option "TwinViewOrientation" "LeftOf"</div>
+EndSection</pre> 
+    </div> 
+  </div> 
+  <p>&nbsp;</p> 
+  <p>&nbsp;</p> 
+  <div style="display:table; padding-left: 20px; padding-right: 20px;"> 
+    <table> 
+      <tr> 
+        <td nowrap="nowrap"><span style="padding: 1px; padding-right: 5px; padding-left: 5px; background: #333333; color:#FFFFFF; font-weight: bold;">リスト 4</span></td> 
+        <td style="font-weight: bold; background: #FFFFFF; color: #2682C5; padding-left: 10px;">/opt/lg3d/etc/lg3d/displayconfig/j3d1x1 の変更箇所</td> 
+      </tr> 
+    </table> 
+    <div style="background-color:#D1DCFF; color:#2682c5; padding: 10px;"> 
+      <pre>(ScreenAttribute center PhysicalScreenWidth 0.360)
+                                            <span style="background-color:#FFFFFF; color:#000000; padding-left: 5px; padding-right: 5px;">＼／</span> 
+(ScreenAttribute center PhysicalScreenWidth 0.720)</pre> 
+    </div> 
+  </div> 
+  <p>&nbsp;</p> 
+  <p>&nbsp;</p> 
+  <h2 style="padding: 5px; background-color: #BDD633; font-size: x-large; font-weight: bold; text-align: center">LG3D とアプリの使い方 / 同梱アプリの説明</h2> 
+  <div style="float:right"> 
+    <p>かみやたま　KAMIYA Tama</p> 
+  </div> 
+  <h3>LG3D 基本動作</h3> 
+  <p>藤槻さんの「LG3D のインストール」を参考にインストールが無事完了したら，さっそく LG3D を動かしてみましょう．ここでは便宜上，LG3D の API を使って開発された LG3D 専用のアプリケーションを「LG3D アプリ」，普通の X 環境用のネイティブアプリケーションを「X アプリ」，LG3D アプリと X アプリをまとめて「アプリ」と呼ぶことにします．LG3D アプリのプログラミングについては 2，3 章で詳しく説明されていますので，楽しみにしていてください．</p> 
+  <p>&nbsp;</p> 
+  <h4>LG3D の基本コンポーネント</h4> 
+  <div style="float: right; padding: 10px; width: 256px;"> 
+    <table> 
+      <tr> 
+        <td nowrap="nowrap"><span style="padding: 1px; padding-right: 5px; padding-left: 5px; background: #333333; color:#FFFFFF; font-weight: bold;">図 11</span></td> 
+        <td style="font-weight: bold; background: #FFFFFF; color: #2682C5; padding-left: 10px;">LG3D 起動直後の画面</td> 
+      </tr> 
+    </table> 
+    <a href="sec1-fig/f11.jpg"><img src="sec1-fig/f11_t.jpg" alt="LG3D 起動直後の画面" width="256" height="192" border="0" /></a></div> 
+  <p>LG3Dを起動すると，図11のような画面が現れます．</p> 
+  <h5>タスクバーとアイコン</h5> 
+  <p> 画面の下のほうに，緑色の半透明なタスクバーがあります．その上のアイコンにマウスポインタを重ねると，アイコンは少し大きくなって浮き上がり，選択しやすくなります．</p> 
+  <p> アイコンは 4 種類に分けることができます (図 12)．</p> 
+  <p> 右端のドクロ印の海賊旗アイコンを左クリックすると LG3D が終了します．左端の PC のアイコンは xterm (端末エミュレータ) 起動用のものです．xterm は X アプリなので，実行環境に制限があります．詳細は，「X アプリの実行」を参照してください．</p> 
+  <p> その他のアイコンを左クリックすると，背景設定メニューまたは LG3D パッケージに含まれている LG3D アプリが起動します．背景設定メニューと，同梱の LG3D アプリの具体的な操作方法については，それぞれ「背景の設定」，「同梱アプリの紹介」で説明します．</p> 
+  <p>また，タスクバーはただのアイコン置き場ではなく，背景操作のための機能を持っています．それについては，「背景の設定」中の「パノラマ背景」で紹介します．</p> 
+  <div style="padding: 10px; width: 328px; margin: auto;"> 
+    <table> 
+      <tr> 
+        <td nowrap="nowrap"><span style="padding: 1px; padding-right: 5px; padding-left: 5px; background: #333333; color:#FFFFFF; font-weight: bold;">図 12</span></td> 
+        <td style="font-weight: bold; background: #FFFFFF; color: #2682C5; padding-left: 10px;">アイコンの種類</td> 
+      </tr> 
+    </table> 
+    <table border="1"> 
+      <tr> 
+        <td style="vertical-align:middle;"><img src="sec1-fig/f12a.jpg" alt="xterm" width="39" height="50" /></td> 
+        <td><img src="sec1-fig/f12b.jpg" alt="3D アプリ" width="208" height="50" /><br /> 
+          <img src="sec1-fig/f12c.jpg" alt="3D アプリ" width="208" height="50" /></td> 
+        <td style="vertical-align:middle;"><img src="sec1-fig/f12d.jpg" alt="背景の選択" width="40" height="50" /></td> 
+        <td style="vertical-align:middle;"><img src="sec1-fig/f12e.jpg" alt="LG3D の終了" width="39" height="50" /></td> 
+      </tr> 
+      <tr> 
+        <td style="background: #2682C5; color: #FFFFFF; text-align: center; font-weight: bold;">xterm</td> 
+        <td style="background: #2682C5; color: #FFFFFF; text-align: center; font-weight: bold;">3D アプリ</td> 
+        <td style="background: #2682C5; color: #FFFFFF; text-align: center; font-weight: bold;">背景の選択</td> 
+        <td style="background: #2682C5; color: #FFFFFF; text-align: center; font-weight: bold;">LG3D の終了</td> 
+      </tr> 
+    </table> 
+  </div> 
+  <p>&nbsp;</p> 
+  <div style="float: right; padding: 10px; width: 215px;"> 
+    <table> 
+      <tr> 
+        <td nowrap="nowrap"><span style="padding: 1px; padding-right: 5px; padding-left: 5px; background: #333333; color:#FFFFFF; font-weight: bold;">図 13</span></td> 
+        <td style="font-weight: bold; background: #FFFFFF; color: #2682C5; padding-left: 10px;">時計アプリとそのサムネイル</td> 
+      </tr> 
+    </table> 
+    <a href="sec1-fig/f13.jpg"><img src="sec1-fig/f13_t.jpg" alt="時計アプリとそのサムネイル" width="215" height="191" border="0" /></a></div> 
+  <h5>サムネイル</h5> 
+  <p>アプリを起動すると，タスクバーの少し上，中央付近にサムネイルが現れます．たとえば，図 13 は LG3D の画面の一部で，赤紫色の時計の右側に出ている黄緑色の数字がこの時計のサムネイルです．</p> 
+  <p><strong>サムネイルからの簡単アプリ選択</strong></p> 
+  <p> LG3D では，サムネイルにマウスポインタを重ねると，アイコンのときと同様にサムネイルは少し大きくなって浮き上がります．それと同時にそのサムネイルに対応するアプリのウィンドウ以外は半透明になるので，ウィンドウが折り重なっていても目的のアプリを簡単に見つけられます (図 14a，b)．サムネイルをクリックすると，対応するアプリが選択されます．選択されたアプリのウィンドウは少し手前に出て大きくなり，それ以外のアプリは選択されているときより少し奥に下がって小さくなると同時に半透明になります．</p> 
+  <p><strong>サムネイルからのアプリ終了</strong></p> 
+  <p> サムネイルを右クリックするとアプリが終了します．</p> 
+  <p>&nbsp;</p> 
+  <div style="width: 552px; margin: auto;"> 
+    <table> 
+      <tr> 
+        <td nowrap="nowrap"><span style="padding: 1px; padding-right: 5px; padding-left: 5px; background: #333333; color:#FFFFFF; font-weight: bold;">図 14</span></td> 
+        <td style="font-weight: bold; background: #FFFFFF; color: #2682C5; padding-left: 10px;">サムネイルによるアプリの選択</td> 
+      </tr> 
+    </table> 
+    <div style="float: left; padding: 10px; width: 256px;"> <a href="sec1-fig/f14b.jpg"><img src="sec1-fig/f14b_t.jpg" alt="lg3d-dev の実行画面" width="256" height="192" border="0" /></a><br /> 
+      <span style="font-weight: bold;">(a) 3D ヘルプのサムネイルを選択した場合</span></div> 
+    <div style="float: left; padding: 10px; width: 256px;"> <a href="sec1-fig/f14a.jpg"><img src="sec1-fig/f14a_t.jpg" alt="Knowledge Web アプリのサムネイルを選択した場合" width="256" height="192" border="0" /></a><br /> 
+      <span style="font-weight: bold;">(b) Knowledge Web アプリのサムネイルを選択した場合</span></div> 
+  </div> 
+  <p>&nbsp;</p> 
+  <h4>背景の設定</h4> 
+  <div style="float: right; padding: 10px; width: 256px;"> 
+    <table> 
+      <tr> 
+        <td nowrap="nowrap"><span style="padding: 1px; padding-right: 5px; padding-left: 5px; background: #333333; color:#FFFFFF; font-weight: bold;">図 15</span></td> 
+        <td style="font-weight: bold; background: #FFFFFF; color: #2682C5; padding-left: 10px;">背景選択メニュー</td> 
+      </tr> 
+    </table> 
+    <a href="sec1-fig/f15.jpg"><img src="sec1-fig/f15_t.jpg" alt="背景選択メニュー" width="256" height="192" border="0" /></a> 
+    <table> 
+      <tr> 
+        <td nowrap="nowrap"><span style="padding: 1px; padding-right: 5px; padding-left: 5px; background: #333333; color:#FFFFFF; font-weight: bold;">図 16</span></td> 
+        <td style="font-weight: bold; background: #FFFFFF; color: #2682C5; padding-left: 10px;">仮想デスクトップ全体の縮小表示画面</td> 
+      </tr> 
+    </table> 
+    <a href="sec1-fig/f16.jpg"><img src="sec1-fig/f16_t.jpg" alt="仮想デスクトップ全体の縮小表示画面" width="256" height="192" border="0" /></a> </div> 
+  <p>タスクバーの右端から 2 つ目のアイコンを左クリックすると，背景選択メニューが表示されます (図 15)．「OK」ボタンをクリックすると，一番手前に表示されている画像が背景として設定されます．</p> 
+  <h5>背景の種類</h5> 
+  <p> 背景には，</p> 
+  <ul> 
+    <li>Panoramic (パノラマ背景)</li> 
+    <li>Image (イメージ背景)</li> 
+    <li>Layered (レイヤード背景)</li> 
+  </ul> 
+  <p> の 3 種類があります．デフォルトではメニューの一番上にある「All」が選択されており，パッケージに含まれているすべての背景が選択用のリング状<br /> 
+    の一覧から参照可能です．</p> 
+  <p><strong>パノラマ背景</strong></p> 
+  <p> 「Panoramic」を選択すると，仮想デスクトップモードで使用可能な背景だけが選択肢として表示されます．このモードは，横長の背景を持つ仮想デ<br /> 
+    スクトップの一部だけを画面に表示してデスクトップとして使用するものです．</p> 
+  <p> パノラマ背景使用時には，タスクバー上で右クリックすると仮想デスクトップ全体が縮小表示されます (図 16)．そこで使用したいデスクトップを左クリックで選択することができます．</p> 
+  <p>パノラマ背景使用時にデスクトップを切り替える方法はもう 1 つあります．画面の左右の端 (アプリのウィンドウが表示されていない部分) にマウスポインタを持っていったときにマウスポインタが左右の矢印の形になる場合には，そこには選択可能なデスクトップが存在しています．その状態でマウスを左クリックすると，そちら側のデスクトップに切り替わります．</p> 
+  <p><strong>イメージ背景</strong></p> 
+  <p> 「Image」を選択すると，ごく普通の画像イメージの背景だけが選択肢として表示されます．</p> 
+  <p><strong>レイヤード背景</strong></p> 
+  <p>「Layered」を選択すると，奥行きのある階層的な背景だけが選択肢として表示されます．この背景使用時には，マウス操作に合わせて背景がゆらぎ，不思議な感覚が味わえるのですが，それは言葉で説明するよりも実際に体験していただいたほうが良さそうです．</p> 
+  <p>&nbsp;</p> 
+  <h4>ウィンドウの操作</h4> 
+  <div style="float: right; padding: 10px; width: 256px;"> 
+    <table> 
+      <tr> 
+        <td nowrap="nowrap"><span style="padding: 1px; padding-right: 5px; padding-left: 5px; background: #333333; color:#FFFFFF; font-weight: bold;">図 17</span></td> 
+        <td style="font-weight: bold; background: #FFFFFF; color: #2682C5; padding-left: 10px;">奥行きのあるウィンドウ配置</td> 
+      </tr> 
+    </table> 
+    <a href="sec1-fig/f17.jpg"><img src="sec1-fig/f17_t.jpg" alt="奥行きのあるウィンドウ配置" width="256" height="192" border="0" /></a> 
+    <table> 
+      <tr> 
+        <td nowrap="nowrap"><span style="padding: 1px; padding-right: 5px; padding-left: 5px; background: #333333; color:#FFFFFF; font-weight: bold;">図 18</span></td> 
+        <td style="font-weight: bold; background: #FFFFFF; color: #2682C5; padding-left: 10px;">画面端に片付けられたウィンドウ</td> 
+      </tr> 
+    </table> 
+    <a href="sec1-fig/f18.jpg"><img src="sec1-fig/f18_t.jpg" alt="画面端に片付けられたウィンドウ" width="256" height="192" border="0" /></a> 
+    <table> 
+      <tr> 
+        <td nowrap="nowrap"><span style="padding: 1px; padding-right: 5px; padding-left: 5px; background: #333333; color:#FFFFFF; font-weight: bold;">図 19</span></td> 
+        <td style="font-weight: bold; background: #FFFFFF; color: #2682C5; padding-left: 10px;">踊る Zoetrope</td> 
+      </tr> 
+    </table> 
+    <a href="sec1-fig/f19.jpg"><img src="sec1-fig/f19_t.jpg" alt="踊る Zoetrope" width="256" height="192" border="0" /></a> </div> 
+  <p>いよいよ LG3D のウリの 1 つでもある，楽しいウィンドウ操作の説明に入ります．</p> 
+  <h5>画面上での移動</h5> 
+  <p>アプリのウィンドウ上でマウスポインタが上下左右の矢印の形になっているとき，そのウィンドウを動かすことができます．左ボタンでドラッグすることで，画面上を上下左右に，またホイールで手前から奥へ，奥から手前へウィンドウを移動させることができます．図 17 では，後ほど「同梱アプリの紹介」のところで紹介する LG3D アプリの 1 つである Zoetrope という名前の画像ビューアが中央の奥に小さく表示されており，右側には LG3D ヘルプのウィンドウの一部が手前に大きく表示されています．</p> 
+  <h5>邪魔なウィンドウを片付ける</h5> 
+  <p> 今必要としていないアプリのウィンドウを，LG3D では「画面の端に立たせておく」ことで片付けることができます．</p> 
+  <p> 特定のウィンドウを片付けたいときには，そのウィンドウを画面の端に接するように移動させるか，中ボタンで片付けたい方向にドラッグします．</p> 
+  <p> また，すべてのウィンドウを片付けるには，ウィンドウが表示されていない部分で右クリックします (図 18)．</p> 
+  <h5>片付けたウィンドウの復活/反対側の隅への移動</h5> 
+  <p> いったん片付けた (立たせた) ウィンドウの中から，必要なものだけを復活させる方法は 2 つあります．</p> 
+  <ul> 
+    <li>立っているウィンドウを左クリック</li> 
+    <li>サムネイルを左クリック</li> 
+  </ul> 
+  <p>また，一括して片付けたウィンドウすべてを一度に復活させるには，片付けられたウィンドウがある側 (画面の左右どちらか半分) の背景で右ク<br /> 
+    リックします．逆に，反対側の背景で右クリックすると，すべてのウィンドウがそちら側に片付けられます．</p> 
+  <h5>Java ロゴでウィンドウ回転</h5> 
+  <p> 通常，背景上のロゴというのは飾りに過ぎないものですが，遊び心あふれる LG3D では違います．画面右上の Java ロゴをマウスの左ボタンでドラッ<br /> 
+    グすると，それに合わせて画面上に表示されているアプリのウィンドウが 3D 空間内で回転します．図 19 は，Zoetrope 画像ビューアを回転させている<br /> 
+    ところで，図ではわかりにくいかもしれませんが，表示されている画像が上下逆の裏返しになっています<sup><a href="#n13">注13</a></sup>．</p> 
+  <p>&nbsp;</p> 
+  <p><a name="n13" id="n13"></a>注 13 なお，この機能は「パノラマ背景使用時で，仮想デスクトップ全体の縮小表示を行っているとき」「イメージ背景使用時」<br /> 
+    には使えません．</p> 
+  <p>&nbsp;</p> 
+  <h4>X アプリの実行</h4> 
+  <p>藤槻さんの「LG3D のインストール」「LG3D の実行」で説明されているとおり，X アプリは lg3d-app または lg3d-session コマンドで立ち上げた LG3D 上でのみ使用可能です．</p> 
+  <p> 「LG3D の基本コンポーネント」で述べたように，タスクバーの左端にあるアイコンを左クリックすると，X アプリの 1 つである「xterm (端末エミュレータ)」が立ち上がります．この xterm から，他の X アプリを起動してみましょう．</p> 
+  <p>筆者が LG3D を動かしている環境は SUSE Linux 9.1と Solaris 10 です．その上で実行した LG3D では,</p> 
+  <ul> 
+    <li>Firefox 1.0.6</li> 
+    <li> OpenOffice.org 1.1.4</li> 
+  </ul> 
+  <p> などのアプリを動かすことができました．しかし，LG3D はまだ開発途上であり，X アプリの中には起動できないものや異常終了するものがあるのは事<br /> 
+    実です．このあたりの X 絡みの問題は今後徐々に解決されていくはずです<sup><a href="#n14">注14</a></sup>．</p> 
+  <p>&nbsp;</p> 
+  <p><a name="n14" id="n14"></a>注 14 LG3D の改良に興味をお持ちの方，力を貸してくださる方は，ぜひコミュニティに参加お願いしますっ！</p> 
+  <p>&nbsp;</p> 
+  <h5>ウィンドウの裏側には…</h5> 
+  <p>Xアプリが立ち上がったらぜひとも試していただきたいのが，バージョン 0.7.0 で実装された「裏メモ」機能です．X アプリのフレームの部分で右クリ<br /> 
+    ックすると，ウィンドウが裏返しになり，クリーム色のメモパッドが現れます (図 20 a)．逆に，裏返しになった状態で右クリックすると表に戻ります<sup><a href="#n15">注15</a></sup> (図 20b)．</p> 
+  <p>&nbsp;</p> 
+  <p><a name="n15" id="n15"></a>注 15 現在 Solaris 10 ではメモが正しく表示されない不具合があることがわかっています．</p> 
+  <p>&nbsp;</p> 
+  <div style="width: 552px; margin: auto;"> 
+    <table> 
+      <tr> 
+        <td nowrap="nowrap"><span style="padding: 1px; padding-right: 5px; padding-left: 5px; background: #333333; color:#FFFFFF; font-weight: bold;">図 20</span></td> 
+        <td style="font-weight: bold; background: #FFFFFF; color: #2682C5; padding-left: 10px;">X アプリの実行</td> 
+      </tr> 
+    </table> 
+    <div style="float: left; padding: 10px; width: 256px;"> <a href="sec1-fig/f20a.jpg"><img src="sec1-fig/f20a_t.jpg" alt="Firefox の実行画面 (裏) … 裏 !?" width="256" height="192" border="0" /></a><br /> 
+      <span style="font-weight: bold;">(a) Firefox の実行画面 (裏) … 裏 !?</span></div> 
+    <div style="float: left; padding: 10px; width: 256px;"> <a href="sec1-fig/f20b.jpg"><img src="sec1-fig/f20b_t.jpg" alt="Firefox の実行画面 (表)" width="256" height="192" border="0" /></a><br /> 
+      <span style="font-weight: bold;">(b) <span style="font-weight: bold;">Firefox の実行画面 (表)</span></span></div> 
+  </div> 
+  <p>&nbsp;</p> 
+  <h4>LG3D はまだ開発途上 </h4> 
+  <p>バージョンが 0.7.0 ということからもわかるとおり，LG3D はまだ開発途上です．全体的な動作に不安定なところがあるのは事実で，既存のデスクト<br /> 
+    ップシステムを完全に置き換えるところまではまだ到達していません．</p> 
+  <p> それでも，LG3D は次世代デスクトップを体感し，次世代アプリを開発したいと考える人たちにとって，とても魅力的な環境であると筆者は信じてい<br /> 
+    ます．</p> 
+  <p>&nbsp;</p> 
+  <h3>同梱アプリの紹介</h3> 
+  <p>LG3D 関連の基本的な操作方法についての説明が終わったところで，今度は LG3D のパッケージに含まれている LG3D アプリ，つまり起動時にタスクバー上にアイコンが用意されている LG3D アプリの中からいくつかを紹介します．</p> 
+  <p>&nbsp;</p> 
+  <h4>CD ビューア</h4> 
+  <div style="float: right; padding: 10px; width: 256px;"> 
+    <table> 
+      <tr> 
+        <td nowrap="nowrap"><span style="padding: 1px; padding-right: 5px; padding-left: 5px; background: #333333; color:#FFFFFF; font-weight: bold;">図 21</span></td> 
+        <td style="font-weight: bold; background: #FFFFFF; color: #2682C5; padding-left: 10px;">CD ビューア</td> 
+      </tr> 
+    </table> 
+    <a href="sec1-fig/f21.jpg"><img src="sec1-fig/f21_t.jpg" alt="CD ビューア" width="256" height="192" border="0" /></a></div> 
+  <p>LG3D が公開されたときから存在しており，そのころからとても有名な LG3D アプリがこの CD ビューアです (図 21)．開発者は，Project Looking Glass <br /> 
+    の産みの親であり，現在はプロジェクトリードを務める川原さんです．</p> 
+  <p> 登録された画像をマウスで選択してどんどん表示させていきます．非選択時には CD を積み上げた状態で表示されており，選択されると手前の 1 枚だけが見やすいように立てられ他の CD は広げて平面に置かれているように見えます． </p> 
+  <p>これは UI のデモであり，実際に音楽を演奏することはできませんが，3D UI の可能性を示す簡潔な例です．</p> 
+  <p>&nbsp;</p> 
+  <h4>Zoetrope</h4> 
+  <div style="float: right; padding: 10px; width: 256px;"> 
+    <table> 
+      <tr> 
+        <td nowrap="nowrap"><span style="padding: 1px; padding-right: 5px; padding-left: 5px; background: #333333; color:#FFFFFF; font-weight: bold;">図 22</span></td> 
+        <td style="font-weight: bold; background: #FFFFFF; color: #2682C5; padding-left: 10px;">画像ビューア「Zoetrope」</td> 
+      </tr> 
+    </table> 
+    <a href="sec1-fig/f22.jpg"><img src="sec1-fig/f22_t.jpg" alt="Zoetrope" width="256" height="192" border="0" /></a></div> 
+  <p>このアプリは，去年から国内外のイベントで実際にプレゼンに使用されてきていますので，ご覧になったことのある方も多いのではないかと思います．</p> 
+  <p> 2，3 章でプログラミング解説の部分を担当している櫻庭さんの開発した LG3D アプリの 1 つです (図 22)．Zoetrope は「ゾエトロープ」と発音しま<br /> 
+    す．意味は「回転のぞき絵」で，4 章「コミュニティの広場」に登場する安藤さんの命名です． </p> 
+  <p>起動すると，用意されているファイル名リストをもとに画像データを読み込みます．マウスの左クリックまたはホイール操作で，メインウィンドウの左側に楕円状に並べられた画像データを見ていくことができます．</p> 
+  <p>&nbsp;</p> 
+  <h4>Ls3D</h4> 
+  <div style="float: right; padding: 10px; width: 256px;"> 
+    <table> 
+      <tr> 
+        <td nowrap="nowrap"><span style="padding: 1px; padding-right: 5px; padding-left: 5px; background: #333333; color:#FFFFFF; font-weight: bold;">図 23</span></td> 
+        <td style="font-weight: bold; background: #FFFFFF; color: #2682C5; padding-left: 10px;">Ls3D</td> 
+      </tr> 
+    </table> 
+    <a href="sec1-fig/f23.jpg"><img src="sec1-fig/f23_t.jpg" alt="Ls3D" width="256" height="192" border="0" /></a></div> 
+  <p>「コミュニティの広場」に登場するえんどうさんの作品で，UNIX/Linux ユーザにはなじみのある ls コマンドの LG3D 版です (図 23)．シンプルなテキストを出力するコマンドに，ビジュアルな要素が加わることでぐっと格好良くなりました．</p> 
+  <p> マウスポインタが重なっている項目は，少し左手前に浮き上がります．赤い丸ボタンを左クリックすると 1 つ上のディレクトリへ，左側に緑の箱のアイコンの付いた青字のディレクトリ名を左クリックすると，そのディレクトリに移動します．少し丸まった紙の付いた黒字の項目はファイルを表しています．</p> 
+  <p>&nbsp;</p> 
+  <h4>Knowledge Web</h4> 
+  <p>英国の科学史家であり，素晴らしいドキュメンタリ番組のプロデューサ兼作家として知られる James Burke が主催する KnowledgeWeb Project (<a href="http://www.k-web.org/">http://www.k-web.org/</a>) で開発された 3D 歴史ビューアで，対話型の教材とも言えるものです．</p> 
+  <p> Release 0.7.0 に含まれているビューアは非常に初期のバージョンで，ごく限られたことしかできませんが，Knowledge Web が歴史上の人や物に関する知識をどのように見せるのか，体感していただくことはできると思います．</p> 
+  <p> このビューアを起動し，左上の虫眼鏡のアイコンを左クリックすると，検索したい文字列を入力するフィールドが表示されます (図 24)．このバー<br /> 
+    ジョンでは “Mozart” が自動選択されます．いくつかの過程を経て，モーツァルトの経歴が表示されます．また，球の中の情報が整理され，モーツ<br /> 
+    ァルトと関連するノードだけが表示されており，関連情報を簡単に探すことができます (図 25)．</p> 
+  <p>&nbsp;</p> 
+  <div style="width: 552px; margin: auto;"> 
+    <div style="float: left; padding: 10px; width: 256px;"> 
+      <table> 
+        <tr> 
+          <td nowrap="nowrap"><span style="padding: 1px; padding-right: 5px; padding-left: 5px; background: #333333; color:#FFFFFF; font-weight: bold;">図 24</span></td> 
+          <td style="font-weight: bold; background: #FFFFFF; color: #2682C5; padding-left: 10px;">Knowledge Web の検索文字列<br /> 
+            入力画面</td> 
+        </tr> 
+      </table> 
+      <a href="sec1-fig/f24.jpg"><img src="sec1-fig/f24_t.jpg" alt="Knowledge Web の検索文字列入力画面" width="256" height="192" border="0" /></a></div> 
+    <div style="float: left; padding: 10px; width: 256px;"> 
+      <table> 
+        <tr> 
+          <td nowrap="nowrap"><span style="padding: 1px; padding-right: 5px; padding-left: 5px; background: #333333; color:#FFFFFF; font-weight: bold;">図 25</span></td> 
+          <td style="font-weight: bold; background: #FFFFFF; color: #2682C5; padding-left: 10px;">Knowledge Web の<br /> 
+            検索後画面</td> 
+        </tr> 
+      </table> 
+      <a href="sec1-fig/f25.jpg"><img src="sec1-fig/f25_t.jpg" alt="Knowledge Web の検索後画面" width="256" height="192" border="0" /></a></div> 
+  </div> 
+  <p>&nbsp;</p> 
+  <h4>BlackGoat Mail Reader</h4> 
+  <div style="float: right; padding: 10px; width: 256px;"> 
+    <table> 
+      <tr> 
+        <td nowrap="nowrap"><span style="padding: 1px; padding-right: 5px; padding-left: 5px; background: #333333; color:#FFFFFF; font-weight: bold;">図 28</span></td> 
+        <td style="font-weight: bold; background: #FFFFFF; color: #2682C5; padding-left: 10px;">BlackGoat Mail Reader</td> 
+      </tr> 
+    </table> 
+    <a href="sec1-fig/f26.jpg"><img src="sec1-fig/f26_t.jpg" alt="BlackGoat" width="256" height="192" border="0" /></a></div> 
+  <p>「コミュニティの広場」に登場する小田原さんの作品で，サーバからメールを読み込んで表示します (図 26)．名前が示すとおり，送信の機能はあり<br /> 
+    ません．</p> 
+  <p> このアプリの名付け親も，Zoetrope と同じく安藤さんです．日本人には懐かしい童謡からヒントを得たようですが，小田原さんが北海道在住なの<br /> 
+    でこのヤギ (Blacky 君) はバッファロー並みの立派な毛皮を持っています (ヒツジではありません)．まだまだ開発途中で，今後の機能追加が楽しみな<br /> 
+    アプリです． </p> 
+  <p>&nbsp;</p> 
+  <h3>最後に</h3> 
+  <p>LG3D の基本操作と同梱アプリの紹介をさせていただきました．ここに登場したもののほとんどは，コミュニティのメンバの手によるものです．こういった活動に興味をお持ちの方は，ぜひメンバに加わって，この楽しさを体験していただければと思います．</p> 
+  <p> コミュニティへの参加方法については 4 章「コミュニティの広場」を参考にしてください♪</p> 
+  <p>&nbsp;</p> 
+  <div style="display: block; background-color: #333333; padding: 10px;"> 
+    <h3 style="font-size:large; font-weight: bold; background: inherit; color: #FFFFFF;">Stable builds と Daily builds</h3> 
+    <p style="color: #FFFFFF;">ここまでは，Stable builds である LG3D 0.7.0 Release (6 月 24 日にリリースされた Release 0-7-0) のパッケージを使って説明をしてきました．ところで，同じ場所注から開発中の次バージョン 0.7.1 の Daily builds をダウンロードできます．図 A は 8 月 9 日版の 0.7.1 のビルドでの LG3D 起動画面のタスクバーの部分で，0.7.0 と比べるとタスクバー上のアプリが 2 つほど増えていることがわかります．</p> 
+    <p style="color: #FFFFFF;"> このように LG3D はどんどん進化を続けています．現時点での正式安定リリース版 0.7.0 に慣れた後は，開発中の最新版 Daily builds で楽しんでいただくのも良いのではないかと思います．</p> 
+    <div style="margin: auto; padding: 10px; width: 512px;"> 
+      <table> 
+        <tr> 
+          <td nowrap="nowrap"><span style="padding: 1px; padding-right: 5px; padding-left: 5px; background: #333333; color:#FFFFFF; font-weight: bold;">図 A</span></td> 
+          <td style="font-weight: bold; background: #333333; color: #2682C5; padding-left: 10px;">開発中の 0.7.1 Daily Builds のタスクバー</td> 
+        </tr> 
+      </table> 
+      <a href="sec1-fig/fa.jpg"><img src="sec1-fig/fa_t.jpg" alt="開発中の 0.7.1 Daily Builds のタスクバー" width="512" height="77" border="0" /></a></div> 
+  </div> 
+  <p>&nbsp;</p> 
+  <hr /> 
+  <p style="font-size: small;">$Revision: 1.1 $ $Date: 2006-05-09 18:16:28 $</p> 
+</div> 
+</body>
+</html>

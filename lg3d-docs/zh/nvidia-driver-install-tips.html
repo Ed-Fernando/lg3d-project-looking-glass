@@ -1,0 +1,243 @@
+<!-- saved from url=(0022)http://internet.e-mail -->
+<!DOCTYPE html PUBLIC "-//Tigris//DTD XHTML 1.0 Transitional//EN"
+"http://style.tigris.org/tigris_transitional.dtd">
+<html>
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  <title>NVIDIA驱动程序安装技巧</title>
+</head>
+<body>
+<div id="projectdocumentview" class="app">
+
+<hr />
+<h2>NVIDIA驱动程序安装技巧</h2>
+
+<br />
+
+<h3>安装指导</h3>
+<ol>
+    <li><p>首先，假定您的系统需要从源代码来建造驱动程序，您需要拥有内核源代码、编译器和二进制应用程序。如果您的机器是按开发平台配置的，那您就应该已经具备了这些条件。如果您开始没有安装这些东西，现在安装也很简单，可通过经销商提供的GUI工具来完成。对于Sun的JDS，您可以通过<b>Launch</b>菜单下的 <b>Applications</b> &gt; <b>System Tools</b>
+&gt; <b>Install</b>进行安装。</p>
+    </li>
+    
+    <li><p>然后需要部分建造内核源代码 － 不是整个内核，只需建造部分前文以便将所需文件安装到位即可。最简单的办法是cd到<font face="Courier New, Courier, monospace">/usr/src/linux</font>目录下，先运行<i>make cloneconfig</i>，然后运行<i>make dep</i>。不过如果您的硬盘空间不够，也可以从将文件从<font face="Courier New, Courier, monospace">/boot</font>目录拷至源程序树中的正确位置，然后再编辑：</p>
+   	  
+<blockquote><small><font face="Courier New, Courier, monospace">  cp /boot/vmlinuz.config
+ /usr/src/linux-2.4.19-SuSE/.config</font><br />
+    <font face="Courier New, Courier, monospace">	  cp /boot/vmlinuz.autoconf.h
+ /usr/src/linux-2.4.19-SuSE/include/linux/autoconf.h</font></small><br /><br />
+   ，编辑<font face="Courier New, Courier, monospace">/usr/src/linux-2.4.19-SuSE/include/linux/version.h</font>
+ 以便与"<font face="Courier New, Courier, monospace">uname -r</font>"相符。<br />
+  </blockquote>
+   </li>
+
+    <li><p>浏览<a href="http://www.nvidia.com/object/linux.html">http://www.nvidia.com/object/linux.html</a>
+ ，点击对应于您的操作平台的最新版本。操作平台可能是面向Intel或AMD x86的Linux IA32。</p>
+   
+<blockquote><b>注：</b>&nbsp; 对于GeForce 3显卡，只有老的“123”驱动才管用。如果您的卡是GeForce 3，请下载下列源程序：<br />
+    <br />
+    <small><font face="Courier New, Courier, monospace">                
+       NVIDIA_GLX-1.0-3123.tar.gz<br />
+                          NVIDIA_kernel-1.0-3123.tar.gz</font></small><br />
+    <br />
+        ，并用这两个源程序进行安装。否则，跳过这一步，继续下面的步骤。<br />
+  </blockquote>
+    </li>
+   
+    <li><p>下载*.run文件，阅读说明，但现在先不要运行这个文件。这里链接的README帮助也非常有用。把*.run文件保存到一个容易找到的地方。如果有多个*.run文件，就选版本号最高的一个来下载。</p>
+    </li>
+   
+    <li><p>为了比较安装此过程前后系统的3D运行速度，您可以试试运行一些3D程序，看看软件3D的性能如何。</p>多数Linux和UNIX系统都安装了XScreenSaver，您可以运行<i>xscreensaver-demo</i>，从列表里选中<b>GLPlanet</b>（这个例子不错），或 <b>Sproingies</b>，点击<b>预览</b>。让它以全屏方式演示一会，然后单击鼠标回到桌面。我们后面还要用到这种测试。也可以试试glxgears - 这个程序每隔5秒钟就会给出帧频率，更方便比较。
+    </li>
+   
+    <li><p>注销到正常的登录窗口，然后键入Ctrl-Alt-F2，这样新建一个虚拟控制台。在这里以root身份登录，输入init 3，进入安全的、多用户的、不带X环境的模式。</p>
+    </li>
+   
+    <li><p>等“正在中止服务”的提示信息显示完毕之后，按回车，此时应该回到提示符状态。然后，键入“pkill gdm”，以便确保没有其它程序在使用X。</p>
+    </li>
+    
+    <li><p>现在运行下载脚步，可键入：</p>
+   
+<blockquote><big><font face="Helvetica, Arial, sans-serif"><small>      sh
+ NVIDIA-Linux-x86-1.0-4496-pkg2.run</small></font></big><br />
+  </blockquote>
+   
+<blockquote>根据版本的不同，具体的文件名可能稍有出入。这是一个shell脚本程序，因此前面必须带上“sh”。逐步完成基于文本的安装过程。对于Sun的JDS，没有现成的预编译二进制文件，需要建造。如欲建造，需确保内核源程序已经安装。内核源程序在Linux安装盘上应该可以找到。
+ </blockquote>
+</li>
+
+    <li><p>如果您是在Athlon PC上使用Java桌面系统，那么就需要编辑下列文件，以免出现内核源代码与运行内核不符的错误信息：</p>
+   
+<blockquote><small><font face="Courier New, Courier, monospace">       /usr/src/linux-2.4.*/include/linux/version.h</font></small><br />
+  </blockquote>
+   
+<blockquote>      把第1行改为以"-athlon"结尾，如下所示：<br />
+  </blockquote>
+     
+<blockquote><small><font face="Courier New, Courier, monospace">       #define
+ UTS_RELEASE "2.4.19-4GB-athlon"<br />
+    </font></small></blockquote>
+   
+<blockquote>      也就是说，让它与 "uname -r"的输出相符合。<br />
+  </blockquote>
+   
+<blockquote>NVIDIA安装脚本运行结束之后会提示您，如果您用的是SuSE，那么您还得运行SaX2才能完成安装。对于Sun的JDS也是一样。现在我就从这里开始介绍接下来的步骤。对于其它平台，您需要编辑XF86Config文件，把“nv”替换成“NVIDIA”，或做其它处理。请参考NVIDIA网站上的README链接（<a
+ href="http://www.nvidia.com/object/linux.html">http://www.nvidia.com/object/linux.html</a>），以及Project Looking Glass网站上与您的平台相应的安装说明。</blockquote>
+    </li>
+   
+    <li><p>现在，运行SaX2。有人说用sax2 -m 0=nvidia 指令可以更省事。运行后会显示出低分辨率的X会话，最后会显示SaX2的GUI。您需要在桌面环境下逐步完成选项设置，－ 其它问题现在先不用考虑。按顺序这些设置包括：
+</p>
+        
+<ul>
+   <li>     
+    <b><a name="Monitor:"></a>显示器：</b>
+   
+<p>在第1个选项卡，或最近的选项卡上选定您的显示器型号。然后点中第3个选项卡<b>Expert</b>，将上部的单选框改为UseFrameBufferTiming。我曾经没选这一项，结果SaX2和XF86怎么也不让我在这种卡上设定分辨率。然后点击<b>Finish</b>，回到主窗口。</p>
+   </li>
+ 
+   <li>     
+    <b>图形卡：</b>:
+   
+<p>点击[<b>Change Configuration</b>]，删掉当前设定的卡。这个用的是旧驱动，这样配置新驱动更容易。然后点击<b>Add new card</b>... ，然后在生产厂家下选中NVIDIA，并在右侧列表中选中卡的型号，然后点击<b>Ok</b>。</p>
+   
+<p>如果开始的时候您在sax2命令行加了 "-m 0=nvidia"参数，那末这部分有可能就不必设置了，－ 不过还是检查一下，看看是不是已经设好。</p>
+   </li>
+
+    <li><b>色彩和分辨率</b>:
+   
+<p>点击<b>Properties</b>，在色彩选项卡中设定您想要的色彩深度。我建议采用24位彩色，这是因为GeForce卡是按这个深度优化的。之后会跳到对相应色彩深度的分辨率设置选项卡。选中您的系统所支持的最高的分辨率，把底下的各种选项都选掉（必要的话需向下滚屏）。这可能很麻烦，但可以免除运行期的许多问题。如果这里没有列出您想要的分辨率，可到“Expert”选项卡上去添加。</p>
+   
+<p>然后点OK保存。</p>
+</li>
+   
+    <li><b>虚拟分辨率</b>
+
+<p>这一步您想设的话可以设，但并非必要！</p></li>
+
+    <li><b>3D 加速：</b>
+   
+<p>如果您已成功将显卡设为<b>nvidia</b>，这里应该显示<b>Enabled</b>。否则，会显示<b>Not configured</b>。如果显示后者，那么问题出在显卡配置上，在这里无法修正。而且Sax2也有可能会产生误判，在使用NVIDIA驱动程序的时候，本来已经有了驱动程序并且选项已经打开，而Sax2却报告没有。目前不必太担心这个问题。 
+</p>
+</li>
+    </ul>
+    </li>
+    
+    <li><p>上述过程中如果有提示说您的显示器不支持所选的分辨率，那么您就要格外注意。要么您设的分辨率确实过高，要么是显示器的配置不对。按照我前面在<a href="#Monitor:">显示器</a>部分的介绍再仔细检查一下，并在Expert选项卡的下拉列表上试试其它选项。如果出现这个提示，有可能是这里设得不对，SaX2不接受您的显示器配置。</p>
+    </li>
+
+    <li><p>一切妥当之后，点<b>Finalize</b>。现在就进入了Graphics Gremlins，您可以自己掌握了。运气好的话，系统会提供一个机会让您对配置进行测试。测试的时候，会出现蓝色背景，上面有一个全屏大小的窗口，左上方有一个“闲置计时器”。在这里您可以对显示区域进行调整，调到适合自己显示器的最佳状态，但是如果停顿时间过长，那个计时器时间到，就会失败返回。注意菜单右上角的调整尺寸对话框，您可以在这里输入调整的幅度。先把高度设好，再设宽度，再回过来调整高度，最后再四下挪动，直到满意。需要注意，其调整的机制是轻微地改变频率，因此调整某项设置的时候也会对其它设置产生影响。这样，可能需要花一点功夫才能达到满意的效果。这个窗口上还会显示出当前的分辨率和频率。如果当前的分辨率不是您想设定的分辨率，请参考前一段的说明。</p>
+   </li>
+   
+   <li><p>调好之后，点出来，回到测试对话框，点<b>Save</b>，就完成了，这时您应该会回到文本提示符状态下。</p></li>
+ 
+   <li><p>注：SaX2常会打断与NVIDIA驱动程序集的OpenGL重要符号链接。如果那样的话，建议采取下列措施：
+<ul>
+<li>用NVIDIA的驱动安装程序安装驱动，</li>
+<li>用SAX2配置色彩深度（要求24位）和分辨率，</li>
+<li>重新安装NVIDIA驱动，修复被打断的连接。</li>
+</ul>
+</li>
+
+   <li><p><b>关于6629版驱动的重要注意事项：</b> 
+<br><br>
+<A NAME="ALLOWGLXWITHCOMPOSITE"></A>
+如果用的是6629版Nvidia驱动，您还得进行下列操作：
+<ul>
+<li>如果文件<span style="font-family: courier New,Courier,monospace;">/etc/X11/xorg.conf</span>不存在，那么您需要用这个文件名创建一个符号连接，指向您的X11配置文件，典型情况下为<span style="font-family: Courier New,Courier,monospace;">/etc/X11/XF86Config</span>。例如：
+<br><br>
+<span style="font-family: Courier New,Courier,monospace;">
+            # cd /etc/X11
+<br>
+            # ln -s XF86Config xorg.conf
+</span>
+</li>
+<br>
+<li>
+编辑<span style="font-family: courier new,courier,monospace;">/etc/X11/xorg.conf</span>，找到<span style="font-family: Courier New,Courier,monospace;">"Device"</span>部分，NVIDIA驱动就是在这部分加载的。其形式如下所示：
+<br><br>
+<span style="font-family: Courier New,Courier,monospace;">
+            Section "Device"
+<br>
+            BoardName    "0x032B"
+<br>
+            BusID        "9:0:0"
+<br>
+            Driver       "nvidia"
+<br>
+            Identifier   "Device[0]"
+<br>
+            VendorName   "NVidia"
+<br>
+            EndSection
+</span>
+<br><br>
+</li>
+<li>
+在<span style="font-family: courier new,courier,monospace;">VendorName</span>那行下面插入下面这一行：
+<br><br>
+<span style="font-family: Courier New,Courier,monospace;">
+            Option "AllowGLXWithComposite" "true"
+</span>
+<br>
+</li>
+</ul>
+	  
+</p>
+   </li>
+
+   <li><p>欲对新设置进行测试，最好的办法是输入startx。如果设置正确，X视窗就会启动，先是显示NVIDIA的闪现屏幕（f奋斗了几个小时之后见到这个图案多么令人兴奋），然后是一个非常简单的窗口管理器。在这里，您可以右键单击一个菜单，打开一个X终端，键入xdpyinfo|more，看看设置情况。您需要检查分辨率、色彩深度设置是否正确，以及扩展列表里有没有NVIDIA-GLX。如果一切正常，就通过菜单退回到文本控制台。</p>
+   </li>
+
+   <li><p>一切就绪之后，您可以回到正常操作模式，键入“init 5”，系统会回到图形登录界面。如果到了这一步，那么您就大可放心，驱动程序运行正常。但还有一些测试需要完成，所以现在还得登录进去。</p>
+   </li>
+
+   <li><p>运行glxinfo，看看服务器glx供应商和OpenGL供应商部分是怎么写的。二者都应该是NVIDIA Corporation才对。如果这两部分当中任何地方提到了Mesa或mesasoft，则说明GL和GLU库的配置仍然不正确。您需要进入/usr/lib目录，然后ls -l libGL*。这时应该看到一个libGL.so.1.0. &lt;NVIDIA发行版本号&gt;、一个libGLcore.so.1.0.&lt;NVIDIA发行版本号&gt;，还有一个libGLU.so.1.3。您可能还会见到其它文件， － 您需要做的是，把LibGL*.so和libGL*.so.1的软链接指向相应的NVIDIA文件。如果您以前装过Mesa，现在可以把那个rpm卸载掉，－ 已经不再需要了。然后，针对您需要的连接和实际安装的版本号，您可以手动创建各个软链接，例如：ln -s libGL.so.1.0.5336 libGL.so，等等。有人说重新运行NVIDIA驱动安装程序即可解决问题，但重装驱动对于系统提供的libGLU.so不起作用。所以，不管怎么说，您还是得手动配置。而且手动配置还省得回过头去重新运行init 3。</p>
+
+<p>
+<b>最后的结果：</b>
+</p>
+<p>
+最后的结果看起来应该是这样的（ls -l libGL*）：	
+</p>
+ 
+<blockquote><small><font face="Courier New, Courier, monospace">lrwxrwxrwx
+ ... libGLcore.so.1 -&gt; libGLcore.so.1.0.5336</font><br />
+    <font face="Courier New, Courier, monospace">	 -rwxr-xr-x ... libGLcore.so.1.0.5336</font><br />
+    <font face="Courier New, Courier, monospace">	 -rw-r--r-- ... libGL.la</font><br />
+    <font face="Courier New, Courier, monospace">	 lrwxrwxrwx ... libGL.so
+ -&gt; libGL.so.1</font><br />
+    <font face="Courier New, Courier, monospace">	 lrwxrwxrwx ... libGL.so.1
+ -&gt; libGL.so.1.0.5336</font><br />
+    <font face="Courier New, Courier, monospace">	 -rwxr-xr-x ... libGL.so.1.0.5336</font><br />
+    <font face="Courier New, Courier, monospace">	 -rw-r--r-- ... libGLU.a</font><br />
+    <font face="Courier New, Courier, monospace">	 -rwxr-xr-x ... libGLU.la</font><br />
+    <font face="Courier New, Courier, monospace">	 lrwxrwxrwx ... libGLU.so
+ -&gt; libGLU.so.1.3</font><br />
+    <font face="Courier New, Courier, monospace">	 lrwxrwxrwx ... libGLU.so.1
+ -&gt; libGLU.so.1.3</font><br />
+    <font face="Courier New, Courier, monospace">	 -rwxr-xr-x ... libGLU.so.1.3</font><br />
+    </small></blockquote>
+</li>
+ 
+  <li><p>这些都完成以后，再运行glxinfo。这个程序会连接X窗口服务器，－ 象所有的图形应用程序那样，－ 所以如果是以root身份运行，它会以登录用户的身份运行xhost +localhost，并先以root身份“export DISPLAY=:0”。运气好的话，这次报告的NVIDIA的东西就应该是正确的了。</p></li>
+   
+  <li><p>现在我们可以重新运行<i>xscreensaver-demo</i>，或者先前进行3D性能测试时用到的其它程序。按先前的步骤重新进行，看看快了没有。一切顺利的话，您一定会感到惊喜。</p></li>
+</ol>
+
+<h3>致谢</h3>
+
+<p>
+Project Looking Glass项目小组诚挚地感谢Mark Bowyer 
+<a href="mailto:Mark.Bowyer@sun.com"><u>Mark.Bowyer@sun.com</u></a>
+和
+Kyle McDonald
+<a href="mailto:Kyle.McDonald@sun.com"><u>Kyle.McDonald@sun.com</u></a>
+提供上述指导!
+</p>
+
+<hr />
+<small>$修订版本: 1.12 $ $日期: 2005/04/28 18:15:56 $</small>
+
+</div>
+</body>
+</html>

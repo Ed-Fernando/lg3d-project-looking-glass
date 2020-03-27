@@ -1,0 +1,368 @@
+20:02 < ddew|bofh> Logging the chat, as per request from paulby 
+20:02 < dwarfy> Ok !
+20:03 < dwarfy> I propose u to begin ddew ... explain us ur ideas ?
+20:03 < NeUtr0N> i wish looking glass was written in c or c++ 
+20:03 < ddew|bofh> :)
+20:03 < dwarfy> lol
+20:03 < ddew|bofh> Ok, here goes 
+20:04 < ddew|bofh> I'm thinking of using the basis of dbfs, and removing everything but the basic framework and various gui dependencies. 
+20:04 < ddew|bofh> To just keep the daemon, interfacing that into a java-app will hopefully be quite easy
+20:05 < dwarfy> Well could u explain a bit more about dbfs ?
+20:05 < ddew|bofh> It basically is a "bot" that looks at and in files and then stores it in a sqllite db
+20:11 < dwarfy> Yes let's discuss about DBFS
+20:11 < PieD> For dbfs, I think that it could be interesting to use the latest improvements in the kernel
+20:11 < PieD> the linux kernel include extended attributes system
+20:12 < PieD> it could perhaps be useful
+20:12 < ddew|bofh> dbfs doesn't need any specific filesystem, it works with files
+20:12 < dwarfy> So dbfs indexes all files in a mysql lite DB ?
+20:12 < ddew|bofh> From what I've understood
+20:12 < PieD> the extended attributes works with ext2/3, reiser, jfs, xfs...
+20:12 < dwarfy> and we can add some added info on one of the files .. ???
+20:12 < PieD> sqlite is really a good choice
+20:12 < ddew|bofh> It's the way I'm thinking the search function would work anyways
+20:13 < PieD> but what about using XML ?
+20:13 < ddew|bofh> Isn't that quite big?
+20:13 < PieD> xml can be used like a database
+20:13 < PieD> I don't know exactly which amount of data is needed
+20:13 < ddew|bofh> I'm suggesting sqllite because of the proof-of-concept uses it :)
+20:13 < dwarfy> yes but a bit slow in this case .... as a complete files hierarchy is HUGE
+20:14 < PieD> but for a packaging system I'm doing, it's perfect !
+20:14 < ddew|bofh> That's why I was thinking of keeping the indexing just in the homedir
+20:14 < PieD> the proof of concept uses sqlite ?
+20:14 < ddew|bofh> Kinda like My Documents
+20:14 < ddew|bofh> PieD: Yeah
+20:14 < PieD> for what ? Notes ?
+20:14 < ddew|bofh> Notes, id3-tags, fileinfo, all sorts of stuff can be put into it
+20:15 < dwarfy> Well that should be an option that influence performances ... COMPLETE HIERARCHY or just HOMEDIR
+20:15 < PieD> the google desktop search system is able to index all the harddrive
+20:15 < ddew|bofh> The way I see it is that since most files you would search, like photos and so on would be kept in your homedir the db can be kept to a minimum size
+20:16 < PieD> why couldn't be LG3D able to do that ?
+20:16 < ddew|bofh> I guess it could, problem is that linux has permissions for files, windows doesn't
+20:16 < PieD> but on the other hand, on a unix system it's useless to index all
+20:16 < ddew|bofh> Exactly
+20:17 < PieD> in fact, I, as user, only go to /home, /opt/java (for some experiments ;), /musique, and /mnt
+20:17 < dwarfy> Well I think that restricting to home dir isn't good as users maybe have strange habits and keeps their photos somewhere else
+20:17 < ddew|bofh> Since lg3d will be run as a user all write access will be in the homedir anyways
+20:17 < PieD> I don't like to store everything in home
+20:17 < ddew|bofh> But I guess we could have an option for including other dirs as well
+20:17 < dwarfy> The user should define WHAT directories should be indexed ??
+20:17 < dwarfy> ,o ?
+20:17 < dwarfy> no?
+20:17 < ddew|bofh> Like lg3d-dbfs.conf or something
+20:18 < PieD> I prefer to store for instance my ogg and mp3 in a separate partition
+20:18 < dwarfy> me to
+20:18 < ddew|bofh> Well, _most_ people. Average joes :)
+20:18 < dwarfy> But when all this is indexed what would your system be able to do ?
+20:19 < ddew|bofh> Damn fast searching. 
+20:19 < PieD> I think that on my computer, the only folders which need indexing are /musique and ~. The other folders (/mnt/..., /usr...) are either dynamic, either useless
+20:19 < PieD> fast searching is only a part of what could be interesting
+20:19 < ddew|bofh> So we could perhaps have a default of ~ and the option to add other dirs in the config?
+20:20 < PieD> for instance, when it find a OpenOffice Writer document, it would be nice to extract from that document titles, author...
+20:20 < ddew|bofh> I'm thinking the possibility to do a search for "Music by Anouk made before 2002" or something
+20:20 < dwarfy> We should have search queries a bit more natural than common
+20:20 < dwarfy> yes
+20:20 < dwarfy> A natural way would be great
+20:21 < PieD> I'm against searching with sentences : it's not really usefull, difficult to do, and the bigger problem : people don't write correctly !
+20:21 < ddew|bofh> I like PieDs idea, perhaps make a plugin interface for different file types, everything from .ogg to .docs 
+20:21 < dwarfy> Some keywords would be needed and maybe some aliases for each keyword ?
+20:21 < PieD> but dbfs should not only be able to store informations about files !
+20:21 < ddew|bofh> The sentence only looks for keywords, like MUSIC made BY ANOUK BEFORE 2002
+20:21 < dwarfy> Yes pluggable document type should be great !
+20:21 < PieD> for instance, I want it to store my browser history
+20:22 < PieD> my chat logs
+20:22 < PieD> and in a usable format
+20:22 < dwarfy> another example i saw on internet was INSTANT MESSAGING log
+20:22 < dwarfy> yes
+20:22 < ddew|bofh> Well, we can add that in 1.2 ;)
+20:22 < ddew|bofh> Again. make it able to use plugins
+20:22 < PieD> when I search for one of my friends, I want it to show me :
+20:23 < ddew|bofh> Even documents written by him or stuff like that
+20:23 < PieD> - webpages I viewed done by him (if they exist and have the information or I entered the information)
+20:23 < ddew|bofh> Exactly
+20:23 < PieD> - documents he did
+20:23 < dwarfy> But if u define an easy way to define a new FILETYPE ... other peoples will contribute with filetypes they know
+20:23 < PieD> - mails he sent me
+20:23 < PieD> - chats I had with him
+20:23 < PieD> ...
+20:23 < ddew|bofh> and so on :)
+20:23 < NeUtr0N> hmm 
+20:23 < dwarfy> The problem is that we cannot index too much info ...
+20:24 < PieD> another good thing would be an extremely easy way to create small indexable informations
+20:24 < ddew|bofh> Such as?
+20:24 < dwarfy> So a FILETYPE should define some SEARCH CRITERIAS 
+20:24 < PieD> for instance, a wizard to create a datatype by adding attributes in a list
+20:24 < ddew|bofh> Could be cool
+20:25 < PieD> and then automagiccaly be able to store items with that type with a tiny window
+20:25 < ddew|bofh> Problem is that we risk failig in writing it if we add too many initial features though. But I like the ideas
+20:25 < dwarfy> for example A FILETYPE like INSTANT MESSAGING LOG should have fields like PEOPLE CONCERNED,TIME OF THE CHAT, ...
+20:25 < PieD> it could be useful to index my magazine list or something like that
+20:26 < dwarfy> And a FILETYPE should be independant of a real file type ??
+20:26 < ddew|bofh> Any data you might want to search for
+20:26 < dwarfy> do u understand that ?
+20:26 < ddew|bofh> filetype should be independent, yes. 
+20:26 < dwarfy> ok
+20:26 < dwarfy> So a FILETYPE would have pluggins
+20:26 < ddew|bofh> But it could use any tags already existing and add them automagically. Like id3 etc
+20:27 < dwarfy> that handle a real file type
+20:27 < dwarfy> N
+20:27 < dwarfy> ?
+20:27 < ddew|bofh> Well, linux doesn't really have any filetypes per say
+20:27 < dwarfy> For example IMAGE should have pluggins JPEG,GIF
+20:27 < dwarfy> file format if u want ..
+20:28 < ddew|bofh> Sure
+20:28 < PieD> and what about using something like FAM or gamin to know when files are modified/created ?
+20:28 < dwarfy> But the search criterias should be linked to the FILETYPE 
+20:28 < ddew|bofh> PieD: That could be a way, prolly better than my initial idea of having a daemon running
+20:29 < dwarfy> For example IMAGE FILETYPE would have attributes NAME,SIZE,BLACKANDWHITEORCOLOR
+20:29 < PieD> no, it's complementary
+20:29 < PieD> the daemon could watch the filesystem using FAM
+20:29 < PieD> but in the same time index files which are not already indexed
+20:29 < ddew|bofh> Sure, I have like no idea how FAM and so on works :)
+20:30 < dwarfy> I'm not sure about a Daemon running everytime ???
+20:30 < PieD> http://www.gnome.org/~veillard/gamin/
+20:30 < dwarfy> it would maybe add a too big load to the system ??
+20:30 < PieD> a daemon doesn't have to always eat the CPU !
+20:30 < ddew|bofh> Nahh, not with todays system
+20:31 < dwarfy> I think that a DB update should be done ONLY when we launch the search system ??
+20:31 < ddew|bofh> It can do it's indexing adapting to the current load
+20:31 < dwarfy> ?
+20:31 < dwarfy> Yes that's goog
+20:31 < dwarfy> good
+20:31 < ddew|bofh> If we launch it as soon as a search is started it would lost its purpose. It'd be too slow
+20:31 < PieD> it's the way the google system works
+20:32 < dwarfy> It works when CPU is free ..
+20:32 < dwarfy> which way ?
+20:32 < ddew|bofh> Google spiders site all the time
+20:32 < PieD> when the CPU is free, it indexes the files
+20:32 < ddew|bofh> Yeah, that's what I was thinking
+20:32 < dwarfy> k so that's the better solution
+20:32 < PieD> but something scaring me about google system :
+20:32 < dwarfy> But a way to force an update should be cool too ..
+20:33 < PieD> google can't be the "center" of our life !
+20:33 < ddew|bofh> hehe
+20:33 < PieD> it's already the center for internet searches
+20:35 < PieD> and what about storing the searches in the database ?
+20:35 < PieD> and use the sqlite features for that ?
+20:35 < PieD> for instance, create a view for each search
+20:36 < PieD> so that the search is automatically updated by the sqlite engine
+20:36 < ddew|bofh> Thats the plan as of now, create a db of all searched files
+20:36 < dwarfy> yes and that speed up things ..
+20:36 < ddew|bofh> So you basically query the db, not the daemon
+20:36 < PieD> and later, when you want to search, you could have to view the history, and "hop" the files you want are here :)
+20:36 < dwarfy> The daemon just watch the filesystem for changes and update the DB
+20:37 < dwarfy> yes
+20:37 < ddew|bofh> Yup, which is why I would want a db for it. The speed
+20:37 < dwarfy> I think the hardest thing is the NATURAL LANGUAGE SEARCH and to keep it platform independant ?
+20:38 < ddew|bofh> Natural language search is easy, just have it search for certain keywords and ignore the rest
+20:38 < PieD> and if you want to translate that ??
+20:38 < ddew|bofh> Portability _should_ be fairly easy. Considering it'd only be used on unix-like systems
+20:39 < dwarfy> I think that the natural language search should be based on the FILETYPES defined
+20:39 < ddew|bofh> How do you mean?
+20:39 < PieD> portability should not, at the beginning, be a slowdown cause !
+20:39 < ddew|bofh> Exactly
+20:39 < PieD> I think I understood dwarfy :)
+20:39 < ddew|bofh> Which is why I want to limit it to unix-like systems
+20:39 < dwarfy> For example SEARCH FILETYPE WHERE ARGUMENT1 = blabl
+20:40 < PieD> like a SQL query !
+20:40 < dwarfy> so SEARCH IMAGE WHERE NAME LIKE BROL
+20:40 < dwarfy> as an example
+20:40 < PieD> so the problem is "only" to translate to SQL and then show the results
+20:40 < ddew|bofh> Pretty much
+20:41 < dwarfy> and user should be aware of the FILETYPES known that would make their search easier ?
+20:41 < PieD> something like completion would be nice !
+20:41 < ddew|bofh> Yeah
+20:42 < ddew|bofh> But we'll have to take it easy in the start. Rome wasn't built in a day :)
+20:42 < dwarfy> Maybe a View with ALL FILETYPES SHOW with the possible ARGUMENTS of each and search a visual way ?
+20:42 < PieD> yes :)
+20:42 < PieD> more informations about FAM :
+20:42 < PieD> http://rox.sourceforge.net/phpwiki/
+20:43 < PieD> (it uses D-Notify)
+20:43 < dwarfy> Yes but that view could be implemented latter and just BUILD a well formatted querry
+20:43 < PieD> http://www.devchannel.org/devtoolschannel/04/05/13/2146252.shtml
+20:43 < dwarfy> So the first things to do are ?
+20:44 < PieD> index the files
+20:44 < ddew|bofh> Try to get a basic sql daemon going which can index files.
+20:44 < PieD> even without any way to query the database without a SQL query !
+20:44 < ddew|bofh> Then we'll need a plugin interface
+20:44 < PieD> when it'll be able to index the files, it should be relatively easy to add an interface to query the database
+20:45 < ddew|bofh> After that we can start thinking about clients
+20:45 < dwarfy> I don't think that we should do it this way ...
+20:45 < ddew|bofh> what do you suggest?
+20:45 < dwarfy> First we must define a baseclass like FILETYPE
+20:46 < dwarfy> and then a way to add real file formats to a FILETYPE
+20:46 < ddew|bofh> First we'll need something to write the plugins for :)
+20:46 < PieD> I think that the daemon mustn't rely on LG3D in order to allow the KDE folks to use that if they want
+20:46 < ddew|bofh> It'll be gui independant, just cooler on lg3d :P
+20:46 < dwarfy> Because the daemon should not list ALL FILES ?
+20:47 < dwarfy> But only known FILETYPES FILES ?
+20:47 < dwarfy> do u understand ?
+20:47 < ddew|bofh> Yeah
+20:47 < PieD> yes
+20:47 < ddew|bofh> But that's easy to change in the source at the start
+20:48 < dwarfy> In fact the great work is to define a way of associating a real file format and how to get things for that fileformat ..
+20:48 < ddew|bofh> Yeah
+20:49 < dwarfy> And then the Daemon would just USE the methods of the FILETYPES associated file formats to get the INFO
+20:49 < dwarfy> and then index it as well as possible ?
+20:49 < ddew|bofh> Yar, that's why there'll be a plugin-interface
+20:49 < PieD> there is a problem : how to store it if we have no idea about which informations are given ?
+20:50 < PieD> a mp3 file give totally different informations that a png !
+20:50 < dwarfy> THE FILETYPE CLASS defines this informations
+20:51 < dwarfy> and is used by the DAEMON to create corresponding DB tables and fields N
+20:51 < dwarfy> ?
+20:51 < PieD> could be a solution
+20:51 < dwarfy> I don't know it just the way I see it ..
+20:51 < PieD> or perhaps :
+20:51 < PieD> a hierarchy of filetypes: 
+20:51 < PieD> - music
+20:51 < PieD> -> ogg
+20:51 < PieD> -> mp3
+20:51 < ddew|bofh> Not only _a_ solution, it might be _the_ solution. I realy like it
+20:51 < PieD> - pictures
+20:51 < PieD> -> jpeg
+20:51 < PieD> ...
+20:51 < dwarfy> Well It's what i say !
+20:52 < PieD> no dwarfy 
+20:52 < dwarfy> i will explain it with an example !
+20:52 < PieD> then in the DB you store jpeg like png
+20:52 < PieD> in the same table : the table containing pictures
+20:52 < dwarfy> WE define a FILETYPED derived class IMAGE that has 3 arguments FILENAME,FILESIZE,COLORTYPE
+20:53 < dwarfy> then
+20:53 < dwarfy> we add some pluggins to IMAGE
+20:53 < dwarfy> IMAGE.JPEG
+20:53 < dwarfy> IMAGE.PNG
+20:54 < dwarfy> these pluggins just give methods to access FILENAME,FILESIZE,COLORTYPE of an IMAGE
+20:54 < dwarfy> well maybe pluggins is not a good name ..
+20:54 < ddew|bofh> Sounds pretty obvious tbh :)
+20:54 < dwarfy> I like ur idea of hierarchy pierre
+20:55 < ddew|bofh> Yeah
+20:55 < PieD> but THE solution is perhaps not to use sqlite
+20:55 < PieD> but a object oriented database
+20:55 < dwarfy> Maybe each filetype should inherit from the BASEFILE FILETYPE that has only 2 ARGUMENTS : FILENAME,FILETYPE !
+20:56 < ddew|bofh> Maybe not, I just saw a implementation of it in sqllite
+20:56 < PieD> for instance : http://www.db4o.com/
+20:57 < dwarfy> so we for example have BASEFILE->MULTIMEDIAFILE->VIDEOFILE and BASEFILE->MULTIMEDIAFILE->SOUNDFILE !!!
+20:57 < PieD> but the problem is : how do you query such systems ?
+20:57 < dwarfy> and BASEFILE has ARGUMENTS FILENAME,FILESIZE
+20:57 < dwarfy> MULTIMEDIA inherits argument from BASEFILE + DURATION (as an example)
+20:57 < PieD> like every good object hierarchy in a library
+20:58 < PieD> (Qt, Swing, more generally Java...)
+20:58 < dwarfy> yes
+20:58 < dwarfy> What do u think ddew ?
+20:59 < dwarfy> and Neutron ?
+21:00 < dwarfy> I think that the FILETYPE class should define how to access his infos in the DB
+21:00 < ddew|bofh> I like dwarfys idea of sorting files into "groups" of types, like multimediafile etc, that combined with PieDs idea of using a hieracical system would rule
+21:00 < PieD> Sorry, I'll be back in a few (10 ?) minutes
+21:01 < dwarfy> and that the FILEFORMAT associated with a certain FILETYPE would give the methods to access the concerned infos in the FILESYSTEM ?
+21:01 < ddew|bofh> Yeah
+21:01 < dwarfy> so a FILETYPE should have many associate FILEFORMATS
+21:01 < dwarfy> I like this
+21:02 < dwarfy> :)
+21:02 < ddew|bofh> Like jpegs are MULTIMEDIA>IMAGEFILES while docs are OFFICE<TEXT
+21:02 < dwarfy> yes
+21:02 < ddew|bofh> err OFFICE>TEXT ofc
+21:02 < dwarfy> exactly
+21:02 < ddew|bofh> That combined with hierarchy would rock, would make it really easy to add new types
+21:03 < dwarfy> Yes and even new formats to a type
+21:03 < ddew|bofh> Yeah
+21:03 < dwarfy> for example ig JPEG3 goes out in a year of 2 it would be added to MULTIMEDIA>IMAGEFILE
+21:03 < ddew|bofh> You add entries, like MULTIMEDIA>PICTURES>JPEGS or whatever you want
+21:04 < dwarfy> yes and no
+21:04 < dwarfy> ..
+21:05 < dwarfy> i think that their should be a PICTURE CLASS that only tells what are searchable criterias for IT
+21:05 < ddew|bofh> Well, different formats have different types of builtin tags
+21:05 < ddew|bofh> Some has resolution while others might have camera model
+21:06 < dwarfy> and a then many classes used by PICTURES as 'pluggins' to access the CRITERIAS define by PICTURE
+21:06 < ddew|bofh> Sure
+21:07 < dwarfy> only criteria defined by the PICTURE class would be searchable
+21:07 < dwarfy> not the criterias associated with a special FILEFORMAT like png
+21:07 < dwarfy> or other
+21:08 < dwarfy> well that's a choice to make
+21:08 < ddew|bofh> Well, you can search in all subclasses of imagefile, the diferent names for the formats would just make it easier to keep track of what is implemented
+21:09 < dwarfy> I don't know
+21:10 < dwarfy> i like the idea of having a FILETYPE defining some SEARCH CRITERIAS (that woudld be common to every FILEFORMAT)
+21:10 < ddew|bofh> We'll have to keep it fairly simple to add plugins or change existing ones
+21:11 < dwarfy> because if u want to keep tracks of every FILEFORMAT dependent CRITERIA .. that will become complicated to maintain ?
+21:12 < ddew|bofh> I could be , but formats use different way to express similar info. Like resolution etc.
+21:12 < dwarfy> I don't know we need other peoples thinkings about this i think
+21:12 < ddew|bofh> At least as far as I remember
+21:12 < dwarfy> Yes i think too
+21:13 < dwarfy> but i think u misunderstood something .. i have explained it bad ..
+21:13 < dwarfy> let's give real names to CLASSES used here
+21:13 < ddew|bofh> Prolly just language barriers :)
+21:14 < dwarfy> the first one if the FILETYPE class that defines a 'general' type of file + the criterias associated with IT
+21:14 < ddew|bofh> Give me an example and I'm sure I'll understand it better
+21:14 < dwarfy> ok
+21:15 < dwarfy> So a good FILETYPE class would be PICTURE
+21:15 < ddew|bofh> Yeah
+21:15 < dwarfy> so we define a PICTURE class that have some args like name,size,resolution
+21:15 < dwarfy> and this args are COMMON to each and every picture
+21:15 < dwarfy> and then
+21:16 < PieD> re
+21:16 < ddew|bofh> Hmm, makes sense actually
+21:16 < dwarfy> we define a FILEFORMAT class that's associated with only ONE FILETYPE
+21:16 < dwarfy> this FILEFORMAT class would for the example be PICTURES.JPEG
+21:17 < dwarfy> and this FILEFORMAT would do the work of getting the args of the corresponding FILETYPE
+21:18 < dwarfy> so PICTURES.JPEG would do the work of searching the name,filesize and resolution of a JPEG
+21:18 < dwarfy> ?
+21:18 < ddew|bofh> Sounds good
+21:18 < ddew|bofh> Sounds real good 
+21:18 < PieD> and we about thumbnails ?
+21:19 < PieD> sorry : what about thumbnails ?
+21:19 < dwarfy> that's a view feature
+21:19 < dwarfy> i think
+21:19 < ddew|bofh> Yeah, that's a fairly simple affair I reckon
+21:19 < dwarfy> this must not be implemented in the base system
+21:20 < PieD> I think we spoke enough... Just code it ? :p
+21:20 < ddew|bofh> hehe
+21:20 < PieD> I think I can help a bit
+21:20 < ddew|bofh> It's still in the design-phase :)
+21:20 < PieD> but I'm actually busy with other projects
+21:21 < ddew|bofh> You think you might have time to take a look at the db interface?
+21:21 < PieD> (I'm developing an extremely easy C++ bindings to libxml2... It's the easier lib for parsing XML I know yet :)
+21:21 < ddew|bofh> :)
+21:21 < dwarfy> I think the base system must take a querry and return an array of found results + corresponding infos ..
+21:21 < dwarfy> View features should be done somewhere else ?
+21:22 < dwarfy> do u agree ?
+21:22 < ddew|bofh> Sure, makes sense
+21:22 < ddew|bofh> But lets not dismiss that fully yet, it might be easier than we think to add
+21:22 < dwarfy> yes that's just display code ..
+21:23 < dwarfy> So let's talk about what should be done as research now ?
+21:23 < dwarfy> in fact i'm in exams from 10/01 to 21/01 so i won't be able to do anything before 21/01
+21:23 < dwarfy> ...
+21:24 < dwarfy> I'm interested in develloping the base FILETYPE and FILEFORMAT class ..
+21:24 < ddew|bofh> I'm quite busy with me car and a few other obligations. But I can look into a database format we could use
+21:24 < ddew|bofh> Oh
+21:25 < dwarfy> ?
+21:25 < ddew|bofh> How we would connect to the db?
+21:25 < dwarfy> Somedbody should search this
+21:25 < ddew|bofh> this==?
+21:25 < dwarfy> how to use the DB
+21:26 < ddew|bofh> Ahh
+21:26 < ddew|bofh> I'll look into it
+21:26 < ddew|bofh> But don't expect any demo code ;)
+21:27 < dwarfy> Maybe we should wait other guys of the projects to say what thay think aboooout this chat sessions ?
+21:27 < dwarfy> and then we'll plan ?
+21:27 < ddew|bofh> Sure, but we can atleast define some basic "roles"
+21:27 < PieD> it's sad that all the core developer team wasn't here (hideya, paulby...)
+21:28 < ddew|bofh> Since it's still in the design phase we can act rather freely, as long as we can agree on what will be researched ´by whom :)
+21:29 < dwarfy> Well I'll talk to others about the idea of FILETYPE <> FILEFORMAT
+21:29 < ddew|bofh> Sure
+21:29 < dwarfy> and maybe someone should search about the DB
+21:29 < dwarfy> and another one about the DAEMON
+21:29 < dwarfy> ?
+21:29 < dwarfy> or the same ..
+21:29 < ddew|bofh> I can look into the daemon a bit
+21:30 < dwarfy> Pierre wrote some links  that could be interresting ...
+21:30 < ddew|bofh> I'll also try to coordinate this, add an incubator project and so on
+21:30 < dwarfy> Yes but we're not hasted ..
+21:30 < ddew|bofh> I'll post the log at the lg page
+21:30 < ddew|bofh> I'm thinking in the long run here :)
+21:31 < dwarfy> Let's talk with other peoples .. and see if they do not find it stupid ..
+21:31 < dwarfy> lol
+21:31 < PieD> I'll always be here
+21:31 < ddew|bofh> It's not stupid, we had some creative juices flowing. It can be really nice if we just put some effort into it
+21:31 < PieD> perhaps that people will come to discuss about our discussion :p
+21:31 < ddew|bofh> Hopefully :)
+21:31 < dwarfy> Ok I'm motivated but really won't be able to do anything before 21/01
+21:32 < ddew|bofh> I'm stopping the log now anyways
+--- Log closed Wed Jan 05 21:32:39 2005

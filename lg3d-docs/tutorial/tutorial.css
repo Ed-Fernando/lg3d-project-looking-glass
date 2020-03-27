@@ -1,0 +1,43 @@
+body {
+  font-family: Arial;
+}
+
+th {
+  font-variant: small-caps;
+  color: #0000AA;
+  text-align: left;
+}
+
+.tutorial-code {
+  font-family: courier;
+  padding: 5;
+  padding-left: 50;
+}
+.inline-code {
+  font-family: courier;
+}
+.command {
+  font-family: courier;
+  padding: 5;
+  padding-left: 50;
+	color: blue;
+}
+
+.newstep {
+  padding-top: 50;
+}
+
+a.javadoc {
+  font-family: courier;
+}
+
+h1 {background-image: url(taskbar-small.png); background-repeat: no-repeat; background-position: bottom center; padding-left: 0px; padding-bottom: 03px; margin-top: 0px; margin-bottom: 0px; text-align: center; font-weight: heavy; font-size: 24pt; font-family: sans-serif;}
+
+h3 {background-image: url(taskbar-small.png); background-repeat: no-repeat; background-position: bottom center; padding-left: 0px; padding-bottom: 03px; text-align: center; font-family: sans-serif; font-weight: heavy}
+
+h4 {text-align: center; font-weight: bold; font-size: 12pt; font-family: sans-serif}
+
+p {padding-left: 0px}
+
+pre {margin-left: 15px; margin-right: 15px; background-color: #DDD}
+

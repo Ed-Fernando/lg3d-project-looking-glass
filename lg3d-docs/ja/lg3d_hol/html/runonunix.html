@@ -1,0 +1,147 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html>
+  <head>
+    <meta http-equiv="content-type" content="text/html; charset=utf-8" />
+    <title>LG3Dの実行</title>
+  </head>
+
+  <body bgcolor="white">
+    <h1>JavaOne Tokyo Hands on Lab : <br>
+	Project Looking Glass (LG3D) Basic Programming</h1>
+
+    <h2>LG3Dの実行</h2>
+    
+    <h3>LG3Dの3つの実行コマンド</h3>
+
+    <p> LG3Dをインストールすると 
+        lg3d/bin 内に lg3d-dev, lg3d-app, lg3d-app-full 
+        という 3つのコマンドができます。<br>
+		<!--  LG3D1.0 では lg3d-session コマンドをサポートしなくなりました。<br>-->
+        これらが LG3D を実行するためのコマンドです。<br>
+        その他のファイルは無視して構いません。<br>
+		
+
+    <p> lg3d-dev, lg3d-app はウィンドウアプリケーションとして 
+        LG3D を実行するためのコマンドです。
+        開発者用のコマンドと位置づけられています。<br>
+        lg3d-dev と lg3d-app の違いは X-Windowアプリケーションが実行できるかどうかです。
+        lg3d-dev は LG3Dアプリケーションのみ実行でき、
+        lg3d-app は X-Windowアプリケーションの実行も行えます。<br>
+		lg3d-app-full は lg3d-app のフルスクリーンモード（フレームなし）です。lg3d-app -f を実行するのと同じです。
+        
+
+        <p> 各環境により利用できるコマンドは異なります。
+            各環境で利用できるコマンドは次の通りです。
+
+<br><br>
+<table border><tr><th></th><th> lg3d-dev </th><th> lg3d-app </th><th> lg3d-app-full </th><tr>
+<tr><th> Solaris 10 x86 + NVIDIA</th><td>○</td><td>○</td><td>○</td></tr>
+<tr><th> Linux + NVIDIA</th><td>○</td><td>○</td><td>○</td></tr>
+<tr><th> Linux + ATI</th><td>○</td><td>○</td><td>○</td></tr>
+<tr><th> Windows </th><td>○</td><td>×</td><td>×</td></tr>
+</table><br>
+<br>
+
+    <h3> 開発者向けモード(lg3d-dev/lg3d-app)の実行</h3>
+
+    <p> lg3d-dev, lg3d-app の実行方法は次の通りです。
+        <br>
+        (インストールしたユーザーのホームディレクトリを /home/duke とします。)<br>
+       <br><br>
+	   
+	   
+	   
+       <table border width="70%">
+       <tr><td><pre>
+# <font color="red"><b>cd lg3d</b></font>
+# <font color="red"><b>bin/lg3d-dev</b></font> (もしくは <font color="red"><b>bin/lg3d-app</b></font>、<font color="red"><b>bin/lg3d-app-full</b></font>)
+       </pre></td></tr></table>
+	   
+	   
+	   
+  <blockquote>
+   <font color="red"><b>補足:</b></font><br>
+   Fedora Core 4 などの一部のLinuxディストリビューションの標準状態では lg3d-app コマンドが動かない場合があります。<br>
+   その場合、/etc/X11/gdm/gdm.conf に DisallowTCP=false を追加し、X-Windowの再起動を行ってください。
+  </blockquote>
+  
+  
+  
+	<br><br>
+    <p> 下図は Solaris 10 x86 JDS 上で
+     	lg3d-devを実行したものです。<br><br><br>
+    <img src="pictures/10lg3d-dev.png">
+    <br><br>
+
+
+
+
+  <blockquote>
+   <font color="red"><b>補足:</b></font><br>
+   LG3D のインストールディレクトリにある etc/lg3d/displayconfig/j3d1x1 ファイル
+   (ここでは/home/duke/lg3d/etc/lg3d/displayconfig/j3d1x1 )
+   ファイルの設定を変更することにより LG3Dウィンドウの大きさを変更できます。<br>
+   下の例では画面サイズを 1152x864 に設定しています。
+   画面サイズの代わりに NoBorderFullScreen と指定すればフルスクリーン表示も可能です。これはlg3d-app-fullを実行するのと同じです<br>
+   変更箇所を<font color="red"><b>赤(太字)</b></font>で示します。<br>
+   <br><br>
+   <table border width="70%"><tr><td><pre>
+/*
+ ************************************************************************
+ *
+ * Java 3D Calibration file for single-screen desktop configuration with
+ * neither head tracking nor 6DOF sensor tracking.
+ *
+ ************************************************************************
+ */
+
+// Create a new screen object and associate it with a logical name and a
+// number.  This number is used as an index to retrieve the AWT GraphicsDevice
+// from the array that GraphicsEnvironment.getScreenDevices() returns.
+//
+(NewScreen center 0)
+
+// Set the available image area for a full screen.  This is important when
+// precise scaling between objects in the virtual world and their projections
+// into the physical world is desired through use of an explicit ScreenScale
+// view attribute.  The defaults are 0.365 meters for width and 0.292 meters
+// for height.
+//
+(ScreenAttribute center PhysicalScreenWidth  0.360)
+(ScreenAttribute center PhysicalScreenHeight 0.288)
+//(ScreenAttribute center       WindowSize           NoBorderFullScreen)
+//(ScreenAttribute center       WindowSize           (800 600))
+<font color="red"><b>(ScreenAttribute center WindowSize           (1152 864))</b></font>
+
+
+// Create a view using the defined screen.
+//
+(NewView view0)
+(ViewAttribute view0 Screen center)
+(ViewAttribute        view0   FrontClipDistance       0.01)
+(ViewAttribute        view0   BackClipDistance        10.0)
+(ViewAttribute view0 WindowEyepointPolicy RELATIVE_TO_COEXISTENCE)
+(ViewAttribute view0 WindowMovementPolicy VIRTUAL_WORLD)
+(ViewAttribute view0 WindowResizePolicy VIRTUAL_WORLD)
+(ViewAttribute view0 ScreenScalePolicy SCALE_EXPLICIT)
+
+// For debugging this will give us the standard scale world and view
+// but in a window. Obviously if the window is reduced in size less of
+// the world is visible.
+(ViewAttribute view0 CoexistenceCenteringEnable true)
+(ViewAttribute view0 WindowEyepointPolicy RELATIVE_TO_WINDOW)
+(ViewAttribute view0 WindowMovementPolicy PHYSICAL_WORLD)
+
+// Enable stereo viewing if desired
+// (ViewAttribute  view0   StereoEnable            true)
+   </pre></td></tr></table>
+  </blockquote>
+
+<br><br><br>
+    <hr>
+    <ul>
+    <li><a href="index.html">メニューに戻る</a>
+    </ul>
+
+  </body>
+</html>

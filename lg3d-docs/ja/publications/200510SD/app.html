@@ -1,0 +1,71 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<title>Software Design 2005.10 Project Looking Glass 徹底攻略 Appendix</title>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<link href="../../preview.css" rel="stylesheet" type="text/css" />
+<meta name="Author" content="Hideya KAWAHARA" />
+</head>
+<body bgcolor="#FFFFFF"> 
+<div id="projectdocumentview" class="app" style="width: 550px;"> 
+  <p>次世代 Java ベースデスクトップ/3D アプリ開発環境 Project Looking Glass 徹底攻略</p> 
+  <h1>開発者が描く LG3D の未来</h1> 
+  <p>&nbsp;</p> 
+  <p>川原 英哉 KAWAHARA Hideya</p> 
+  <p>初出: <a href="http://www.gihyo.co.jp/magazines/SD/archive/200510">Software Desing 2005 年 10 月号</a></p> 
+  <hr /> 
+  <p>本章では，LG3D の現在の状況を紹介しつつ，今後 LG3D で注力していこうと考えている点を紹介したいと思います．</p>
+  <h3>これまでを振り返って</h3> 
+  <p>オープンソースとして公開してから 1 年少し経ち，コミュニティとともに LG3D もずいぶん発展してきました．オープンソースとして公開してからは，安定性の向上と LG3D アプリ API の制定を大きな目標として掲げてきました．これらについてはかなりの進歩を遂げられたと思います．</p>
+  <h3>アプリとプラットフォーム機能の拡充</h3> 
+  <p>まず，LG3D アプリ API の制定を受けて，今後ますます LG3D アプリの開発が盛んになると予想されます．これを積極的に支援し，LG3D の魅力の向上につなげたいと思っています．</p>
+  <p>&nbsp;</p>
+  <h4>Summer of Code への参加</h4>
+  <p>皆さんは Google により今年の初夏に募集が行われた「<a href="http://code.google.com/summerofcode.html">Summer of Code</a>」という奨学金制度をご存知でしょうか．オープンソース開発に参加する学<br />
+    生向けの奨学金で，LG3D も参加団体として取り上げられました．</p>
+  <p>LG3D からは 10 のプロジェクトが採用になりました．次の URL でそれらのプロジェクトを一覧できます．</p>
+  <p><a href="http://wiki.java.net/bin/view/Javadesktop/SummerOfCode2005">http://wiki.java.net/bin/view/Javadesktop/SummerOfCode2005</a></p>
+  <h5>日本発のプロジェクトも</h5>
+  <p>日本からは，本特集4 章「コミュニティの広場」にも寄稿して頂いた小田原大氏が参加しています．他のプロジェクトを見ると，「Google サーチ UI の LG3D 版」や「3D チャット環境」「3D ファイルマネージャ」といったプロジェクトがあるのがわかります．</p>
+  <p>これらの成果を活用して，LG3D を実用的なデスクトップにより一歩でも近づけたいと願っています．</p>
+  <h5>3D 以外の分野も登場</h5>
+  <p>他にも見逃せないのは，3D とは直接関係ない，プラットフォームとしての幅を広げるようなプロジェクトが採用されている点です．たとえば，「自然言語による操作」や「WebCam からの入力による操作」などのプロジェクトがあります．</p>
+  <p>今後も「Summer of Code」のような機会を積極的に活用し，オープンコミュニティでの開発を促進していきたいと思っています．</p>
+  <p>&nbsp;</p>
+  <h3>大学 / 学術団体との連携</h3>
+  <div style="float: right; padding: 10px; width: 200px;"> 
+    <table> 
+      <tr> 
+        <td nowrap="nowrap"><span style="padding: 1px; padding-right: 5px; padding-left: 5px; background: #333333; color:#FFFFFF; font-weight: bold;">図 1</span></td> 
+        <td style="font-weight: bold; background: #FFFFFF; color: #2682C5; padding-left: 10px;">University of Colorado のグループによる App<br />
+        LG3D 上で動作するサウンドプレーヤの UI</td> 
+      </tr> 
+    </table> 
+    <a href="app-fig/f1.jpg"><img src="app-fig/f1_t.jpg" alt="LG3D 上で動作するサウンドプレーヤの UI" width="200" height="150" border="0" /></a></div> 
+  <p>「コミュニティの広場」でも一例をご紹介したとおり，研究開発の成果を実装するプラットフォームとして，大学関係の方々に LG3D を活用していただく例が多くなってきました．</p>
+  <p>海外では University of Colorado や Carnegie Mellon
+    University などでも学生の研究題材として使用してもらった実績があります．図 1 は， University of
+    Colorado のグループが LG3D 上に実装したミュージックプレーヤの UI です．また，LG3D にバンドルされている「Knowledge Web」も学術団体との共同作業の成果です．</p>
+  <p>今後とも，こういった連携は積極的に進めていきたいと思っています．学生の皆さんで興味のある方は，ぜひ LG3D で遊んでみてください．イマジネーションがさらに広がるかもしれません．</p>
+  <p>&nbsp;</p>
+  <h3>LG3D フレームワーク化計画</h3>
+  <p>LG3D アプリを開発した人からよくもらうコメントとして，「別に LG3D をデスクトップに限定する必要はない」というものがあります．LG3D アプリ
+    API は，デスクトップ機能とは独立した，3D UI を持つアプリケーションの開発に広く使えるフレームワークとなり得る，という意味です．</p>
+  <p>これはまったくもって的を射たコメントで，現に「SouceViewer」という，3D 空間を利用してソースファイルを可視化するモジュールを開発するプロジェクトが進められています．将来的には
+    NetBeans のモジュールとして組み込んでいくことを目標にしています．</p>
+  <p>これを実現するために，LG3D アプリ API は，LG3D デスクトップとは独立して利用できるフレームワークとして整備していこうと考えています．</p>
+  <p>このフレームワークを利用すれば，Java アプリの 3D 可視化機能の実装に LG3D が使えるようになり，LG3D の適用範囲が格段に広がります．</p>
+  <p>&nbsp;</p>
+  <h3>さらに先の話</h3>
+  <p>LG3D アプリ API は，デスクトップアプリを開発するための API です．これを策定しているということは，次世代デスクトップアプリ開発用の API を作り出していると考えることもできます．</p>
+  <p>これは，2D から 3D というアプリの UI まわりの改善だけでなく，他の点でも次世代デスクトップ環境として整備していく絶好の機会と言えるのではないでしょうか．</p>
+  <p>たとえば，昨今のデスクトップは，単にアプリを起動する場所という利用方法から，人と人とのコミュニケーションの場所という役割がより重要になってきました．現状では，メーラやインスタントメッセンジャーアプリがコミュニケーションを仲介していますが，こういった機能はより本質的な機能としてデスクトップの中に取り込まれるべきなのかもしれません．</p>
+  <p>&nbsp;</p>
+  <h3>最後に</h3>
+  <p>LG3D フォーラムでは，3D の枠を超えて，今後は「次世代デスクトップはどうあるべきか」というテーマでも議論を進めていければ，と考えています．その成果を LG3D アプリ API に反映し，LG3D を理想の次世代デスクトップ環境に，皆さんとともに育てていければと考えています．皆さんのご参加をお待ちしております．</p>
+  <p>&nbsp;</p>
+  <hr /> 
+  <p style="font-size: small;">$Revision: 1.1 $ $Date: 2006-05-09 18:16:27 $</p> 
+</div> 
+</body>
+</html>

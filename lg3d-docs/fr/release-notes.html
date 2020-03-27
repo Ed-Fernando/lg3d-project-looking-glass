@@ -1,0 +1,242 @@
+<!DOCTYPE html PUBLIC "-//Tigris//DTD XHTML 1.0 Transitional//EN"
+"http://style.tigris.org/tigris_transitional.dtd">
+<html>
+<head>
+  <title>
+    Notes de version pour développeurs du Projet Looking Glass
+    Version 0.6.1
+  </title>
+  <meta name="Translator" content="Pierre DUCROQUET" />
+  <meta http-equiv="content-type" content="text/html; charset=UTF-8" />
+</head>
+  <body>
+   
+<h2>Notes de version pour développeurs du Projet Looking Glass <br />
+Version 0.6.1</h2>
+  Ces notes de version contiennent des informations importantes à propos de la version pour développeurs 0.6.1 du
+Projet Looking Glass. En plus d'un aperçu global des principaux changements depuis la version précédente (0.5.1),
+les bugs et limites connus, des notes techniques et d'autres informations sont donnés ici. Lisez ce document
+avant de commencer à utiliser la version 0.6.1 pour développeurs du Projet Looking Glass.
+<br />
+  <br />
+  <a href="#Overview_of_the_changes">1. Aperçu global des changements</a>
+  <ol>
+  <a href="#App_quality_improvements">1.1 Amélioration de la qualité des applications X11</a><br />
+  <a href="#X11_perf_improvements">1.2 Améliorations des performances X11</a><br />
+  <a href="#Window_resizing">1.3 Le redimensionnement des fenêtres est maintenant supporté</a><br />
+  <a href="#Client_api_cleanup">1.4 Nettoyage de l'API du client 3D</a><br />
+  </ol>
+  <a href="#Limitations">2. Limites de cette version</a>
+  <ol>
+  <a href="#Perf_sluggish">2.1 Les performances sont faibles</a><br />
+  <a href="#Stability_probs">2.2 Problèmes de stabilité</a><br />
+  <a href="#ATI_probs">2.3 Problèmes de rendu avec les cartes ATI</a><br />
+  <a href="#No_3D_keyboard_events">2.4 Les évenements clavier pour les applications LG3D ne sont pas encore supportés</a><br />
+  <a href="#No_XINPUT">2.5 L'utilisation de l'extension XINPUT n'est pas encore supportée</a><br />
+  <a href="#No_open_office_presenter_full_screen">2.6 Le mode plein écran d'OpenOffice Impress n'est pas encore supporté</a><br />
+  <a href="#No_multiscreen">2.7 Pas de support de plusieurs écrans</a><br />
+  <i>Ndt : je ne traduis pas ce point car je le considère faux</i><a href="#Terminal_windows_root"> 2.8 lg3d-session terminal windows are the root user</a><br />
+  </ol>
+  <a href="#Known_Bugs">3. Bugs connus</a><br /><br />
+  <a href="#Fixed_issues">4. Problèmes corrigés</a><br />
+   
+<h3><a name="Overview_of_the_changes"></a>1. Aperçu global des changements</h3>
+
+Cette section fournit un aperçu global des changements majeurs qui ont été effectués sur le Projet Looking Glass 
+depuis la version précédente (version 0.5.1).
+
+<h4><a name="App_quality_improvements"></a>1.1 Amélioration de la qualité des applications X11</h4>
+De nombreux bugs ont été corrigés. La plupart des applications X11 marchent raisonnablement bien maintenant. Certaines
+ont encore des problèmes mineurs. Les applications majeures comme Mozilla, Evolution et OpenOffice marchent bien. 
+Consultez les "Problèmes corrigés" (ci dessous) pour une liste des bugs corrigés.
+<br />
+<h4><a name="X11_perf_improvements"></a>1.2 Améliorations des performances X11</h4>
+Les applications X ont été significativement accélérées, bien que beaucoup de travail reste à faire dans ce domaine (voir
+plus loin).
+<br />
+<h4><a name="Window_resizing"></a>1.3 Le redimensionnement des fenêtres est maintenant supporté</h4>
+Vous pouvez maintenant redimensionner les fenêtres des applications X11. L'effet visuel est quelque peu étrange, mais au
+moins il marche.
+<br />
+<h4><a name="Client_api_cleanup"></a>1.4 Nettoyage de l'API du client 3D</h4>
+L'API du client 3D a subi un nettoyage général. Les changements sont indiqués dans la JavaDoc. Voici une liste partielle 
+montrant le travail qui a été fait dans ce domaine :
+<br /><br />
+<li>Ajout du supporte de KeyEvent.</li>
+<li>Ajout de la première partie du framework gesture.</li>
+<li>Ajout du framework de configuration.</li>
+<li>Intégration des projets d'incubator avec la plateforme principale.</li>
+<li>Le système d'évènement est maintenant asynchrone.</li>
+<li>Pile de transformations de Component3D reconçue.</li>
+<br />
+<h3><a name="Limitations"></a>2. Limites de cette version</h3>
+Gardez à l'esprit que LG3D est encore en développement et donc c'est encore un travail en cours; Vous devez être au courant
+des limites du système. Tous ces domaines seront analysés et les problèmes corrigés dans de futures versions.
+
+<h4><a name="Perf_sluggish"></a>2.1 Les performances sont faibles</h4>
+Les performances sont encore très faibles. Le curseur démarre et s'arrête souvent. Les choses sont particulièrement lentes
+quand plusieures grandes fenêtres sont affichées. Un moyen d'accélérer les choses est de réduire la taille des  grandes
+fenêtres ou d'iconifier celles que vous n'utilisez pas.
+<br />
+
+<h4><a name="Stability_probs"></a>2.2 Problèmes de stabilité</h4>
+Le serveur d'affichage souffre occasionnellement de crash aléatoires, même si leur fréquence a été grandement réduite. Le
+plus troublant de ces crash se manifeste par des messages comme ceux ci dans /var/tmp/lgserver.log :
+<br /><br />
+WARNING: MessageFactory error in thread Escher-DinReader-For-DevicePoller
+<br />
+WARNING: MessageFactory.build_extension_event: Unsupported extension event: 118
+<br /><br />
+(Vous pouvez aussi voir des messages comme "unsupported extension event" avec un code de 111 ou 116).
+<br /><br />
+Sinon de temps en temps les applications X11 afficheront des messages comme celui-ci :
+<br /><br />
+Xlib: unexpected async reply (sequence 0x413b2)!
+<br /><br />
+Quand ces effets commencent à apparaître, il est habituellement nécessaire de relancer lg3d-session.
+<br /><br />
+Si vous rencontrez l'un des messages ci-dessous, veuillez ajouter un commentaire au <a href="https://lg3d-core.dev.java.net/issues/show_bug.cgi?id=157">rapport de bug n°157</a>. Veuillez fournir une description de la plateforme
+(matériel, version et distribution de votre linux) que vous utilisez, ainsi que les messages qui sont apparus et ce que vous 
+faisiez quand ils ont commencé à apparaître (c'est-à-dire quelles applications vous utilisiez et quelles opérations vous
+effectuiez). Ceci nous aidera pour la résolution du problème.
+<br />
+
+<h4><a name="ATI_probs"></a>2.3 Problèmes de rendu avec les cartes ATI</h4>
+Lors de l'utilisation de lg3d-session, des problèmes de rendu ont été observés sur les cartes ATI. Pour plus d'information, 
+consultez <a href="https://lg3d-core.dev.java.net/issues/show_bug.cgi?id=100">le rapport de bug n°100</a>.
+<br />
+
+<h4><a name="No_3D_keyboard_events"></a>2.4 Les évenements clavier pour les applications LG3D ne sont pas encore supportés</h4>
+Vous ne pouvez pas écrire d'applications avec l'API de client LG3D qui reçoive des évènements clavier.
+<br />
+
+<h4><a name="No_XINPUT"></a>2.5 L'utilisation de l'extension XINPUT n'est pas encore supportée</h4>
+Les applications X11 utilisant l'extension XINPUT peuvent ne pas marcher correctement.
+<br />
+
+<h4><a name="No_open_office_presenter_full_screen"></a>2.6 Le mode plein écran d'OpenOffice Impress n'est pas encore supporté</h4>
+Vous pouvez contourner ce problème en redimensionnant la fenêtre jusqu'à ce qu'elle soit presque plein-écran.
+<br />
+
+<h4><a name="No_multiscreen"></a>2.7 Pas de support de plusieurs écrans</h4>
+Cette version ne supporte qu'une seule instance d'une session LG3D lancée par machine. Seul un seul écran est supporté. Les
+configurations avec plus d'un écran, que ça soit séparé ou combiné (par exemple le mode Xinerama) ne sont pas encore supportées.
+<br />
+
+<h4><a name="Terminal_windows_root"></a>2.8 lg3d-session terminal windows are the root user</h4>
+Shells brought up by clicking the terminal icon default to the
+root user. So exercise suitable caution when entering commands into these shells.
+<br />
+
+<h3><a name="Known_Bugs"></a>3. Bugs connus</h3>
+Vous pouvez obtenir la liste des bugs actuels en <a href="https://lg3d-core.dev.java.net/issues/buglist.cgi?Submit+query=Submit+query&amp;component=lg3d-core&amp;issue_status=NEW&amp;issue_status=STARTED&amp;issue_status=REOPENED">cliquant ici</a>.
+
+<h3><a name="Fixed_issues"></a>4. Problèmes corrigés</h3>
+Voici une liste des problèmes qui ont été corrigés dans la version 0.6.1 :
+<br /><br />
+94  P1 	MouseWheel causes exception
+<br />
+132 P1 	Restoring application after minized doesn't work
+<br />
+133 P1 	NativePopup3D doesn't handle input only windows
+<br />
+162 P1 	xterm resize: window contents do not resize properly
+<br />
+174 P1 	Stability: Xlib sequence lost error
+<br />
+175 P1 	Stability: Mystery hang
+<br />
+176 P1 	Stability: reply out of order
+<br />
+181 P1 	moving mouse quickly over gcalculator case X crash
+<br />
+209 P1 	Some windows don't receive initial input focus
+<br />
+217 P1 	Mouse gestures start suddendly and never stop
+<br />
+225 P1 	Problems with demo apps images
+<br /><br />
+45  P2 	realplayer doesn't run
+<br />
+92  P2 	Improper keyboard focus management with xterm + jedit
+<br />
+102 P2 	Stability: Mozilla scroll bars hang system on some web pages
+<br />
+123 P2 	xterm scroller is not rendered when resizing it
+<br />
+124 P2 	Minimized view does not disappear on kill
+<br />
+138 P2 	menu and popup window doesn't work now
+<br />
+139 P2 	Moving or resizing a window creates white "WID holes"
+<br />
+140 P2 	Mozilla edit window comes up in the wrong place and garbaged
+<br />
+146 P2 	Component3D's size change doesn't update container's layout
+<br />
+148 P2 	Mozilla menu garbaged when the first menu brought up
+<br />
+156 P2 	Dragging the scrollbars of various applications doesn't work
+<br />
+159 P2 	mozilla navigator: trying to bring up Preferences fails
+<br />
+160 P2 	heihlighting text inside a native window doesn't work
+<br />
+163 P2 	Visiting a certain internal Sun web site causes mozilla to c
+<br />
+165 P2 	staroffice presenter: Can't draw figures
+<br />
+166 P2 	staroffice word: causes a NullPointer exception when it star
+<br />
+171 P2 	mozilla mail: cannot click on Delete button multiple times t
+<br />
+177 P2 	LookupDeviceIntRec id=0x0 not found
+<br />
+178 P2 	gnome-about:cannot destroy associated mozilla navigator
+<br />
+179 P2 	Poor support for moving Component3D between Container3Ds
+<br />
+188 P2 	X window appears at the center after first creation and unic
+<br />
+191 P2 	garbage images when scrolling in some applications
+<br />
+193 P2 	Popups sometimes come up in the wrong location
+<br />
+202 P2 	Race condition in native window resizing
+<br />
+208 P2 	resizing a window sometimes leaves garbage in portions of th
+<br />
+213 P2 	emacs: using menus frequently causes emacs to segv
+<br />
+219 P2 	lgcapture has stopped working.
+<br />
+226 P2 	Mozilla mail: clicking middle mouse button causes exception
+<br /><br />
+143 P3 	Psuedo3DShortcut should have a fixed size
+<br />
+164 P3 	Stuck popup help windows
+<br />
+196 P3 	IllegalArgumentException raised when using the GlassyCubeMen
+<br />
+199 P3 	Some of SceneManager API resides in an implementation packag
+<br />
+203 P3 	If you shrink a window as small as it will go you can crash
+<br />
+206 P3 	xterm resize: sometimes has an off-by-a-few-pixels error
+<br /><br />
+
+<h3><a name="Acks"></a>5. Remerciements</h3>
+Les propriétaires du projet souhaitent remercier ceux qui ont été particulièrement actifs dans la communauté LG3D.
+Vos contributions de code, d'idées, vous relectures de documents et vos tests ont vraiment fourni une aide lors de 
+la progression du projet. Nous voudrions remercier tout particulièrement Amir Bukhari. Il a passé beaucoup, beaucoup
+d'heures à débugger et corriger les applications X et ses contributions ont aidé de façon incalculable dans l'achèvement
+des objectifs de cette version. Nous remercions aussi spécialement Phil Dowell pour avoir écrit l'écran de démarrage et 
+David Weizades et Kirk Turner pour leur maintenance des pages web de LG3D.
+<br /><br />
+
+  <b>Voir aussi :</b><br />
+  <br />
+  <a href="lg3d-getting-started.html">Comment installer la version de développement du Projet Looking Glass</a><br />
+  <a href="lg3d-developers-guide.html">Guide du développeur du Projet Looking Glass</a><br />
+</body>
+</html>

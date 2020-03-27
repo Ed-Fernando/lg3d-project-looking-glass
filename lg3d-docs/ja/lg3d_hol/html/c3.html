@@ -1,0 +1,306 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html>
+  <head>
+    <meta http-equiv="content-type" content="text/html; charset=utf-8" />
+    <title>Jarベースのアプリケーションの作成と実行</title>
+  </head>
+
+  <body bgcolor="white">
+    <h1>JavaOne Tokyo Hands on Lab : <br>
+        Project Looking Glass (LG3D) Basic Programming</h1>
+    <h2>4.3 Jarベースアプリケーションの作成と実行</h2>
+
+    <p> 
+        この節では、Jarベースアプリケーションの作成と実行について説明します。<br>
+		作成したアプリケーションを実行するためには、Jarパッケージを作成し、
+		$LG3DHOME/usr/share/lg3d/ext/app/ に配置して実行する必要があります。
+		 <br>LG3D 1.0 用の Jar ファイルを作るには、以下のファイルを用意します。
+        <ul>
+          <li> <b>Manifest File :&nbsp;</b>JARファイルの内容(バージョン、メインクラスなど)について記述するためのファイル
+          <li> <b>.lgcfg File&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;:&nbsp</b>アプリケーションをLG3Dのメインメニューのどこに配置するかを記述するためのファイル
+          <li> <b>Icon-File&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;:&nbsp;</b>タスクバー、あるいはメニューに表示するアイコンファイル
+        </ul>
+        
+        
+		
+	<hr>
+    <a name="iconfile"><h3>アイコンファイルのプロジェクトへの取り込み</h3></a>
+    
+	アプリケーションのアイコンファイル（画像ファイル）はプロジェクトには含まれていないため、外部から取り込む必要があります。<br>
+	以下の手順で外部ディレクトリ /home/duke/Documents を読み込めるように設定し、 画像ファイルをプロジェクトに取り込みます。<br>
+	<p>ハンズオンで利用した画像ファイル等は <a href="all_contents.zip">all_contents.zip</a> にまとめています。<br>
+	 /home/duke/Documents に解凍してください。<br>
+	</p>
+	<ol>
+      <li> メニューから「<font color="red"><b>ウィンドウ</b></font>」
+      →「<font color="red"><b>お気に入り</b></font>」を選択します。
+      <br><br><br>
+      <img src="pictures/c3_01.png">
+      <br><br><br>
+      <li> IDEの左側のパネルに「<font color="red"><b>お気に入り</b></font>」
+      が追加されていることを確認します。
+      <br><br><br>
+      <img src="pictures/c3_02.png">
+      <br><br><br>
+      <li> 「<font color="red"><b>お気に入り</b></font>」を右クリックすると
+      メニューが表示されるで「<font color="red"><b>お気に入りを追加</b></font>」を選択します。
+      <br><br><br>
+      <img src="pictures/c3_03.png">
+      <br><br><br>
+      <li> ファイル選択ダイアログが表示されるので
+      「<font color="red"><b>Documents</b></font>」を選択し、
+      「<font color="red"><b>追加</b></font>」をクリックします。
+      <br><br><br>
+      <img src="pictures/c3_04.png">
+      <br><br><br>
+      <li> 左側のパネルに「<font color="red"><b>Documents</b></font>」
+      というフォルダ(ディレクトリ)が追加されます。<br>
+      その中を開くと <b>texturebox.png</b> というファイルが表示されますので、
+      これを選択します。<br>
+      選択後、右クリックするとメニューが表示されますので「<font color="red"><b>コピー</b></font>」を選択します。
+      <br><br><br>
+      <img src="pictures/c3_05.png">
+      <br><br><br>
+      <li>左上のタブから「<font color="red"><b>ファイル</b></font>」を選択します。<br>
+      プロジェクト作成時に生成されたファイル、フォルダ(ディレクトリ)の一覧が表示されます。<br>
+      この中から「<font color="red"><b>src</b></font>」(ソースファイルのフォルダ(ディレクトリ))を選択し、
+      右クリックします。<br>
+      メニューが表示されますので「<font color="red"><b>ペースト</b></font>」を選択します。
+      <br><br><br>
+      <img src="pictures/c3_06.png">
+      <br><br><br>
+      <li> 下図のように画像ファイルが追加されたことを確認します。<br>
+           これでプロジェクトへのファイルの追加は完成です。<br>
+           プロジェクトを構築する際に、これらのファイルが自動的にJARアプリケーションに追加されます。<br>
+      <br><br><br>
+      <img src="pictures/c3_07.png">
+      <br><br><br>
+    </ol>
+	
+	
+	
+	
+	
+	
+	<hr>
+	<h3>JARベースのアプリケーションの作成</h3>
+	<ol>
+
+	  
+      <li> 左側のパネルの最下部にある「<font color="red"><b>manifest.mf</b></font>」を選択します。<br>
+      右クリックを押すとメニューが出ますので「<font color="red"><b>開く</b></font>」を選択します。
+      <br><br><br>
+      <img src="pictures/c3_08.png">
+      <br><br><br>
+      <li> 右側のソースコードエディタに「<font color="red"><b>manifest.mf</b></font>」が表示され、
+      編集可能な状態になります。
+      <br><br><br>
+      <img src="pictures/c3_09.png">
+      <br><br><br> 
+	  
+      
+	  
+	  
+	  <li> manifest.mfを編集し、<br>
+      <ul>
+        <li><b>Config-File ( .lgcfg ファイル )</b>
+      </ul><br>
+      を追加します。<br>
+      追加部分は<font color="red"><b>赤(太字)</b></font>で示します。
+      <br><br>
+      <table border>
+      <tr><td><pre>
+Manifest-Version: 1.0
+X-COMMENT: Main-Class will be added automatically by build
+<font color="red"><b>Config-File: TextureBox.lgcfg</b></font> ←アプリケーションと同じ名前にしています。
+      </pre></td></tr></table><br>
+	  <font color="red">注</font>：最後に空行を入れます。
+      <br><br><br>
+	  
+	  <li> .lgcfgファイルを追加<br>
+	  <font color="red"><b>「ファイル」</b></font>タブの<font color="red"><b>「src」</b></font>を右クリックして、メニューが表示されます<br>
+	  そして、<font color="red"><b>「新規」</b></font>→<font color="red"><b>「空のファイル」</b></font>を選びます。<br><br>
+	  <img src="pictures/c3_10.png">
+	  <br><br><br>
+	  
+	  <li> .lgcfgファイル名の入力<br>
+	  <font color="red"><b>「新規　空のファイル」</b></font>というタイトルのウィンドが表示されます。<br>
+	  <font color="red"><b>「ファイル名」</b></font>に<font color="red"><b>「TextureBox.lgcfg」</b></font>を入力して、<font color="red"><b>「完了」</b></font>をクリックします。<br><br>
+	  <img src="pictures/c3_11.png">
+	  <br><br><br>
+	  
+	  <li> 右側のソースコードエディタに「<font color="red"><b>TextureBox.lgcfg</b></font>」が表示され、
+      編集可能な状態になります。
+      <br><br>
+	  <img src="pictures/c3_12.png">
+	  <br><br><br>
+	  
+	  <li> .lgcfgファイルの編集<br><br>
+	  アプリケーションをタスクバーに登録する場合、以下の内容（<font color="red"><b>赤(太字)</b></font>）を TextureBox.lgcfg に追加して保存します。<br><br>
+	  メニューにプログラムを登録する場合、このページの最後にある <a href="#menu">「アプリケーションをメインメニューに登録するには」</a> を参考してください。<br><br>
+	  ※<font color="red"><b>Windowsの場合、タスクバーへの登録はうまく動作しないことがあります。その場合は「アプリケーションをメインメニューに登録するには」の項目を行ってください。
+</b></font><br><br>
+	  <table border>
+      <tr><td><pre>
+<font color="red"><b>
+&lt;?xml version="1.0" encoding="UTF-8"?&gt;
+&lt;java version="1.5.0" class="java.beans.XMLDecoder"&gt;
+ &lt;object class="org.jdesktop.lg3d.scenemanager.config.ApplicationDescription"&gt;
+  &lt;void property="exec"&gt;
+   &lt;string&gt;java texturebox.TextureBox&lt;/string&gt;<font color="black"> ←実行コマンド(メインクラスを指定)</font>
+  &lt;/void&gt;
+  &lt;void property="iconFilename"&gt;
+   &lt;string&gt;texturebox.png&lt;/string&gt;<font color="black"> ←アプリケーションのアイコンファイル名</font>
+  &lt;/void&gt;
+  &lt;void property="name"&gt;
+   &lt;string&gt;TextureBox&lt;/string&gt;<font color="black"> ←アプリケーションの名前</font>
+  &lt;/void&gt;
+  &lt;void property="classpathJars"&gt;
+   &lt;string>TextureBox.jar&lt;/string&gt;<font color="black"> ←アプリケーションが入っているJarファイルの名前</font>
+  &lt;/void&gt;
+ &lt;/object&gt;
+&lt;/java&gt;
+</b></font>
+      </pre></td></tr></table><br><br>
+	  
+	  <li>  <a name="jar">左側のパネルのタブから</a>「<font color="red"><b>プロジェクト</b></font>」を選択し、
+        「<font color="red"><b>プロジェクトの構築</b></font>」を行います。<br><br>
+	  <img src="pictures/c3_13.png">
+	  <br>
+	  
+	  
+      <p> JARベースのアプリケーションの作成はこれで終わりです。<br>
+      アプリケーションは プロジェクトのフォルダ(ディレクトリ)内の「<font color="red"><b>dist</b></font>」
+      に置かれます。
+      <br>
+      今回の場合は <font color="red"><b>/home/duke/TextureBox/dist/texturebox.jar</b></font> 
+      が作成したアプリケーションです。
+      </ol>
+	  
+	
+	
+	
+	
+	  
+	<hr>
+    <h3><a name="run">JARベースのアプリケーションの実行</a></h3>
+
+    <p> 作成したJARベースアプリケーションをLG3Dに登録します。<br>
+    LG3D本体のフォルダ(ディレクトリ)にある ext/app フォルダ(ディレクトリ)が
+    作成したアプリケーションの登録フォルダになります。<br>
+    Linuxの場合 <font color="red"><b>/home/duke/lg3d/usr/share/lg3d/ext/app</b></font> になります。<br>
+    Windowsの場合 <font color="red"><b>C:\lg3d\ext\app</b></font> になります。<br>
+    ここに作成したJARベースアプリケーションをコピーすれば登録完了です。<br>
+    アプリケーションの登録がうまくいけば、LG3Dのタスクバーにアプリケーションの起動アイコンが追加されます。
+
+
+    <p>以下に、作成したアプリケーションを登録して、実行する方法を示します。
+     <ol>
+      <li>Solaris 10のJDS環境では背景で右クリックするとメニューが表示されますので、
+      「<font color="red"><b>端末エミュレータを開く</b></font>」を選択します。
+      <br><br><br>
+      <img src="pictures/c3_14.png">
+      <br><br><br>
+      <li> 次のような端末が表示されますので、その上で作業を行います。
+      <br><br>
+      <img src="pictures/c3_15.png">
+      <br><br>
+      <li> 次のコマンドを実行して、JARベースアプリケーションを LG3Dのディレクトリにコピーします。<br>
+           ( # を入力する必要はありません。 )
+      <br><br><br>
+      <table border><tr><td><pre>
+# <font color="red"><b>cp ~/TextureBox/dist/TextureBox.jar ~/lg3d/usr/share/lg3d/ext/app/</b></font>
+      </pre></td></tr></table>
+      <br><br><br>
+      <li> 次のコマンドを実行し、LG3Dを起動します。
+      <br><br><br>
+      <table border><tr><td><pre>
+# <font color="red"><b>cd</b></font>
+# <font color="red"><b>lg3d/bin/lg3d-dev</b></font>
+      </pre></td></tr></table>
+      <br><br><br>
+      <li> 下図のようにJARベースアプリケーションのアイコンが表示されます。クリックして実行します。
+      <br><br><br>
+      <img src="pictures/c3_16.jpg">
+      <br><br><br>
+      <li> 下図はアイコンをクリックしてアプリケーションを起動した後の画面です。
+      <br><br>
+      <img src="pictures/c3_17.jpg">
+      <br><br>
+	  <li> LG3Dにボックスが表示されたら、ウィンドウの右上にある Java ロゴをドラッグ
+      (Javaロゴをクリックしたままマウスを動かす) してみてください。
+      下図のようにボックスを動かすことができます。<br>
+      ドラッグをやめるとボックスは元に戻ります。
+      <br><br>
+      <img src="pictures/c3_18.jpg">
+      <br><br>
+     </ol> 
+	 
+	 
+	 
+	 
+　　<hr>
+    <h3><a name="menu">アプリケーションをメインメニューに登録するには</a></h3>
+	<p> 作成したJARベースのアプリケーションを LG3D のメインメニューに登録するには、.lgcfg ファイルを修正する必要があります。<br>
+		「メインメニュー」の「 Demos 」サブメニューに登録するための .lgcfg ファイルは以下のように修正します。
+	 	  <li> .lgcfgファイルの編集<br><br>
+	  以下の内容（<font color="red"><b>赤(太字)</b></font>）を TextureBox.lgcfg に追加して保存します。<br><br>
+<table border>
+<tr><td><pre>
+&lt;?xml version="1.0" encoding="UTF-8"?&gt;
+&lt;java version="1.5.0" class="java.beans.XMLDecoder"&gt;
+
+<font color="red"><b> &lt;!-- Taskbar item --&gt;
+ &lt;!--</b></font><font color="black"><b> ←タスクバー登録用の記述をコメントアウト</b></font>
+ &lt;object class="org.jdesktop.lg3d.scenemanager.config.ApplicationDescription"&gt;
+  &lt;void property="exec"&gt;
+   &lt;string&gt;java texturebox.TextureBox&lt;/string&gt;
+  &lt;/void&gt;
+  &lt;void property="iconFilename"&gt;
+   &lt;string&gt;texturebox.png&lt;/string&gt;
+  &lt;/void&gt;
+  &lt;void property="name"&gt;
+   &lt;string&gt;TextureBox&lt;/string&gt;
+  &lt;/void&gt;
+  &lt;void property="classpathJars"&gt;
+   &lt;string&gt;TextureBox.jar&lt;/string&gt;
+  &lt;/void&gt;
+ &lt;/object&gt;
+<font color="red"><b>--&gt; </b></font><font color="black"><b> ←タスクバー登録用の記述をコメントアウト</b></font>
+<font color="red"><b>
+&lt;!--  Start Menu item --&gt;
+&lt;object class="org.jdesktop.lg3d.scenemanager.utils.startmenu.StartMenuItemConfig"&gt;
+ &lt;void property="command"&gt;
+  &lt;string&gt;java texturebox.TextureBox&lt;/string&gt;<font color="black"> ←実行コマンド(メインクラスを指定)</font>
+ &lt;/void&gt;
+ &lt;void property="displayResourceType"&gt;
+  &lt;string&gt;ICON&lt;/string&gt;<font color="black"> ←表示用アイテムのタイプにアイコンを指定</font>
+ &lt;/void&gt;
+ &lt;void property="displayResourceUrlName"&gt;
+  &lt;string&gt;resource:///texturebox.png&lt;/string&gt;<font color="black"> ←アプリケーションのアイコンファイル名</font>
+ &lt;/void&gt;
+ &lt;void property="menuGroup"&gt;
+  &lt;string&gt;Demos&lt;/string&gt;<font color="black"> ←「Demos」サブメニューに登録</font>
+ &lt;/void&gt;
+ &lt;void property="name"&gt;
+  &lt;string&gt;TextureBox&lt;/string&gt;<font color="black"> ←アプリケーションの名前</font>
+ &lt;/void&gt;
+ &lt;void property="classpathJars"&gt;
+  &lt;string&gt;TextureBox.jar&lt;/string&gt;<font color="black"> ←アプリケーションが入っているJarファイルの名前</font>
+ &lt;/void&gt;
+&lt;/object&gt;
+</b></font>
+&lt;/java&gt;
+</pre></td></tr></table><br><br>
+	<li> 正しく登録されますと、「<b>Demos</b>」サブメニューはこのように変わります。<br><br>
+	<img src="pictures/c3_19.jpg">
+	<br><br>
+
+
+    <hr>
+    <ul>
+	<li><a href="c4.html">「4.4 テクスチャを使う」</a>に進む<br><br>
+    <li><a href="index.html">メニューに戻る</a>
+    </ul>
+  </body>
+</html>

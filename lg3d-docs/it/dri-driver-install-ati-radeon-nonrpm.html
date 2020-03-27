@@ -1,0 +1,97 @@
+<!DOCTYPE html PUBLIC "-//Tigris//DTD XHTML 1.0 Transitional//EN"
+"http://style.tigris.org/tigris_transitional.dtd">
+<html>
+<head>
+  <title>Installazione driver DRI per ATI Radeon su distribuzioni non basate su rpm</title>
+  <meta name="Translator" content="Giordano Fracasso" />
+</head>
+<body>
+<div id="projectdocumentview" class="app">
+
+<hr />
+<h2>Installazione driver DRI per ATI Radeon</h2>
+
+<br />
+<p>
+Queste istruzioni spiegano come installare il driver Direct Rendering
+Infrastructure (DRI) per schede grafiche ATI Radeon per abilitare l' estensione per il 
+rendering diretto richiesta da Project Looking Glass.</p>
+
+<h3>Istruzioni per l'installazione</h3>
+<p>
+Questa è una guida per installare i driver binari ATI su distribuzioni non basate su rpm come Slackware.
+Si farà riferimento ai comandi necessari su Slackware, ma molti passi possono essere comunque applicati alle altre distribuzioni.
+</p>
+
+<ol>
+  <li>Da root:<br />
+    <br />
+    <span style="font-family: monospace;"> % su -</span><br />
+    <span style="font-family: monospace;"> Password: </span><b>inserire la password di root</b><br />
+    <span style="font-family: monospace;"> #</span><br />
+    <br />
+  </li>
+  <li>Installare i sorgenti del kernel dal pacchetto kernel-source della distribuzione:<br />
+    <br />
+    <span style="font-family: monospace;"># installpkg kernel-source-2.4.26-noarch-4.tgz</span><br />
+    <br />
+    <b>Nota:</b> Nella distribuzione Slackware il pacchetto è sul primo cd.<br />
+    <span style="font-family: monospace;">/mnt/cdrom/slackware/k/kernel-source-2.4.26-noarch-4.tgz</span><font
+ face="Courier New, Courier, monospace"><br />
+    <br />
+    </font></li>
+  <li>Aggiornare la configurazione del kernel e delle dipendenze:<br />
+    <br />
+    <span style="font-family: monospace;"># cd /usr/src/linux</span><br />
+    <span style="font-family: monospace;"># cp /boot/config-ide-2.4.26.config</span><br />
+    <span style="font-family: monospace;"># make oldconfig</span><br />
+    <span style="font-family: monospace;"># make dep</span><br />
+    <br />
+    <b>Nota:</b> Non è necessario ricompilare il kernel.<br />
+    <br />
+  </li>
+  <li>Scaricare gli ultimi drivers per ATI Radeon dal  <a
+ href="http://www.ati.com/">sito web di ATI</a>.<br />
+    <br />
+  </li>
+  <li>Convertire l' rpm a un ordinario file tar.gz con il comando:<br />
+    <br />
+    <span style="font-family: monospace;"># rpm2tgz fglrx-"version".rpm</span><br />
+    <span style="font-family: monospace;"># cd /</span><br />
+    <span style="font-family: monospace;"># tar zxvf fglrx-"version".tgz</span><br />
+    <span style="font-family: monospace;"># cd /lib/modules/fglrx/build_mod/</span><br />
+    <span style="font-family: monospace;"># chmod +x ./make.sh &amp;&amp; ./make.sh</span><br />
+	<span style="font-family: monospace;"># cd .. &amp;&amp; chmod +x make_install.sh &amp;&amp; ./make_install.sh</span>
+    <br />
+    <br />
+  </li>
+  <li>Eseguire il comando fglrxconfig per effettuare il setup di X:<br />
+    <br />
+    <span style="font-family: monospace;"># fglrxconfig</span><br />
+ <br />
+  </li>
+  <li>Su Slackware 10 come su ogni altra distribuzione che usa xorg invece di XFree86 bisogna creare un collegamento simbolico tra XF86Config-4 e xorg.conf:<br />
+    <br />
+    <span style="font-family: monospace;"># ln -sf /etc/X11/XF86Config-4 /etc/X11/xorg.conf</span><br />
+    <br /> Ora provate ad avviare X, a patto di non aver ricevuto errori nei passi precedenti, dovreste ora avere
+    un' accelerazione 3D funzionante. Verificate questo con:<br /><br />
+    <span style="font-family: monospace;">% glxinfo | grep render</span><br />
+    <br />
+    You should now see: <br /><br />
+    <span style="font-family: monospace;">direct rendering: Yes</span><br />
+    <br />
+    </li>
+   </ol>
+    
+<h3>Ringraziamenti</h3>
+ <p>
+  L' autore vorrebbe ringraziare Lucian Cionca
+  <a
+  href="mailto:lucian.cionca@gmail.com"><u>lucian.cionca@gmail.com</u></a>					
+    per aver scritto la guida originale in modo da avere una struttura iniziale.</p>
+    <br />
+  <hr />
+<small> $Revision: 1.1 $ $Date: 2006-05-09 17:46:28 $ (English Version Revision: 1.5)</small>
+</div>
+</body>
+</html>

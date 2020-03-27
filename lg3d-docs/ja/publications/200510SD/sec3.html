@@ -1,0 +1,774 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<title>Software Design 2005.10 Project Looking Glass 徹底攻略 第 3 章</title>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<link href="../../preview.css" rel="stylesheet" type="text/css" />
+<meta name="Author" content="Yuichi SAKURABA" />
+</head>
+<body bgcolor="#FFFFFF"> 
+<div id="projectdocumentview" class="app" style="width: 550px;"> 
+  <p>次世代 Java ベースデスクトップ/3D アプリ開発環境 Project Looking Glass 徹底攻略</p> 
+  <h1>チャレンジ! 
+  LG3D プログラミング</h1> 
+  <h2>スロットマシンアプリ [SlotBox] を作ろう</h2> 
+  <p>&nbsp;</p> 
+  <p>櫻庭 祐一 SAKURABA Yuichi <a href="http://www.javainthebox.net/">http://www.javainthebox.net/</a></p> 
+  <p>初出: <a href="http://www.gihyo.co.jp/magazines/SD/archive/200510">Software Desing 2005 年 10 月号</a></p> 
+  <hr /> 
+  <p>本特集 2 章のプログラミング基礎編では LG3D プログラミングの基本的な部分を解説しました．応用編となる本章では，基礎編では触れなかった部分やデプロイメントに関して，アプリケーションを作成しながら説明していきます．</p>
+  <h3>アプリケーションの説明</h3> 
+  <div style="float: right; padding: 10px; width: 256px;"> 
+    <table> 
+      <tr> 
+        <td nowrap="nowrap"><span style="padding: 1px; padding-right: 5px; padding-left: 5px; background: #333333; color:#FFFFFF; font-weight: bold;">図 1</span></td> 
+        <td style="font-weight: bold; background: #FFFFFF; color: #2682C5; padding-left: 10px;">SlotBox のイメージ図</td> 
+      </tr> 
+    </table> 
+    <img src="sec3-fig/f1.gif" alt="SlotBox のイメージ図" width="256" height="192" border="0" /></div> 
+  <p>せっかく 2 章でボックスの回転などのアクションを使用したのですから，それらが活かせるようなアプリケーションにしてみたいですね．何が良いかいろいろ考えたのですが，簡易的なスロットマシンを作るというのはいかがでしょうか．</p>
+  <p>本格的なスロットマシンと違い，スロットは 1 つで，スロットはボックス，レバーはボタンで代用しましょう．ボックスの各面に異なるイメージを貼り，ボタンを押して回転を開始 / 停止します．人物のイメージを貼ってくじ引きの代わりにするのも良し，数字のイメージを貼ってサイコロ代わりに使うのも良いと思います．</p>
+  <p>図 1 は，筆者がアプリケーションを作る前に書いたスケッチです．こんなポンチ絵でもイメージを掴むのにはずいぶん役に立ちます．3D の形状を頭の中だけで考えるのは難しいので，何かしら書いてみるというのはお勧めです．</p>
+  <p>ボックスがスロットマシンになるということで，「SlotBox」と名付けてみました．</p>
+  <h3>コンポーネントの構成</h3> 
+  <h4>階層構造を利用</h4>
+  <p>2 章の図 4 で表したアクティビティ図でループになっているのは，コンポーネントやコンテナを階層構造にできるということを示しています．これはデザインパターンのコンポジットパターンを使って，コンポーネント / コンテナのツリー構造を構成していることになります．<br />
+    これから解説していきますが，SlotBox でもこの階層構造を利用します．</p>
+  <p>&nbsp;</p>
+  <h4>イメージ用コンポーネントを用意</h4>
+  <div style="float: right; padding: 10px; width: 239px;"> 
+    <table> 
+      <tr> 
+        <td nowrap="nowrap"><span style="padding: 1px; padding-right: 5px; padding-left: 5px; background: #333333; color:#FFFFFF; font-weight: bold;">図 2</span></td> 
+        <td style="font-weight: bold; background: #FFFFFF; color: #2682C5; padding-left: 10px;">SlotBox のコンポーネントの構成</td> 
+      </tr> 
+    </table> 
+    <a href="sec3-fig/f2.gif"><img src="sec3-fig/f2_t.gif" alt="SlotBox のコンポーネントの構成" width="239" height="193" border="0" /></a></div> 
+  <p>ここで，SlotBox のコンポーネントの構成を考えてみます．最低限，使用するのはボタンを表すコンポーネントと，ボックスのコンポーネントです．2 章で行ったように，ボックスの表面に直接テクスチャを貼っても良いのですが，もうちょっと格好良くするためにボックスとは別にイメージ用のコンポーネントを用意してみました．</p>
+  <p>これらをまとめると図 2 のようになります．一番上にフレームがあり，そこにボタンのコンポーネントと，スロットを構成するコンテナを追加します．</p>
+  <p>スロットのコンテナにはボックスのコンポーネントと，イメージをまとめるコンテナがあります．イメージは 4 枚あり，それぞれコンポーネントで表しました．イメージを表示するためにはパネルの 1 
+    つである ImagePanel クラスを使用します．</p>
+  <p>ボタンには ToggleButton というコンポーネントを作ってみることにしました．それではまず
+    ToggleButton から作っていきましょう．</p>
+  <p>&nbsp;</p> 
+  <h3>ToggleBUtton クラスの作成</h3> 
+  <p>LG3D には Swing の JButton クラスや JTextField クラスなどに相当するウィジェットは今のところ用意されていません．「なければ作る」ということで，Swing の JToggleButton に相当するトグルボタン<sup><a href="#n1">注1</a></sup>のコンポーネントを作ってみましょう．</p>
+  <p>ToggleButton クラスの初期バージョンをリスト 1
+    に示しました<sup><a href="#n2">注2</a></sup>．この初期バージョンではボタンの状態に応じてテクスチャを切り替える処理まで行います．</p>
+  <p>&nbsp;</p>
+  <p><a name="n1" id="n1"></a>注 1 トグルボタンは状態を持ったボタンで，状態を交互に変えられるようなボタンです．見た目も状態によって変更します．</p>
+  <p><a name="n2" id="n2"></a>注 2 import 文は省略してあります．</p>
+  <p>&nbsp;</p>
+  <h4>本体の作成</h4>
+  <h5>アピアランスの生成</h5>
+  <p>テクスチャの切り替えは Appearance オブジェクトに対して行います．</p>
+  <p>リスト1 (1) の SimpleAppearance の生成で，コンストラクタに見慣れない引数が追加されています．この定数SimpleAppearance.DISABLE_CULLING は，シェイプの裏側まで描画することを意味しています．今まで扱っていたボックスは，シェイプの裏側がボックスの内側になっていたので描画する必要はありませんでした．3D CG では，こういう省略をすることにより描画性能を向上させています．</p>
+  <p>しかし，ToggleBoxは使い方によっては裏側が見えるかもしれないので (現にSlotBoxでも裏側が見えてしまいます)，DISABLE_CULLING で裏側を描<br />
+    画するようにしました．</p>
+  <h5>テクスチャの切り替えを可能にするには</h5>
+  <p>Appearance オブジェクトは，デフォルトではテクスチャの切り替えができません．テクスチャを切り替えられるようにするには (2) に示したように，Appearance#setCapability メソッドを引数 
+    Appearance.ALLOW_TEXTURE_WRITE を指定してコールします．</p>
+  <div style="float: right; padding: 10px; width: 129px;"> 
+    <table> 
+      <tr> 
+        <td nowrap="nowrap"><span style="padding: 1px; padding-right: 5px; padding-left: 5px; background: #333333; color:#FFFFFF; font-weight: bold;">図 6</span></td> 
+        <td style="font-weight: bold; background: #FFFFFF; color: #2682C5; padding-left: 10px;">使用したイメージ (on 状態 / off 状態)</td> 
+      </tr> 
+    </table> 
+    <img src="sec3-fig/f3a.png" alt="SimpleBox の実行例" width="129" height="129" border="0" /><br /><br /> 
+    <img src="sec3-fig/f3b.png" alt="SimpleBox を回転させたところ" width="129" height="129" border="0" /></div> 
+  <h5>テクスチャの作成</h5>
+  <p>今までテクスチャは SimpleAppearance のコンストラクタで指定し，直接扱うことはしませんでした．しかし，テクスチャを切り替えるためには複数のテクスチャが必要です．そこで，テクスチャを表すorg.jdesktop.lg3d.sg.Texture クラスを使用して，テクスチャを保持することにしましょう．テクスチャはファイルから読み込みますが，JARファイルに含まれている場合 ClassLoader#getResourceAsStream メソッドを使用してストリームを取り出す必要があります．</p>
+  <p>そこで，(3) に示したようにクラスローダを取得し，そこからストリームを取り出します ((4)，(5))．もし，取り出せなかった場合は通常のファイルとして扱います．</p>
+  <p>イメージファイルのロードには javax.imageio.ImageIO クラスの read メソッドを使用しました．ロードしたイメージからテクスチャを作成するためのクラスとしてorg.jdesktop.lg3d.sg.utils.image.TextureLoader クラスが用意されています．コンストラクタで BufferedImage オブジェクトを指定し，getTexture メソッドでテクスチャを取得することができます．</p>
+  <p>ここでは，on 状態と off 状態の 2 つのテクスチャを作成しました．図 3 が実際に使用したイメージです．</p>
+  <p>テクスチャをアピアランスに設定するには
+    Appearance#setTexture メソッドを使用します ((6))．</p>
+  <h5>シェイプの作成</h5>
+  <p>次に，ToggleButton クラスのシェイプを作りましょう．シェイプにはプリミティブを使っても良いのですが，ここでは 2 章の表 1 の中からパネルの
+    ImagePanel クラスを選んでみました．</p>
+  <p>(7) に示したようにオブジェクトの生成にはサイズを指定し，その後に setAppearance メソッドでアピアランスを設定します．そして，コンポーネントに追加します．</p>
+  <h5>カーソルの変更</h5>
+  <p>もう 1 つだけ見た目を変更しましょう．それはカーソルです．カーソルを変更するには Component3D#setCursor メソッドを使用します ((8))．引数は<br />
+    Cursor3D オブジェクトです．Cursor3D クラスには用途に応じたカーソルが定義されているので，その中から SMALL_CURSOR を使用してみました．</p>
+  <p>&nbsp;</p>
+  <h4>イベントによるテクスチャ切り替え</h4>
+  <p>これでコンポーネントの基本的な部分は完成しました．後はイベントによってテクスチャを切り替える部分です．</p>
+  <p>テクスチャを切り替えるには (9) に示したように 
+    MouseClickedEventAdapter クラスを使用し，クリックがあったら切り替えるようにしています．</p>
+  <p>テクスチャを切り替えるアクションは提供されていないので，ActionNoArg インタフェースを実装した無名クラスを作成しました．</p>
+  <p>performAction メソッドは (10) に示すように，まず状態を更新します．そして，(11) で状態に応じて 
+    Appearance#setTexture メソッドを使用してテクスチャを切り替えます．</p>
+  <p>&nbsp;</p> 
+  <div style="display:table; padding-left: 20px; padding-right: 20px;"> 
+    <p><strong>リスト 1 SimpleBox クラス</strong></p> 
+    <div style="background-color:#D1DCFF; color:#2682c5; padding: 10px;"> 
+      <pre>public class ToggleButton extends Component3D {
+    // テクスチャ用のイメージファイル
+    private static String ON_IMAGE = "on.png";
+    private static String OFF_IMAGE = "off.png";
+    private static float SIZE = 0.03f;
+ 
+    private Appearance appearance;
+    private Texture offTexture;
+    private Texture onTexture;
+
+    private boolean state;
+ 
+    public ToggleButton() throws FileNotFoundException, IOException {
+        // (1) アピアランスの生成
+        appearance = new SimpleAppearance(0.0f, 0.0f, 0.0f, 
+                                          SimpleAppearance.DISABLE_CULLING);
+  
+        // (2) テクスチャの切りかえを可能にする
+        appearance.setCapability(Appearance.ALLOW_TEXTURE_WRITE);
+  
+        // (3) JAR ファイルからの読み込みをおこなうためのクラスローダの取得
+        ClassLoader classloader = this.getClass().getClassLoader();
+ 
+        // (4) off 状態のテクスチャを作成する
+        //    はじめに JAR ファイルから読み込み，
+        //    失敗したら通常のファイルとして読み込む
+        InputStream imageStream
+            = classloader.getResourceAsStream(OFF_IMAGE);
+        if (imageStream == null) {
+            imageStream = new FileInputStream(OFF_IMAGE);
+        }
+        BufferedImage offImage = ImageIO.read(imageStream);
+        offTexture = new TextureLoader(offImage).getTexture();
+ 
+        // (5) on 状態のテクスチャを作成する
+        imageStream = classloader.getResourceAsStream(ON_IMAGE);
+        if (imageStream == null) {
+            imageStream = new FileInputStream(ON_IMAGE);
+        }
+        BufferedImage onImage = ImageIO.read(imageStream);
+        onTexture = new TextureLoader(onImage).getTexture();
+ 
+        // (6) 初期状態は off なので，off 状態のテクスチャを設定する
+        appearance.setTexture(offTexture);
+ 
+        // (7) コンポーネントに追加するパネルの作成
+        ImagePanel panel = new ImagePanel(SIZE, SIZE);
+        panel.setAppearance(appearance);
+        addChild(panel);
+ 
+        // (8) カーソルを変更する
+        setCursor(Cursor3D.SMALL_CURSOR);
+ 
+        // (9) イベント処理
+        addListener(
+            new MouseClickedEventAdapter(
+                new ActionNoArg() {
+                    public void performAction(LgEventSource source) {
+                        // (10) 状態の更新
+                        state = !state;
+ 
+                        // (11) 状態に応じて，テクスチャを変更する
+                        if (state) {
+                            appearance.setTexture(onTexture);
+                        } else {
+                            appearance.setTexture(offTexture);
+                        }
+                    }
+                }));
+ 
+        setMouseEventPropagatable(true);
+    }
+  
+    // (12) テスト用の main メソッド
+    public static void main(String[] args) throws FileNotFoundException, IOException {
+        org.jdesktop.lg3d.wg.Frame3D frame 
+            = new org.jdesktop.lg3d.wg.Frame3D();
+ 
+        ToggleButton button = new ToggleButton();
+        frame.addChild(button);
+            
+        frame.changeEnabled(true);
+        frame.changeVisible(true);        
+    }
+}</pre> 
+    </div> 
+  </div> 
+  <p>&nbsp;</p> 
+  <h4>テスト</h4> 
+  <div style="float: right; padding: 10px; width: 256px;"> 
+    <table> 
+      <tr> 
+        <td nowrap="nowrap"><span style="padding: 1px; padding-right: 5px; padding-left: 5px; background: #333333; color:#FFFFFF; font-weight: bold;">図 4</span></td> 
+        <td style="font-weight: bold; background: #FFFFFF; color: #2682C5; padding-left: 10px;">ToggleButton を単体で動作させたところ</td> 
+      </tr> 
+    </table> 
+    <img src="sec3-fig/f4.jpg" alt="ToggleButton を単体で動作させたところ" width="256" height="192" border="0" /></div> 
+  <p>ToggleButton クラスの基本的な部分は完成したので，ここまでのところをテストしてみましょう．</p>
+  <p>(12) に示したように，ToggleButton クラスにはテスト用の main メソッドが記述してあります．この
+    main メソッドには表示させるための最低限の記述<br />
+    がしてあります．</p>
+  <p> 図 3 に示した，on 状態のイメージと off 状態のイメージを使用して，ToggleButton を実行してみました．実行結果は図 4 です．ボタンだけが浮かんでいるので変な感じですが，テクスチャの張り替えなどの動作は確認することができます．</p>
+  <p>&nbsp;</p>
+  <h4>イベントクラスの作成</h4>
+  <p>ToggleButton クラスの基本的な部分はできたので，ボタンを押したときの処理を加えてみましょう．つまり，ToggleButton でイベントを発生させ，ポストする処理を作っていきます．</p>
+  <p>Swing の JToggleButton クラスが発生させるイベントは ChangeEvent クラスなので，ToggleButton
+    クラスでは似たような名前の <a href="sec3-src/StateChangeEvent.java">StateChangeEvent</a> クラスとしてみました．リスト 2 に StateChageEvent
+    クラスのリストを示します．</p>
+  <p>LG3D のイベントはすべて org.jdesktop.lg3d.wg.event.LgEvent クラスを派生させて作ります．イベントクラスの作成方法はどれもだいたい同じで，そのイベントが扱う部分だけを追加するような形になります．</p>
+  <p>StateChangeEvent クラスでは状態を表す state を返すための getState メソッドを追加しました．</p>
+  <p>&nbsp;</p> 
+  <div style="display:table; padding-left: 20px; padding-right: 20px;"> 
+    <p><strong>リスト 2 StateChangeEvent クラス</strong></p> 
+    <div style="background-color:#D1DCFF; color:#2682c5; padding: 10px;"> 
+      <pre>import org.jdesktop.lg3d.wg.event.LgEvent;
+import org.jdesktop.lg3d.wg.event.LgEventSource;
+ 
+public class StateChangeEvent extends LgEvent {
+    private LgEventSource source;
+    private Class sourceClass;
+    private boolean state;
+ 
+    public StateChangeEvent(LgEventSource source, boolean state) {
+        this.source = source;
+        this.sourceClass = source.getClass();
+ 
+        this.state = state;
+    }
+ 
+    public LgEventSource getSource() {
+        return source;
+    }
+ 
+    public Class getSourceClass() {
+        return sourceClass;
+    }
+ 
+    // 状態を返すメソッド
+    public boolean getState() {
+        return state;
+    }
+}</pre> 
+    </div> 
+  </div> 
+  <p>&nbsp;</p> 
+  <h4>イベントアダプタの作成</h4>
+  <p>次は StateChangeEvent クラスを扱うためのイベントアダプタを作成します．名前はそのまま <a href="sec3-src/StateChangeEventAdapter.java">StateChangeEventAdapter</a> クラスとしましょう (リスト 3)．</p>
+  <p>StateChangeEvent クラスが持つ情報は boolean の
+    state だけなので，StateChangeEventAdapter クラスがコールするアクションは ActionBoolean インタフェースだけです．コンストラクタで ActionBoolean
+    オブジェクトを設定し，processEvent メソッドでコールするようになっています．</p>
+  <p>getTargetEventClasses メソッドはこういうものだと理解しておいていただいてかまいません．コンパイル時に警告が出ますが，とくに問題はありません．</p>
+  <p>&nbsp;</p> 
+  <div style="display:table; padding-left: 20px; padding-right: 20px;"> 
+    <p><strong>リスト 3 StateChangeEventAdapter クラス</strong></p> 
+    <div style="background-color:#D1DCFF; color:#2682c5; padding: 10px;"> 
+      <pre>import org.jdesktop.lg3d.utils.action.ActionBoolean;
+import org.jdesktop.lg3d.utils.eventadapter.EventAdapter;
+import org.jdesktop.lg3d.wg.event.LgEvent;
+ 
+public class StateChangeEventAdapter implements EventAdapter {
+    private static final Class[] targetEventClasses = {
+        StateChangeEvent.class
+    };
+ 
+    private ActionBoolean action;
+ 
+    public StateChangeEventAdapter(ActionBoolean action) {
+        // StateChangeEventAdapter で扱うアクションは
+        // ActionBoolean のみ
+        this.action = action;
+    }
+ 
+    public Class[] getTargetEventClasses() {
+        return targetEventClasses;
+    }
+ 
+    public void processEvent(LgEvent event) {
+        // イベントが StateChangeEvent であれば，
+        // アクションをコールする
+        if (event instanceof StateChangeEvent) {
+            boolean state = ((StateChangeEvent)event).getState();
+            action.performAction(event.getSource(), state);
+        }
+    }
+}</pre> 
+    </div> 
+  </div> 
+  <p>&nbsp;</p> 
+  <h4>イベントの発生</h4>
+  <p>ボタンを押したときに発生させるイベントとイベントアダプタができたので，ToggleButton クラスでイベントを発生させる部分を実装して
+  ToggleButton クラスを完成させてしまいましょう．</p>
+  <p>リスト 4 が完成版の ToggleButton クラスです．リスト 1 から変更した部分はグレーで表示してあります．</p>
+  <p>イベントを発生させているのはリスト 4 の (1) で示している fireStateChangeEvent メソッドです．</p>
+  <p>StateChangeEvent オブジェクトを生成し，それを LgEventSource#postEvent メソッドを使用してポストします．</p>
+  <p>これで，StateChangeEvent を発生させることのできる <a href="sec3-src/ToggleButton.java">ToggleButton</a> クラスの完成です．</p>
+  <p>&nbsp;</p>
+  <div style="display:table; padding-left: 20px; padding-right: 20px;"> 
+    <p><strong>リスト 4 ToggleButton クラス (完成版)</strong></p> 
+    <div style="background-color:#D1DCFF; color:#2682c5; padding: 10px;"> 
+      <pre>public class ToggleButton extends Component3D {
+    private static float SIZE = 0.03f;
+    private static String ON_IMAGE = "on.png";
+    private static String OFF_IMAGE = "off.png";
+ 
+    private Appearance appearance;
+    private Texture offTexture;
+    private Texture onTexture;
+ 
+    private boolean state;
+ 
+    public ToggleButton() throws FileNotFoundException, IOException {
+        appearance = new SimpleAppearance(0.0f, 0.0f, 0.0f, 
+                                          SimpleAppearance.DISABLE_CULLING);
+        appearance.setCapability(Appearance.ALLOW_TEXTURE_WRITE);
+  
+        ClassLoader classloader = this.getClass().getClassLoader();
+ 
+        InputStream imageStream
+            = classloader.getResourceAsStream(OFF_IMAGE);
+        if (imageStream == null) {
+            imageStream = new FileInputStream(OFF_IMAGE);
+        }
+        BufferedImage offImage = ImageIO.read(imageStream);
+        offTexture = new TextureLoader(offImage).getTexture();
+ 
+        imageStream = classloader.getResourceAsStream(ON_IMAGE);
+        if (imageStream == null) {
+            imageStream = new FileInputStream(ON_IMAGE);
+        }
+        BufferedImage onImage = ImageIO.read(imageStream);
+        onTexture = new TextureLoader(onImage).getTexture();
+ 
+        appearance.setTexture(offTexture);
+ 
+        ImagePanel panel = new ImagePanel(SIZE, SIZE);
+        panel.setAppearance(appearance);
+        addChild(panel);
+ 
+        setCursor(Cursor3D.SMALL_CURSOR);
+ 
+        addListener(
+            new MouseClickedEventAdapter(
+                new ActionNoArg() {
+                    public void performAction(LgEventSource source) {
+                        state = !state;
+                        if (state) {
+                            appearance.setTexture(onTexture);
+                        } else {
+                            appearance.setTexture(offTexture);
+                        }
+                        <span style="background-color:#666666; color:#FFFFFF;">fireStateChangeEvent();</span>
+                    }
+                }));
+				
+        setMouseEventPropagatable(true);
+    }
+ 
+<div style="background-color:#666666; color:#FFFFFF;">    // ① ボタンが押されたときの処理
+    private void fireStateChangeEvent() {
+        // StateChangeEvent を生成し，ポストする
+        StateChangeEvent event = new StateChangeEvent(this, state);
+        postEvent(event);
+    }</div>
+}</pre> 
+    </div> 
+  </div> 
+  <p>&nbsp;</p> 
+  <p>&nbsp;</p>
+  <h3>SlotBox の作成</h3>
+  <p>ようやく本体の作成です．本体の構成は先ほど図 2 に示したように，複数のコンポーネント / コンテナから成っています．まずはこのコンポーネント / コンテナ群の生成過程から見ていきましょう．</p>
+  <p>&nbsp;</p>
+  <h4>コンポーネント / コンテナの作成</h4>
+  <p>図 2 のトップレベルのフレームはとくに問題ないと思うので，次は Container3D オブジェクトと 
+  ToggleButton オブジェクトを生成します．ToggleButton オブジェクトは後にして，先に Container3D オブジェクトの生成を先に見ていきましょう．</p>
+  <h5>親となるコンテナの生成</h5>
+  <p>フレームに追加する Container3D オブジェクトを生成しているのは，createSlotBox メソッドです (稿末のリスト 5 (1))．</p>
+  <p>まず，Container3D オブジェクトである container
+    を生成します．container にはボックスのコンポーネントとイメージパネルを含んだコンテナを追加します．</p>
+  <p>ボックスのコンポーネントは createBox メソッドで生成し，イメージパネルを含んだコンテナは createImageContainer メソッドで生成しています．</p>
+  <h5>イメージを含んだコンテナの生成</h5>
+  <p>ボックスを生成する createBox メソッドは 2 章のサンプルとほとんど同じなので，もう一方のイメージを含んだコンテナの生成を行う createImageContainer メソッドを見てみましょう (リスト 5 (2))．このメソッドもまず Container3D オブジェクトを生成します．</p>
+  <p>ループの中で，コンテナに追加するコンポーネントを生成するための createImageComponent メソッドをコールします．ボックスを回転させるとき<br />
+    に表示されるのは 4 つの面ですので，それぞれをコンポーネントとして扱うとコンポーネントは 4 つになります．</p>
+  <h5>コンポーネントの作成</h5>
+  <p><strong>● コンポーネント作成本体部分</strong></p>
+  <p>そして，このコンポーネントを作成しているのが，(3) で示している createImageComponent メソッドです．</p>
+  <p>コンポーネントに追加するシェイプは
+    ToggleButton クラスと同様に ImagePanel クラスを使用しました．まず，ImagePanel オブジェクトを生成し，コンポーネントに追加します．</p>
+  <p><strong>● 回転 / 移動</strong></p>
+  <p>その後に，ボックスの各面にイメージが貼られているように見せるために，コンポーネントを回転 / 移動します．</p>
+  <p>回転はボックスの各面に対応させるため，90 度ずつ行います．スロットは縦方向に回るので，回転軸は x 軸，つまり (1, 0, 0) になります．</p>
+  <p>2 章では、コンポーネントを回転させるために
+    Component3D#changeRotationAngle メソッドを使用しましたが，ここでは Component3D#setRotationAngle メソッドを使用します．</p>
+  <p>この 2 つのメソッドの違いは，changeRotionAngle メソッドが回転するための時間を指定できるということです．逆に言えば，setRotationAngle メ<br />
+    ソッドを使用した場合，瞬時に回転が完了します．</p>
+  <p>移動にも同様に Component3D#changeTranslation
+    メソッドと Component3D#setTranslation メソッドがあります．注意することとして，setTranslation メソッドの引数は移動量で，座標ではないということです．ここで，移動量を算出するときにボックスのサイズより若干大きめ (コードでは 1.05倍) 
+    にしているのは，確実にボックスの上に描画されるようにするためです．</p>
+  <p>これで ToggleButton オブジェクト以外の部分はできあがりました．ToggleButton オブジェクトは次のイベント処理とまとめて扱いたいと思います．</p>
+  <p>&nbsp;</p>
+  <h4>イベント処理</h4>
+  <p>SlotBox は ToggleButton がクリックされたらボックスが回転し，もう一度クリックされたら止まるというイベント処理を行います．</p>
+  <h5>回転処理</h5>
+  <p>回転を行うには Component3D#changeRotationAngle メソッドを使用します．おもしろいのは，コンテナを回転させるとコンテナに追加されたコンポーネントも一緒に回転することです．たとえば，トップレベルのフレームを回転させると，ToggleButton
+    もボックスも両方回転します．</p>
+  <p>また，フレームに追加されているボックスを含んだコンテナを回転させると，ToggleButton は回転せずにボックスだけ回転します．</p>
+  <p>これは回転だけでなく移動などでも同じです．コンポーネントのツリーで，上位にあるものに対して回転 / 移動などを行うと，下位のコンポーネント / コンテナも，同時に回転 / 移動します．</p>
+  <h5>連続的に回転をさせるには</h5>
+  <p>さて，連続的に回転をさせるには changeRotationAngle メソッドを定期的にコールする必要があります．これを行うために <a href="sec3-src/SlotRotator.java">SlotRotator</a> クラスを作成し<br />
+    ました (リスト 6)．</p>
+  <p>ここでは，J2SE 5.0 から使えるようになった
+    Concurrency Utilities の java.util.concurrent.ExecutorService インタフェースを使用しています．しか<br />
+    し，基本的には Runnable インタフェースを実装したクラスを利用したものと変わりありません．</p>
+  <h5>start メソッド</h5>
+  <p>start メソッドで Runnable インタフェースを実装した無名クラスのオブジェクトを生成し，別スレッドで処理を開始します．</p>
+  <p>無名クラスの run メソッドでは，target に対して
+    changeRotationAngle メソッドをコールして回転させ，回転が行われている間スリープするという処<br />
+    理をループで繰り返すようにしています．</p>
+  <h5>stop メソッド</h5>
+  <p>回転を止めるときは stop メソッドで割り込みをかけます．すると InterruptedException 例外が発生するので，無限ループから抜け出ることができます．</p>
+  <h5>SlotRotator クラスを利用する</h5>
+  <p>さて，SlotBox クラスでは SlotRotator クラスをどのように使用しているのでしょう．リスト 7 に
+    SlotBox クラスの createToggleButton メソッドのイベント処理を設定する部分を抽出しました．</p>
+  <p>先ほど作成した StateChangeEventAdapter クラスを使用し，ActionBoolean インタフェースを実装した無名クラスでイベント処理を行います．</p>
+  <p>処理自体は単純で，state の値により SlotRotator
+    オブジェクト (rotator および thumbRotator) に対して start メソッドもしくは stop メソッドをコール<br />
+    するだけです．</p>
+  <p> そして，このイベントアダプタを ToggleButton 
+    に addListener メソッドを使用して登録します．</p>
+<p>&nbsp;</p>
+  <div style="display:table; padding-left: 20px; padding-right: 20px;"> 
+    <p><strong>リスト 7 SlotBox クラスのイベント処理部分</strong></p>
+    <div style="background-color:#D1DCFF; color:#2682c5; padding: 10px;"> 
+      <pre>        ToggleButton button = new ToggleButton();
+        
+        // イベント処理
+        EventAdapter adapter = new StateChangeEventAdapter(
+                new ActionBoolean() {
+                    public void performAction(LgEventSource source, boolean state) {
+                        if (state) {
+                            // 回転開始
+                            rotator.start();
+                            thumbRotator.start();
+                        } else {
+                            // 回転停止
+                            rotator.stop();
+                            thumbRotator.stop();
+                        }
+                    }
+                });
+        button.addListener(adapter);</pre> 
+    </div> 
+  </div> 
+<p>&nbsp;</p>
+<p>&nbsp;</p>
+<h4>コンパイルと実行</h4>
+<p>ここまでの説明で，SlotBox のおもな部分を説明しました．</p>
+<p>さっそくコンパイルしてみましょう．複数ファイルになってしまったので，CLASSPATH にカレントディレクトリを加えてください．</p>
+<pre>$ javac -cp /opt/lg3d/lib/ext/lg3dcore.jar:. SlotBox.java</pre>
+<p>実行には今までと同様，runsample を使います．図5にSlotBoxの実行例を示しました．</p>
+<p>&nbsp;</p>
+  <div style="width: 552px; margin: auto;"> 
+    <div style="float: left; padding: 10px; width: 256px;"> 
+      <table> 
+        <tr> 
+          <td nowrap="nowrap"><span style="padding: 1px; padding-right: 5px; padding-left: 5px; background: #333333; color:#FFFFFF; font-weight: bold;">図 5</span></td> 
+          <td style="font-weight: bold; background: #FFFFFF; color: #2682C5; padding-left: 10px;">SlotBox の実行例 (停止中)</td> 
+        </tr> 
+      </table> 
+      <img src="sec3-fig/f5a.jpg" alt="SlotBox の実行例 (停止中)" width="256" height="192" border="0" /></div> 
+    <div style="float: left; padding: 10px; width: 256px;"> 
+      <table> 
+        <tr> 
+          <td style="font-weight: bold; background: #FFFFFF; color: #2682C5; padding-left: 10px;">(回転中)</td> 
+        </tr> 
+      </table> 
+      <img src="sec3-fig/f5b.jpg" alt="SlotBox の実行例 (回転中)" width="256" height="192" border="0" /></div> 
+  </div> 
+  <p style="clear: both;">&nbsp;</p> 
+<div style="display:table; padding-left: 20px; padding-right: 20px;"> 
+    <p><strong>リスト 5 SlotBox クラス</strong></p> 
+    <div style="background-color:#D1DCFF; color:#2682c5; padding: 10px;"> 
+      <pre>public class SlotBox {
+    private static final float BOX_SIZE = 0.035f;
+    private static final int VEROCITY = 2;
+ 
+    private static final float IMAGE_WIDTH = 0.05f;
+    private static final float IMAGE_HEIGHT = 0.06f;
+    private static final int IMAGE_SIZE = 4;
+    private static final String IMAGE_BASE = "contributor";
+    private static final String IMAGE_EXT = ".jpg";
+ 
+    private Container3D container;
+    private Container3D thumbContainer;
+ 
+    private SlotRotator rotator;
+    private SlotRotator thumbRotator;
+ 
+    public SlotBox() throws FileNotFoundException, IOException {
+        Frame3D frame = new Frame3D();
+ 
+        container = createSlotBox();
+        frame.addChild(container);
+ 
+        Component3D button = createToggleButton();
+        frame.addChild(button);
+ 
+        Thumbnail thumbnail = new Thumbnail();
+        thumbContainer = createSlotBox();
+        thumbnail.addChild(thumbContainer);
+        thumbnail.setPreferredSize(new Vector3f(BOX_SIZE, BOX_SIZE, BOX_SIZE));
+        frame.setThumbnail(thumbnail);
+ 
+        initRotator();
+ 
+        frame.setPreferredSize(new Vector3f(BOX_SIZE * 2.0f, BOX_SIZE, BOX_SIZE));
+        frame.changeEnabled(true);
+        frame.changeVisible(true);        
+    }
+ 
+    private Component3D createToggleButton()
+                    throws FileNotFoundException, IOException {
+        ToggleButton button = new ToggleButton();
+         
+        // イベント処理
+        EventAdapter adapter = new StateChangeEventAdapter(
+                new ActionBoolean() {
+                    public void performAction(LgEventSource source, boolean state) {
+                        if (state) {
+                            rotator.start();
+                            thumbRotator.start();
+                        } else {
+                            rotator.stop();
+                            thumbRotator.stop();
+                        }
+                    }
+                });
+        button.addListener(adapter);
+ 
+        // ToggleButton を移動させる
+        button.setTranslation(BOX_SIZE * 2.0f, 0.0f, 0.0f);
+ 
+        return button;
+    }
+ 
+    // (1) トップレベルのコンテナの生成
+    private Container3D createSlotBox() 
+                    throws FileNotFoundException, IOException {
+        Container3D container = new Container3D();
+ 
+        // ボックスの生成
+        Component3D boxComponent = createBox();
+        container.addChild(boxComponent);
+ 
+        // イメージパネルを含むコンテナの生成
+        Container3D imageContainer = createImageContainer();
+        container.addChild(imageContainer);
+ 
+        return container;
+    }
+ 
+    private Component3D createBox() {
+        Appearance appearance 
+            = new SimpleAppearance(0.6f, 0.6f, 1.0f, 0.5f);
+ 
+        Box box = new Box(BOX_SIZE, BOX_SIZE, BOX_SIZE, appearance);
+ 
+        Component3D component = new Component3D();
+        component.addChild(box);
+ 
+        return component;
+    }
+ 
+    // (2) イメージを含んだコンテナの生成
+    private Container3D createImageContainer()
+                    throws FileNotFoundException, IOException {
+        Container3D container = new Container3D();
+ 
+        // 4 枚分のコンポーネントを作成する
+        for (int i = 0; i &lt; IMAGE_SIZE; i++) {
+            Component3D component = createImageComponent(i);
+            container.addChild(component);
+        }
+ 
+        return container;
+    }
+ 
+    // (3) イメージを含んだコンポーネントの生成
+    private Component3D createImageComponent(int index)
+                    throws FileNotFoundException, IOException {
+        String filename = IMAGE_BASE + index + IMAGE_EXT;
+        ImagePanel panel = new ImagePanel(filename,
+                                          IMAGE_WIDTH, IMAGE_HEIGHT);
+         
+        Component3D component = new Component3D();
+        component.addChild(panel);
+ 
+        // イメージを x 軸を中心に回転させる
+        // 回転量は -index * 90度
+        component.setRotationAxis(1.0f, 0.0f, 0.0f);
+        component.setRotationAngle(-index * (float)Math.PI/2.0f);
+ 
+        // イメージを移動させて，ボックスの面の上に位置するようにする
+        float y = BOX_SIZE * 1.05f * (float)Math.sin(Math.PI / 2.0 * index);
+        float z = BOX_SIZE * 1.05f * (float)Math.cos(Math.PI / 2.0 * index);
+        component.setTranslation(0.0f, y, z);
+ 
+        return component;
+    }
+ 
+    private void initRotator() {
+        // SlotRotator の生成
+        rotator = new SlotRotator(container, VEROCITY);
+        thumbRotator = new SlotRotator(thumbContainer, VEROCITY);
+    }
+ 
+    public static void main(String[] args) throws Exception {
+        try {
+            new SlotBox();
+        } catch (FileNotFoundException ex) {
+            System.err.println("イメージファイルをオープンできません");
+            ex.printStackTrace();
+        } catch (IOException ex) {
+            System.err.println("イメージファイルのロードに失敗しました");
+            ex.printStackTrace();
+        }
+    }
+}</pre> 
+    </div> 
+  </div> 
+<p>&nbsp;</p>
+<div style="display:table; padding-left: 20px; padding-right: 20px;"> 
+    <p><strong>リスト 6 SlotRotator クラス</strong></p> 
+    <div style="background-color:#D1DCFF; color:#2682c5; padding: 10px;"> 
+      <pre>public class SlotRotator {
+    private Component3D target;
+    private float angle;
+    private int delay;
+ 
+    private ExecutorService executor;
+    private Future future;
+ 
+    // verosity は回転/秒を表す
+    public SlotRotator (Component3D target, int verosity) {
+        if (target == null) {
+            throw new IllegalArgumentException("target cannot be null");
+        }
+ 
+        this.target = target;
+ 
+        // 速度から 90 度回すための時間を算出
+        delay = 250 / verosity;
+ 
+        // 初期状態のコンポーネントの回転角度を取得
+        this.angle = target.getRotationAngle();
+ 
+        // アニメーションをなめらかにする
+        target.setAnimation(new NaturalMotionAnimation(1000));
+ 
+        // 回転軸を x 軸に設定
+        target.setRotationAxis(1.0f, 0.0f, 0.0f);
+ 
+        // 回転をおこなうための ExecutorService を生成
+        executor = Executors.newSingleThreadExecutor();
+    }
+ 
+    // 回転の開始
+    public void start() {
+        future = executor.submit(new Runnable() {
+                public void run() {
+                    try {
+                        while (true) {
+                            // 90 度づつ回転させる
+                            angle += (float)(Math.PI/2.0);
+                            target.changeRotationAngle(angle, delay);
+                             
+                            TimeUnit.MILLISECONDS.sleep(delay);
+                        }
+                    } catch (InterruptedException ex) {
+                    }
+                }
+            });
+    }
+ 
+    // 回転の停止
+    public void stop() {
+        future.cancel(true);
+    }
+}</pre> 
+    </div> 
+  </div> 
+  <p>&nbsp;</p> 
+  <p>&nbsp;</p>
+  <h3>デプロイメント ～ メニューバーから実行可能に</h3>
+  <p>今までサンプルの実行は，すべて runsample シェルスクリプトを使用してきました．しかし，せっかくここまで作ってきたのですから，メニューバーから実行できるようにしたいですね．そのためにはデプロイメントの作業が必要になります．</p>
+  <p>しかし，難しいことはありません．用意するものは 2 つ．アイコンのイメージと，JAR ファイルにするときの MANIFEST ファイルです．</p>
+  <p>&nbsp;</p>
+  <h4>用意するもの</h4>
+  <div style="float: right; padding: 10px; text-align: center;"> 
+    <table> 
+      <tr> 
+        <td nowrap="nowrap"><span style="padding: 1px; padding-right: 5px; padding-left: 5px; background: #333333; color:#FFFFFF; font-weight: bold;">図 6</span></td> 
+        <td style="font-weight: bold; background: #FFFFFF; color: #2682C5; padding-left: 10px;">SlotBox のアイコン (slotboxlogo.png)</td> 
+      </tr> 
+    </table> 
+    <img src="sec3-fig/f6.png" alt="SlotBox のアイコン" width="64" height="64" border="0" />
+  <p>&nbsp;</p>
+    <table> 
+      <tr> 
+        <td nowrap="nowrap"><span style="padding: 1px; padding-right: 5px; padding-left: 5px; background: #333333; color:#FFFFFF; font-weight: bold;">表 1</span></td> 
+        <td style="font-weight: bold; background: #FFFFFF; color: #2682C5; padding-left: 10px;">MANIFEST ファイルに記述する項目</td> 
+      </tr> 
+    </table> 
+    <table style="border: 1 solid #FFFFFF;"> 
+      <tr> 
+        <th style="background-color:#666666; color:#FFFFFF; margin: 2px; padding: 5px;">項目</th> 
+        <th style="background-color:#666666; color:#FFFFFF; margin: 2px; padding: 5px;">説明</th> 
+      </tr> 
+      <tr>
+        <td style="background-color: #D0E072; margin: 2px; padding: 5px;">Implementation-Title</td>
+        <td style="background-color: #D0E072; margin: 2px; padding: 5px;">アプリケーションの名称</td>
+      </tr>
+      <tr>
+        <td style="background-color: #D0E072; margin: 2px; padding: 5px;">Main-Class</td>
+        <td style="background-color: #D0E072; margin: 2px; padding: 5px;">メインクラス</td>
+      </tr>
+      <tr>
+        <td style="background-color: #D0E072; margin: 2px; padding: 5px;">Icon-Filename</td>
+        <td style="background-color: #D0E072; margin: 2px; padding: 5px;">アイコンのファイル名</td>
+      </tr> 
+    </table> 
+  </div> 
+  <h5>アイコンのイメージ</h5>
+  <p>アイコンは JPEG もしくは PNG のイメージを使用できます．しかし，JPEG は透明が扱えないので，PNG の方がお勧めです．アイコンの大きさは 64 × 64 ピクセルです．今回は図 6 のようなイメージをアイコンにしてみました．</p>
+  <h5>MANIFEST ファイル</h5>
+  <p>次は MANIFEST ファイルです．MANIFEST ファイルに記述するのは表 1 に示した 3 つの項目です．</p>
+  <p>SlotBox 用の MANIFEST ファイル slotbox.mf をリスト 8 に示します．</p>
+  <p>&nbsp;</p>
+  <h4>JAR ファイルにまとめる</h4>
+  <p>これで材料は揃いました．コンパイルしたクラスファイルを JAR ファイルにまとめましょう．MANIFEST ファイルを付け加えるには，jar コマンドのオプションに m を付け加えてください．JAR にするのはクラスファイルだけではなくて，テクスチャ用のイメージファイルやアイコンファイルも忘れずに．</p>
+  <pre>$ jar cvmf slotbox.mf slotbox.jar *.class *.png *.jpg</pre>
+  <p>&nbsp;</p>
+  <h4>LG3D にデプロイメント</h4>
+  <p>JAR ファイルができたら，LG3D にデプロイメントします．LG3D をインストールしたディレクトリの直下に ext というディレクトリがあります．ここに app というディレクトリがあれば，そこに今作成した JAR ファイルをコピーします．もし，app ディレクトリがない場合は，app ディレクトリを作成してから JAR ファイルをコピーしてください． </p>
+  <p>&nbsp;</p>
+  <h4>起動してみる</h4>
+  <div style="float: right; padding: 10px; width: 256px;"> 
+    <table> 
+      <tr> 
+        <td nowrap="nowrap"><span style="padding: 1px; padding-right: 5px; padding-left: 5px; background: #333333; color:#FFFFFF; font-weight: bold;">図 7</span></td> 
+        <td style="font-weight: bold; background: #FFFFFF; color: #2682C5; padding-left: 10px;">タスクバー上のアイコン</td> 
+      </tr> 
+    </table> 
+    <img src="sec3-fig/f7.jpg" alt="タスクバー上のアイコン" width="256" height="192" border="0" /></div> 
+  <p>これで LG3D を起動させてみましょう．runsample を使うのではなく，lg3d-dev/lg3dapp/lg3d-session のいずれかを使用して起動してください．</p>
+  <p>JAR ファイルが正しく作られていれば，タスクバーにアイコンが並んでいるはずです (図 7)．アイコンをクリックすると，SlotBox が起動します．自分が作ったアプリケーションがタスクバーに並ぶと喜びもひとしおですよ．</p>
+  <p>&nbsp;</p>
+  <h3>まとめ</h3>
+  <p>後半やや駆け足になってしまいましたが，LG3D
+  のプログラミングはいかがだったでしょうか．AWT や Swing のアプリケーションを書いたことがあるのであれば，今日からすぐにでも LG3D のアプリケーションが作れるはずです．</p>
+  <p>まだ LG3D は発展途上なので，不完全な部分や足りない部分もあるかもしれません．しかし，それにあまりあるほどのおもしろさが LG3D にはあるの<br />
+    です．</p>
+  <p>ぜひ，皆さんも LG3D のアプリケーションを書いてみて，そのおもしろさを感じてみませんか? 皆さんの新しいアイディアをぜひ実現させていただきたいと思います．そして，そのときにこの解説が少しでもお役に立てば幸いです．</p>
+  <p>&nbsp;</p>
+  <hr /> 
+  <p style="font-size: small;">$Revision: 1.1 $ $Date: 2006-05-09 18:16:29 $</p> 
+</div> 
+</body>
+</html>

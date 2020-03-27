@@ -1,0 +1,106 @@
+<!DOCTYPE html PUBLIC "-//Tigris//DTD XHTML 1.0 Transitional//EN"
+"http://style.tigris.org/tigris_transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="ja"
+ lang="ja">
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  <meta name="Translator" content="ENDO Yasuyuki" />
+  <title>RPMベースでないディストリビューションのATI Radeon用のDRIドライバのインストール</title>
+  <style type="text/css"> /* <![CDATA[ */
+@import "preview.css";
+/* ]]> */</style>
+</head>
+<body>
+<div id="projectdocumentview" class="app">
+
+<hr />
+<h2>ATI Radeon用のDRIドライバのインストール</h2>
+
+<br />
+
+<p>
+この手順書は、Project Looking Glassに必要なダイレクトレンダリング拡張を可能にするために、 ATI RadeonグラフィックスカードのDRI (Direct Rendering
+Infrastracture)ドライバをインストールする方法について説明します。</p>
+
+<h3>インストール手順</h3>
+<p>これはSlackwareのような非rpmベースのディストリビューションにバイナリ形式のATIドライバをインストールするための手引きです。
+Slackwareで必要なコマンドに準拠しましたが、
+多くのコマンドは他のディストリビューションにも適用可能です。
+</p>
+
+<p>
+<b>注:</b> fglrxドライバのすべての最近のリリース (> 3.12) は、GLの不完全な実装を含んでいます。
+そのために、これらのドライバではLG3Dは正しく実行できないかもしれません。
+もしこの問題に出会ったならば、他の<a href="dri-driver-install-ati-radeon.html"> インストール方法</a>を試してみてください。
+</p>
+
+<ol>
+  <li>次のように、rootになります。<br />
+    <br />
+    <span style="font-family: monospace;"> % su -</span><br />
+    <span style="font-family: monospace;"> Password: </span><b>rootパスワードを入力します</b><br />
+    <span style="font-family: monospace;"> #</span><br />
+    <br />
+  </li>
+  <li>ディストリビューションのカーネルソースパッケージからカーネルソースをインストールします。<br />
+    <br />
+    <span style="font-family: monospace;"># installpkg kernel-source-2.4.26-noarch-4.tgz</span><br />
+    <br />
+    <b>注:</b>Slackwareディストリビューションではカーネルソースパッケージは最初のCDにあります。<br />
+    <span style="font-family: monospace;">/mnt/cdrom/slackware/k/kernel-source-2.4.26-noarch-4.tgz</span><font
+ face="Courier New, Courier, monospace"><br />
+    <br />
+    </font></li>
+  <li>カーネルコンフィギュレーションおよび依存性を、次のように更新します。<br />
+    <br />
+    <span style="font-family: monospace;"># cd /usr/src/linux</span><br />
+    <span style="font-family: monospace;"># cp /boot/config-ide-2.4.26.config</span><br />
+    <span style="font-family: monospace;"># make oldconfig</span><br />
+    <span style="font-family: monospace;"># make dep</span><br />
+    <br />
+    <b>注:</b> カーネルを再コンパイルする必要はありません。<br />
+    <br />
+  </li>
+  <li>最新のATI Radeonドライバを<a
+ href="http://www.ati.com/">ATIウェブサイト</a>からダウンロードしてください。<br />
+    <br />
+  </li>
+  <li>次のように、rpmを通常のtar.gzファイルに変換します。<br />
+    <br />
+    <span style="font-family: monospace;"># rpm2tgz fglrx-"version".rpm</span><br />
+    <span style="font-family: monospace;"># cd /</span><br />
+    <span style="font-family: monospace;"># tar zxvf fglrx-"version".tgz</span><br />
+    <span style="font-family: monospace;"># cd /lib/modules/fglrx/build_mod/</span><br />
+    <span style="font-family: monospace;"># chmod +x ./make.sh &amp;&amp; ./make.sh</span><br />
+	<span style="font-family: monospace;"># cd .. &amp;&amp; chmod +x make_install.sh &amp;&amp; ./make_install.sh</span>
+    <br />
+    <br />
+  </li>
+  <li>Xの設定を行うために、次のようにfglconfigを実行します。<br />
+    <br />
+    <span style="font-family: monospace;"># fglrxconfig</span><br />
+ <br />
+  </li>
+  <li>他のディストリビューションと同様、 Slackware 10でもXFree86の代わりにxorgを使用するので、XF86Config-4とxorg.confの間に、次のようなシンボリックリンクを作成する必要があります。<br />
+    <br />
+    <span style="font-family: monospace;"># ln -sf /etc/X11/XF86Config-4 /etc/X11/xorg.conf</span><br />
+    <br />
+ここでXを起動してください。これまでのステップで何のエラーもなければ、3Dアクセラレーションが動作しているはずなので、次を実行してそれを確認してください。<br /><br />
+    <span style="font-family: monospace;">% glxinfo | grep render</span><br />
+    <br />
+    以下が表示される必要があります。<br />
+<br />
+    <span style="font-family: monospace;">direct rendering: Yes</span><br />
+    <br />
+    </li>
+   </ol>
+    
+<h3>謝辞</h3>
+<p>著者はこの手引きのオリジナル版を書いて最初の枠組みを提供したLucian Cionca <a
+ href="mailto:lucian.cionca@gmail.com"><u>lucian.cionca@gmail.com</u></a>					に感謝します。</p>
+    <br />
+  <hr />
+<small>$Revision: 1.1 $ $Date: 2006-05-09 17:51:01 $ (英語版Revision: 1.8)</small>
+</div>
+</body>
+</html>

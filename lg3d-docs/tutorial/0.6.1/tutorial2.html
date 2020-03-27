@@ -1,0 +1,236 @@
+<html><head><title>Project Looking Glass Application Tutorial 2</title>
+    
+    <link rel="stylesheet" type="text/css" href="../tutorial.css"></head>
+  <body bgcolor="white">
+    <p>This tutorial is based upon the tutorial written by Hideya Kawahara.</p>
+    <p>
+    <table>
+      <tbody><tr>
+	<th align="left" valign="top">Aim:</th>
+	<td>To demonstrate simple manipulations and user interaction with a 3D application within the lg3d framework.</td>
+      </tr>
+      <tr>
+	<th align="left" valign="top">Requirements:</th>
+	<td>This tutorial builds upon <a href='tutorial1.html'>Tutorial 1</a>.<br/>To
+use this tutorial you will need a functional installation of the of
+lg3D. The stable version is the best version to begin with. This version is located
+at the <a href="http://lg3d-core.dev.java.net/">lg3d-core</a> web site. Follow the "<a href="https://lg3d-core.dev.java.net/lg3ddevelopersguide.html">Getting started with Project Looking Glass</a>" link for lg3d installation instructions.<br/>
+Note: You do not need to run the lg3d-session version.</td>
+      </tr>
+			<tr>
+				<td>&#32;</td>
+				<td>Additionally, you need to have the Java 1.5 SDK. This is available at the <a href="http://java.sun.com/j2se/1.5/">Sun Java</a> web site.</td>
+			</tr>
+      <tr><td colspan='2' height='10'>&#32;</td></tr>
+				
+      <tr>
+	<th align="left" valign="top">Steps:</th>
+	<td>
+	  <ol>
+	    <li><a href="#step1">Initialize the 3D application</a></li>
+	    <li><a href="#step2">Rotate the box</a></li>
+	    <li><a href="#step3">Allow the application to be moved</a></li>
+	    <li><a href="#step4">Set the application's cursor</a></li>
+			<li><a href="#step5">Add some visual feedback</a></li>
+			<li><a href="#step6">Add some user interaction</a></li>
+			<li><a href="#step7">Initialize the container</a></li>
+	    <li><a href="#step8">Compile the code</a></li>
+	    <li><a href="#step9">Run our application</a></li>
+	  </ol>
+	</td>
+      </tr>
+      <tr><td colspan='2' height='10'>&#32;</td></tr>
+      <tr>
+        <th class="newstep" valign="top"><a id="step1">Step 1:</a></th>
+	<th class="newstep">Initialize the 3D application</th>
+      </tr>
+      <tr>
+	<td> </td>
+	<td>Follow steps 1 - 3 in <a href='tutorial1.html'>Tutorial 1</a> to initialize the application, creating a box. As a slight variation to that try making the box translucent by changing the alpha value in the <a class='javadoc' href='http://javadesktop.org/lg3d/javadoc/rel-0-6-1/api/index.html?org/jdesktop/lg3d/sg/SimpleAppearance.html'>SimpleAppearance</a> constructor.</td>
+      </tr>
+      <tr><td colspan='2' height='10'>&#32;</td></tr>
+      <tr>
+	<td>&#32;</td>
+	<td><code><ol>
+		Frame3D frame3d = new Frame3D();<br/>
+		SimpleAppearance app = new SimpleAppearance(0.6f, 0.8f, 0.6f, 0.7f);<br/>
+		Box box = new Box(0.05f, 0.04f, 0.03f, Primitive.GENERATE_NORMALS | Primitive.GEOMETRY_NOT_SHARED, app);<br/>
+		Component3D comp = new Component3D();<br/>
+		comp.addChild(box);
+	    </ol></code>
+	</td>
+      </tr>
+      <tr><td colspan='2' height='10'>&#32;</td></tr>
+      <tr>
+	<th class="newstep" valign="top"><a id="step2">Step 2:</a></th>
+	<th class="newstep">Rotate the box</th>
+      </tr>
+      <tr>
+	<td>&#32;</td>
+	<td>To prove that this is a box, we can rotate it and see its 3D nature.<br/>
+	    Component3D provides utility methods to achieve this. First, we specify the axis around which we rotate the component, using <a class='javadoc' href='http://javadesktop.org/lg3d/javadoc/rel-0-6-1/api/index.html?org/jdesktop/lg3d/wg/Component3D.html#setRotationAxis(float, float, float)'>setRotationAxis</a>.</td>
+      </tr>
+      <tr><td colspan='2' height='10'>&#32;</td></tr>
+      <tr>
+	<td>&#32;</td>
+	<td><code><ol>comp.setRotationAxis(1.0f, 0.5f, 0.0f);</ol></code></td>
+      </tr>
+      <tr><td colspan='2' height='10'>&#32;</td></tr>
+      <tr>
+	<td>&#32;</td>
+	<td>This specifies the rotation to be around the line running through the X axis at 1, and the Y axis at 0.5.<br/>
+	Now we can set the angle to of rotation, using <a class='javadoc' href='http://javadesktop.org/lg3d/javadoc/rel-0-6-1/api/index.html?org/jdesktop/lg3d/wg/Component3D.html#setRotationAngle(float)'>setRotationAngle</a>. The API uses radians, but degrees are more commonly used, so we use <a class='javadoc' href='http://java.sun.com/j2se/1.5.0/docs/api/java/lang/Math.html#toRadians(double)'>Math.toRadians()</a>to simplify the process.</td>
+      </tr>
+      <tr>
+      <tr><td colspan='2' height='10'>&#32;</td></tr>
+	<td>&#32;</td>
+	<td><code><ol>comp.setRotationAngle((float)Math.toRadians(60));</ol></code></td>
+      </tr>
+      <tr><td colspan='2' height='10'>&#32;</td></tr>
+      <tr>
+	<td>&#32;</td>
+	<td>
+		Please note that this shows reasonable lighting on each surface. It is the <a class='javadoc' href='http://javadesktop.org/lg3d/javadoc/rel-0-6-1/api/index.html?org/jdesktop/lg3d/displayserver/SceneManager.html'>SceneManager</a>'s responsibility to lighten the world in a reasonable manner. If you want to it would be possible to write a SceneManager that changes lighting depending on the time of day, or the workload of your machine.
+		</td></tr>
+      <tr><td colspan='2' height='10'>&#32;</td></tr>
+      <tr>
+	<th class="newstep" valign="top"><a id="step3">Step 3:</a></th>
+	<th class="newstep">Allow the application to be moved</th>
+      </tr>
+			<tr>
+				<td>&#32;</td>
+				<td>
+					One of the basic functions that should be provided by most applications is the ability to be moved through the displayed scene. To facilitate this process a predefined event action class, <a class='javadoc' href='http://javadesktop.org/lg3d/javadoc/rel-0-6-1/api/index.html?org/jdesktop/lg3d/utils/eventaction/ComponentMover.html'>ComponentMover</a> has been implemented.<br/>
+					It implements mouse event listeners and translational operators under the covers in order to achieve the action. The usage is simple - just specify a component you would like to move and an argument to its constructor.
+				</td>
+			</tr>
+      <tr>
+      <tr><td colspan='2' height='10'>&#32;</td></tr>
+	<td>&#32;</td>
+	<td><code><ol>new ComponentMover(comp);</ol></code></td>
+      </tr>
+      <tr><td colspan='2' height='10'>&#32;</td></tr>
+			<tr>
+	<th class="newstep" valign="top"><a id="step4">Step 4:</a></th>
+	<th class="newstep">Set the application's cursor</th>
+      </tr>
+			<tr>
+				<td>&#32;</td>
+				<td>Now that the application can be moved, we should change the cursor to indicate that the component can be moved.<br/>
+				    To do this, we make use of predefined <a class='javadoc' href='http://javadesktop.org/lg3d/javadoc/rel-0-6-1/api/index.html?org/jdesktop/lg3d/wg/Cursor3D.html'>Cursor3D</a> shapes and the <a class='javadoc' href='http://javadesktop.org/lg3d/javadoc/rel-0-6-1/api/index.html?org/jdesktop/lg3d/wg/Component3D.html#setCursor(org.jdesktop.lg3d.wg.Cursor3D)'>setCursor()</a> method in order to associate the cursor to the component.
+</td>
+			</tr>
+      <tr><td colspan='2' height='10'>&#32;</td></tr>
+      <tr>
+	<td>&#32;</td>
+	<td><code><ol>comp.setCursor(Cursor3D.MOVE_CURSOR);</ol></code></td>
+      </tr>
+      <tr><td colspan='2' height='10'>&#32;</td></tr>
+			<tr>
+	<th class="newstep" valign="top"><a id="step5">Step 5:</a></th>
+	<th class="newstep">Add some visual feedback</th>
+      </tr>
+			<tr>
+				<td>&#32;</td>
+				<td>
+					As is commonly seen in desktops, and other applications, some sort of visual feedback is usually provided to indicate that an action can take place on any given object. Commonly a button will change its appearance when the mouse moves over it to indicate that it can be pressed. The Project Looking Glass API provides the basic building blocks to implement visual user feedback.<br/>
+					Two key concepts are &quot;event adapter&quot; and &quot;action&quot;. An event adapter is a listener that listens to specific events and converts it into a form that can invoke &quot;action&quot; via the <a class='javadoc' href='http://javadesktop.org/lg3d/javadoc/rel-0-6-1/api/index.html?org/jdesktop/lg3d/utils/action/Action.html'>Action</a> interface.<br/>
+					An action is a class that implements at least one sub-interface of the Action interface. It accepts converted events and performs predefined actions accordingly.<br/>
+				 This example uses a <a class='javadoc' href='http://javadesktop.org/lg3d/javadoc/rel-0-6-1/api/index.html?org/jdesktop/lg3d/utils/eventadapter/MouseEnteredEventAdapter.html'>MouseEnteredEventAdapter</a> that listens to mouse enter and exit events, and invokes <a class='javadoc' href='http://javadesktop.org/lg3d/javadoc/rel-0-6-1/api/index.html?org/jdesktop/lg3d/utils/action/ActionBoolean.html#performAction(boolean)'>performAction(boolean)</a> method (which is declared in <a class='javadoc' href='http://javadesktop.org/lg3d/javadoc/rel-0-6-1/api/index.html?org/jdesktop/lg3d/utils/action/ActionBoolean.html'>ActionBoolean</a>) to propagate the stimulus. <a class='javadoc' href='http://javadesktop.org/lg3d/javadoc/rel-0-6-1/api/index.html?org/jdesktop/lg3d/utils/action/ScaleAction.html'>ScaleAction</a> in turn implements the ActionBoolean interface and the performAction(boolean) method, which is used to receive the stimulus. It scales the specified component by the factor of its float argument (1.2f). The duration of the animation is specified by the third argument in milliseconds.
+				 </td>
+			</tr>
+      <tr><td colspan='2' height='10'>&#32;</td></tr>
+      <tr>
+	<td>&#32;</td>
+	<td><code><ol>new MouseEnteredEventAdapter(comp, new ScaleAction(comp, 1.2f, 500));</ol></code></td>
+      </tr>
+      <tr><td colspan='2' height='10'>&#32;</td></tr>
+			<tr>
+	<th class="newstep" valign="top"><a id="step6">Step 6:</a></th>
+	<th class="newstep">Add some user interaction</th>
+      </tr>
+			<tr>
+				<td>&#32;</td>
+				<td>Another standard practice of desktops is that the application is brought to the front when it is clicked on. To demonstrate simple user interaction we will implement this functionality in our application.<br/>
+				To do this we must do two things. First, listen for mouse click events to know when our application has been clicked on, and second, fire an event to the SceneManager requesting that the application be brought to the front.<br/>
+				To perform the first step, a utility class <a class='javadoc' href='http://javadesktop.org/lg3d/javadoc/rel-0-6-1/api/index.html?org/jdesktop/lg3d/utils/eventadapter/MouseClickedEventAdapter.html'>MouseClickedEventAdapter</a> needs to be created to listen to the component. The MouseClickedEventAdapter then fires a <a class='javadoc' href='http://javadesktop.org/lg3d/javadoc/rel-0-6-1/api/index.html?org/jdesktop/lg3d/wg/event/Frame3DToFrontEvent.html'>Frame3DToFrontEvent</a> (via a <a class='javadoc' href='http://javadesktop.org/lg3d/javadoc/rel-0-6-1/api/index.html?org/jdesktop/lg3d/utils/action/GenericEventPostAction.html'>GenericEventPostAction</a>) with the Frame3D that was clicked on. Assuming the SceneManager implements this event, the frame should be brought to the front.
+				</td>
+			</tr>
+      <tr><td colspan='2' height='10'>&#32;</td></tr>
+      <tr>
+	<td>&#32;</td>
+	<td><code><ol>new MouseClickedEventAdapter(comp, new GenericEventPostAction(Frame3DToFrontEvent.class,frame3d));</ol></code></td>
+      </tr>
+      <tr><td colspan='2' height='10'>&#32;</td></tr>
+			<tr>
+	<th class="newstep" valign="top"><a id="step7">Step 7:</a></th>
+	<th class="newstep">Initialize the container</th>
+      </tr>
+			<tr>
+				<td>&#32;</td>
+				<td>
+					Finally, we can add the frame to the container and initialize it to make it visible, as described in <a href='tutorial1.html#step4'>Tutorial 1</a> step 4. Note, since the box has been rotated and scaled, a large hint size should be given to the SceneManager to avoid conflicts with other 3D apps.
+				</td>
+      </tr>
+      <tr><td colspan='2' height='10'>&#32;</td></tr>
+      <tr>
+	<td>&#32;</td>
+	<td><code><ol>
+		frame3d.addChild(comp);<br/>
+		frame3d.setSize(0.06f, 0.06f, 0.06f);<br/>
+		frame3d.setCapabilities();<br/>
+		frame3d.setActive(true);<br/>
+		frame3d.setVisible(true);
+		</ol></code></td>
+      </tr>
+			</tr>
+      <tr><td colspan='2' height='10'>&#32;</td></tr>
+			<tr>
+	<th class="newstep" valign="top"><a id="step8">Step 8:</a></th>
+	<th class="newstep">Compile the code</th>
+      </tr>
+			<tr>
+				<td>&#32;</td>
+				<td>
+				We have finished writing the code. The full version includes the required import statements, and various constructor and main methods. Download <a href="code/Tutorial2.java">Tutorial2.java</a><br/>
+Now we need to compile the source file. The tutorial requires the lg3d core
+library and Java 1.5 to compile. The core library can be found under
+the <code>lib</code> directory of the lg3d distribution (replace $LG3DHOME with the path to the lg3d distribution).
+</td>
+			</tr>
+      <tr><td colspan='2' height='10'>&#32;</td></tr>
+      <tr>
+	<td>&#32;</td>
+	<td class="command">javac -cp "$LG3DHOME/lib/ext/lg3d-core.jar" Tutorial2.java</td>
+      </tr>
+      <tr><td colspan='2' height='10'>&#32;</td></tr>
+			<tr>
+	<th class="newstep" valign="top"><a id="step9">Step 9:</a></th>
+	<th class="newstep">Run our application</th>
+      </tr>
+			<tr>
+				<td>&#32;</td>
+				<td>To run the tutorial, simply execute the runtutorial script with the name of the class file (without the .class extension)</td>
+			</tr>
+      <tr><td colspan='2' height='10'>&#32;</td></tr>
+			<tr>
+				<td>&#32;</td>
+				<td><code><ol>./runtutorial Tutorial2</ol></code></td>
+			</tr>
+      <tr><td colspan='2' height='10'>&#32;</td></tr>
+			<tr>
+				<td>&#32;</td>
+				<td>
+				The lg3d desktop should be displayed with a pale green (translucent) box in the center (as you see below). When the mouse is moved over it the cursor should change the movement cursor, and the box should increase in size for have a second. Play around with your new application before moving on to 
+the <a href="tutorial3.html">next tutorial</a> which will cover greater interaction with the user, and a simple example of textures.
+			</tr>
+			<tr>
+				<td>&#32;</td>
+				<td><img width="80%" src="images/tutorial2.png" alt="The rotated pale green box from Tutorial2"></td>
+			</tr>
+
+	
+      
+    </tbody></table>
+    </p>
+  </body></html>

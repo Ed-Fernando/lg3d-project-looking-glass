@@ -1,0 +1,417 @@
+<!DOCTYPE html PUBLIC "-//Tigris//DTD XHTML 1.0 Transitional//EN"
+"http://style.tigris.org/tigris_transitional.dtd">
+<html><head>  
+  <title>Sun Java Desktop System release 2 How-To: 
+  3D Acceleration with ATI's fglrx driver on a Tadpole Talin</title>
+</head>
+<body>
+<div id="projectdocumentview" class="app">
+
+<hr />
+
+<a name="top"></a>
+<h2>Java Desktop System Release 2 How-To: <br />
+ 3D acceleration on a Tadpole Talin (ATI Radeon M9)</h2>
+<br />
+ 
+<h3>Contents</h3>
+    <ol type="I">
+       <li><a href="#background">Background</a> ... system used, links, notes</li>
+       <li><a href="#installKernel">Install Kernel Sources</a> ... simple!</li>
+       <li><a href="#installDriver">Install/compile the ATI driver</a> ...
+pick your version, SuSE makes it easy</li>
+       <li><a href="#XF86Config-4">XF86Config-4</a> ... pick your configuration, 
+I make it easy</li>
+       <li><a href="#modules.conf">Modify modules.conf</a> ... small system
+tweak</li>
+       <li><a href="#X">Restart X</a> ... rebooting is best, but you have
+a choice</li>
+       <li><a href="#testing">Testing</a> ... how many FPS do you get?</li>
+       <li><a href="#done">Final notes</a> ... fixing libGLU, reverting to
+old setup, upgrading to a new version</li>
+     
+    </ol>
+<b>Legend</b>
+<p>
+<tt>``</tt> (backticks) ... commands to be executed verbatim in a command shell
+</p>
+<hr noshade="noshade" size="1" />
+<ol type="I">
+       <li><a name="background"></a>Background:       
+      <ol type="A">
+         <li>These steps are tailored to a Tadpole Talin laptop with an ATI
+M9 Radeon Mobility GPU ... mileage will vary but they should help with the
+basic steps.           
+          <p><b>NOTE:</b> These instructions were written using Java Desktop 
+System release 2 (aka "Quicksilver") and not Java Desktop System 2003 (aka 
+"Mercury"). Tadpole Talins were first shipped with Java Desktop System 2003 
+along with an OEM Vendor Update CD to fix a couple of configuration issues 
+(like getting the wireless driver set up properly). I have found that Java 
+Desktop System release 2 seems to fix alot (if not all) of the issues that 
+the Talin Vendor Update CD was addressing. However, if you don't want to install
+a fresh release 2, you will probably need to configure your kernel sources
+after you install them. I don't remember ever needing to do this for Quicksilver.
+I've put the instructions for doing this later in the document. AFAIK this
+is the only difference with these instructions between the two releases.
+          </p>
+         </li>
+         <li>The following information was derived from a ton of online postings 
+about getting ATI cards in general to work. Some (but no way all) of the links
+I used for source material include:           
+          <ul>
+             <li><a href="http://www.rage3d.com/content/articles/atilinuxhowto/">ATI Radeon
+Linux How-To</a> </li>
+             <li><a href="http://www.suse.de/en/private/download/xfree86/index.html">SuSE's web
+site</a></li>
+             <li><a href="ftp://ftp.suse.com/pub/suse/i386/supplementary/X/XFree86/ATI/suse90/fglrx/3.7.6/README">SuSE's 
+ftp server</a></li>
+             <li><a href="http://www.ati.com/support/infobase/4485.html">ATI's 
+web site - monitor configuration</a></li>
+             <li><a href="http://www2.ati.com/drivers/firegl/readme420296.txt">ATI's web site
+- driver readme</a></li>
+             <li><a href="http://www.linuxquestions.org/questions/showthread.php?s=&amp;threadid=122514">Linuxquestions.org</a></li>
+             <li><a href="http://www.xfree86.org/4.3.0/XF86Config.5.html">XFree86.org - XF86Config/XF86Config-4
+man page</a></li>
+           
+          </ul>
+         </li>
+         <li>The end goal of this note is to allow 3D acceleration (via DRI)
+to work on the ATI card. In addition the synaptics pointing device on the 
+Talin will be fully enabled along with a USB wheel mouse. </li>
+         <li>This document is targeted for Java Desktop System 2003 and release 
+2 users but should apply to similar distributions (SuSE 8.x, SuSE Linux Desktop 
+1.0, possibly SuSE 9.x). Be aware that this procedure is UNSUPPORTED BY SUN 
+due to the manual configuration needed, which prevents you from using YaST2 
+and SaX2 to configure your video card in the future.</li>
+         <li>If you don't need 3D acceleration on your machine (Sun does not
+currently ship any 3D apps with JavaDS) then do not do the following procedure.</li>
+         <li>Only 24-bit mode is supported with this driver ... some apps
+specifically require 16-bit modes though this is rare.</li>
+         <li>In the example XF86Config-4 files I configured my own external
+mouse and external monitor (Sun 1399) so you may have some editing to do.</li>
+       
+      </ol>
+     <hr noshade="noshade" size="1" /></li>
+     
+    <li><a name="installKernel"></a>Install 
+the kernel source for JavaDS       
+      <ol type="A">
+         <li>Find the kernel source for your running kernel and install it
+(175+ MB of space required) and install it. If you have a stock Java Desktop 
+system you can go to "Launch / Applications / System Tools / Administration
+/ Software Installer", then "Filter: Search" for "kernel" and select "kernel-source", 
+then click "Accept".</li>
+         <li><b>NOTE:</b> You do not need to compile the kernel sources, you
+just need to install the source. If you desperately need the space back you 
+can uninstall the sources after you've compiled the kernel module in the next 
+section.</li>
+       
+      </ol>
+       
+      <hr noshade="noshade" size="1" /> </li>
+     <li><a name="installDriver"></a>
+Install the drivers and compile the kernel module from ftp://ftp.suse.com/pub/suse/i386/supplementary/X/XFree86/ATI/suse91/fglrx/
+              <ol type="A">
+         <li><b>NOTES: </b>           
+          <ol type="1">
+             <li>Yes they are in the 'suse91' directory but this allows us
+to use the latest version of the driver since SuSE is not putting anything
+into the suse81 branch anymore. I have tested these instructions against
+the suse90/3.7.6 and suse91/3.9.0 versions Java Desktop System release 2
+(so they should also work for SuSE 8.* and SuSE Linux Desktop 1.0).</li>
+             <li>I used the <a href="ftp://ftp.suse.com/pub/suse/i386/supplementary/X/XFree86/ATI/suse91/fglrx/3.9.0/">suse91/3.9.0 
+version</a> RPMs but check to see if something newer is there when you are 
+installing. I have also succeed with the suse90/3.7.6 version.</li>
+             <li>The reason I chose the suse91/3.9.0 version was to use the
+latest driver since I'm told it fixes a few crash bugs in some Java3D applications. 
+However, when running glxgears with the suse90/3.7.6 driver I was getting 
+1500-1700 FPS but with the suse91/3.9.0 driver I only got 1000-1200. The 3.9.0
+driver has some extra bits to support kernel 2.6 so you may want to play
+around with 3.7.6 if getting a ton of FPS is your goal over stability (there
+may be some performance tweaks for 3.9.0 to fix this, I didn't check). </li>
+           
+          </ol>
+         </li>
+         <li><a name="installRPM"></a>Install the fglrx rpm (binary driver)
+via: <br />
+           <tt>`rpm -Uhv --force --nodeps fglrx*.rpm`</tt>           
+          <ol type="1">
+             <li> I used --force and --nodeps in case you have tried to install
+an older version of the RPM and because it complained that the libpng library 
+was not installed when it was on my system (possibly it was looking for the 
+SuSE9 version of libpng)</li>
+             <li>If you have other copies of the driver RPM you should explicitly 
+type out the filename, replacing "fglrx*.rpm" above.</li>
+             <li>If you want to use the version I used without checking for
+a newer version: <br />
+               <tt>`rpm
+-Uhv --force --nodeps ftp://ftp.suse.com/pub/suse/i386/supplementary/X/XFree86/ATI/suse91/fglrx/3.9.0/fglrx-3.9.0-2.1.i586.rpm`</tt> 
+            </li>
+           
+          </ol>
+         </li>
+         <li>Install the kernel module source via: <br />
+           <tt>`rpm -Uhv --force --nodeps km_fglrx*.rpm`</tt> <br />
+ (see <a href="#installRPM">previous section</a> for notes).           
+          <p>To simply use the version I used: <br />
+           <tt>`rpm
+-Uhv --force --nodeps ftp://ftp.suse.com/pub/suse/i386/supplementary/X/XFree86/ATI/suse91/fglrx/3.9.0/km_fglrx-3.9.0-2.1.i586.rpm`</tt> 
+          </p>
+         </li>
+         <li>Compile the kernel module sources:           
+          <ol type="1">
+             <li><tt>`cd /usr/src/kernel-modules/fglrx`</tt></li>
+             <li><tt>`make -f Makefile.module &amp;&amp; make -f Makefile.module
+install`</tt></li>
+             <li><b>NOTE:</b> If you get complaints about the kernel sources
+not being the right version (should happen on a fresh Java Desktop System
+2003, should not happen to my knowledge on Java Desktop System release 2
+but could), do the following to setup your kernel sources as root and repeat
+the previous command:               
+              <p><tt>`cp /boot/vmlinuz.version.h /usr/src/linux-2.4.19/include/linux/version.h`</tt></p>
+               
+              <p><tt>`cp /boot/vmlinuz.autoconf.h /usr/src/linux-2.4.19/include/linux/autoconf.h`</tt></p>
+               
+              <p><tt>`touch /usr/src/linux-2.4.19/include/linux/modversions.h`</tt></p>
+             </li>
+           
+          </ol>
+         </li>
+       
+      </ol>
+     <hr noshade="noshade" size="1" /></li>
+     
+    <li><a name="XF86Config-4"></a>Use the 
+linked <a href="etc/XF86Config-4.talin-clone">XF86Config-4.talin-clone</a> file 
+to configure your X server       
+      <ol type="A">
+         <li>NOTES:           
+          <ol type="1">
+             <li> Once you have the fglrx driver running, you can use the
+              <tt>`fireglcontrol`</tt> program to configure your settings
+... for some it may be preferable to do this over manually editing the XF86Config-4
+file, though I've found that fireglcontrol can do some weird things with
+fonts.</li>
+             <li> If you are NOT using a laptop with a 1400x1050 pixel screen,
+synaptics touchpad, and compatible ATI GPU, then skip this section and read 
+through the sources mentioned at the top of this document as you will need
+to use <tt>`SaX2`</tt> and/or <tt>`fglrxconfig`</tt> files to configure your
+system properly. Specifically the linked XF86Config-4.talin-clone file is
+meant for use on a Tadpole Talin laptop, though laptops with very similar 
+configurations may work fine.</li>
+             <li> The X system on SuSE / Linux JavaDS will use the "XF86Config-4" 
+file in preference to the file "XF86Config". This means, assuming you don't 
+already have an XF86Config-4 file, you can install it and restart X without 
+blowing away your known-good XF86Config file (and so you can easily switch 
+back to your old system if needed by renaming/deleting the XF86Config-4 file).</li>
+             <li> The file I have linked a copy to includes a number of customizations 
+including a preconfigured USB wheel mouse. If you need additional configuration 
+of the X system, you should compare the contents of your XF86Config file to
+my XF86Config-4 file and incorporate as necessary.</li>
+             <li> From this point on you need to manually edit the XF86Config-4
+file to modify your X system, YaST2 and SaX2 will not understand this version. 
+Explaining how to edit the X directives is WAY beyond the scope of this note, 
+Google is your friend as are the links at the beginning of this document. 
+Please don't ask me to help fix your configuration if you messed something 
+up or want something special. In other words BACKUP YOUR FILES. Since YaST2 
+/ SaX2 -will- understand your old XF86Config file, you can make changes via 
+those tools and manually incorporate the updates into your XF86Config-4 file.</li>
+             <li> I've added comments to XF86Config-4 ... these may help you
+alter your setup and if you are using a different configuration may help
+you tweak that alternate configuration.</li>
+           
+          </ol>
+         </li>
+         <li>To keep a backup of your known-good XF86Config: <br />
+           <tt>`cp /etc/X11/XF86Config /etc/X11/XF86Config.orig`</tt></li>
+         <li>Download the file and copy it to /etc/X11/XF86Config-4 (remove
+the ".talin" extension) ... remember, this won't overwrite your XF86Config 
+setup.</li>
+         <li>Scan through XF86Config-4 to see if there is anything you would
+like to tune. I have custom edited this file to add comments where appropriate 
+based on parameters that can be set by SaX2 and fglrxconfig.</li>
+         <li>The XF86Config-4.talin-clone file is using "clone" mode to use
+LCD and external monitor with identical pictures. You can also choose from 
+one of the following alternatives if you want (all files are identical except 
+for a few well placed comment ... you can easily edit your config later for 
+different modes):           
+          <ol type="1">
+             <li><a href="etc/XF86Config-4.talin-clone">Clone mode</a> - default
+configuration, same image on both monitors all the time</li>
+             <li><a href="etc/XF86Config-4.talin-single">Single mode</a> - only
+uses the LCD</li>
+             <li><a href="etc/XF86Config-4.talin-bigdesktop">Big Desktop</a> -
+Uses both monitors for a single large desktop</li>
+             <li><a href="etc/XF86Config-4.talin-dualhead">Dual Head</a> - Each
+monitor gets a unique desktop, no drag and drop between them. The external 
+monitor is using the settings for my 1399 so you need to edit the "ScreenDual1" 
+section if you want to use dualhead and you had to change "ExternalMonitor"
+to work with your monitor.</li>
+           
+          </ol>
+           
+          <p>NOTE: I did not do a "laptop" mode example because I don't know 
+which key on the Talin is used to switch monitors and so I couldn't test it.
+I have a pre-release Talin and didn't get manuals :)</p>
+         </li>
+       
+      </ol>
+     <hr noshade="noshade" size="1"/></li>
+     
+    <li><a name="modules.conf"></a>Tell the
+system to pre-load the agpgart module before the ATI driver:       
+      <ol type="A">
+         <li>Backup /etc/modules.conf: <br />
+           <tt>`cp /etc/modules.conf /etc/modules.conf.bak`</tt></li>
+         <li>Make sure the agpgart module is loaded -before- fglrx: <br />
+           <tt>`echo 'pre-install fglrx /sbin/modprobe "-k" "agpgart"' &gt;&gt; 
+/etc/modules.conf`</tt></li>
+         <li>Switch from the software renderer (mesasoft) to the hardware
+accelerated OpenGL driver: <br />
+           <tt>`/usr/X11/bin/switch2xf86_glx`</tt></li>
+       
+      </ol>
+    <hr noshade="noshade" size="1" /></li>
+     
+    <li><a name="X"></a>Restarting X   
+   
+      <ol type="A">
+         <li>The easiest way to finish configuring is to reboot and skip to
+          <a href="#testing">Testing</a>.</li>
+         <li>If you want to try to get acceleration without rebooting you
+can try the following ... but if you don't get 3D acceleration doing this 
+please reboot before assuming you have a problem:           
+          <ol type="1">
+             <li>log out (if you <tt>`init 3`</tt> as follows without logging
+out you may freeze up)</li>
+             <li>switch to a virtual console (press Control+ALT+F1)</li>
+             <li>log in to the console as root</li>
+             <li>just to be safe: <br />
+               <tt>`rmmod fglrx`</tt> <br />
+ (if it says it wasn't loaded or unloads it as expected, no big deal ... but 
+if it complains about it being in use you will have to reboot)</li>
+             <li>Shut down X: <br />
+               <tt>`init 3`</tt></li>
+             <li>Load the video drive kernel modules: <br />
+               <tt>`insmod agpgart &amp;&amp; insmod fglrx`</tt></li>
+             <li>Start X: <br />
+               <tt>`init 5`</tt></li>
+             <li>log in to X (press ALT+F7 to get there) as root and go to
+the next section</li>
+           
+          </ol>
+         </li>
+       
+      </ol>
+       
+      <hr noshade="noshade" size="1" /> </li>
+     <li><a name="testing"></a>Testing       
+      <ol type="A">
+         <li>You can confirm you have 3D acceleration enabled by:       
+   
+          <ol type="1">
+             <li>logging in to an X session as normal</li>
+             <li>open a terminal and execute: <br />
+               <tt>`glxinfo | grep render`</tt></li>
+             <li>If you see "direct rendering: Yes" 3D acceleration is enabled</li>
+             <li>If you see "direct rendering: No" our procedure failed (reboot
+and test again if you haven't restarted X yet)</li>
+             <li>If you see an error, search through this document to see
+if you missed anything and if not, begin looking through the quoted sources
+at the top of this document.</li>
+           
+          </ol>
+         </li>
+         <li>Assuming you didn't modify the parameters in the XF86Config-4 
+file and you see have 3D acceleration working (see the beginning of this section
+to find out) then you can run the <tt>`glxgears`</tt> program to see your
+FPS. You should get 1000+ FPS (depending on what else is running) on a 2.4GHz
+Talin w/512MB RAM. If 3D is enabled but you turn on v-sync (see comments
+in XF86Config-4.talin) then you'll only see &lt;&gt;100 FPS.</li>
+       
+      </ol>
+    <hr noshade="noshade" size="1" /> </li>
+     
+     <li><a name="done"></a>3D Driver Installation 
+Done!       
+      <p>Notes: </p>
+       
+      <ol type="A">
+         <li>So far I have not tracked down how to get the "fgl_glxgears"
+program to run (error about "fbconfig" with v3.7.6 and "Trace/breakpoint
+trap" with 3.9.0) but since glxgears shows the speed bump fine I haven't
+taken too much time to diagnose this.</li>
+         <li>For now the XF86Config-4.talin file only configures "clone mode"
+where both the LCD and external SVGA connector both display the same screen 
+... other modes are available through fglrxconfig or by using the aforementioned 
+alternate configurations.</li>
+         <li>if you want to customize or troubleshoot your setup please revisit 
+the notes in the <a href="#XF86Config-4">XF86Config-4 section</a>.</li>
+         <li>Install/Run your 3D applications!           
+          <p><b>NOTE:</b> if you are attempting to run a Java3D program (and 
+probably others) on the Java Desktop System, you need to do this so that it
+can find the GL libraries:</p>
+           
+          <p><tt>`ln -s /usr/lib/libGLU.so.1 /usr/lib/libGLU.so`</tt></p>
+         </li>
+         <li>To revert to stock configuration:           
+          <ol type="A">
+             <li>Make X stop using the accelerated config and use your old
+XF86Config setup (assuming you left it intact) <br />
+               <tt>`mv /etc/X11/XF86Config-4 /etc/X11/XF86Config-4.accelerated`</tt></li>
+             <li>Go back to the software OpenGL renderer (not necessary if
+you are not going to be using OpenGL apps with the standard video driver
+and if you skip this step it is that much easier to revert to 3D acceleration 
+later) <br />
+               <tt>`/usr/X11/bin/switch2mesasoft`</tt></li>
+             <li>You can optionally remove the 'pre-install fglrx /sbin/modprobe
+"-k" "agpgart"' line from /etc/modules.conf and uninstall the fglrx and km_fgrlx 
+RPMs, but these won't be used unless you have the XF86Config-4 file in place 
+and keeping them lets you easily switch back to the fglrx driver.</li>
+           
+          </ol>
+         </li>
+         <li>To upgrade the driver ...           
+          <p><b>NOTE:</b> I have only tested this on a Java Desktop System 
+box with the SuSE packaged fglrx RPMs ... this may not work with other fglrx 
+packages. It has been verified to work upgrading suse90/3.7.6 to suse91/3.9.0.</p>
+           
+          <ol type="A">
+             <li>Get the correct name of the RPMs you installed via:    
+          
+              <p><tt>`rpm -qa | grep fglrx`</tt></p>
+               
+              <p>In the case of suse90/3.7.6 you should see:</p>
+               
+              <p><tt><b>fglrx-3.7.6-13</b></tt> <br />
+               <tt><b>km_fglrx-3.7.6-13</b></tt></p>
+               
+              <p>If you got different results then please use them in the 
+following RPM commands! </p>
+             </li>
+             <li>Remove the old version: <br />
+               <tt>`rpm -e km_fglrx-3.7.6-13`</tt> <br />
+               <tt>`rpm -e fglrx-3.7.6-13`</tt> </li>
+             <li>Clean up the build directory: <br />
+               <tt>`rm -rf /usr/src/kernel-modules/fglrx`</tt> </li>
+             <li>Repeat the section on <a href="#installDriver">installing 
+the ATI driver</a> and then reboot</li>
+          </ol>
+          <br />
+        </li>
+      </ol>
+    </li>
+  </ol>
+  
+
+<h3>Acknowledgements</h3>
+<blockquote>
+The Project Looking Glass team gratefully thanks Geoff Baysinger at Geoff.Baysinger@sun.com 
+for providing these instructions!
+</blockquote>
+<hr />
+
+<small>$Revision: 1.1 $ $Date: 2006-05-09 17:39:11 $</small>
+
+</div>
+</body></html>

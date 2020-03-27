@@ -1,0 +1,371 @@
+<!DOCTYPE html PUBLIC "-//Tigris//DTD XHTML 1.0 Transitional//EN"
+"http://style.tigris.org/tigris_transitional.dtd">
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<meta name="Translator" content="Yasuyuki ENDO" />
+  <title>Linux用NVIDIAドライバインストールのヒント</title>
+<style type="text/css"> /* <![CDATA[ */
+@import "preview.css";
+/* ]]> */</style>
+</head>
+<body>
+<div id="projectdocumentview" class="app">
+
+<hr />
+<h2>Linux用NVIDIAドライバインストールのヒント</h2>
+
+<br />
+
+<h3>インストール手順</h3>
+
+<ol>
+    <li><p>まず、あなたのシステムでソースからドライバをビルドしなければならないのならば、
+カーネルソース、コンパイラおよびbinutilsがインストールされていることを確認してください。
+マシンが開発者プラットフォームとしてセットアップされていれば、
+これらはすべて既に存在するはずです。
+OSインストール時にこのソフトウェアをインストールしていない場合に、それを追加することは通常は非常に簡単で、ディストリビュータから供給されているGUIツールでおこなえます。
+SunのJDSでは、<b>起動メニュー</b>ボタンのメニューの<b>アプリケーション</b> &gt; <b>システムツール</b> &gt; <b>管理</b>にあります。</p>
+    </li>
+    
+    <li><p>次に、カーネルソースのセミビルドをおこなう必要があります。
+つまり、すべてをビルドしなくても、
+適切なファイルを配置するビルドの前段階で十分です。
+最も簡単な方法は、cdコマンドで<font
+ face="Courier New, Courier, monospace">/usr/src/linux</font>に移動し、
+まず<i>make cloneconfig</i>を実行してから、<i>make dep</i>を実行することです。
+ディスク容量が不足している場合は、
+複数のファイルを<font face="Courier New, Courier, monospace">/boot</font>からソースツリーの正しい位置にコピーして、編集することもできます。</p>
+   	  
+<blockquote><small><font face="Courier New, Courier, monospace">  cp /boot/vmlinuz.config
+ /usr/src/linux-2.4.19-SuSE/.config</font><br />
+    <font face="Courier New, Courier, monospace">	  cp /boot/vmlinuz.autoconf.h
+ /usr/src/linux-2.4.19-SuSE/include/linux/autoconf.h</font></small><br /><br />
+    そして"<font face="Courier New, Courier, monospace">uname -r</font>"の結果と一致するように、<font face="Courier New, Courier, monospace">/usr/src/linux -2.4.19-SuSE/include/linux/version.h</font>を編集してください。<br />
+  </blockquote>
+   </li>
+
+    <li><p><a href="http://www.nvidia.com/object/linux.html">http://www.nvidia.com/object/linux.html</a>に行き、あなたのプラットフォーム用の最新バージョンをクリックしてください。
+これはたぶん，インテルまたはAMD x86チップ用のLinux IA32対応ドライバでしょう。</p>
+   
+<blockquote><b>注:</b> GeForce 3カードの場合は、
+古いバージョンの”123”ドライバしか動作しないと思われます。
+あなたがGeForce 3カードを使用している場合は、
+下記のファイルをダウンロードしてください。<br />
+    <br />
+    <small><font face="Courier New, Courier, monospace">                
+       NVIDIA_GLX-1.0-3123.tar.gz<br />
+                          NVIDIA_kernel-1.0-3123.tar.gz</font></small><br />
+    <br />
+そして、代わりにこれらのソースを使用してインストールしてください。
+あるいは、以下のステップを続けてください。<br />
+  </blockquote>
+    </li>
+   
+    <li><p>まず、*.runファイルをダウンロードして、手順書を読んでください。
+しかし、それはまだ実行しないでください。
+ダウンロードページからリンクされているREADMEも非常に有用です。
+*.runファイルは、アクセスが容易な場所に置きます。
+*.runファイルが複数存在する場合は、 パッケージ番号が最も大きいものを取得してください。</p>
+    </li>
+   
+    <li><p>この手順の実行前と実行後のシステムの3D速度を比較しやすくするために、
+3Dプログラムを試しに実行して、
+ソフトウェア3D描画ではどの程度の速度で実行されるのかを調べることができます。
+XScreenSaverは大部分のLinuxとUNIXシステムにインストールされているので、
+システムを比較するための一つの良い選択肢は、まず<i>xscreensaver-demo</i>を実行して、
+リストから(良い例として)<b>GLPlanet</b>あるいは<b>Sproingies</b>を選び、<b>Preview</b>をクリックすることです。
+しばらくの間フルスクリーンで実行した後に、
+通常の画面に戻るためには、マウスボタンをクリックします。
+この作業は後でもう一度おこないます。
+また、glxgearsも試してみてください。
+5秒ごとにフレームレートが印字されるので、
+比較しやすくなります。</p>
+    </li>
+   
+    <li><p>ログアウトして通常のログイン画面に戻り、
+Ctrl-Alt-F2をタイプすれば、
+新たな仮想コンソールが開きます。
+rootとしてログインし、init 3とタイプすると、
+X環境を使用しない安全なマルチユーザモードに移行します。</p>
+    </li>
+   
+    <li><p>個々のサービスの停止を示すメッセージの出力が終わったら、
+Returnキーを押せばプロンプトに戻ります。
+次に、Xが使用するプログラムが実行されていないことを確実にするために、"pkill gdm"とタイプします。</p>
+    </li>
+    
+    <li><p>次に、ダウンロードされたスクリプトを実行するために、
+例えば次のようにタイプします。</p>
+   
+<blockquote><big><font face="Helvetica, Arial, sans-serif"><small>      sh
+ NVIDIA-Linux-x86-1.0-4496-pkg2.run</small></font></big><br />
+  </blockquote>
+   
+<blockquote>
+<b>注:</b> 実際にタイプするスクリプト名はダウンロードしたファイル名に依存します。<br />
+<br />
+このファイルはシェルスクリプトなので、先頭の"sh"は重要です。
+テキストベースのインストールを実行してください。
+SunのJDS用にコンパイルされたバイナリは存在しないので、
+ビルドしなければいけません。
+もし、ビルドを実行するならば、今回初めて実行する場合は、
+カーネルソースが既にインストールされているかを確認する必要があります。
+カーネルソースはディストリビューションのメディア上にあるはずです
+</blockquote>
+</li>
+
+    <li><p>Athlon PC上でJava Desktop Systemディストリビューションを使用している場合は、
+以下のファイルを編集しなければいけません。
+そうすれば、カーネルソースと実行しているカーネルのバージョンの不一致に関するエラーは発生しません。</p>
+   
+<blockquote><small><font face="Courier New, Courier, monospace">       /usr/src/linux-2.4.*/include/linux/version.h</font></small><br />
+  </blockquote>
+   
+<blockquote>テストシステムのために，1行目を以下のように"-athlon"で終るように変更します。<br />
+  </blockquote>
+     
+<blockquote><small><font face="Courier New, Courier, monospace">       #define
+ UTS_RELEASE "2.4.19-4GB-athlon"<br />
+    </font></small></blockquote>
+   
+<blockquote>
+すなわち、"uname- r"の出力と一致させます。<br />
+  </blockquote>
+   
+<blockquote>
+SuSEを使用している場合は、NVIDIAインストールスクリプトが完了すると、
+セットアップを完了させるためにはSaX2を実行してくださいという意味のメッセージが表示されます。
+これはSunのJDSの場合も同じなので，ここでざっと説明します。
+他のプラットフォームの場合は、 XF86Configファイルを編集して、"nv"を"nvidia"に置換する必要があるでしょう。
+他の部分も編集する必要があるかもしれません。
+NVIDIA Webサイト (<a
+ href="http://www.nvidia.com/object/linux.html">http://www.nvidia.com/object/linux.html</a>) からリンクされているREADMEと、Project Looking Glass Webサイトで，あなたの設定に最も一致するインストールについての注意書きを読んでください。
+</blockquote>
+    </li>
+   
+    <li><p>SaX2を実行してください。
+この時に、sax2 -m 0=NVIDIAを使用すると速くなると報告している人がいます。
+低解像度のXセッションが開始され、最終的にSaX2 GUIが表示されるでしょう。
+Desktopセクションのオプションを変更する必要がありますが，他は変更する必要はありません。
+以下の順序で変更してください。</p>
+<ul>
+   <li>     
+    <b><a name="Monitor:"></a>Monitor:</b>
+   
+<p>最初のタブにあるモニターから、使用しているモデル、あるいは一番近いものを選択します。
+次に、3番目のタブ<b>Expert</b>をクリックし、
+UseFrameBufferTimingの上にあるチェックボックスを選択します。
+この設定をしないと、
+このカードで望む解像度を使用しようとするとSaX2とXF86で問題が発生しました。
+それから、メイン画面に戻るために、<b>Finish</b>をクリックします。</p>
+   </li>
+ 
+   <li>     
+    <b>Graphics card</b>:
+   
+<p>[<b>Change Configuration</b>]をクリックして、
+現在設定されているグラフィックスカードを削除してください。
+これは古いドライバ用の設定されているので、
+こうすれば新しいドライバーの設定が容易になります。
+次に、<b>Add new card</b>をクリックし、ベンダーからNVIDIAを選択し、
+右側に表示されたリストから使用しているカードを選択してから、
+<b>Ok</b>をクリックします。</p>
+   
+<p>起動時にsax2に"-m 0=NVIDIA"引数を指定した場合は、
+この操作は不要のはずですが、
+念のために確認してください。</p>
+   </li>
+
+    <li><b>Colors and Resolutions</b>:
+   
+<p><b>Properties</b>をクリックして、Colorsタブの中で希望する色深度を選んでください。
+GeForceカードを最適化するために、24 ビットを推奨します。
+次に、その色深度のResolutionsタブに移動して使用可能な最も高い解像度を選択して、
+(必要に応じてスクロールして)これ以外の他の低い解像度をすべて選択解除してください。
+この作業は手間が掛かるかもしれませんが、
+これをすることで実行時の多くの問題が解決されます。
+希望する解像度がない場合は、"Expert"タブの中で追加することができます。</p>
+   
+<p>次に、OKをクリックして変更を確定してください。</p>
+</li>
+   
+    <li><b>Virtual Resolution:</b> 
+<p>必要な場合だけ選択してください!</p></li>
+
+    <li><b>3D Acceleration:</b>
+   
+<p>グラフィックスカードを正しく<b>nvidia</b>と設定していれば<b>Enabled</b>が、
+そうでなければ<b>Not configured</b>が表示されます。
+グラフィックスカードの設定に問題がある場合でも、
+この段階で修正するべき点はほとんどありません。
+実際にはNVIDIAドライバが使用されているにもかかわらず、
+sax2がこれを誤認識してunavailableやnot enableと表示されても、
+この段階ではまだあまり心配しないでください。</p>
+</li>
+    </ul>
+    </li>
+    
+    <li><p>上記中のどの時点でも、
+選択した解像度があなたのモニターではサポートされていないと伝えられた場合は、
+以下に注意してください。
+一般的に、これはハードウェアの能力を超えているか、
+あるいはモニタが正しく設定されていないことを意味しています。
+上記の<a href="#Monitor:">Monitor</a>セクション内の手順に従い、
+Expertタブ中のプルダウンリストの他のオプションを試してください。
+このダイアログが表示されている場合には、
+SaX2は上記の原因を示唆してあなたを戒めるために、
+モニター設定を廃棄しています!</p>
+    </li>
+
+    <li><p>すべてがめでたく完了したなら、<b>Finalize</b>をクリックしてください。
+あなたの運命は未だグラフィックスの魔物の手に握られていて、あなたの自由にはなりません。
+運が良ければ、この設定を試すチャンスがあります。
+そうするとすぐに、
+青色の背景の上に、左上に"Idle timer"を持つ灰色の画面サイズを調節するボックスが表示されます。
+これは、その表示を伸縮し移動させることで、モニターに最も適合するようにするものです．
+しかし、何もしないで待っていると、タイムアウトして画面設定が失敗します。
+resizeダイアログの右上のメニューで設定をどのくらい変更するかを選択できることに注意してください。
+まず高さを正しく設定し、次に幅を、そしてまた高さに戻ってから、最後にそれを正しい位置まで動かしてください。
+これは周波数をゆっくり調節することで制御しているので、一つの変更は他の設定にも影響することに注意してください。
+この作業は、良い結果に近づくまで可能な限りゆっくりと行ってください。
+またこのボックスで、設定した解像度と周波数を確認することもできます。
+希望する解像度と一致しない場合は、前節を参照してください。</p>
+   </li>
+   
+   <li><p>上記を終了したら、クリックしてTestダイアログに戻り、
+次に<b>Save</b>をクリックして、終了しテキストプロンプトに戻ります。</p></li>
+ 
+   <li><p>注: SAX2はいつもNVIDIAドライバセットの重要なOpenGLのシンボリックリンクを壊します。
+       だから、次の手順で実行することを推奨します。
+<ul>
+<li>NVIDIAドライバをインストーラを使ってインストールします。 </li>
+<li>SAX2を使って色深度と解像度を設定します(24ビットが必要です)。</li>
+<li>壊れたリンクを修正するために、NVIDIAドライバを再インストールします。</li>
+</ul>
+</li>
+
+   <li><p><b>ドライバのバージョン6629についての重要な注意:</b> 
+<br><br>
+<A NAME="ALLOWGLXWITHCOMPOSITE"></A>
+もしあなたがNVIDIAドライバのバージョン6629を使っているのならば、さらに次の操作をおこなわねばいけません。
+<ul>
+<li>もし、ファイル<span style="font-family: courier New,Courier,monospace;">/etc/X11/xorg.conf</span>が存在しなければ、このファイル名があなたのX11設定ファイルを指すようにシンボリックリンクを作ります。このファイルはたいていは、<span style="font-family: Courier New,Courier,monospace;">/etc/X11/XF86Config</span>です。たとえば，次のように実行します。
+<br><br>
+<span style="font-family: Courier New,Courier,monospace;">
+            # cd /etc/X11
+<br>
+            # ln -s XF86Config xorg.conf
+</span>
+</li>
+<br>
+<li>
+<span style="font-family: courier new,courier,monospace;">/etc/X11/xorg.conf</span>を編集して、NVIDIAドライバをロードしている<span style="font-family: Courier New,Courier,monospace;">"Device"</span>セクションを見つけます。
+この部分は、次のようになっているはずです。
+<br><br>
+<span style="font-family: Courier New,Courier,monospace;">
+            Section "Device"
+<br>
+            BoardName    "0x032B"
+<br>
+            BusID        "9:0:0"
+<br>
+            Driver       "nvidia"
+<br>
+            Identifier   "Device[0]"
+<br>
+            VendorName   "NVidia"
+<br>
+            EndSection
+</span>
+<br><br>
+</li>
+<li>
+次の行を<span style="font-family: courier new,courier,monospace;">VendorName</span>行の後に挿入します。
+<br><br>
+<span style="font-family: Courier New,Courier,monospace;">
+            Option "AllowGLXWithComposite" "true"
+</span>
+<br>
+</li>
+</ul>
+
+</p>
+   </li>
+
+   <li><p>これらの新しい設定の良い初期テスト方法は、startxを実行してみることです。
+すべてが適切な場合には、Xが起動し、NVIDIAのスプラッシュスクリーンが表示され
+(数時間格闘した後に見るには、なんとすばらしいものでしょう)、
+次に非常にシンプルなウィンドウマネージャが表示されます。
+ここからは、xtermを右クリックメニューで起動して、xdpyinfo|moreをタイプして設定を確かめることが可能になります。
+どの解像度が設定されているか、どの色深度が設定されているか、
+そしてNVIDIA-GLXがExtentionsリストの中にあるかどうかが確認できます。
+すべてが適切な場合は、Exitメニューを使用してテキストコンソールに戻ってください。</p>
+   </li>
+
+   <li><p>通常の操作に戻る準備ができたら、
+"init 5"をタイプして、システムをグラフィカルなログインプロンプトに戻します。
+もしこれが表示されれば、システムは正しく作動しています。
+他のテストも実行する必要があるので、再びログインしてください。</p>
+   </li>
+
+   <li><p>glxinfo を実行して、server glx vendor stringとOpenGL vendor stringに何が表示されるかを確認してください。
+どちらもNVIDIA Corporationと表示されるはずです。
+Mesaまたはmesasoftに関する何かが表示される場合には、
+GLおよびGLUライブラリはまだ正しく設定されていないので、
+/usr/libに移動してls -l libGL*を実行する必要があります。
+libGL.so.1.0.&lt;NVIDIAリリース番号&gt;とlibGLcore.so.1.0.&lt;NVIDIAリリース番号&gt;に加え、libGLU.so.1.3が確認できるはずです。
+また他のファイルが存在している場合もあります。
+および、NVIDIAファイルを指すようなlibGL*.soとlibGL*.so.1のソフトリンクが必要です。
+Mesaを以前にインストールしている場合は、そのrpmはもう不要なので削除してください。
+必要とする各リンクは、実際にインストールされているどのバージョン番号に対しても、たとえばln -s libGL.so.1.0.5366 libGL.soのように実行して、自分で作ることができます。
+NVIDIA インストーラを再度実行するとこの作業をおこなってくれるとされていましたが、システムで提供されている libGLU.soに対しては動作しません。
+そこで、上記手順に従えば、再びinit 3に戻って修復を行う手間が省けます。 </p>
+
+<p><b>最終結果:</b></p>
+<p>求める結果は、以下のようになります(ls -l libGL*)。</p>
+ 
+<blockquote><small><font face="Courier New, Courier, monospace">lrwxrwxrwx
+ ... libGLcore.so.1 -&gt; libGLcore.so.1.0.5336</font><br />
+    <font face="Courier New, Courier, monospace">	 -rwxr-xr-x ... libGLcore.so.1.0.5336</font><br />
+    <font face="Courier New, Courier, monospace">	 -rw-r--r-- ... libGL.la</font><br />
+    <font face="Courier New, Courier, monospace">	 lrwxrwxrwx ... libGL.so
+ -&gt; libGL.so.1</font><br />
+    <font face="Courier New, Courier, monospace">	 lrwxrwxrwx ... libGL.so.1
+ -&gt; libGL.so.1.0.5336</font><br />
+    <font face="Courier New, Courier, monospace">	 -rwxr-xr-x ... libGL.so.1.0.5336</font><br />
+    <font face="Courier New, Courier, monospace">	 -rw-r--r-- ... libGLU.a</font><br />
+    <font face="Courier New, Courier, monospace">	 -rwxr-xr-x ... libGLU.la</font><br />
+    <font face="Courier New, Courier, monospace">	 lrwxrwxrwx ... libGLU.so
+ -&gt; libGLU.so.1.3</font><br />
+    <font face="Courier New, Courier, monospace">	 lrwxrwxrwx ... libGLU.so.1
+ -&gt; libGLU.so.1.3</font><br />
+    <font face="Courier New, Courier, monospace">	 -rwxr-xr-x ... libGLU.so.1.3</font><br />
+    </small></blockquote>
+</li>
+ 
+  <li><p>これらの手順をすべて終えたら、再度glxinfoを試してください。
+グラフィカルアプリケーションがするように、Xサーバに接続するので、
+root権限で実行する場合には、
+まず実際にログインしたユーザでxhost +localhostを実行して、
+次にroot権限で"export DISPLAY=:0"を実行してから、glxinfoを実行してください。
+運がよければNVIDIAの現在の構成が正しく報告されます。</p></li>
+   
+  <li><p>ここで、<i>xscreensaver-demo</i>または3Dパフォーマンスを確認するために、前回実行したすべてのものを再実行しましょう。
+同じことを実行して、実際に速くなったかどうかを確かめてください。
+うまくいけば，驚くほど速くなったことが体感できるでしょう!</p></li>
+</ol>
+
+<h3>謝辞</h3>
+
+<p>Project Looking Glassチームはこの手順書を提供してくれたMark Bowyer
+<a href="mailto:Mark.Bowyer@sun.com"><u>Mark.Bowyer@sun.com</u></a>
+とKyle McDnald
+<a href="mailto:Kyle.McDonald@sun.com"><u>Kyle.McDonald@sun.com</u></a>
+に多大な感謝を捧げます!</p>
+<hr />
+<small>$Revision: 1.1 $ $Date: 2006-05-09 17:51:02 $ (英語版 Revision: 1.12)</small>
+
+</div>
+</body>
+</html>

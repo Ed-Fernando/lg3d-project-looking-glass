@@ -1,0 +1,84 @@
+<!DOCTYPE html PUBLIC "-//Tigris//DTD XHTML 1.0 Transitional//EN"
+"http://style.tigris.org/tigris_transitional.dtd">
+<html>
+<head>
+  <title>NVIDIA Driver Install Tips for Solaris x86</title>
+</head>
+<body>
+<div id="projectdocumentview" class="app">
+
+<hr />
+<h2>NVIDIA Driver Installation Tips for Solaris x86</h2>
+
+<br />
+
+<h3>Installation Instructions</h3>
+<ol>
+
+    <li><p>Go to <a href="http://www.nvidia.com/object/solaris_display_1.0-8756.html">http://www.nvidia.com/object/solaris_display_1.0-8756.html<a> and follow the download and installation instructions.
+<br><br>
+Currently only the following Nvidia graphics devices are supported by this driver.<br /> 
+        <ul>
+        Quadro FX 4000
+        <br>
+	Quadro FX 3000
+        <br>
+	Quadro FX 1100
+        <br>
+	Quadro FX 500
+        <br>
+	NVS 280
+        </ul>
+
+   <li><p><b>Enable Composite and GLX Together:</b> 
+<br><br>
+<A NAME="ALLOWGLXWITHCOMPOSITE"></A>
+Project Looking Glass depends on the presence of both of the X11 extensions Composite and GLX. By default, version 8756 of the Nvidia doesn't enable them both. You need to modify
+your X configuration in order to enable them both.
+<ul>
+<br>
+<li>
+Edit <span style="font-family: courier new,courier,monospace;">/etc/X11/xorg.conf</span> and find the <span style="font-family: Courier New,Courier,monospace;">"Device"</span> section that loads the NVIDIA driver. 
+It should look something like this:
+<br><br>
+<span style="font-family: Courier New,Courier,monospace;">
+Section "Device"
+    Identifier  "** NVIDIA "
+<br>
+    Driver      "nvidia"
+<br>
+EndSection
+<br><br>
+<li>
+Insert the following line after the <span style="font-family: courier new,courier,monospace;">Driver</span> line:
+<br><br>
+<span style="font-family: Courier New,Courier,monospace;">
+            Option "AllowGLXWithComposite" "true"
+</span>
+</li>
+</ul>
+
+</li>
+</ol>
+
+<h3>NVIDIA GeForce workaround</h3>
+NVIDIA only supports QUADRO cards, but you can get them working on GeForce cards.
+<ol>
+  <li> Run the installation of the driver as normal, but <strong>do not reboot yet!!</strong>.<br/><br/></li>
+  <li>Make the modifications to the xorgconfig file as indicated in the NVidia driver readme. Don't forget to add:<br/><br/>
+  <ol><code>Option "AllowGLXWithComposite" "true"</code></ol><br/><br/></li>
+  <li> Run /usr/X11/bin/scanpci and check the pci id of your NVidia card.<br/><br/></li>
+  <li>Open the file driver_aliases in the /etc folder and add a line &quot;pcixxxx,xxx&quot; where the xxxs are filled by the values from the scanpic in step 3. Don't forget the &quot;.<br/><strong>Note:</strong> scanpci gives a PCI ID fo the GeForce 5200 card as 0x10de 0x0322. It must be entered as &quot;pci10de,322&quot; to meet IEEE standards.<br/><br/></li>
+  <li>Reboot the machine in reconfiguration mode.<br/><br/>
+      <ol><code>reboot -- -r</code></ol><br/>
+      <strong>Note:</strong> Normal reboot may not work.
+  </li>
+</ol><br/>
+<small>Thanks to catscratch for these instructions!</small>
+<hr />
+
+<small>$Revision: 1.2 $ $Date: 2006-05-12 22:59:48 $</small>
+
+</div>
+</body>
+</html>

@@ -1,0 +1,619 @@
+<!DOCTYPE html PUBLIC "-//Tigris//DTD XHTML 1.0 Transitional//EN" "http://style.tigris.org/tigris_transitional.dtd">
+<html>
+<head>
+  <title>Project Looking Glass開発者ガイド</title>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  <meta name="Translator" content="Hideyuki OTOKAWA" />
+<style type="text/css"> /* <![CDATA[ */ @import "preview.css"; /* ]]> */</style>
+</head>
+<body>
+<div id="projectdocumentview" class="app">
+<hr />
+<h2>Project Looking Glass開発者ガイド</h2>
+<br />
+<p>
+このドキュメントではjava.net上のSunの3DデスクトップのオープンソースプロジェクトのProject Looking Glass開発者リリースを紹介します。開発環境の設定方法並びにProject Looking Glassと3Dアプリケーションのビルド方法を説明します。<br />
+</p>
+<a href="#Getting_Started">1. はじめに</a> <br />
+<a href="#Setting_up_your_development">2. 開発環境の設定</a> <br />
+<a href="#Download_the_Project_Looking_Glass">3. Project Looking Glass開発者リリースのダウンロード</a> <br />
+<a href="#Building_Project_Looking_Glass">4. Project Looking Glassのビルド</a> <br />
+<a href="#Configuring_app_mode">5. appモードの設定</a> <br />
+<a href="#Running_Project_Looking_Glass">6. Project Looking Glassの起動</a> <br />
+<a href="#Getting_the_latest_Project_Looking">7. 最新のProject Looking Glassのソースコードの入手</a> <br />
+<a href="#A_quick_tour_of_the_Project_Looking">8. Project Looking Glassのソースのクィックツアー</a> <br />
+<a href="#Contributing_to_Project_Looking_Glass">9. Project Looking Glassへの貢献</a><br />
+<a href="#Learning_how_to_write_3D_applications">10. Project Looking Glass向け3Dアプリケーションの書き方の学習</a> <br />
+<h3><a name="Getting_Started"></a>1. はじめに</h3>
+<p>
+もしまだ実行環境を設定していないのであれば、<a href="lg3d-getting-started.html">さぁ、はじめよう Project Looking Glass 開発者リリース</a>の情報を参照して下さい。特に、自分の環境がProject Looking Glassを実行するための最低限の必要条件を満たしているかを確認して下さい。</p>
+<p>
+アプリケーションの開発やProject Looking Glassの拡張をおこなうために、いくつかのコンポーネントをインストールし、Project Looking Glassのソースをダウンロードする必要があります。
+</p>
+<h3><a name="Setting_up_your_development"></a>2. 開発環境の設定</h3>
+<h4>開発ツールのダウンロードとインストール</h4>
+<p>
+Project Looking Glassは、ビルドプロセスを管理するためにApacheのANTビルドツールを使用します。まだANTをインストールしていなければ、apache.orgのWebサイトからバイナリをダウンロードして下さい。
+</p>
+<a href="http://ant.apache.org/">http://ant.apache.org/</a> <br />
+<br />
+<b>注:</b> 以下の手順では、ANTのバイナリを<span
+ style="font-family: courier new,courier,monospace;">/tmp</span>にダウンロードしたと仮定しています。<br />
+<br />
+ANTをダウンロードした後、次のようにインストールして下さい。<br />
+<ol>
+  <li>まずrootになります。<br />
+    <br />
+    <span style="font-family: courier new,courier,monospace;"> % su root</span><br />
+    <span style="font-family: courier new,courier,monospace;"> Password:</span>
+    <b>rootのパスワードを入力</b><br />
+    <span style="font-family: courier new,courier,monospace;">#</span><br />
+    <br />
+  </li>
+  <li>ApacheのANTをインストールします。<span
+ style="font-family: courier new,courier,monospace;"><br />
+    <br />
+# cd /usr/local<br />
+    </span><span style="font-family: courier new,courier,monospace;">#
+tar -xzf
+/tmp/apache-ant-1.6.1-bin.tar.gz<br />
+    <br />
+    </span></li>
+  <li>rootから抜けます。<br />
+    <br />
+    <span style="font-family: courier new,courier,monospace;"> # exit<br />
+%<br />
+    <br />
+    </span></li>
+  <li>さらに環境変数を設定する必要があります。 以下は bash(1) を使用した場合の例です。
+<span
+ style="font-family: courier new,courier,monospace;"><br />
+    <br />
+ANT_HOME=/usr/local/apache-ant-1.6.1<br />
+    </span><span style="font-family: courier new,courier,monospace;">PATH=$ANT_HOME/bin:$PATH</span><br />
+  </li>
+</ol>
+<h3><a name="Download_the_Project_Looking_Glass"></a>3. Project Looking Glass開発者リリースのダウンロード</h3>
+<p>
+Project Looking Glass開発者リリースのソースコードは、<a href="http://www.java.net">java.net</a>上の<a href="https://lg3d.dev.java.net">LG3D</a>オープンソースプロジェクトから入手できます。<br />
+</p>
+<h4>java.netWebサイトへの登録</h4>
+<p>まだ<a href="http://www.java.net/">java.net</a>に登録していなければ、ソースコードのダウンロードの前に次のようにアカウントを作成する必要があります。<br />
+</p>
+<ol>
+  <li><a href="http://www.java.net/">http://www.java.net</a>にアクセスして、ページの一番上にある<b>Register</b>をクリックします。</li>
+  <li>好きな名前とメールアドレスを入力してから、<b>[登録]</b>ボタンを押します。</li>
+  <li>アカウントのパスワードの設定方法が記述してあるメールが送られてきます。一旦パスワードを設定して、java.net サイトの参加規約(JAVA.NET WEB SITE TERMS OF PARTICIPATION)を承認すれば、ログインできます。
+</li>
+  <li>その後は、<a href="https://lg3d.dev.java.net/">LG3DプロジェクトWebサイト</a>を見て回ってください。</li>
+</ol>
+Project Looking Glassのコアのソースコードを見るためには、<a href="https://lg3d.dev.java.net">LG3DプロジェクトWebサイト</a>の<b>サブプロジェクト</b>の節の中の<b>lg3d-core</b>をクリックします。
+次にサイドバーの中の<b>プロジェクト ツール</b>にある<b>ソースコード</b>をクリックします。そうすると、右側にソースツリーがリンクとして表示されるので、そのリンクをクリックすることによってソースツリーを見たり、個々のファイルをダウンロードすることができます。<br />
+<h4>Project Looking Glassコアのソースのダウンロード</h4>
+<p>
+さて次は、Project Looking Glassコアのソースを設定済みの開発システムに次のようにダウンロードします。<br />
+</p>
+<ol>
+  <li>まずProject Looking Glassプロジェクトのためのディレクトリを例えば次のように作成します。<br />
+    <br />
+    <span style="font-family: courier new,courier,monospace;"> % mkdir
+-p
+~/projects/lg3d<br />
+% cd ~/projects/lg3d</span><br />
+    <br />
+<b>appモードの注意:</b> もしappモード(lg3d-app)を実行するためにこのビルドを使おうとしている場合は、必ずローカルディスクのパーティションにダウンロードしてください。
+ネットワーク経由でマウントされたパーティションは使ってはいけません。
+<br /><br />
+  </li>
+  <li>次に、cvs.dev.java.netのCVSサーバにログインします。<br />
+    <br />
+    <span style="font-family: courier new,courier,monospace;"> % cvs -d
+:pserver:<b>username</b>@cvs.dev.java.net:/cvs login <br />
+CVS password:</span> <b>password</b><br />
+    <br />
+この中の<b>username</b>と<b>password</b>はjava.netの自分のアカウント情報を使用して下さい。<br />
+    <br />
+  </li>
+  <li><b>lg3d-core</b>のソースファイルをチェックアウトします。<br />
+    <br />
+    <span style="font-family: courier new,courier,monospace;"> % cvs -d
+:pserver:<b>username</b>@cvs.dev.java.net:/cvs
+checkout lg3d-core<br />
+    <br />
+    </span></li>
+  <li><b>lg3d-demo-apps</b>プロジェクトは、CD viewerなどの3Dアプリケーションやチュートリアルを含んでいます。Project Looking Glassデスクトップはこれらのファイルを必要としますので、これらをチェックアウトします。<br />
+    <br />
+    <span style="font-family: courier new,courier,monospace;"> % cvs -d
+:pserver:<b>username</b>@cvs.dev.java.net:/cvs
+checkout lg3d-demo-apps</span><br />
+  </li>
+</ol>
+<p>
+Windowsユーザへの注意:
+Windowsプラットフォーム用のCVSクライアントを使ってソースファイルをチェックアウトすることができます。
+しかし、どのファイルをチェックする時でも、Windowsファイル名では大文字・小文字を区別しないということに注意する必要があります。
+</p>
+
+<h4>Project Looking GlassのX11のソースのダウンロード (オプション)</h4>
+<p>
+Project Looking Glassをビルドして実行するためには、Project Looking GlassのX11のソースをダウンロードする必要はありません。
+もし、X11のソースのダウンロードを選ばなくても、(lg3d-devスクリプトを使って)"devモード"で実行できるでしょう。
+このモードでは、3Dアプリケーションは実行できますが、ネイティブのX11アプリケーションは実行できません。
+</p>
+<p>
+"sessionモード" (lg3d-session)と"appモード" (lg3d-app)を使えば、3DアプリケーションとネイティブのX11アプリケーションの両方が実行できるようになりますが、これらのスクリプトは、あなたがX11ソースをダウンロードしてビルドした場合だけ動作します。
+</p>
+<p>
+Project Looking GlassのX11ソースをダウンロードするためには、lg3d-x11のCVSツリーをチェックアウトして、あなたがダウンロードしたlg3d-coreディレクトリと同じディレクトリ内にそのディレクトリを作ります。
+必ずlg3d-coreのブランチと同じ名前のCVSブランチをチェックアウトしてください。
+</p>
+<p>
+たとえば、lg3d-coreが/opt/mylg/lg3d-coreディレクトリにあり、そのブランチ名がdev-0-7-0の場合は、lg3d-x11を次のようにチェックアウトしてください。
+</p>
+<blockquote><span
+ style="font-family: courier new,courier,monospace;">
+% cd /opt/mylg
+<br />
+    <span style="font-family: courier new,courier,monospace;"> % cvs -d
+:pserver:<b>username</b>@cvs.dev.java.net:/cvs
+checkout -r dev-0-7-0 lg3d-x11/<i>platform</i>/<i>arch</i> lg3d-x11
+    <br />
+    </span>
+</span></blockquote>
+<p>
+<span style="font-family: courier new,courier,monospace;"><i>platform</i>/<i>arch</i></span>の現在サポートされている値は、以下のどれかです。
+</p>
+<blockquote><span
+ style="font-family: courier new,courier,monospace;">
+    linux/i686 
+<br />
+    solaris/i86pc</span> (Solaris用)
+</blockquote>
+
+<h4>次は?</h4>
+<p>
+おめでとうございます。
+以上でビルド環境の設定が終了し、これでProject Looking Glassをビルドできるようになりました。
+</p>
+
+<h3>
+<a name="Building_Project_Looking_Glass"></a>4. Project Looking Glassのビルド</h3>
+<p>
+ソースからのProject Looking Glassのビルドは、lg3d-coreディレクトリにあるANTのビルドファイル(build.xml)によっておこなわれます。そのディレクトリに移動し、antコマンドを実行して、Project Looking Glassをビルドします。</p>
+<blockquote> <span style="font-family: courier new,courier,monospace;">%
+cd
+~/projects/lg3d/lg3d-core<br />
+% ant</span><br />
+</blockquote>
+実行すると、次のように出力されます。
+<blockquote> <small><span
+ style="font-family: courier new,courier,monospace;">Buildfile:
+build.xml<br />
+&nbsp;<br />
+init:<br />
+&nbsp;&nbsp;&nbsp; [mkdir] Created dir:
+/home/username/projects/lg3d/lg3d-core/build/classes<br />
+&nbsp;<br />
+unpack-x:<br />
+&nbsp;&nbsp;&nbsp; [untar] Expanding:
+/home/username/projects/lg3d/lg3d-core/ext/lg3d-x11.tar.gz into
+/home/username/projects/lg3d/lg3d-core/ext<br />
+&nbsp;<br />
+compile:<br />
+&nbsp;&nbsp;&nbsp; [javac] Compiling 1 source file to
+/home/username/projects/lg3d/lg3d-core/build-tools<br />
+&nbsp;&nbsp;&nbsp; [javac] Compiling 626 source files to
+/home/username/projects/lg3d/lg3d-core/build/classes<br />
+&nbsp;<br />
+compile-x11:<br />
+&nbsp;<br />
+check-escher:<br />
+&nbsp;&nbsp;&nbsp; [javac] Compiling 25 source files to
+/home/username/projects/lg3d/lg3d-core/build/classes<br />
+&nbsp;<br />
+init:<br />
+&nbsp;<br />
+unpack-x:<br />
+  <br />
+native-x11:<br />
+&nbsp;&nbsp;&nbsp;&nbsp; [exec]
+.:/home/username/projects/lg3d/lg3d-core/src/../build/classes<br />
+&nbsp;<br />
+junit-tests:<br />
+&nbsp;<br />
+no-junit-tests:<br />
+&nbsp;&nbsp;&nbsp;&nbsp; [echo] Skipping junit tests because junit.jar
+is not installed in ext-unbundeled<br />
+&nbsp;<br />
+compile-demo-apps:<br />
+&nbsp;&nbsp;&nbsp; [javac] Compiling 5 source files to
+/home/username/projects/lg3d/lg3d-core/build/classes<br />
+&nbsp;&nbsp;&nbsp;&nbsp; [copy] Copying 4 files to
+/home/username/projects/lg3d/lg3d-core/build/classes/org/jdesktop/lg3d/apps/cdviewer/resources<br />
+&nbsp;&nbsp;&nbsp;&nbsp; [copy] Copying 1 file to
+/home/username/projects/lg3d/lg3d-core/build/classes/org/jdesktop/lg3d/apps/tutorial/resources<br />
+&nbsp;&nbsp;&nbsp;&nbsp; [copy] Copying 1 file to
+/home/username/projects/lg3d/lg3d-core/build/classes/org/jdesktop/lg3d/apps/help/resources<br />
+&nbsp;<br />
+jar:<br />
+&nbsp;&nbsp;&nbsp; [mkdir] Created dir:
+/home/username/projects/lg3d/lg3d-core/build/lib<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; [jar] Building jar:
+/home/username/projects/lg3d/lg3d-core/build/lib/lg3d-core.jar<br />
+&nbsp;<br />
+all:<br />
+&nbsp;<br />
+BUILD SUCCESSFUL<br />
+Total time: 32 seconds</span><br />
+  </small></blockquote>
+<h3>
+<a name="Configuring_app_mode"></a>5. appモードの設定</h3>
+もし、
+<span style="font-family: courier new,courier,monospace;">
+src/devscripts/lg3d-app
+</span>スクリプトを使おうとしている場合には
+必ずローカルディスクパーティションにlg3d-coreのCSVツリーのコピーを置いてください。
+それから、rootユーザになり、次のように実行します。
+<br /><br />
+<span style="font-family: courier new,courier,monospace;">
+# cd ~/projects/lg3d/lg3d-core
+<br />
+# ./postinstall
+</span>
+<br /><br />
+その後に、通常ユーザに戻ります。
+<h3>
+<a name="Running_Project_Looking_Glass"></a>6. Project Looking Glassの起動</h3>
+<p>
+Project Looking Glassを起動する方法は、appモード、sessionモード、devモードの3つがあります。
+これらのモードは<a
+ href="lg3d-getting-started.html#Running_Project_Looking_Glass">さぁ、はじめよう Project Looking Glass 開発者リリース</a>ドキュメントの<b>Project Looking Glassの起動</b>の節に書かれています。 
+<br /><br />
+開発者としての唯一の違いは、
+<span style="font-family: courier new,courier,monospace;">
+~/projects/lg3d/lg3d-core/bin
+</span>
+の中にある起動スクリプトの代わりに、
+<span style="font-family: courier new,courier,monospace;">
+~/projects/lg3d/lg3d-core/src/devscripts.
+</span>
+の中にある起動スクリプトを使う必要があることです。
+</p>
+<p>
+Project Looking Glassの起動がうまくいかない場合は、<a href="lg3d-getting-started.html#Troubleshooting">さぁ、はじめよう Project Looking Glass 開発者リリース</a>の<b>トラブルシューティング</b>の節を参照して下さい。
+</p>
+<h3><a name="Getting_the_latest_Project_Looking"></a>7. 最新のProject Looking Glassのソースコードの入手<br />
+</h3>
+<p>
+Project Looking Glassの最新の開発状況を反映するには、java.netのcvsサーバに定期的にログインし、次のように自分のcvsの作業領域を更新して下さい。
+</p>
+<ol>
+  <li>自分の~/projects/lg/lg3d-coreディレクトリに移動します。<br />
+    <span style="font-family: courier new,courier,monospace;"><br />
+% cd ~/projects/lg/lg3d-core<br />
+    </span> <br />
+  </li>
+  <li>現在のバージョンのソース用のビルドファイルを削除します。<br />
+    <br />
+    <span style="font-family: courier new,courier,monospace;"> % ant
+clean </span><br />
+    <br />
+  </li>
+  <li>自分の~/projects/lgディレクトリに移動します。<br />
+    <br />
+    <span style="font-family: courier new,courier,monospace;"> % cd
+~/projects/lg</span><span
+ style="font-family: courier new,courier,monospace;"><br />
+    </span><br />
+  </li>
+  <li>自分の作業領域を最新のProject Looking Glassのソースコードに更新します。<br />
+    <br />
+    <span style="font-family: courier new,courier,monospace;"> %
+cvs -d :pserver<b>:username</b></span><span
+ style="font-family: courier new,courier,monospace;">@cvs.dev.java.net:/cvs
+update
+-Pd lg3d-core<br />
+    </span><br />
+さらにデモアプリケーションも次のように更新します。<br />
+    <br />
+    <span style="font-family: courier new,courier,monospace;"> % cvs -d
+:pserver<b>:username</b></span><span
+ style="font-family: courier new,courier,monospace;">@cvs.dev.java.net:/cvs
+update
+-Pd lg3d-demo-apps</span><br />
+    <br />
+<b>username</b>は自分のjava.netのユーザ名に置き換えて下さい。<br />
+  </li>
+</ol>
+<p>
+以上で、Project Looking Glassを無事ビルドすることができました。さて、次にソースコードに親しむために、<span style="font-family: courier new,courier,monospace;">lg3d-core/</span>ディレクトリをざっと見て回りましょう。<br />
+</p>
+<h3><a name="A_quick_tour_of_the_Project_Looking"></a>
+8. Project Looking Glass Sourceのクイックツアー</h3>
+<p>
+Project Looking Glassのソースコードは<span style="font-family: courier new,courier,monospace;">lg3d-core/src</span>にあります。以下は、lg3d-coreのソースのCVSリポジトリにある様々なファイルの概要です。</p>
+<table style="text-align: left; width: 100%;" border="1" cellpadding="2"
+ cellspacing="2">
+  <tbody>
+    <tr>
+      <td bgcolor="#cccccc">ディレクトリ</td>
+      <td bgcolor="#cccccc">説明</td>
+    </tr>
+    <tr>
+      <td
+ style="text-align: left; vertical-align: top; white-space: nowrap;"><span
+ style="font-family: courier new,courier,monospace;">build/</span></td>
+      <td style="text-align: left; vertical-align: top;">ビルドファイルはこのディレクトリにあります。<br />
+      </td>
+    </tr>
+    <tr>
+      <td
+ style="text-align: left; vertical-align: top; white-space: nowrap;"><span
+ style="font-family: courier new,courier,monospace;">build-tools/</span>
+      </td>
+      <td style="text-align: left; vertical-align: top;">Project Looking Glassをビルドするためのツール群です。<br />
+      </td>
+    </tr>
+    <tr>
+      <td
+ style="text-align: left; vertical-align: top; white-space: nowrap;"><span
+ style="font-family: courier new,courier,monospace;">build.xml</span></td>
+      <td style="text-align: left; vertical-align: top;">Antのビルド制御ファイルです。<br />
+      </td>
+    </tr>
+    <tr>
+      <td
+ style="text-align: left; vertical-align: top; white-space: nowrap;"><span
+ style="font-family: courier new,courier,monospace;">ext/</span></td>
+      <td style="text-align: left; vertical-align: top;">escher (X11のJavaバインディング)やlg3d-x11の安定版ビルドのような、Project Looking Glassと共にリリースされる様々なコンポーネントです。<br />
+      </td>
+    </tr>
+    <tr>
+      <td
+ style="text-align: left; vertical-align: top; white-space: nowrap;"><span
+ style="font-family: courier new,courier,monospace;">&nbsp;&nbsp;&nbsp;app/</span></td>
+      <td style="text-align: left; vertical-align: top;">タスクバーに配備するアプリケーションを置くディレクトリ。
+LG3Dは自動的にこのディレクトリの中のJARファイルを探して、(もし正しく設定されていれば)タスクバーにそれらを追加します。<br />
+      </td>
+    </tr>
+    <tr>
+      <td
+ style="text-align: left; vertical-align: top; white-space: nowrap;"><span
+ style="font-family: courier new,courier,monospace;">ext-unbundled/</span></td>
+      <td style="text-align: left; vertical-align: top;">Project Looking Glassと一緒に配布することが認められていないコンポーネント(例、junit, Java3Dローダなど)を入れることができるディレクトリです。$LGX11HOMEを使う代わりに自分でビルドしたlg3d-x11をここに入れることもできます。<br />
+      </td>
+    </tr>
+    <tr>
+      <td
+ style="text-align: left; vertical-align: top; white-space: nowrap;"><span
+ style="font-family: courier new,courier,monospace;">src/</span></td>
+      <td style="text-align: left; vertical-align: top;">lg3d-coreのソースツリーのルートです。<br />
+      </td>
+    </tr>
+    <tr>
+      <td
+ style="text-align: left; vertical-align: top; white-space: nowrap;"><span
+ style="font-family: courier new,courier,monospace;">&nbsp;&nbsp;&nbsp;
+classes/</span></td>
+      <td style="text-align: left; vertical-align: top;">すべての.javaファイルがここにあります。<br />
+より詳しい情報は、バイナリに含まれている<span
+ style="font-family: courier new,courier,monospace;">docs/javadoc/api</span>にあるjavadocファイルを参照してください。</td>
+    </tr>
+    <tr>
+      <td
+ style="text-align: left; vertical-align: top; white-space: nowrap;"><span
+ style="font-family: courier new,courier,monospace;">&nbsp;&nbsp;&nbsp;
+devscripts/</span></td>
+      <td style="text-align: left; vertical-align: top;">様々なProject Looking Glass開発用スクリプトのソースです。これらは<span style="font-family: courier new,courier,monospace;">build/</span>ディレクトリにあるクラスを利用します。</td>
+    </tr>
+    <tr>
+      <td
+ style="text-align: left; vertical-align: top; white-space: nowrap;"><span
+ style="font-family: courier new,courier,monospace;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+HelloUniverse</span></td>
+      <td style="text-align: left; vertical-align: top;">Project Looking GlassセッションにおいてJava3Dの回転立方体のデモを起動するスクリプトです。<br />
+      </td>
+    </tr>
+    <tr>
+      <td
+ style="text-align: left; vertical-align: top; white-space: nowrap;"><span
+ style="font-family: courier new,courier,monospace;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+README</span></td>
+      <td style="text-align: left; vertical-align: top;">このディレクトリにあるいくつかのスクリプトに対する説明です。<br />
+      </td>
+    </tr>
+    <tr>
+      <td
+ style="text-align: left; vertical-align: top; white-space: nowrap;"><span
+ style="font-family: courier new,courier,monospace;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+Xtest<br />
+      </span></td>
+      <td style="text-align: left; vertical-align: top;">X11サポートを使わずに、Java X11のクラスをテストするためのスクリプトです。<br />
+      </td>
+    </tr>
+    <tr>
+      <td
+ style="text-align: left; vertical-align: top; white-space: nowrap;"><span
+ style="font-family: courier new,courier,monospace;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+displayserver</span></td>
+      <td style="text-align: left; vertical-align: top;">Display Serverを起動するスクリプトです。<br />
+      </td>
+    </tr>
+    <tr>
+      <td
+ style="text-align: left; vertical-align: top; white-space: nowrap;"><span
+ style="font-family: courier new,courier,monospace;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+lg3d-dev</span></td>
+      <td style="text-align: left; vertical-align: top;">既存のX11デスクトップ(例、Gnome、KDE)の中の1つのウィンドウ内で、X11アプリケーションサポートなしでProject Looking Glassセッションを起動します。
+(これは、「開発者用」または「Xなしのモード」と呼ばれます)<br />
+      </td>
+    </tr>
+    <tr>
+      <td
+ style="text-align: left; vertical-align: top; white-space: nowrap;"><span
+ style="font-family: courier new,courier,monospace;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+lg3d-session<br />
+      </span></td>
+      <td style="text-align: left; vertical-align: top;">X11アプリケーションサポートありで、Project Looking Glassセッションをフルスクリーンモードで起動するものです。<br />
+      </td>
+    </tr>
+    <tr>
+      <td
+ style="text-align: left; vertical-align: top; white-space: nowrap;"><span
+ style="font-family: courier new,courier,monospace;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+lg3d-app<br />
+      </span></td>
+      <td style="text-align: left; vertical-align: top;">Project Looking Glassを、X11アプリケーションサポートありで、既存のX11デスクトップ(例、Gnome、KDE)の一つのウィンドウとして起動します。<br />
+      </td>
+    </tr>
+    <tr>
+      <td
+ style="text-align: left; vertical-align: top; white-space: nowrap;"><span
+ style="font-family: courier new,courier,monospace;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+postinstall<br />
+      </span></td>
+      <td style="text-align: left; vertical-align: top;">lg3d-appモードのための設定スクリプトで、lg3d-appを起動する前にrootで実行しておく必要があります。<br />
+      </td>
+    </tr>
+    <tr>
+      <td
+ style="text-align: left; vertical-align: top; white-space: nowrap;"><span
+ style="font-family: courier new,courier,monospace;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+setup</span></td>
+      <td style="text-align: left; vertical-align: top;">他のスクリプトが利用するヘルパースクリプトです。<br />
+      </td>
+    </tr>
+    <tr>
+      <td
+ style="text-align: left; vertical-align: top; white-space: nowrap;"><span
+ style="font-family: courier new,courier,monospace;">&nbsp;&nbsp;&nbsp;
+etc/</span></td>
+      <td style="text-align: left; vertical-align: top;">様々な設定ファイルを含んでいます。<br />
+      </td>
+    </tr>
+    <tr>
+      <td
+ style="text-align: left; vertical-align: top; white-space: nowrap;"><span
+ style="font-family: courier new,courier,monospace;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+jz/</span></td>
+      <td style="text-align: left; vertical-align: top;">現在利用されていないディレクトリです。<br />
+      </td>
+    </tr>
+    <tr>
+      <td
+ style="text-align: left; vertical-align: top; white-space: nowrap;"><span
+ style="font-family: courier new,courier,monospace;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+lg3d/</span></td>
+      <td style="text-align: left; vertical-align: top;"><br />
+      </td>
+    </tr>
+    <tr>
+      <td
+ style="text-align: left; vertical-align: top; white-space: nowrap;"><span
+ style="font-family: courier new,courier,monospace;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+README</span></td>
+      <td style="text-align: left; vertical-align: top;">様々なlgconfig*ファイルのドキュメントです。<br />
+      </td>
+    </tr>
+    <tr>
+      <td
+ style="text-align: left; vertical-align: top; white-space: nowrap;"><span
+ style="font-family: courier new,courier,monospace;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+lgconfig*</span></td>
+      <td style="text-align: left; vertical-align: top;">Project Looking Glassが実行可能な様々なモードに応じた設定スクリプトです。<br />
+      </td>
+    </tr>
+    <tr>
+      <td
+ style="text-align: left; vertical-align: top; white-space: nowrap;"><span
+ style="font-family: courier new,courier,monospace;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+logging.properties</span></td>
+      <td style="text-align: left; vertical-align: top;">Display Serverのログファイルである<span style="font-family: courier new,courier,monospace;">/var/tmp/lgserver.log</span>へのログ出力の冗長度を制御するための設定ファイルです。</td>
+    </tr>
+    <tr>
+      <td style="vertical-align: top; white-space: nowrap;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+      <span style="font-family: courier new,courier,monospace;">displayconfig/</span></td>
+      <td style="vertical-align: top;">実験目的のために、このディレクトリには、Project Looking Glassを、マルチスクリーン、立体視、Power Wall (壁面型の大型表示装置) などの複雑な表示環境で起動するためのファイルがあります。設定の選択はlgconfig.xmlでおこないます。<br />
+      <br />
+      <span style="color: red;">警告!</span> 他のディスプレイ設定はまだ十分にテストされていません。<br />
+      </td>
+    </tr>
+    <tr>
+      <td
+ style="text-align: left; vertical-align: top; white-space: nowrap;"><span
+ style="font-family: courier new,courier,monospace;">&nbsp;&nbsp;&nbsp;
+      <small>native/org/jdesktop/lg3d/displayserver/fws/x11/</small></span></td>
+      <td style="text-align: left; vertical-align: top;">X11との統合のためのCのコードです。<br />
+      </td>
+    </tr>
+    <tr>
+      <td
+ style="text-align: left; vertical-align: top; white-space: nowrap;"><span
+ style="font-family: courier new,courier,monospace;">&nbsp;&nbsp;&nbsp;
+resources/images/</span></td>
+      <td style="text-align: left; vertical-align: top;">Project Looking Glassで使われる様々な画像です。<br />
+      </td>
+    </tr>
+    <tr>
+      <td
+ style="text-align: left; vertical-align: top; white-space: nowrap;"><span
+ style="font-family: courier new,courier,monospace;">tests/</span></td>
+      <td style="text-align: left; vertical-align: top;">そのうちにProject Looking Glassのテストスィートを格納します。<br />
+      </td>
+    </tr>
+    <tr>
+      <td
+ style="text-align: left; vertical-align: top; white-space: nowrap;"><span
+ style="font-family: courier new,courier,monospace;">www/</span></td>
+      <td style="text-align: left; vertical-align: top;">java.netサイトのページと様々なドキュメントです。<br />
+      </td>
+    </tr>
+  </tbody>
+</table>
+<br />
+<h3><a name="Contributing_to_Project_Looking_Glass"></a>9. Project Looking Glassへの貢献</h3>
+<h4>貢献の内容の理解<span style="font-weight: bold;"><span
+ style="font-weight: bold;"></span></span></h4>
+<span style="font-weight: normal;">貢献に関するより詳しい情報は、<a href="https://lg3d.dev.java.net/contribute.html">Project Looking Glassへの貢献</a>というドキュメントを読んで下さい。そして、興味があれば、LG3Dプロジェクトへのアクセス権をリクエストして下さい。</span><br />
+<h4>LG3Dプロジェクトへのアクセス権のリクエスト</h4>
+<p>
+次のように、LG3Dプロジェクトへのアクセス権をリクエストします。
+</p>
+<ol>
+  <li><a href="http://www.java.net/">java.net</a>にログインしていなければ、
+<a href="http://www.java.net/">http://www.java.net</a>にアクセスし、自分のユーザ名とパスワードを一番上のフィールドに入力してから[Login]ボタンを押して、ログインして下さい。</li>
+  <li><a href="https://lg3d.dev.java.net/">https://lg3d.dev.java.net</a>
+にアクセスし、再アクセスするためにそれをブックマークに入れて下さい。きっとよく戻ってくることになるでしょう。</li>
+  <li><b>プロジェクト メンバーシップ／ロールの要求</b>のリンクをクリックして下さい。</li>
+  <li>次のように適切な役割を選択して下さい。<br />
+- 単にProject Looking Glassをビルドしたいのであれば、<b>Observer</b>を選択して下さい。 <br />
+- Project Looking Glassに対して新たなコードを開発し、プロジェクトにコードを提供するオプションを希望するのであれば、<b>Developer</b>を選択して下さい。<br />
+  </li>
+  <li>リクエストを送信すると、プロジェクトへのアクセス方法の説明を含むメールを受け取るはずです。<br />
+  </li>
+</ol>
+今後プロジェクトのドキュメントにアクセスするためには、<a href="https://lg3d.dev.java.net/">LG3DプロジェクトのWebサイト</a>にアクセスする時にログインする必要があります。<br />
+<span style="font-weight: bold;"><span style="font-weight: bold;"><span
+ style="font-weight: bold;"><span style="font-weight: bold;"></span></span></span></span>
+<h3><a name="Learning_how_to_write_3D_applications"></a>10. Project Looking Glass向け3Dアプリケーションの書き方の学習</h3>
+<p>Project Looking Glassは、Project Looking Glass3Dデスクトップ環境の3Dの性質を活かしたアプリケーションの書き方を学ぶために用いることができる3Dアプリケーションの例を含んでいます。これらの例は<a href="http://lg3d-demo-apps.dev.java.net">lg3d-demo-apps</a>プロジェクトで見つけることができます。
+</p>
+<p>
+<b>参考:</b>
+</p>
+<p>
+<a href="../netbeans/NetBeansLookingGlass.html">
+NetBeansを使ったProject Looking Glassのビルドと実行</a>
+<br />
+<a href="lg3d-getting-started.html">さぁ、はじめよう Project Looking Glass 開発者リリース</a>
+<br />
+<a href="release-notes.html">Project Looking Glass開発者リリースノート</a>
+<br />
+<span style="font-weight: normal;"></span><a
+ href="https://lg3d.dev.java.net/contribute.html">Project Looking Glassへの貢献</a> <br />
+</p>
+<hr />
+<small>$Revision: 1.1 $ $Date: 2006-05-09 17:51:02 $ (英語版Revision: 1.19)</small>
+</div>
+</body>
+</html>

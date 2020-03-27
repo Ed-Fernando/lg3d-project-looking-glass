@@ -1,0 +1,480 @@
+# File: XF86Config-4.talin
+#
+# Author: Geoff Baysinger, baysinger .at. sun .d0t. com
+#
+# Instructions: 
+# 	see http://www.ergastulum.com/sun/javadesktopsystem/notes/ati.3daccel.html
+#
+# NOTES:
+#	* This file is meant for use in Tadpole Talin laptops running the
+#	  Sun Java(tm) Desktop System 2003 and release 2 though it may
+#	  be useful for similar configurations.
+#
+#	* ABSOLUTELY NO WARRANTY EXPRESSED OR IMPLIED, USE AT YOUR OWN RISK.
+#
+#	* Online man page: http://www.xfree86.org/4.3.0/XF86Config.5.html
+#
+#	* To change monitor modes, look at the "Device" and "ServerLayout" sections
+#
+#	* To change power saving modes, look at the "ServerFlags" section
+#
+# Created with help from SaX2 and fglrxconfig commands
+
+
+
+### Fonts, Input device locations and such 
+Section "Files"
+  FontPath     "/usr/X11R6/lib/X11/fonts/misc:unscaled"
+  FontPath     "/usr/X11R6/lib/X11/fonts/local"
+  FontPath     "/usr/X11R6/lib/X11/fonts/75dpi:unscaled"
+  FontPath     "/usr/X11R6/lib/X11/fonts/100dpi:unscaled"
+  FontPath     "/usr/X11R6/lib/X11/fonts/Type1"
+  FontPath     "/usr/X11R6/lib/X11/fonts/URW"
+  FontPath     "/usr/X11R6/lib/X11/fonts/Speedo"
+  FontPath     "/usr/X11R6/lib/X11/fonts/PEX"
+  FontPath     "/usr/X11R6/lib/X11/fonts/cyrillic"
+  FontPath     "/usr/X11R6/lib/X11/fonts/latin2/misc:unscaled"
+  FontPath     "/usr/X11R6/lib/X11/fonts/latin2/75dpi:unscaled"
+  FontPath     "/usr/X11R6/lib/X11/fonts/latin2/100dpi:unscaled"
+  FontPath     "/usr/X11R6/lib/X11/fonts/latin2/Type1"
+  FontPath     "/usr/X11R6/lib/X11/fonts/latin7/75dpi:unscaled"
+  FontPath     "/usr/X11R6/lib/X11/fonts/baekmuk:unscaled"
+  FontPath     "/usr/X11R6/lib/X11/fonts/japanese:unscaled"
+  FontPath     "/usr/X11R6/lib/X11/fonts/kwintv"
+  FontPath     "/usr/X11R6/lib/X11/fonts/truetype"
+  FontPath     "/usr/X11R6/lib/X11/fonts/uni:unscaled"
+  FontPath     "/usr/X11R6/lib/X11/fonts/CID"
+  FontPath     "/usr/X11R6/lib/X11/fonts/ucs/misc:unscaled"
+  FontPath     "/usr/X11R6/lib/X11/fonts/ucs/75dpi:unscaled"
+  FontPath     "/usr/X11R6/lib/X11/fonts/ucs/100dpi:unscaled"
+  FontPath     "/usr/X11R6/lib/X11/fonts/hellas/misc:unscaled"
+  FontPath     "/usr/X11R6/lib/X11/fonts/hellas/75dpi:unscaled"
+  FontPath     "/usr/X11R6/lib/X11/fonts/hellas/100dpi:unscaled"
+  FontPath     "/usr/X11R6/lib/X11/fonts/hellas/Type1"
+  FontPath     "/usr/X11R6/lib/X11/fonts/misc/sgi:unscaled"
+  FontPath     "/usr/X11R6/lib/X11/fonts/xtest"
+  InputDevices "/dev/ttyS0"
+  InputDevices "/dev/ttyS1"
+  InputDevices "/dev/ttyS2"
+  InputDevices "/dev/ttyS3"
+  InputDevices "/dev/ttyS4"
+  InputDevices "/dev/ttyS5"
+  InputDevices "/dev/ttyS6"
+  InputDevices "/dev/ttyS7"
+  InputDevices "/dev/ttyS8"
+  InputDevices "/dev/psaux"
+  InputDevices "/dev/logibm"
+  InputDevices "/dev/sunmouse"
+  InputDevices "/dev/atibm"
+  InputDevices "/dev/amigamouse"
+  InputDevices "/dev/atarimouse"
+  InputDevices "/dev/inportbm"
+  InputDevices "/dev/gpmdata"
+  InputDevices "/dev/mouse"
+  InputDevices "/dev/usbmouse"
+  InputDevices "/dev/adbmouse"
+  InputDevices "/dev/input/mice"
+  InputDevices "/dev/input/event0"
+  InputDevices "/dev/pointer0"
+  InputDevices "/dev/pointer1"
+  InputDevices "/dev/pointer2"
+  InputDevices "/dev/pointer3"
+EndSection
+
+
+
+### Modules to be loaded
+Section "Module"
+  Load	"synaptics"	# Synaptics pointing device driver
+  Load	"dbe"  		# Double buffer extension
+  Load	"type1"		# Type1 fonts
+  Load	"freetype"	# TrueType fonts
+  Load	"speedo"	# Speedo fonts
+# This loads the miscellaneous extensions module, uncomment to prevent
+# initialisation of the XFree86-DGA extension within that module
+# as DGA is known to have security issues, but enabled here by default
+  Load	"extmod"
+  SubSection	"extmod"
+#      Option    "omit xfree86-dga" 
+  EndSubSection
+  Load	"glx"   	# GLX OpenGL extensions
+  Load	"dri"		# DRI is required for 3D acceleration
+  Load	"v4l"		# Video4Linux?
+EndSection
+
+
+
+### Access Control for DRI
+
+Section "DRI"	# enables 3D accel but has security issues
+# Access to OpenGL ICD is allowed for all users:
+    Mode 0666
+# Access to OpenGL ICD is restricted to group "video":
+#    Group video    # users
+#    Mode 0660
+EndSection
+
+
+
+### X Server Options
+
+Section "ServerFlags"
+### From Sax2
+  Option       "AllowMouseOpenFail"
+  Option       "RandR" "on"
+
+# Configure power savings
+# From http://www.barriebremner.com/xfreedpms.html
+  Option	"BlankTime"	"0"
+  Option	"StandbyTime"	"5"
+  Option	"SuspendTime"	"0"
+  Option	"OffTime"	"20"
+
+# Remainder from fglrxconfig
+# Uncomment this to cause a core dump at the spot where a signal is 
+# received.  This may leave the console in an unusable state, but may
+# provide a better stack trace in the core dump to aid in debugging
+#    Option "NoTrapSignals"
+
+# Uncomment this to disable the <Crtl><Alt><BS> server abort sequence
+# This allows clients to receive this key event.
+#    Option "DontZap"
+
+# Uncomment this to disable the <Crtl><Alt><KP_+>/<KP_-> mode switching
+# sequences.  This allows clients to receive these key events.
+#    Option "Dont Zoom"
+
+# Uncomment this to disable tuning with the xvidtune client. With
+# it the client can still run and fetch card and monitor attributes,
+# but it will not be allowed to change them. If it tries it will
+# receive a protocol error.
+#    Option "DisableVidModeExtension"
+
+# Uncomment this to enable the use of a non-local xvidtune client. 
+#    Option "AllowNonLocalXvidtune"
+
+# Uncomment this to disable dynamically modifying the input device
+# (mouse and keyboard) settings. 
+#    Option "DisableModInDev"
+
+# Uncomment this to enable the use of a non-local client to
+# change the keyboard or mouse settings (currently only xset).
+#    Option "AllowNonLocalModInDev"
+EndSection # end ServerFlags
+
+
+
+### Input Device Configuration
+
+Section "InputDevice"
+  Identifier	"Keyboard1"
+  Driver	"Keyboard"
+  Option	"MapName"	"Standard Keyboard [ pc104 ]"
+  Option	"XkbRules"	"xfree86"
+  Option	"XkbModel"	"pc104"
+  Option	"Protocol"	"Standard"
+  Option	"XkbLayout"	"us"
+EndSection
+
+# Synaptics built-in pointer config
+Section "InputDevice"
+	Identifier "Synaptics"
+	Driver "synaptics"
+	Option "Device" "/dev/mouse"
+	Option "Protocol" "auto-dev"
+	Option "Emulate3Buttons"
+EndSection
+
+# USB Wheel Mouse, runs simultaneous to the Synaptics mouse
+Section "InputDevice"
+	Identifier "USBWheelMouse"
+	Driver "mouse"
+	Option "Device"	"/dev/input/mice"
+	Option "Protocol" "IMPS/2"
+	Option "Emulate3Buttons" "off"
+	Option "ZAxisMapping" "4 5"
+EndSection
+
+
+
+### Monitor Configurations
+
+# Built-in Tadpole Talin LCD
+Section "Monitor"
+  Identifier	"BuiltInLCD"
+  ModelName    "1400X1050@75HZ"
+  VendorName	"--> LCD"
+  HorizSync	30-90
+  VertRefresh	58-78
+  Option	"CalcAlgorithm"	"CheckDesktopGeometry"
+  Option	"DPMS"	# Enables power management settings, configured in ServerFlags
+EndSection
+
+
+# This monitor matches my Sun CRT, model 1399 ... you should edit this based on your
+# old configuration if you have configured your external monitor
+Section "Monitor"
+  Identifier	"ExternalMonitor"
+  ModelName	"1399"
+  VendorName	"Sun"
+# The 2nd monitor settings are unfortunately configured both here and in the "Device" 
+# sections lower ... you need to edit in all 3 places
+  HorizSync	30-82	# NOTE: "Device" sections as Hsync2
+  VertRefresh	50-120	# NOTE: "Device" sections as Vfresh2
+  Option	"DPMS"
+EndSection
+
+
+
+### Graphics Device / Chipset Configuration
+
+# NOTE: I am not doing complete documentation of these features, Google is your friend
+Section "Device"
+    Identifier                          "ATI Graphics Adapter NOT Dual Head"
+    Driver                              "fglrx"
+# ### generic DRI settings ###
+# === disable PnP Monitor  ===
+    #Option                              "NoDDC"
+# === disable/enable XAA/DRI ===
+    Option "no_accel"                   "no"
+    Option "no_dri"                     "no"
+# === misc DRI settings ===
+    Option "mtrr"                       "off" # disable DRI mtrr mapper, driver has its own code for mtrr
+# ### FireGL DDX driver module specific settings ###
+# === Screen Management ===
+
+# Monitor modes
+#
+# NOTE: for a better description of these modes go to http://www.ati.com/support/infobase/4485.html
+#
+# Single: 	only the LCD is activated even if external connected
+# Clone: 	both screens always on with same content
+# Laptop:	switches between LCD and external monitor
+# Big Desktop:	one logical desktop stretched across both monitors
+# Dual Head:	two separate desktops, no D&D between screens, can run different window managers
+#
+# NOTE: IF DUAL HEAD MODE, MAKE SURE TO UNCOMMENT APPROPRIATE LINES IN ServerLayout section
+#
+#    Option "DesktopSetup"               "0x00000000"	# Single -or- Dual Head
+    Option "DesktopSetup"               "0x00000100"	# Clone -or- Laptop (configure MonitorLayout below)
+#    Option "DesktopSetup"               "0x00000200"	# Big - Horizontal
+#    Option "DesktopSetup"               "0x00000201"	# Big - Horizontal, connector1 on right
+#    Option "DesktopSetup"               "0x00000300"	# Big - Vertical
+#    Option "DesktopSetup"               "0x00000301"	# Big - Vertical, connector1 on bottom
+
+# OPTIONS FOR CLONE/LAPTOP MODES
+    Option "MonitorLayout"              "LVDS, CRT"	# ... explicitely configure monitors for Clone mode
+#    Option "MonitorLayout"              "AUTO, AUTO"	# ... use this to choose Clone mode with auto detection
+#    Option "MonitorLayout"              "AUTO, NONE"	# ... use this to choose Laptop mode with autodetection
+
+    Option "IgnoreEDID"                 "off"
+    Option "HSync2"                     "30-82" 
+    Option "VRefresh2"                  "50-120" 
+    Option "ScreenOverlap"              "0" 
+# === TV-out Management ===
+    Option "NoTV"                       "no"     
+    Option "TVStandard"                 "NTSC-M"     
+    Option "TVHSizeAdj"                 "0"     
+    Option "TVVSizeAdj"                 "0"     
+    Option "TVHPosAdj"                  "0"     
+    Option "TVVPosAdj"                  "0"     
+    Option "TVHStartAdj"                "0"     
+    Option "TVColorAdj"                 "0"     
+    Option "GammaCorrectionI"           "0x00000000"
+    Option "GammaCorrectionII"          "0x00000000"
+# === OpenGL specific profiles/settings ===
+    Option "Capabilities"               "0x00000000"
+# === Video Overlay for the Xv extension ===
+    Option "VideoOverlay"               "on"
+# === OpenGL Overlay ===
+# Note: When OpenGL Overlay is enabled, Video Overlay
+#       will be disabled automatically
+    Option "OpenGLOverlay"              "off"
+# === Center Mode (Laptops only) ===
+    Option "CenterMode"                 "off"
+# === Pseudo Color Visuals (8-bit visuals) ===
+    Option "PseudoColorVisuals"         "off"
+# === QBS Management ===
+    Option "Stereo"                     "off"
+    Option "StereoSyncEnable"           "1"
+# === FSAA Management ===
+    Option "FSAAEnable"                 "yes"
+    Option "FSAAScale"                  "2"
+    Option "FSAADisableGamma"           "no"
+    Option "FSAACustomizeMSPos"         "no"
+    Option "FSAAMSPosX0"                "0.000000"
+    Option "FSAAMSPosY0"                "0.000000"
+    Option "FSAAMSPosX1"                "0.000000"
+    Option "FSAAMSPosY1"                "0.000000"
+    Option "FSAAMSPosX2"                "0.000000"
+    Option "FSAAMSPosY2"                "0.000000"
+    Option "FSAAMSPosX3"                "0.000000"
+    Option "FSAAMSPosY3"                "0.000000"
+    Option "FSAAMSPosX4"                "0.000000"
+    Option "FSAAMSPosY4"                "0.000000"
+    Option "FSAAMSPosX5"                "0.000000"
+    Option "FSAAMSPosY5"                "0.000000"
+# === Misc Options ===
+    Option "UseFastTLS"                 "0"
+    Option "BlockSignalsOnLock"         "on"
+    Option "UseInternalAGPGART"         "yes"
+    Option "ForceGenericCPU"            "no"
+    BusID "PCI:1:0:0"    # vendor=1002, device=4c66
+    Screen 0
+EndSection
+
+
+Section "Device"
+    Identifier                          "ATI Graphics Adapter Dual Head 0"
+    Driver                              "fglrx"
+# ### generic DRI settings ###
+# === disable PnP Monitor  ===
+    #Option                              "NoDDC"
+# === disable/enable XAA/DRI ===
+    Option "no_accel"                   "no"
+    Option "no_dri"                     "no"
+# === misc DRI settings ===
+    Option "mtrr"                       "off" # disable DRI mtrr mapper, driver has its own code for mtrr
+# ### FireGL DDX driver module specific settings ###
+# === Screen Management ===
+    Option "DesktopSetup"               "0x00000000" 
+    Option "MonitorLayout"              "AUTO, AUTO"
+    Option "IgnoreEDID"                 "off"
+    Option "HSync2"                     "31.5       " 
+    Option "VRefresh2"                  "20 - 60" 
+    Option "ScreenOverlap"              "0" 
+# === TV-out Management ===
+    Option "NoTV"                       "yes"     
+    Option "TVStandard"                 "NTSC-M"     
+    Option "TVHSizeAdj"                 "0"     
+    Option "TVVSizeAdj"                 "0"     
+    Option "TVHPosAdj"                  "0"     
+    Option "TVVPosAdj"                  "0"     
+    Option "TVHStartAdj"                "0"     
+    Option "TVColorAdj"                 "0"     
+    Option "GammaCorrectionI"           "0x00000000"
+    Option "GammaCorrectionII"          "0x00000000"
+# === OpenGL specific profiles/settings ===
+    Option "Capabilities"               "0x00000000"
+# === Video Overlay for the Xv extension ===
+    Option "VideoOverlay"               "on"
+# === OpenGL Overlay ===
+# Note: When OpenGL Overlay is enabled, Video Overlay
+#       will be disabled automatically
+    Option "OpenGLOverlay"              "off"
+# === Center Mode (Laptops only) ===
+    Option "CenterMode"                 "off"
+# === Pseudo Color Visuals (8-bit visuals) ===
+    Option "PseudoColorVisuals"         "off"
+# === QBS Management ===
+    Option "Stereo"                     "off"
+    Option "StereoSyncEnable"           "1"
+# === FSAA Management ===
+    Option "FSAAEnable"                 "no"
+    Option "FSAAScale"                  "1"
+    Option "FSAADisableGamma"           "no"
+    Option "FSAACustomizeMSPos"         "no"
+    Option "FSAAMSPosX0"                "0.000000"
+    Option "FSAAMSPosY0"                "0.000000"
+    Option "FSAAMSPosX1"                "0.000000"
+    Option "FSAAMSPosY1"                "0.000000"
+    Option "FSAAMSPosX2"                "0.000000"
+    Option "FSAAMSPosY2"                "0.000000"
+    Option "FSAAMSPosX3"                "0.000000"
+    Option "FSAAMSPosY3"                "0.000000"
+    Option "FSAAMSPosX4"                "0.000000"
+    Option "FSAAMSPosY4"                "0.000000"
+    Option "FSAAMSPosX5"                "0.000000"
+    Option "FSAAMSPosY5"                "0.000000"
+# === Misc Options ===
+    Option "UseFastTLS"                 "0"
+    Option "BlockSignalsOnLock"         "on"
+    Option "UseInternalAGPGART"         "yes"
+    Option "ForceGenericCPU"            "no"
+    BusID "PCI:1:0:0"    # vendor=1002, device=4c66
+    Screen 0
+EndSection
+
+Section "Device"
+    Identifier                          "ATI Graphics Adapter Dual Head 1"
+    Driver                              "fglrx"
+    BusID "PCI:1:0:0"    # vendor=1002, device=4c66
+    Screen 1
+EndSection
+
+
+
+
+### Screen Resolution and such
+Section "Screen"
+  Identifier	"ScreenNotDual"
+  Device	"ATI Graphics Adapter NOT Dual Head"
+  Monitor	"BuiltInLCD"
+  DefaultDepth	24
+# Option	"backingstore"	# may be useful for things like VMWare and Win4Lin
+  Subsection	"Display"
+    Depth	24
+    Modes	"1400x1050" "1280x1024" "1024x768" "800x600" "640x480"
+    ViewPort	0 0  # initial origin if mode is smaller than desktop
+  EndSubsection
+EndSection
+
+# Dual Head monitor 0
+Section "Screen"
+    Identifier  "ScreenDual0"
+    Device      "ATI Graphics Adapter Dual Head 0"
+    Monitor     "BuiltInLCD"
+    DefaultDepth 24
+    #Option "backingstore"
+
+    Subsection "Display"
+        Depth       24
+        Modes       "1400x1050" "1280x1024" "1024x768" "800x600" "640x480"
+        ViewPort    0 0  # initial origin if mode is smaller than desktop
+#        Virtual     1280 1024
+    EndSubsection
+EndSection
+
+# Dual Head monitor 1
+Section "Screen"
+    Identifier  "ScreenDual1"
+    Device      "ATI Graphics Adapter Dual Head 1"
+    Monitor     "ExternalMonitor"
+    DefaultDepth 24
+    #Option "backingstore"
+
+    Subsection "Display"
+        Depth       24
+        Modes	    "1600x1200" "1400x1050" "1280x1024" "1024x768" "800x600" "640x480"
+        ViewPort    0 0  # initial origin if mode is smaller than desktop
+#        Virtual     1280 1024
+    EndSubsection
+EndSection
+
+
+
+### Bring it all together to figure out the Input Devices, Screen Device, etc
+
+Section "ServerLayout"
+  Identifier   "Layout[all]"
+
+# NOTE: If NOT using Dual Head mode, uncomment first line and comment other Dual Head options
+  Screen       "ScreenNotDual"
+# OPTIONS FOR DUAL HEAD MODE
+# NOTE: If USING Dual Head mode, comment previous item and uncomment next item
+#  Screen "ScreenDual0"
+# NOTE: If USING Dual Head mode, uncomment ONE of the next 4 items
+#  Screen "ScreenDual1" RightOf	"ScreenDual0"	# screen1 goes on right
+#  Screen "ScreenDual1" LeftOf  "ScreenDual0"	# screen1 goes on left
+#  Screen "ScreenDual1" Above   "ScreenDual0"	# screen1 goes on top
+#  Screen "ScreenDual1" Below   "ScreenDual0"	# screen1 goes on bottom
+
+# Each InputDevice line specifies an InputDevice section name and
+# optionally some options to specify the way the device is to be
+# used.  Those options include "CorePointer", "CoreKeyboard" and
+# "SendCoreEvents".
+  InputDevice	"Keyboard1"	"CoreKeyboard"
+  InputDevice	"Synaptics"	"CorePointer"
+  InputDevice	"USBWheelMouse"	"SendCoreEvents"
+EndSection
+

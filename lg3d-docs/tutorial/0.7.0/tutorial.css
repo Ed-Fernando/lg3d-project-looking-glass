@@ -1,0 +1,34 @@
+body {
+  font-family: Arial;
+}
+
+th {
+  font-variant: small-caps;
+  color: #0000AA;
+  text-align: left;
+}
+
+.tutorial-code {
+  font-family: courier;
+  padding: 5;
+  padding-left: 50;
+}
+.inline-code {
+  font-family: courier;
+}
+.command {
+  font-family: courier;
+  padding: 5;
+  padding-left: 50;
+	color: blue;
+}
+
+.newstep {
+  padding-top: 50;
+}
+
+a.javadoc {
+  font-family: courier;
+}
+
+

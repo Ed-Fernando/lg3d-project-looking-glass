@@ -1,0 +1,1018 @@
+<!DOCTYPE html PUBLIC "-//Tigris//DTD XHTML 1.0 Transitional//EN" "http://style.tigris.org/tigris_transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+
+  <meta content="text/html; charset=utf-8" http-equiv="Content-Type">
+
+  <meta content="Giordano Fracasso" name="Translator">
+
+  <title>LG3D Core Project</title>
+  <style type="text/css">
+  <!--
+    table, th, td {
+	border-style: none;
+    }
+    table {background-color:#fff}
+    th {font-family:lucida,arial,sans-serif; color:#fff; background-color:#88bb88}
+  -->
+  </style>
+</head>
+
+
+<body>
+
+<p><font color="#88bb88" size="+2"><b>
+Benvenuto in Project Looking Glass!
+</b></font></p>
+
+<iframe src="/nonav/taskbar.html" frameborder="0" height="75" width="100%"></iframe>
+
+<a href="../images/misc/lg3d-pic-300x300.jpg">
+  <img vspace="8" hspace="8"
+    alt="LG3D"
+    style="border: 0px solid ; float: left; width: 120px;"
+    src="../images/misc/lg3d-pic-120x120.jpg" />
+</a>
+
+<div class="app" id="projectdocumentview">
+  <table style="float: right;" border="0" cellpadding="2" cellspacing="2">
+    <tr>
+    <td>
+  <a href="../index.html">
+    <img vspace="0" hspace="0"
+      alt="English page"
+      style="border: 1px solid ; float: right; width: 48px;"
+      src="../images/icon/lang-english.png" />
+  </a>
+    </td>
+  </tr><tr>
+    <td>
+  <a href="../zh/index.html">
+    <img vspace="0" hspace="0"
+      alt="Chinese (simp) page"
+      style="border: 1px solid ; float: right; width: 48px;"
+      src="../images/icon/lang-chinese-simp.png" />
+  </a>
+    </td>
+  </tr>
+  <tr>
+    <td>
+  <a href="../cs/index.html">
+    <img vspace="0" hspace="0"
+      alt="Czech page"
+      style="border: 1px solid ; float: right; width: 48px;"
+      src="../images/icon/lang-czech.png" />
+  </a>
+    </td>
+  </tr>
+  <tr>
+    <td>
+  <a href="../fr/index.html">
+    <img vspace="0" hspace="0"
+      alt="French page"
+      style="border: 1px solid ; float: right; width: 48px;"
+      src="../images/icon/lang-french.png" />
+  </a>
+    </td>
+  </tr>
+  <tr>
+    <td>
+  <a href="../de/index.html">
+    <img vspace="0" hspace="0"
+      alt="German page"
+      style="border: 1px solid ; float: right; width: 48px;"
+      src="../images/icon/lang-german.png" />
+  </a>
+    </td>
+  </tr>
+  <tr>
+    <td>
+  <a href="../ja/index.html">
+  	<img vspace="0" hspace="0"
+	alt="Japanese page"
+	style="border: 1px solid ; float: right; width: 48px;"
+	src="../images/icon/lang-japanese.png" />
+  </a>
+    </td>
+  </tr>
+  <tr>
+    <td>
+  <a href="../es/index.html">
+    <img vspace="0" hspace="0"
+      alt="Spanish page"
+      style="border: 1px solid ; float: right; width: 48px;"
+      src="../images/icon/lang-spanish.png" />
+  </a>
+    </td>
+  </tr>
+  <tr>
+      <td> 
+   <a href="pl/index.html"> 
+     <img vspace="0" hspace="0" 
+     alt="Polska strona" 
+     style="border: 1px solid ; float: right; width: 48px;" 
+     src="../images/icon/lang-polski.png" />
+   </a> 
+    </td>
+   </tr>
+</table>
+
+
+<p></p>
+
+<p align="right">
+  <font color="#cc0000"> <b><font size="+1">D</font>ownload e Installazione:</b>
+  </font>
+<a href="../lg3d-getting-started.html"><b>Linux/Solaris x86</b></a>,
+<a href="../lg3d-on-windows.html"><b>Windows</b></a>
+&nbsp;&nbsp;
+</p>
+<p align="right">
+ <a href="http://wiki.java.net/bin/view/Javadesktop/SummerOfCode2006">
+  <b><font size="+1">Summer of Code Project</font></b> sponsorizzato da
+  <img src="http://code.google.com/images/google_sm.gif" border="0" height="30">
+ </a>
+ &nbsp;&nbsp;
+</p>
+<br />
+
+
+<p> Vi piacerebbe se il vostro Desktop fosse realmente un
+ambiente 3D? Vi piacerebbe se il vostro database di CD o filmati si
+trasformasse in un jukebox 3D?
+
+Project Looking Glass è basato su tecnologia Java ed ha l'ambizione di
+fornire all'utente un'esperienza più ricca dell'
+ambiente desktop e delle applicazioni attraverso finestre 3D e nuove
+possbilità di visualizzazione. E' un progetto di sviluppo
+open source basato ed evoluto dal progetto della divisione Advanced
+Development di Sun Microsystems. Supporta l'esecuzione delle
+applicazioni bidimensionali esistenti, senza alcuna modifica, in uno
+spazio 3D, cos- come le API per la gestione delle
+finestre 3D e lo sviluppo di applicazioni. Al momento l'integrazione
+delle applicazioni esistenti è supportata per
+piattaforme Linux e Solaris x86. La piattaforma per lo sviluppo di
+applicazioni 3D è disponibile per Linux, Solaris e
+Windows.
+</p>
+  <a href="/branding/images/lg3d-core/lg_snapshot.png">
+    <img vspace="8" hspace="8"
+      alt="Project Looking Glass" title="Project Looking Glass"
+      style="border: 0px solid ; float: right; width: 200px; height: 145px;"
+      src="/branding/images/lg3d-core/lg_snapshot-s.png" />
+  </a>
+<p>
+Project Looking Glass è nella sua infanzia.
+Abbiamo bisogno del vostro aiuto per esplorare molte idee nel
+desktop e nello spazio in cui si muovono le applicazioni. Abbiamo
+rilasciato il codice sorgente all'intera comunità
+affinché ne venga esplorato ogni apsetto della
+tecnologia invece di limitarne l'accesso a pochi privilegiati. Crediamo
+che questo sviluppo aperto sia un modello eccellente per perseguire
+questa vasta ed eccitante opportunità . Quindi la vostra
+partecipazione è ampiamente desiderata, innoviamo
+l'interfaccia utente del computer!
+</p>
+
+<p>
+La tecnologia Java è il linguaggio di sviluppo
+principale. Noi crediamo che
+sia una buona scelta specialmente per il guadagno di
+produttività derivato da un
+ricco insieme di API di supporto su cui possiamo scrivere. Detto
+questo, stiamo
+pianificando un interfacciamento al C++ in modo tale da far interagire
+direttamente
+il le applicazioni con il sistema.
+</p>
+
+<p align="center">
+ <a href="../lg3d-faq.html">Risposte alle Domande Frequenti (FAQ)</a>,
+ <a href="../lg3d-contributorspotlight.html">
+   Spotlighted Contributors </a>,
+ <a href="http://wiki.java.net/bin/view/Javadesktop/DeveloppementTeam">
+  LG3D Development Team Info Wiki </a>
+</p>
+
+<a name="WhatsNew" />
+<center>
+<table style="width: 100%; text-align: left;" border="1" cellpadding="4" cellspacing="4">
+ <tr>
+   <th colspan="2">
+    <font size="3">Novità</font>
+   </th>
+
+<!-- <th>
+<font size=3>Contributor Spotlight</font>
+</th>-->
+    </tr>
+    <tr>
+
+      <td colspan="2">
+       <table border="0">
+         <tr>
+          <td>
+         <a href="http://projectlookingglass3d.blogspot.com/"> <img style="border: 0px solid ; width: 250px;" src="http://photos1.blogger.com/blogger/1333/3447/1600/bloglogo.png" hspace="16" vspace="8">
+         </a>
+             </td>
+
+          <td valign="center"> Aperto il <a href="http://projectlookingglass3d.blogspot.com/"><b>
+&nbsp;blog per sviluppatori di&nbsp;Project Looking Glass!</b></a> Visitaci!!
+            </td>
+			</tr>
+
+        </tbody>
+      </table>
+
+	<p> <b>Rilasciata la versione 1.0 </b>
+	    E' disponibile <b><a href="https://lg3d-core.dev.java.net/binary-builds.html"> 
+      nella sezione Stable builds.</a></b> 
+  </p>
+  <p>
+      <b>Rilasciato LG3D-LiveCD 3.0</b><a href="https://lg3d-livecd.dev.java.net/Web-Site/Download.html">
+      <b>Scaricalo adesso</b></a><br>
+      Questa nuova versione include LG3D 1.0 e nuove features tra le quali la possibilit&agrave; 
+      di installare LG3D-LiveCD su un dispositivo USB ed una versione sperimentale di un installer 
+      per l'installazione su HardDisk.
+  </p>
+
+
+
+ <img vspace="8" hspace="16"
+        style="border: 0px solid ; hspace: 8px ; float: left; width: 150px;"
+        src="https://lg3d.dev.java.net/files/documents/1833/33592/LG3DGoMonkeySun-2.jpg" />
+      <img vspace="8" hspace="16"
+        style="border: 0px solid ; hspace: 8px ; float: right; width: 150px;"
+        src="https://lg3d.dev.java.net/files/documents/1833/31070/LG3DGoMonkeySun.jpg" />
+      <p>
+        Finalmente, <b> l'interfacia utente come
+"Minority Report"</b> è divenuta una
+realtà <b>su LG3D!</b> E' disponibile un nuovo
+filmato! ( <b><a href="https://lg3d-core.dev.java.net/files/documents/1834/33274/gomonkey-divx-small.avi">
+~67MB in AVI/DivX/MPEG3</a></b>, una versione
+più piccola: <b><a href="https://lg3d-core.dev.java.net/files/documents/1834/33275/gomonkey-rm.rm">
+~18MB nel formato RM</a></b>). Inoltre scaricate <b><a href="https://lg3d-core.dev.java.net/files/documents/1834/31064/Sun_GoMonkey_demo_by_Oliver_Jones.avi">
+questo filmato (~9MB, AVI/DivX/PCM)</a></b> dalla demo
+GoMonkey/Sun al CeBIT 2006. Grazie, Oliver Jones, per aver condiviso
+questa clip con noi! </p>
+
+      <br clear="left">
+
+      <p> E' disponibile un nuovo documento tecnico, in Inglese! <b><a href="https://lg3d-core.dev.java.net/files/documents/1834/30923/LG3D-Overview.pdf">
+Project Looking Glass - A Comprehensive Overview of the Technology (PDF
+1.6MB) </a></b> </p>
+
+      <p> <b>Per iniziare ed installare l'ambiente di
+sviluppo fate riferimento al documento <a href="../lg3d-getting-started.html">"Installazione iniziale
+di Project Looking Glass"</a></b>
+      </p>
+
+      <p>
+     <b>Restate informati consultando il
+      <a href="http://www.javadesktop.org/forums/forum.jspa?forumID=56">
+      forum di discussione ufficiale</a></b>!
+  </p>
+ </td>
+
+<!--<td>
+<p>
+<img vspace="8" hspace="8"
+alt="Petr Hejl"
+style="border: 0px solid ; float: left; width: 100px;"
+src="../images/contributors/sickboy.jpg" />
+<b>Petr Hejl (sickboy)</b>
+</p>
+<p>
+" I'm 25 years old java developer employed at Adastra Corporation. I live in beautiful city of Prague, Czech Republic. The idea of LG3D realy fascinates me - new unexplored way of human and computer interaction developed as an open source. Although I prefer Linux, I have to work in windows environment these days. So I decided to contribute with LG3D all-in-one windows installer. When not sitting at computer I spend time with my girlfriend, watch movies and listen music. "
+</p>
+<p>
+Petr is a long time and keen contributor. He has been working
+on Czech translation of the LG3D pages. Recently he initiated
+the all-in-one Windows installer work, which received lots of
+interest from the community. The work allows more people to try out LG3D without hustle. A big thanks to you, Petr!
+</p>
+<p align="right">
+<a href="../lg3d-contributorspotlight.html">
+Other spotlighted contributors
+</a>
+<br />
+<a href="http://wiki.java.net/bin/view/Javadesktop/DeveloppementTeam">
+LG3D Development Team Info Wiki
+</a>
+</p>
+</td>
+</tr>-->
+    </tr>
+
+    <tr>
+
+      <th> <font size="3">Principali
+Caratteristiche Supportate</font> </th>
+
+      <th> <font size="3">Per quelli che non
+possono aspettare...</font> </th>
+
+    </tr>
+
+    <tr>
+
+      <td>
+      <p>Attualmente stiamo focalizzando il nostro lavoro nel
+fornire le funzionalità principali per avviare
+l'esplorazione del 3D ed il raffinamento della piattaforma
+iniziale. La piattaforma corrente offre le seguenti caratteristiche
+principali: </p>
+
+      <ul>
+
+        <li>Integrazione iniziale alle applicazini X11 (<a href="../x-application-status.html">stato dell'integrazione</a>)</li>
+
+        <li>Piattaforma scenografica client-server</li>
+
+        <li>Comportamento lato server dell'esecuzione</li>
+
+        <li>Supporto per un generico evento di sistema</li>
+
+        <li>Insieme iniziale di API per la creazione di controlli
+3D</li>
+
+        <li>Supporto di utilità per l'animazione delle
+risposte agli eventi utente</li>
+
+      </ul>
+
+      </td>
+
+      <td>
+      <p>Per iniziare e installare l'ambiente di sviluppo fare
+riferimento al documento "<a href="../lg3d-getting-started.html">Installazione
+iniziale di Project Looking Glass</a>".
+Se siete utenti Windows, fate riferimento al documento
+"<a href="../lg3d-on-windows.html">Eseguire la versione di
+sviluppo di LG3D su Microsoft Windows</a>". </p>
+
+      <p>Una volta ottenuto un ambiente di sviluppo funzionante,
+dovreste leggere il documento "<a href="../lg3d-developers-guide.html">Guida agli sviluppatori
+di Project Looking Glass </a>"che fornisce informazioni
+dettagliate su Project Looking Glass e sulla creazione di applicazioni
+3D.
+      <br>
+
+Se siete utenti NetBeans, fate riferimento al documento
+"<a href="../netbeans/NetBeansLookingGlass.html">Costruire
+ed eseguire LG3D con NetBeans</a>".
+      <br>
+
+Ed inoltre "<a href="../tutorial/">I tutorials di Project
+Looking Glass</a>" su come scrivere applicazioni per LG3D. </p>
+
+      <p>Quando sarai pronto per contribuire alla scrittura del
+codice o della documentazione relativa al progetto, puoi leggere "<a href="https://lg3d.dev.java.net/contribute.html">Contribuire
+a Project Looking Glass</a>". </p>
+
+      </td>
+
+    </tr>
+
+  </tbody>
+</table>
+
+</center>
+
+<br>
+
+<a name="Sub-projects"></a>
+<h3>Sotto-progetti correnti</h3>
+
+<p>
+Qui di seguito è riportata una lista dei
+sotto-progetti correlati a lg3d-core
+(e lg3d-demo-apps, lg3d-incubator).
+Vi ringraziamo per le vostre offerte! Se siete interessati nel proporre
+qualsiasi cosa, non fatevi scrupoli!
+Prego postate pure su <a href="http://www.javadesktop.org/forums/thread.jspa?threadID=3482&amp;tstart=0">
+questo thread </a> sul forum di javadesktop.org e fateci
+conoscere le vostre idee.
+Per favore visitate la <a href="https://lg3d-x11.dev.java.net/">pagina
+del progetto
+lg3d-x11</a> per gli argomenti specifici all'integrazione con
+X11.
+Se volete aiutarci e partecipare ad uno dei sub-projects contattaci sul
+forum, sicuramente il team di sviluppo gradirà il vostro
+interesse.
+</p>
+
+ <a href="../images/screenshot/lg3d-imageviewer.jpg">
+    <img vspace="8" hspace="8"
+      alt="Zoetrope - an LG3D Image Viewer"
+      style="border: 0px solid; float: right; width: 150px;"
+      src="../images/screenshot/lg3d-imageviewer-tn.jpg" />
+  </a>
+
+<ul>
+
+  <li> <a href="http://javadesktop.org/lg3d/javadoc/0-7-1-latest/api/index.html">
+    <b>Javadoc API 0-7-1</b><br>
+
+    </a>
+    <p> Kirk Turner (gameldar), Hideya Kawahara (hideya) </p>
+
+  </li>
+
+  <li> <a href="../tutorial/index.html"> <b>Project
+Looking Glass Tutorials</b><br>
+
+    </a>
+    <p> Kirk Turner (gameldar) </p>
+
+  </li>
+
+  <li> <b>3D Swing L&amp;F</b><br>
+
+    <p> Kirk Turner (gameldar), Paul Byrne (paulby) </p>
+
+  </li>
+
+  <li> <b>Splashscreen</b><br>
+
+    <p> Phil Dowell (phild) </p>
+
+  </li>
+
+  <li> <a href="https://lg3d-art.dev.java.net/"> <b>lg3d-art
+project</b><br>
+
+    </a>
+    <p> Questo è il posto dove vengono
+condivisi modelli e materiale artistico addizionale per Project Looking
+Glass. Il tuo contributo sarebbe molto apprezzato! </p>
+
+  </li>
+
+  <li> <a href="https://lg3d-incubator.dev.java.net/">
+    <b>Progetti in lg3d-incubator</b><br>
+
+    </a> <iframe src="https://lg3d-incubator.dev.java.net/nonav/project-list.html" frameborder="0" height="300" width="100%"></iframe>
+  </li>
+
+  <li> <b>Localizzazione della Documentazione</b><br>
+
+    <p></p>
+
+    <table style="width: 100%; text-align: left;" bgcolor="#eeffe8" border="1" cellpadding="2" cellspacing="2">
+
+      <caption></caption>
+      <tbody>
+
+        <tr>
+
+          <th>Lingua </th>
+
+          <th>Responsabile(i) </th>
+
+        </tr>
+
+        <tr>
+
+          <th>Cinese </th>
+
+          <td>Wen Peng (wenpeng) </td>
+
+        </tr>
+
+        <tr>
+
+          <th>Ceco </th>
+
+          <td> Petr Hejl (sickboy) </td>
+
+        </tr>
+
+        <tr>
+
+          <th>Olandese </th>
+
+          <td>Martjin Kools (marve) </td>
+
+        </tr>
+
+        <tr>
+
+          <th>Francese </th>
+
+          <td>jibe77, Pierre (pinaraf) </td>
+
+        </tr>
+
+        <tr>
+
+          <th>Tedesco </th>
+
+          <td>Christian Ost (cost) </td>
+
+        </tr>
+
+        <tr>
+
+          <th>Italiano </th>
+
+          <td><a href="http://www.shinyfrog.net" target="_blank"> Giordano Fracasso (giosquad)</a>, Raffaele Di Fazio (raffo)</td>
+
+        </tr>
+
+        <tr>
+
+          <th> <a href="../ja/trans-support/index.html">
+Giapponese </a> </th>
+
+          <td> Yuka Kamiya (kyuka), Hideyuki Otokawa (otokawa),
+Yuichi Sakuraba (sakuraba), Kazuhiro Kazama (kazama) and Endo Yasuyuki
+(yasuyuki) </td>
+
+        </tr>
+
+        <tr>
+
+          <th>Rumeno </th>
+
+          <td> Abibula Aygun (aygun) </td>
+
+        </tr>
+
+        <tr>
+
+          <th>Spagnolo </th>
+
+          <td>Sergio Ivan Marcin (bitbeat) </td>
+
+        </tr>
+
+      </tbody>
+    </table>
+
+    <ul>
+
+      <li> <b>Riferimenti</b>
+        <ul>
+
+          <li> <a href="../ja/trans-support/lg3d-translation-filestyle_en.html">
+Guida allo stile di traduzione<br>
+
+            </a> </li>
+
+        </ul>
+
+      </li>
+
+    </ul>
+
+  </li>
+
+  <li> <b>Wiki</b><br>
+
+    <a href="http://wiki.java.net/bin/view/Javadesktop/ProjectLookingGlass">
+LG3D Wiki - Pagina Principale </a>
+    <p></p>
+
+    <table style="width: 100%; text-align: left;" bgcolor="#f0eeff" border="1" cellpadding="2" cellspacing="2">
+
+      <caption></caption>
+      <tbody>
+
+        <tr>
+
+          <th>Argomento </th>
+
+          <th>Responsabile(i) </th>
+
+        </tr>
+
+        <tr>
+
+          <td> <a href="http://wiki.java.net/bin/view/Javadesktop/ProjectLookingGlass#KnowledgeBase">
+Base di conoscenza </a> </td>
+
+          <td> Martijn Kools (marve), David Weizades (ddew), Paul
+Shoemaker (t0rn) </td>
+
+        </tr>
+
+        <tr>
+
+          <td> <a href="http://wiki.java.net/bin/view/Javadesktop/ProjectLookingGlass#UiIdeas">
+Idee e Discussioni relative a 3D User Interface </a> </td>
+
+          <td> Paul Shoemaker (t0rn), qgnjon, David Weizades
+(ddew) </td>
+
+        </tr>
+
+        <tr>
+
+          <td> <a href="http://wiki.java.net/bin/view/Javadesktop/ProjectLookingGlass#Looking_Glass_3D_Development">
+Team/Releases di sviluppo di LG3D </a> </td>
+
+          <td> Van der Haegen Mathieu (dwarfy) </td>
+
+        </tr>
+
+        <tr>
+
+          <td> <a href="http://wiki.java.net/bin/view/Javadesktop/AppDevelopmentTips">
+Suggerimenti per lo sviluppo di Applicazioni di LG3D </a> </td>
+
+          <td> Van der Haegen Mathieu (dwarfy) </td>
+
+        </tr>
+
+        <tr>
+
+          <td> <a href="http://wiki.java.net/bin/view/Javadesktop/DocumentationPage">
+Progetti di Miglioramento della Documentazione </a> </td>
+
+          <td> Van der Haegen Mathieu (dwarfy) </td>
+
+        </tr>
+
+      </tbody>
+    </table>
+
+  </li>
+
+</ul>
+
+<br>
+
+<a name="How_to_Contribute"></a>
+<h3>Come Contribuire</h3>
+
+<p>
+Come primo passo considerate di diventare un Osservatote del progetto,
+familiarizzando
+con il progetto e partecipando al
+<a href="http://forums.java.net/jive/forum.jspa?forumID=80">forum
+di discussione</a>.
+Prego fare riferimento al documento <a href="https://lg3d.dev.java.net/contribute.html">Contribuire
+a Project Looking Glass
+</a>per maggiori informazioni su come contribuire al progetto.
+Leggete le <a href="https://javadesktop.dev.java.net/govern.html">linee
+guida per la gestione della JavaDesktop
+Community</a> per le principali linee guida
+allo scopo di partecipare ai progetti della JavaDesktop community, come
+ad esempio Project Looking Glass.
+</p>
+
+<a name="Reporting_Issues"></a>
+<h3>Fare Rapporto delle Problematiche</h3>
+
+<p>
+Le informazioni riguardo le problematiche correnti possono essere
+trovate utilizzando
+l' <a href="https://lg3d-core.dev.java.net/servlets/ProjectIssues"><b>Issue
+tracker (Fare rapporto dei problemi)</b></a>. Puoi cercare
+problemi e difetti o trovare un problema specifico. Se incontri un
+problema che non è stato archiviato, ti preghiamo
+di segnalarlo. Potresti inoltre sfruttare la possibilità di
+cercare nell'archivio e-mail sul
+<a href="http://forums.java.net/jive/forum.jspa?forumID=80">forum
+di discussione su javadesktop.org </a>per trovare tutte le
+informazioni relative.
+</p>
+
+<p>
+Quando fai rapporto di un problema ti preghiamo di essere specifico
+riguardo alla configurazione hardware e software del tuo computer e al
+sintomo che hai riscontrato.
+Quando riscontri un crash, i seguenti file di log potrebbero essere
+utili per fornire maggiori informazioni: </p>
+
+<ul>
+
+  <li><tt>/var/tmp/lgserver.log</tt></li>
+
+  <li><tt>/var/log/Xorg.0.log</tt><br>
+
+Questo log potrebbe essere eccessivamente lungo. Ti preghiamo quindi di
+prestare attenzione alle linee che sono identificate da <tt>(EE)</tt>,
+e riportare ogni linea sospetta. </li>
+
+  <li><tt>hs_err_pid####.log</tt><br>
+
+Anche questo log potrebbe essere molto lungo. Ti preghiamo di inviare
+solo le linee comprese tra l'inizio e la linea identificata da <br>
+
+"<tt>--- P R O C E S S ---</tt>". </li>
+
+</ul>
+
+<p>Se sei inesperto nel segnalare un problema, potrebbero esserti
+utili questi documenti: </p>
+
+<ul>
+
+  <li><a href="https://javadesktop.dev.java.net/reportbug.html">Una
+guida passo passo
+    </a> per poter fornire un bug report utile.</li>
+
+  <li><a href="https://www.dev.java.net/nonav/docs/ddIssues_EnterModify.html#entryfields">Introduzione
+veloce alla segnalazione dei problemi riscontrati</a> </li>
+
+</ul>
+
+<a name="Staying_Connected"></a>
+<h3>Come Restare Informati</h3>
+
+<p>Project Looking Glass si sta evolvendo continuamente. Il
+miglior modo per rimanere aggiornati è quello di
+sottoscriversi alla mailing list di Project Looking Glass. Clicca sulla
+voce <b>Mailing lists</b> nella sezione <b>Project
+tools</b> della barra laterale nella pagina <a href="https://lg3d.dev.java.net/">https://lg3d.dev.java.net/</a>.
+Ci sono varie mailing lists da scegliere in base al proprio livello di
+interesse.
+</p>
+
+<ul>
+
+  <li>Se sei interessato nel sapere <span style="color: red;">cosa
+c'è di nuovo</span>,
+sottoscrivitii a <a href="mailto:announce@lg3d.dev.java.net">announce@lg3d.dev.java.net</a>.<br>
+
+  </li>
+
+</ul>
+
+<ul>
+
+  <li>Se sei uno sviluppatore e <span style="color: red;">vuoi
+discutere delle problematiche e delle questioni relative a Project
+Looking Glass</span>, sottoscriviti a <a href="mailto:interest@lg3d.dev.java.net">interest@lg3d.dev.java.net</a>.
+  </li>
+
+</ul>
+
+<ul>
+
+  <li>Se sei interessato alle <span style="color: red;">questioni
+riguardanti la licenza</span>, sottoscriviti
+a <a href="mailto:lg3d_license@dev.java.net">lg3d_license@dev.java.net</a>.<br>
+
+  </li>
+
+</ul>
+
+<a name="Resources"></a>
+<h3>Risorse</h3>
+
+<ul>
+
+  <li> <a href="../lg3d-faq.html">FAQ - Risposte
+alle Domande Frequenti</a> </li>
+
+  <li> <a href="../lg3d-getting-started.html">
+Installazione iniziale di Project Looking Glass</a>
+    <ul>
+
+      <li> <a href="../nvidia-driver-install-tips.html">Suggerimenti
+per l'nstallazione dei driver NVIDIA </a> </li>
+
+<!-- <li> <a href="dri-driver-install-ati-radeon.html"> Installazione dei driver DRI
+per ATI Radeon </a> </li>
+<li> <a href="../jds-3d-acceleration.html"> Accelerazione 3D
+su Tadpole Talin JDS Laptop (ATI Radeon M9) </a> </li>
+<li> <a href="dri-driver-install-ati-radeon-nonrpm.html"> Istruzioni per l'installazione dei driver ATI Binari per distribuzioni non basate su pacchetti rpm. </a>
+<p> Scritte pensando a Slackware ma molti dei passi possono essere applicati anche alle altre distribuzioni. </p>
+</li>-->
+      <li> <a href="http://dri.freedesktop.org/wiki/">Direct
+Rendering Open Source Project (DRI) </a> </li>
+
+      <li> <a href="http://www.javadesktop.org/forums/thread.jspa?threadID=7816&amp;start=0&amp;tstart=0">
+A thread on the LG3D forums detailing the ATI issue </a> </li>
+
+    </ul>
+
+  </li>
+
+  <li> <a href="http://www.iksnet.it/forum/viewforum.php?f=5&amp;sid=8a03c1751a97ac4d6c4701a7117195b7" target="_blank">Forum Italiano non ufficiale per discussioni
+e problematiche</a></li>
+
+  <li> <a href="http://www.iksnet.it" target="_blank">
+Risorse, articoli e guide italiane correlate a LG3D e non solo</a></li>
+
+  <li> <a href="../lg3d-on-windows.html">Eseguire
+la release di sviluppo di Project Looking Glass su Microsoft Windows </a>
+  </li>
+
+  <li> <a href="http://wiki.java.net/bin/view/Javadesktop/FirstRun">LG3D's
+First Run (Primi passi con l'ambiente LG3D) </a> </li>
+
+  <li> <a href="../lg3d-developers-guide.html">
+Guida degli sviluppatori di Project Looking Glass</a> </li>
+
+  <li> <a href="../netbeans/NetBeansLookingGlass.html">
+Costruire ed eseguire Project Looking Glass con NetBeans </a> </li>
+
+  <li><a href="../tutorial/">Project Looking Glass
+Tutorials</a></li>
+
+  <li> <a href="http://java.sun.com/docs/codeconv/">Convenzioni
+per la scrittura di codice Java </a> </li>
+
+  <li> <a href="../jar-app-deployment.html">Sviluppo
+di Applicazioni Jar-based all'interno di LG3D </a> </li>
+
+  <li> <a href="http://solaris-fr.org/home/docs/build/looking_glass3d">Istruzioni
+in Francese per Solaris x86, grazie al Solaris User Group francese </a>
+  </li>
+
+</ul>
+
+<ul>
+
+  <li> <a href="http://forums.java.net/jive/forum.jspa?forumID=80">javadesktop.org
+Forum: Project Looking Glass 3D </a> </li>
+
+  <li> <a href="https://lg3d-core.dev.java.net/issues/query.cgi">Interrogazione
+dell'archivio dei problemi: Issue Tracker Query </a></li>
+
+</ul>
+
+<ul>
+
+  <li><a href="https://lg3d-core.dev.java.net/files/documents/1834/30923/LG3D-Overview.pdf">
+Project Looking Glass - A Comprehensive Overview of the Technology (PDF
+1.6MB) </a></li>
+
+  <li>JavaOne slide set (lucidi usati nelle presentazioni)
+    <ul>
+
+      <li><a href="https://lg3d-core.dev.java.net/files/documents/1834/16804/J12005-TS-7992.pdf">
+JavaOne 2005 slide set (PDF 1.5MB) </a></li>
+
+      <li><a href="https://lg3d-core.dev.java.net/files/documents/1834/5964/J1-2004-TS1586-final.pdf">
+JavaOne 2004 slide set (PDF 900KB) </a></li>
+
+    </ul>
+
+  </li>
+
+  <li> <a href="http://javadesktop.org/lg3d/javadoc/0-7-0-latest/api/index.html">
+LG3D Release 0.7.0 Javadoc </a> </li>
+
+  <li> <a href="http://wiki.java.net/bin/view/Javadesktop/PortingTo062">Pagine
+del wiki how-to per il porting del codice alla versione 0.6.2</a></li>
+
+  <li> Summer of Code sponsorizzata da Google
+    <ul>
+
+      <li><a href="http://wiki.java.net/bin/view/Javadesktop/SummerOfCode2006">
+Projects wiki page 2006 </a></li>
+
+      <li><a href="http://wiki.java.net/bin/view/Javadesktop/SummerOfCode2005">
+Projects wiki page 2005 </a></li>
+
+    </ul>
+
+  </li>
+
+  <li> <a href="../lg3d-related-technologies.html">
+Tecnologie Correlate </a> </li>
+
+  <li> <a href="../lg3d-ui-design.html">
+Discussione del design dell'interfaccia utente di Project Looking Glass
+    </a> </li>
+
+  <li>Scambio di nuove idee -- Transcripts of chat-sessions on
+irc
+    <ul>
+
+      <li><a href="lg3dchat-2005-01-06.log">Una chat
+riguardante l'implementazione di un database filesystem</a></li>
+
+    </ul>
+
+  </li>
+
+  <li> <a href="http://web.mac.com/stefanouliari/iWeb/La%20finestra%20sul%20mondo%20di%20Stefano%20U/Looking%20Glass.html">
+Tesi di Laurea su Project Looking Glass, di Stefano Uliari</a>. <br>
+
+Contiene un' ottima panoramica sul'ambiente LG3D, il sistema operativo
+GNU/Linux e le interfacce grafiche dal 2D al 3D. </li>
+
+</ul>
+
+<a name="LG3D_in_the_Press"></a>
+<h3>Project Looking Glass in the Press, etc.</h3>
+
+<p>
+Articoli riguardanti Project Looking Glass:
+</p>
+
+<ul>
+
+  <li> <a href="http://digital.revistasprofesionales.com/mundolinux">
+Mundo Linux, January 2006 (Ed Linux World in Spanish)</a> The
+article is <a href="El_proyecto_looking_glass.pdf">here</a>,
+thanks to Francisco and Mundo Linux for making this possible. </li>
+
+  <li> UK Linux Format magazine, December 2005, "Super cool
+desktop", LG3D LiveCD on cover CD. </li>
+
+  <li> Play Magazine, December 2004 page 99 </li>
+
+  <li> <a href="http://java.sun.com/developer/technicalArticles/javaopensource/plg.html">
+November 2004 - java.sun.com - Project Looking Glass: Its Architecture
+and a Sneak Preview of the API </a> </li>
+
+  <li> <a href="http://today.java.net/pub/a/today/2004/11/08/lookingglass.html">
+11th November 2004 - java.net - Through the Looking Glass </a> </li>
+
+  <li> <a href="http://java.sun.com/developer/technicalArticles/J2SE/Desktop/lookingglass/">
+12th October 2004 - java.sun.com - Going 3D with Project Looking Glass </a>
+  </li>
+
+  <li> <a href="http://www.desktoplinux.com/articles/AT2538828150.html">
+15th October 2004 - Desktop Linux - Looking into the future of Linux </a>
+  </li>
+
+  <li> <a href="http://www.computerwire.com/industries/research/?pid=335F6658%2DE5B3%2D4F01%2D98CC%2DDF1226853757">
+8th October 2004 - ComputerWire - Sun Sees Java Desktop Through the
+Looking Glass </a> </li>
+
+  <li> <a href="http://www.pcpro.co.uk/news/64179/sun-plots-3d-route-to-java-desktop.html">
+6th October 2004 - PC Pro - Sun plots 3D route to Java desktop </a>
+  </li>
+
+  <li> <a href="http://www.eweek.com/article2/0,1759,1631949,00.asp">
+9th August 2004 - eWeek - Looking Glass Is Closer to Reality </a>
+  </li>
+
+  <li> <a href="http://today.java.net/pub/a/today/2004/07/06/3ddesktop.html">
+9th August 2004 - java.net - Behind The Scenes of Project Looking Glass
+    </a> </li>
+
+  <li> <a href="http://www.orangecrate.com/article.php?sid=762"> 24th
+July 2004 - ORANGECRATE.COM - An Interview with Hideya Kawahara, Sun's
+Looking Glass Guru </a> </li>
+
+  <li> <a href="http://www.computerworld.com/softwaretopics/software/appdev/story/0,10801,94193,00.html">
+29th June 2004 - COMPUTERWORLD - JavaOne: Sun opens Looking Glass, sees
+more Java clients </a> </li>
+
+  <li> <a href="http://www.computerweekly.com/Article131603.htm"> 29th
+June 2004 - ComputerWeekly.com - Sun opens up Project Looking Glass </a>
+  </li>
+
+  <li> <a href="http://www.prnewswire.com/cgi-bin/stories.pl?ACCT=104&amp;STORY=/www/story/06-28-2004/0002201109&amp;EDATE=">
+28th June 2004 - PR Newswire - Sun Contribute Four Java Breakthroughs
+to Open Source Community Including 'Project Looking Glass' and JAVA 3D </a>
+  </li>
+
+  <li> <a href="http://www.desktoplinux.com/news/NS9715433982.html">
+28th June 2004 - DesktopLinux.com - Sun opens 'Looking Glass' for
+desktops </a> </li>
+
+  <li> <a href="http://www.eweek.com/article2/0,1759,1560991,00.asp">
+2nd April 2004 - eWeek - Sun Weighs Open-Source Options </a> </li>
+
+  <li> ... </li>
+
+  <li> <a href="http://www.crn.com/sections/breakingnews/dailyarchives.jhtml;jsessionid=UVIFGMYMMOSQYQSNDBCCKH0CJUMEKJVN?articleId=18830578&amp;_requestid=222447">
+5th August 2003 (the very first public appearance) - CRN - Schwartz
+Defends Sun's Open-Source Investment, Demonstrates Mad Hatter </a>
+  </li>
+
+</ul>
+
+<a name="Tools"></a>
+<h3>Strumenti</h3>
+<p>Ringraziamenti alle seguenti compagnie per aver fornito l'accesso ai loro strumenti per l'utilizzo in progetti OpenSource.
+</p>
+<a href="http://yourkit.com" target="_blank">
+<img vspace="8" hspace="8"
+      alt="YourKit Java Profiler"
+      style="border: 0px solid; width: 150px;"
+      src="../images/misc/yjp.gif" />
+</a>
+
+
+<h3>Alcune parole finali...</h3>
+
+<p>Grazie per il tuo interesse al progetto e per aver speso il
+tuo tempo nel leggere questa pagina.
+Confidiamo nel fatto che tu voglia unirti al nostro progetto ed
+esplorare con noi questa divertente opportunità. Abbiamo
+inoltre un canale irc (in inglese), non sempre attivo ma è un punto di partenza, il link è:
+#projectlookingglass su irc.freenode.net
+</p>
+
+<p>
+Il Team di Sviluppo di Project Looking Glass
+</p>
+
+<hr>
+<small> $Revision: 1.12 $ $Date: 2007-01-09 00:02:04 $ (English
+Version Revision: 1.94)</small>
+</div>
+
+</body>
+</html>

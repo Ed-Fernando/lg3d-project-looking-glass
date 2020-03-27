@@ -1,0 +1,134 @@
+<!DOCTYPE html PUBLIC "-//Tigris//DTD XHTML 1.0 Transitional//EN"
+"http://style.tigris.org/tigris_transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+  <title>Projekt Looking Glass &Uuml;bersetzungsrichtlinien</title>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  <meta name="Author" content="Yuichi SAKURABA" />
+  <meta name="Translator" content="Christian Ost" />
+<style type="text/css"> /* <![CDATA[ */
+ @import "../preview.css";
+ /* ]]> */</style></head>
+<body>
+<div id="projectdocumentview" class="app">
+<h2>Projekt Looking Glass &Uuml;bersetzungsrichtlinien</h2>
+
+<p>Dieses Dokument ist eine Einf&uuml;hrung in die Richtlinien, die im japanischen &Uuml;bersetzungsunterprojekt des Projekt Looking Glass verwendet werden.</p>
+
+<h3><a name="location" id="location"></a>Der Speicherort der &uuml;bersetzten Dateien</h3>
+<p>&Uuml;bersetzte Dateien sollten in <strong>lg3d-core/www/<i>&lt;Name der Sprache&gt;</i></strong> abgelegt werden. Der <i>&lt;Sprachenname&gt;</i> wird im 2 Buchstaben Sprachencode angegeben, wie er in ISO-639 definiert ist.
+F&uuml;r genauere Informationen siehe auch:
+<a href="http://www.w3.org/WAI/ER/IG/ert/iso639.htm">http://www.w3.org/WAI/ER/IG/ert/iso639.htm</a>
+</p>
+<p>Prinzipiell wird in diesem Verzeichnis die Verzeichnisstruktur unter lg3d-core/www dupliziert.
+Insofern ist es auch m&ouml;glich Bilddateien zu &uuml;bersetzen.
+Bitte beachte, dass es einige wenige Ausnahmen gibt, die du nicht &uuml;bersetzen solltest (z.B. Lizenzdateien).</p>
+
+<h3><a name="filename" id="filename"></a>Dateinamen</h3>
+<p>Benutze <strong>diselben Dateinamen</strong>, wie im Original.</p>
+
+<h3><a name="format" id="format"></a>Dateiformat</h3>
+<p>Das Dateiformat sollte <strong>XHTML 1.0</strong> sein.
+Schreibe keine Dokumente in HTML. Bei CollabNet, das das LG3D Projekt hostet, werden alle Antworten in XHTML umgewandelt.</p>
+<p>XHTML 1.0 DOCTYPE Definition, die CollabNet nutzt ist:</p>
+<table width="80%" border="1" align="center" cellpadding="5" cellspacing="2">
+  <tr> 
+    <td bgcolor="#CCFFFF"><pre>&lt;!DOCTYPE html PUBLIC &quot;-//Tigris//DTD XHTML 1.0 Transitional//EN&quot;
+&quot;http://style.tigris.org/tigris_transitional.dtd&quot;&gt;</pre></td>
+  </tr>
+</table>
+<p>Du solltest diese Deklaration am Beginn der &Uuml;bersetzung einf&uuml;gen.
+Gl&uuml;cklicherweise haben die meisten englischen Dokumente sie bereits und es gibt dadurch keinen Bedarf sie hinzuzuf&uuml;gen.</p>
+
+  <h3><a name="charset" id="charset"></a>Character Encoding</h3>
+<p>Kodiere deine &Uuml;bersetzung in <strong>UTF-8</strong>.
+Das CollabNet System, das von java.net genutzt wird, gibt HTTP Antworten in UTF-8 zur&uuml;ck und andere Zeichenkodierungen k&ouml;nnen zu Anzeigeproblemen f&uuml;hren.
+</p>
+<p>F&uuml;r eine Vorschau auf deinem lokalen Dateisystem, benutze das folgende META Element um den Zeichensatz festzulegen:</p>
+<table width="80%" border="1" align="center" cellpadding="5" cellspacing="2">
+  <tr> 
+    <td bgcolor="#CCFFFF"><pre>&lt;meta http-equiv=&quot;Content-Type&quot; content=&quot;text/html; charset=utf-8&quot; /&gt;</pre></td>
+  </tr>
+</table>
+<p>Es sollte zwischen &lt;head&gt; und &lt;/head&gt; platziert werden.</p>
+
+<h3><a name="lineseparator" id="lineseparator"></a>Zeilentrenner</h3>
+<p>Benutze <strong>LF</strong> (0x0A) als Zeilenumbruchszeichen, auch unter Windows oder MacOS.</p>
+
+<h3><a name="editor" id="editor"></a>HTML Editor</h3>
+<p>Bitte benutze keine <strong>HTML Editoren</strong>, da diese die XHTML Dateien mit unerwarteten Modifikationen oder redundadnten XHTML Elementen versehen k&ouml;nnen.
+Ein guter Texteditor ist v&ouml;llig ausreichend.</p>
+<p>In der Zukunft werden wir allerdings den Einsatz eines HTML-Editors in Betracht ziehen, wenn wir in der Lage sind, zu best&auml;tigen, dass dies keine Probleme mitsichbringt.
+A&szlig;erdem planen wir ein Plugin f&uuml;r IDEs (z.B. Eclipse) zu entwickeln, um die &Uuml;bersetzungsarbeit zu unterst&uuml;tzen.</p>
+
+<h3><a name="stylesheet" id="stylesheet"></a>Stylesheet</h3>
+<p>F&uuml;r eine Vorschau auf dem lokalen Dateisystem, kannst du das folgende Stylesheet verwenden, sodas du dasselbe Aussehen wie auf java.net erh&auml;ltst:</p>
+<table width="80%" border="1" align="center" cellpadding="5" cellspacing="2">
+  <tr> 
+    <td bgcolor="#CCFFFF"><pre>&lt;style type=&quot;text/css&quot;&gt; /* &lt;![CDATA[ */
+@import &quot;preview.css&quot;;
+/* ]]&gt; */&lt;/style&gt;</pre></td>
+  </tr>
+</table>
+<p>Auf dem CollabNet System, wird diese Deklaration entfernt und es werden andere Stylesheets genutzt.</p>
+<p><strong>Anmerkung:</strong> 
+Dieses Beispiel nimmt an , dass die &Uuml;bersetzungsdateien in lg3d-core/www/ja liegen.
+Wenn du sie in einem anderen Verzeichnis ablegst, solltest du den Ort &auml;ndern, indem du eine relative URL verwendest.</p>
+<p>Es sollte in &lt;head&gt; ... &lt;/head&gt; platziert werden.
+"preview.css" liegt in dem lg3d-core/www/ja Verzeichnis im CVS Baum, also kannst du es herunterladen und benutzen.</p>
+
+<h3><a name="hyperlink" id="hyperlink"></a>Hyperlinks</h3>
+<p>Verfasse URls unterhalb von https://lg3d-core.dev.java.net/ in relativen URIs, um den Aufwand des Neuschreibens zu minimieren.</p>
+<p><strong>Anmerkung:</strong> Englische Originale sollten ebenso geschrieben werden.</p>
+<p>Um den HTTP 404 Error zu vermeiden (d.h. Not found), kannst du die folgende Dummyseite verwenden und auf das Originaldokument umleiten:</p>
+<table width="80%" border="1" align="center" cellpadding="5" cellspacing="2">
+  <tr> 
+    <td bgcolor="#CCFFFF"><pre>&lt;meta http-equiv=&quot;Refresh&quot; content=&quot;1; URL=https://lg3d-core.dev.java.net/foo.html&quot; /&gt;</pre></td>
+  </tr>
+</table>
+
+<h3><a name="translator" id="translator"></a>&Uuml;bersetzer Credits</h3>
+<p>Der Name des &Uuml;bersetzers wird in das folgende META Tag geschrieben:</p>
+<table width="80%" border="1" align="center" cellpadding="5" cellspacing="2">
+  <tr> 
+    <td bgcolor="#CCFFFF"><pre>&lt;meta name=&quot;Translator&quot; content=&quot;Yuichi SAKURABA&quot; /&gt;</pre></td>
+  </tr>
+</table>
+<p>Das Tag sollte in &lt;head&gt; ... &lt;/head&gt; platziert sein.</p>
+
+<h3><a name="contents" id="contents"></a>&Uuml;bersetzungsergebnisse</h3>
+<p>Es sollten nur <strong>&uuml;bersetzte S&auml;tze</strong>, aber nie original S&auml;tze in die (&uuml;bersetzten) Dateien gelangen.
+Das bedeutet, dass wir keine mehrsprachigen S&auml;tze in eine Date einf&uuml;gen.</p>
+<p>Wir haben aber den Plan das original Dokument und seine &Uuml;bersetzung in derselben Datei zum Gegenlesen anzuzeigen.</p>
+
+<h3><a name="revision" id="revision"></a>CVS Revisionsnummer</h3>
+<p>Wenn du das erste Mal deine &Uuml;bersetzung in das CVS einspeist,
+solltest du die CVS Revisionsnummer zur&uuml;cksetzen und die originale Revisionsnummer im folgenden Format hinzuf&uuml;gen:</p>
+<table width="80%" border="1" align="center" cellpadding="5" cellspacing="2">
+  <tr> 
+    <td bgcolor="#CCFFFF"><pre>$Revision: 1.1 $ $Date: 2006-05-09 17:46:21 $ (English Version Revision: x.y)</pre></td>
+  </tr>
+</table>
+<p>Dies zeigt, ob es die neueste &Uuml;bersetzung ist, oder nicht und es hilft anderen &Uuml;bersetzern die existierende &Uuml;bersetzung zu aktualisieren, indem sie CVS diff bei CollabNet benutzen.</p>
+<p><strong>Note:</strong> Wenn du eine &Uuml;bersetzung aktualisierst, musst du die Revisionsnummer des Originals von Hand aktualisieren.</p>
+
+<h3><a name="commit" id="commit"></a>Commit Erl&auml;uterungen im CVS</h3>
+<p>Schreibe commit-Nachrichten f6uuml;r das CVS auf <strong>Englisch</strong>.
+Der Grund ist:
+<ul>
+<li>Das CollabNet System kann nicht mit mehreren Zeichenkodierungen umgehen und deshalb kann es mit einigen Kodierungen zu Problemen kommen.</li>
+<li>Alle Entwickler und Content-Entwickler lesen sie.
+Also wird es nicht empfohlen andere Sprachen zu benutzen.</li>
+</ul>
+</p>
+
+<h3><a name="validation" id="validation"></a>&Uuml;berpr&uuml;fung</h3>
+<p>LG3D Dokumente werden in XHTML geschrieben.
+Sie sollten &uuml;berpr&uuml;ft werden, bevor sie ins CVS eingespeist werden.
+Zum Beispiel, kann man den <a href="http://validator.w3.org/">W3C 
+  Markup Validation Service</a> benutzen.</p>
+<hr />
+<p><small>$Revision: 1.1 $ $Date: 2006-05-09 17:46:21 $ (English Version Revision: 1.1)</small></p>
+</div>
+</body>
+</html>

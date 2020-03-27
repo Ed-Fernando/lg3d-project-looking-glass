@@ -1,0 +1,1238 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<title>Project Looking Glass</title>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<link href="../../preview.css" rel="stylesheet" type="text/css" />
+<meta name="Author" content="Yuichi SAKURABA" />
+</head>
+<body bgcolor="#FFFFFF"> 
+<div id="projectdocumentview" class="app" style="width: 550px;"> 
+  <h1>Project Looking Glass で 3D 体験</h1> 
+  <h2>Windows で動かす LG3D の世界</h2> 
+  <p>&nbsp;</p> 
+  <p>櫻庭 祐一 <a href="http://www.javainthebox.net/">http://www.javainthebox.net/</a></p> 
+  <p>&nbsp;</p> 
+  <p>初出: <a href="http://www.gihyo.co.jp/magazines/javapress/archive/Vol43">JAVA PRESS Vol.43</a> </p> 
+  <hr /> 
+  <h2>未来のデスクトップ</h2> 
+  <p>みなさん、次世代の 3D デスクトップ Project Looking Glass はご存知でしょうか。</p> 
+  <p>この解説記事が掲載されている JAVA PRESS が書店に並ぶときには、すでに San Francisco において JavaOne がおこなわれており、Projecct Looking Glass とその開発者である川原英哉氏の話題でもちきりだと思います。</p> 
+  <p>今でこそ Java というとサーバ側の技術して定着していますが、Java はそれだけではないのです。J2SE 5.0 のテーマにも Client Desktop が掲げられているように、デスクトップでの Java の巻きかえしがはかられています。</p> 
+  <p>その流れの筆頭が本解説で紹介する Project Looking Glass、通称 LG3D なのです。</p> 
+  <h3>LG3D のテーマ</h3> 
+  <p>今から約 30 年前、Xerox のパロアルト研究所 (PARC) で今のウィンドウシステムのベースとなる技術が生まれました。WIMP と呼ばれる Window - Icon - Menu - Pointer で構成された GUI はまさに画期的なものでした。</p> 
+  <p>それから 30 年。今のウィンドウシステムは機能こそ増えましたが、基本的には 30 年前と変わりません。</p> 
+  <p>でも、それでいいのでしょうか。</p> 
+  <p>そこで、川原氏が考えたことは今までの 2D のウィンドウシステムに奥行きを与えることでした。 しかし、単にデスクトップを 3D にしたのではありません。</p> 
+  <p>たとえば、LG3D には次のような機能があります。</p> 
+  <ul> 
+    <li>開いているウィンドウを Z 軸方向に並べる</li> 
+    <li>必要のないウィンドウを横に立てておく</li> 
+    <li>重なったウィンドウを立てることにより、奥の隠れているウィンドウを選択する</li> 
+  </ul> 
+  <p>これらの機能はすべて、ユーザビリティを高めるために盛り込まれた機能です。</p> 
+  <p>つまり LG3D のテーマは</p> 
+  <p style="margin-left: 32px; font-weight: bold;">2D のデスクトップ + ユーザビリティのための 3D</p> 
+  <p>であり、川原氏はこのことを</p> 
+  <p style="margin-left: 32px; font-weight: bold;">2.5D デスクトップシステム</p> 
+  <p>と呼んでいます。</p> 
+  <p>LG3D では 2.5D のデスクトップシステムを実現しているだけでなく、その上で動作するアプリケーションを開発するための API も提供しています。 </p> 
+  <p>そこで、本解説では LG3D のサンプルアプリケーションを作ることで、2.5D デスクトップシステムを少しでも感じていただければと思っています。</p> 
+  <h2>LG3D のインストールと実行</h2> 
+  <h3>Windows で LG3D を動作させる </h3> 
+  <p>LG3D というと Linux で動作するというイメージがあるかもしれませんが、本解説では Windows を使用します。LG3D の基本的な部分はほぼ Java で作られており、プラットフォームに依存せずに動作させることが可能です。</p> 
+  <p>ただし、X Window システムと協調する部分はネイティブコードで書かれているため、Windows では次のような制約があります。</p> 
+  <ul> 
+    <li>LG3D を Windows に代わるウィンドウシステムにすることができない</li> 
+    <li>Windows のネイティブアプリケーションを LG3D 上で動作させることができない </li> 
+  </ul> 
+  <p>しかし、LG3D API を使用した 2.5D や 3D のアプリケーションを動作させるには何の問題もありません。逆に Windows で作成することの利点もあります。たとえば、</p> 
+  <ul> 
+    <li>グラフィックスドライバの OpenGL 対応が高い</li> 
+    <li>普段使いなれた開発環境が使える </li> 
+  </ul> 
+  <p>などがあります。</p> 
+  <p>LG3D は 3D の描画に OpenGL を使用しています。Linux で LG3D を動作させるには OpenGL への対応の問題もあり、現状 NVIDIA のビデオカードを選択せざるをえません。ところが、Windows ではチップセットに統合されているビデオ機能であっても問題なく LG3D を動かすことができるのです。</p> 
+  <p>&nbsp;</p> 
+  <h3>コンポーネントのインストール</h3> 
+  <p>LG3D をインストールする前に、次の 3 つのコンポーネントをインストールしておきましょう。</p> 
+  <ul> 
+    <li>JDK 5.0 <a href="http://java.sun.com/j2se/1.5.0/download.jsp">http://java.sun.com/j2se/1.5.0/download.jsp</a></li> 
+    <li>Java Advanced Imaging API (JAI) 1.1.2_01 <a href="http://java.sun.com/products/java-media/jai/downloads/download-1_1_2_01.html">http://java.sun.com/products/java-media/jai/downloads/download-1_1_2_01.html</a></li> 
+    <li>Java3D 1.3.2 <a href="https://j3d-core.dev.java.net/servlets/ProjectDocumentList">https://j3d-core.dev.java.net/servlets/ProjectDocumentList</a></li> 
+  </ul> 
+  <p>JDK 5.0 は原稿執筆時点での最新バージョンは 5.0 Update 3 です。JDK をインストールした後には JAVA_HOME 環境変数を JDK をインストールしたディレクトリに設定しておいてください。</p> 
+  <p>JAI にはいくつかのパッケージがあるのですが、その中の JDK Install を使用してください。この場合、ダウンロードするファイル名は jai-1_1_2_01-lib-windows-i586-jdk.exe です。</p> 
+  <p>Java3D 1.3.2 は ZIP ファイルで提供されています。ファイル名は java3d-1_3_2-windows0i586.zip です。展開すると j3d-132-win.zip というファイルがあるので、それを J2SE をインストールしたディレクトリの下の jre ディレクトリに展開します。</p> 
+  <p>&nbsp;</p> 
+  <h3>LG3D のインストールと起動</h3> 
+  <p>LG3D のインストールは非常に簡単です。</p> 
+  <p>LG3D のダウンロードは <a href="../../../binary-builds.html">https://lg3d-core.dev.java.net/binary-builds.html</a> からおこないます。原稿執筆時点の最新バージョンは 0.62 で、ダウンロードするファイルは lg3d-fcs-rel-0-6-2-linux-i586-0504141534.tar.gz です。</p> 
+  <p>ダウンロードしたファイルをインストールするディレクトリに展開します。展開にはUNIX で使われる tar + gzip に対応している展開ツールをご使用ください。</p> 
+  <p>展開すると、lg3d というディレクトリが作成されます。これで、インストールは終了です。さっそく、起動させてみましょう。</p> 
+  <p>lg3d 直下に bin ディレクトリがあり、その中に 3 つのバッチファイルがあります。Windows で起動するには、このバッチファイルの中の lg3d-dev.bat を使用します。</p> 
+  <p>たとえば、C:\lg3d にパッケージを展開した場合、次のようになります。</p> 
+  <div style="display: table; width: 90%; margin-left: 5%; padding-left: 10px; padding-right: 10px; background-color:#DDFFFF;"> 
+    <pre>C:\lg3d&gt;cd bin
+C:\lg3d\bin&gt;lg3d-dev</pre> 
+  </div> 
+  <p>すると、画面中央にスプラッシュ画面が表示されたあと、LG3D のウィンドウが表示されます。もし、起動しない場合にはカレントディレクトリにある lgserver.log を見てみてください。</p> 
+  <p>&nbsp;</p> 
+  <table style="margin-left: auto; margin-right: auto;"> 
+    <tr> 
+      <td><a href="img/lg3d1.jpg"><img src="img/lg3d1-s.jpg" alt="図 1 Windows で起動した LG3D" width="256" height="192" border="0" /></a></td> 
+    </tr> 
+    <tr> 
+      <th>図 1 Windows で起動した LG3D</th> 
+    </tr> 
+  </table> 
+  <p>&nbsp;</p> 
+  <p>LG3D が無事に起動したら、いろいろ試してみてください。</p> 
+  <p>ウィンドウの下部にあるのがタスクバーです。左側に並ぶアイコンがアプリケーション起動のためのアイコン、右側が背景変更のためのアイコンです。一番右側のどくろマークのアイコンは LG3D を終了させるためのアイコンです。 </p> 
+  <p>左側に並んでいるアプリケーションのアイコンは主に lg3d-incubator プロジェクト (<a href="https://lg3d-incubator.dev.java.net">https://lg3d-incubator.dev.java.net</a>) で開発されているものです。lg3d-incubator ではこれ以外にもさまざまなサンプルアプリケーションが開発されています。</p> 
+  <p>基本的な操作方法に関して表 1 にまとめました。</p> 
+  <p>&nbsp;</p> 
+  <table style="margin-left: auto; margin-right: auto"> 
+    <tr> 
+      <th>表 1 基本的な操作</th> 
+    </tr> 
+    <tr> 
+      <td><table style="border: 1px outset;"> 
+          <tr> 
+            <th style="padding: 2px; border: 1px inset;">アクション</th> 
+            <th style="padding: 2px; border: 1px inset;">効果</th> 
+          </tr> 
+          <tr> 
+            <td style="padding: 2px; border: 1px inset;">ウィンドウが表示されていないところで右クリック</td> 
+            <td style="padding: 2px; border: 1px inset;">すべてのウィンドウがサイドに立つ<br /> 
+              ウィンドウが立っている場合は元の状態に復帰する</td> 
+          </tr> 
+          <tr> 
+            <td style="padding: 2px; border: 1px inset;">実行中のアプリケーションのアイコンを左クリック</td> 
+            <td style="padding: 2px; border: 1px inset;">クリックされたアプリケーションにフォーカスがあたる<br /> 
+              ウィンドウが立っている状態であれば、復帰する</td> 
+          </tr> 
+          <tr> 
+            <td style="padding: 2px; border: 1px inset;">ウィンドウをスクリーンの端に接するように移動させる</td> 
+            <td style="padding: 2px; border: 1px inset;">ウィンドウが立つ</td> 
+          </tr> 
+          <tr> 
+            <td style="padding: 2px; border: 1px inset;">立っているウィンドウをクリック</td> 
+            <td style="padding: 2px; border: 1px inset;">元の状態に復帰</td> 
+          </tr> 
+          <tr> 
+            <td style="padding: 2px; border: 1px inset;">Javaのロゴの部分でマウスをドラッグ</td> 
+            <td style="padding: 2px; border: 1px inset;">ドラッグに応じてウィンドウが回転</td> 
+          </tr> 
+          <tr> 
+            <td style="padding: 2px; border: 1px inset;">ルートウィンドウの端の部分でクリック</td> 
+            <td style="padding: 2px; border: 1px inset;">バーチャルデスクトップのパン<br /> 
+              ただし，背景がキャンパスのように連続している場合のみ</td> 
+          </tr> 
+          <tr> 
+            <td style="padding: 2px; border: 1px inset;">タスクバーの上で右クリック</td> 
+            <td style="padding: 2px; border: 1px inset;">バーチャルデスクトップ全面の縮小表示<br /> 
+              ただし、背景が連続している場合のみ</td> 
+          </tr> 
+          <tr> 
+            <td style="padding: 2px; border: 1px inset;">デスクトップの縮小表示上でクリック</td> 
+            <td style="padding: 2px; border: 1px inset;">指定された背景に復帰</td> 
+          </tr> 
+          <tr> 
+            <td style="padding: 2px; border: 1px inset;">実行中のアプリケーションのアイコンを右クリック</td> 
+            <td style="padding: 2px; border: 1px inset;">アプリケーションの終了</td> 
+          </tr> 
+        </table></td> 
+    </tr> 
+  </table> 
+  <p>&nbsp;</p> 
+  <h3>フルスクリーンモード</h3> 
+  <p>前述したように Windows では、ウィンドウシステムを LG3D に置きかえることはできません。しかし、表示用の設定ファイル lg3d\etc\lg3d\displayconfig\j3d1x1 を変更することでフルスクリーンにすることができます。</p> 
+  <p>デフォルトでは j3d1x1 ファイルの24, 25 行目は以下のようになっています。</p> 
+  <div style="display: table; width: 90%; margin-left: 5%; padding-left: 10px; padding-right: 10px; background-color:#DDFFFF;"> 
+    <pre>//(ScreenAttribute center WindowSize           NoBorderFullScreen)
+(ScreenAttribute center   WindowSize           (800 600))</pre> 
+  </div> 
+  <p>フルスクリーンにするには、24 行目のコメントをはずし、25 行目をコメントアウトします。</p> 
+  <div style="display: table; width: 90%; margin-left: 5%; padding-left: 10px; padding-right: 10px; background-color:#DDFFFF;"> 
+    <pre>(ScreenAttribute center   WindowSize           NoBorderFullScreen)
+//(ScreenAttribute center WindowSize           (800 600))</pre> 
+  </div> 
+  <p>これで、フルスクリーンモードで起動させることができます。</p> 
+  <p>&nbsp;</p> 
+  <h2>2.5D アプリケーションの作り方</h2> 
+  <p>本解説で使用する LG3D のバージョンは 0.62 ですが、JavaOne において 0.70 が発表される予定になっています。0.70 ではパフォーマンス向上などが主な変更点となっており、API の変更は最小限に抑えられる予定です。</p> 
+  <p>したがって、0.62 で作成したアプリケーションはそのまま 0.70 でも動作するはずです。バージョンの違いによる相違などについては、技術評論社の Web サイト (<a href="http://www.gihyo.co.jp/magazines/javapress/support/Vol43">http://www.gihyo.co.jp/magazines/javapress/support/Vol43</a>) でフォローするようにしますのでご参照ください。</p> 
+  <p>また、作成したサンプルもここからダウンロードできるようにしてあります。</p> 
+  <p>&nbsp;</p> 
+  <h3>パネルを表示する</h3> 
+  <p>まずはじめにフレームに直接コンポーネントを 1 つ追加するサンプルを作ってみましょう。ソースはリスト 1 に表示しました。</p> 
+  <p>LG3D でも AWT/Swng と同様にフレームを作成して、そこにコンポーネントを追加していきます。</p> 
+  <p>LG3D のフレームには org.jdesktop.lg3d.wg.Frame3D クラスを使用します。同様に、コンポーネントは org.jdesktop.lg3d.wg.Component3D クラスです。</p> 
+  <p>ここまでは AWT/Swing と同じですが、LG3D のコンポーネントは描画されないという違いがあります。描画されるのはコンポーネントに追加されるシェイプです。</p> 
+  <p>シェイプは自分で作ることもできますが、すぐに使えるシェイプが org.jdesktop.utils.shape パッケージにまとめて提供されています。</p> 
+  <p>このパッケージで提供されいているシェイプは大別すると 2 種類に分けられます。一方が立方体、円柱など 3D のモデルを作るためのベースになるプリミティブと呼ばれるもの、もう一方がパネルと呼ばれるものです。2.5D アプリケーションを作るにはこのパネルが大活躍します。</p> 
+  <p>ここでは、パネルの中から GlassyPanel クラスを選んでみました。</p> 
+  <p>3D での描画では色以外にも光の反射など物体の質感を表すことが重要になります。このような質感も含めたものをアピアランスと呼びます。</p> 
+  <p>つまり、物体を描画するには形状とアピアランスが必要になるということです。前述したプリミティブやパネルは形状だけを表しています。</p> 
+  <p>LG3D ではアピアランスを表すのに org.jdesktop.lg3d.sg.Appearance クラスを使用します。直接 Appearance クラスを使用してもいいのですが、簡単に扱うための org.jdesktop.lg3d.utils.shape.SimpleAppearance クラスが提供されているので、そちらを使ってみました。</p> 
+  <p>SimpleAppearance クラスのコンストラクタは色の RGB の値、アルファ、そしてアピアランスのタイプを指定します。RGB とアルファは 0 から 1 までの float です。 </p> 
+  <p>Monolith1 では 14 行目で SimpleAppearance オブジェクトを生成しています。色が 1.0, 0.6, 0.6 なので薄いピンク、アルファは 1.0 つまり不透明になります。最後の DISABLE_CULLING は見えない部分でも処理をするということを意味しています。</p> 
+  <p>&nbsp;</p> 
+  <div style="width: 100%;"> 
+    <table> 
+      <tr> 
+        <th>リスト 1 Monolith1 クラス</th> 
+      </tr> 
+      <tr> 
+        <td><pre style="padding: 10px; background-color:#DDFFFF;">01: import javax.vecmath.Vector3f;
+02:  
+03: import org.jdesktop.lg3d.sg.Appearance;
+04: import org.jdesktop.lg3d.utils.shape.GlassyPanel;
+05: import org.jdesktop.lg3d.utils.shape.SimpleAppearance;
+06: import org.jdesktop.lg3d.wg.Component3D;
+07: import org.jdesktop.lg3d.wg.Frame3D;
+08:  
+09: public class Monolith1 {
+10:     public Monolith1() {
+11:         Frame3D frame = new Frame3D();
+12:   
+13:         // Appearance の設定
+14:         Appearance appearance = new SimpleAppearance(1.0f, 0.6f, 0.6f, 1.0f, 
+15:                                           SimpleAppearance.DISABLE_CULLING);
+16:  
+17:         // パネルの生成
+18:         GlassyPanel panel = new GlassyPanel(0.2f, 0.2f, 0.01f, 0.001f,
+19:                                             appearance);
+20:  
+21:         // パネルをコンポーネントに追加
+22:         Component3D component = new Component3D();
+23:         component.addChild(panel);
+24:  
+25:         frame.addChild(component);
+26:  
+27:         // フレームの大きさを設定
+28:         frame.setPreferredSize(new Vector3f(0.2f, 0.2f, 0.01f));
+29:  
+30:         // フレームの表示
+31:         frame.changeEnabled(true);
+32:         frame.changeVisible(true);        
+33:     }
+34:  
+35:     public static void main(String[] args) {
+36:         new Monolith1();
+37:     }
+38: }</pre></td> 
+      </tr> 
+    </table> 
+  </div> 
+  <p>&nbsp;</p> 
+  <p>GlassyPanel クラスのコンストラクタの引数は幅、高さ、奥行き、ぼかす部分の幅、そしてアピアランスです (18 行目)。これ以外にもコンストラクタはオーバーロードされているので、使いやすいものを選んでください。</p> 
+  <p>LG3D で扱う単位は m (メートル) です。したがって、ここで使用しているサイズ (0.2, 0.2, 0.01) は 20cm, 20cm, 1cm になります。</p> 
+  <p>パネルができたので、それをコンポーネントに追加します (23 行目)。AWT/Swing ではコンポーネントの追加は add メソッドが使われますが、LG3D では addChild メソッドです。</p> 
+  <p>同じく、コンポーネントをコンテナ (この場合はフレーム) に追加するのにも addChild メソッドが使用されます (25 行目)。同じメソッド名ですが、混同しないようにしてください。</p> 
+  <p>次に 28 行目で、フレームの大きさを設定します。</p> 
+  <p>フレームの大きさを設定するには Swing と同じように Component3D#setPreferredSize メソッドを使います。setPreferredSize メソッドの引数は Java3D で 3D のベクトルを表す Vector3f クラスになります。クラス名の最後の f は float であることを意味しています。</p> 
+  <p>最後に、フレームを表示します。フレームの表示には changeEnable メソッド (31 行目) とchangeVisible メソッド (32 行目) を使用します。</p> 
+  <p>&nbsp;</p> 
+  <h3>サンプルのコンパイル、起動</h3> 
+  <p>できあがったサンプルをさっそくコンパイルしてみましょう。</p> 
+  <p>ここでは LG3D を c:\lg3d にインストールし、サンプルもそこにあると仮定します。以後のサンプルでもすべてこの配置として記述してあります。</p> 
+  <p>コンパイルには LG3D の JAR ファイル lg3d-core.jar が必要です。この JAR ファイルは C:\lg3d\lib\ext ディレクトリにあります。</p> 
+  <div style="display: table; width: 90%; margin-left: 5%; padding-left: 10px; padding-right: 10px; background-color:#DDFFFF;"> 
+  <pre>C:\lg3d&gt;javac -cp lib\ext\lg3d-core.jar Monolith1.java</pre>
+  </div> 
+  <p>コンパイルができたら、動かしてみましょう。</p> 
+  <p>パッケージ化して LG3D にデプロイメントすることも可能ですが、ここでは手軽に動かすためのバッチファイルを用意しました。</p> 
+  <p>このバッチファイルは LG3D チュートリアル (<a href="../../../tutorial/">https://lg3d-core.dev.java.net/tutorial/</a>) で使用されているシェルスクリプトをバッチファイルに変更したものです (リスト 2)。使用にあたっては、2 行目の LG3DHOME をお使いの環境にあわせて変更してください。</p> 
+  <p>&nbsp;</p> 
+  <p>注) Rel-0.7.0 から LG3D チュートリアルでは runtutorial は使用されていません </p> 
+  <p>&nbsp;</p> 
+  <div style="width:100%"> 
+    <table> 
+      <tr> 
+        <th>リスト 2 runtutorial.bat</th> 
+      </tr> 
+      <tr> 
+        <td><pre style="padding: 10px; background-color:#DDFFFF;">@echo off
+set LG3DHOME=.      &lt;--- ここを使っている環境にあわせて変更する
+  
+if "%LGX11HOME%" == "" set LGX11HOME=%LG3DHOME%\ext\lg3d-x11
+
+set CLASSPATH=%CLASSPATH%;.
+set CLASSPATH=%CLASSPATH%;%LG3DHOME%\lib\ext\lg3d-core.jar
+set CLASSPATH=%CLASSPATH%;%LG3DHOME%\ext\escher-0.2.2.lg.jar
+set CLASSPATH=%CLASSPATH%;%LG3DHOME%\ext\jaimlib.jar
+set CLASSPATH=%CLASSPATH%;%LG3DHOME%\ext\nwn-0.7.jar
+set CLASSPATH=%CLASSPATH%;%LG3DHOME%\ext\odejava.jar
+set CLASSPATH=%CLASSPATH%;%LG3DHOME%\ext\satin-v2.3.jar
+ 
+set CONFIG=lgconfig_1p_nox.xml
+set LGCONFIG=file:%LG3DHOME%\etc\lg3d\%CONFIG%
+ 
+set DISP_CONFIG=-Dlg.displayconfigurl=file:%LG3DHOME%/etc/lg3d/displayconfig/j3d1x1
+ 
+java -Xmx512m -cp %CLASSPATH% -Dj3d.sortShape3DBounds="true" -Dlg.configurl=%LGCONFIG% %DISP_CONFIG% -Dlg.etcdir=%LG3DHOME%\etc\ %1
+</pre></td> 
+      </tr> 
+    </table> 
+  </div> 
+  <p>&nbsp;</p> 
+  <p>さて、実行してみましょう。</p> 
+  <div style="display: table; width: 90%; margin-left: 5%; padding-left: 10px; padding-right: 10px; background-color:#DDFFFF;"> 
+  <pre>C:\lg3d>runtutorial Monolith1</pre> 
+  </div>
+  <p>画面の中央にピンクのパネルが表示されましたか?</p> 
+  <p>このサンプル、たかだか40 行程度ですが、立派な LG3D のアプリケーションです。次からは、これをベースに拡張を加えていきたいと思います。</p> 
+  <p>&nbsp;</p> 
+  <table style="margin-left: auto; margin-right: auto"> 
+    <tr> 
+      <td><a href="img/monolith1.jpg"><img src="img/monolith1-s.jpg" alt="図 2 Monolith1" width="256" height="192" border="0" /></a></td> 
+    </tr> 
+    <tr> 
+      <th>図 2 Monolith1</th> 
+    </tr> 
+  </table> 
+  <p>&nbsp;</p> 
+  <h3>イメージを貼る</h3> 
+  <p>LG3D ではイメージを扱うことがとても多くあります。というのも、LG3D の動作原理がイメージと密接に関わっているからです。</p> 
+  <p>たとえば、X Window のネイティブアプリケーションを動作させることを考えてみます。</p> 
+  <p>X Window で動作しているアプリケーションは当然のごとく 2D です。それを 3D 空間に持ってくるために、アプリケーションの画面を一度イメージにしてしまいます。</p> 
+  <p>つまり、アプリケーションの画面をキャプチャし、キャプチャしたイメージを LG3D でパネルの表面に貼るということを繰りかえしています。</p> 
+  <p>したがって、必然的に LG3D ではイメージを扱うことが多くなるわけです。3D CG ではこのように 3D のモデルの表面に貼るイメージのことをテクスチャと呼びます。</p> 
+  <p>それでは、さきほどのサンプル Monolith1 にテクスチャを貼ってみましょう。</p> 
+  <p>GlassyPanel オブジェクトに直接テクスチャを貼ってもいいのですが、それだとせっかくの半透明のガラスの感じがなくなってしまうので、GlassyPanel とは別にもう 1 つパネルを追加しましょう。</p> 
+  <p>イメージを表示するパネルとして FuzzyEdgePanel クラスを選んでみました。FuzzyEdgePanel クラスでは周りの部分をぼかすことができます。0 にしてもよいのですが、移動したときなどパネルが傾いたときにギザギザ (ジャギー) が出てしまうので、ここでは 0.001 にしてみました。 </p> 
+  <p>テクスチャの設定部分をリスト 3 に示しました。 </p> 
+  <p>先ほどとはちがって、アピアランスにテクスチャを設定できるように SimpleAppearance クラスのコンストラクタの第 4 引数に ENABLE_TEXTURE を追加しています (5 行目)。</p> 
+  <p>テクスチャを作成するには、ユーティリティクラスの org.jdesktop.lg3d.sg.util.image.TextureLoader クラスを使用しました。このクラスはイメージファイルを指定すると、テクスチャを作成してくれます。</p> 
+  <p>TextureLoader クラスのコンストラクタの第 2 引数は Component オブジェクトを指定しますが (Component3D オブジェクトではありません)、9 行目でおこなっているように null でかまいません。</p> 
+  <p>テクスチャは getTexture メソッドで取得できます (10 行目)。テクスチャは org.jdesktop.lg3d.sg.Texture クラスで表されます。</p> 
+  <p>そして、11 行目で Appearance#setTexture メソッドを使用してテクスチャをアピアランスに設定します。</p> 
+  <p>FuzzyEdgePanel クラスのコンストラクタの引数は幅と高さ、ぼかす幅、アピアランスです。16 行目に示したように、アピアランスにはテクスチャを設定した imageAppearance を使用します。</p> 
+  <p>後は Monolith1 と同様にコンポーネントに追加するだけです (20、21 行目)。 </p> 
+  <p>basePanel が Monolith1 と同様に GlassyPanel オブジェクト、imagePanel が今作成したテクスチャを貼ったパネルです。 </p> 
+  <p>実行する前にイメージファイルを用意してください。ファイル名は 9 行目に書かれているように texture.jpg です。</p> 
+  <p>Monolith2 を実行した結果が図 3 です。GlassyPanel の上に FuzzyEdgePanel が表示されていることがお分かりだと思います。</p> 
+  <p>&nbsp;</p> 
+  <div style="width: 100%;"> 
+    <table> 
+      <tr> 
+        <th>リスト 3 テクスチャを貼る (Monolith2.java より抜粋) </th> 
+      </tr> 
+      <tr> 
+        <td><pre style="padding: 10px; background-color:#DDFFFF;">01:        // イメージパネル用のアピアランス
+02:        Appearance imageAppearance
+03:            = new SimpleAppearance(1.0f, 1.0f, 1.0f, 1.0f, 
+04:                      SimpleAppearance.ENABLE_TEXTURE 
+05:                      | SimpleAppearance.DISABLE_CULLING);
+06:
+07:        // テクスチャの設定
+08:        TextureLoader loader
+09:            = new TextureLoader("texture.jpg", null);
+10:        Texture texture = loader.getTexture();
+11:        imageAppearance.setTexture(texture);
+12:
+13:        // イメージ用のパネルの設定
+14:        FuzzyEdgePanel imagePanel
+15:            = new FuzzyEdgePanel(0.18f, 0.18f, 0.001f,
+16:                                 imageAppearance);
+17:
+18:        // パネルをコンポーネントに追加
+19:        Component3D component = new Component3D();
+20:        component.addChild(basePanel);
+21:        component.addChild(imagePanel);</pre></td> 
+      </tr> 
+    </table> 
+  </div> 
+  <p>&nbsp;</p> 
+  <table style="margin-left: auto; margin-right: auto;"> 
+    <tr> 
+      <td><a href="img/monolith2.jpg"><img src="img/monolith2-s.jpg" alt="図 3 テクスチャを貼る" width="256" height="192" border="0" /></a></td> 
+    </tr> 
+    <tr> 
+      <th>図 3 テクスチャを貼る</th> 
+    </tr> 
+  </table> 
+  <h3>イベント処理</h3> 
+  <p>次はイベント処理です。</p> 
+  <p>LG3D で扱えるイベントはまだ十分とはいえません。たとえば、マウスは扱えますが、キー入力はまだ限定的にしか使えません。今後、バージョンが進むにつれてイベントも拡充される予定です。</p> 
+  <p>そこで今回は、マウスでクリックされたらパネルを回転させるということをやってみましょう。</p> 
+  <p>AWT/Swing ではイベント処理にはリスナが使用されますが、LG3D ではイベントアダプタとアクションの 2 つでイベント処理をおこないます。</p> 
+  <h4>イベントアダプタ</h4> 
+  <p>LG3D のイベントに関連するクラスとシーケンスを図 4 にまとめてみました。</p> 
+  <p>コンポーネントにリスナとして登録するのがイベントアダプタです。イベントアダプタは AWT/Swing のリスナのようにマウスイベントやキーボードイベントという単位ではなく、マウスのクリックのイベントとかマウスのホイールのイベントなどのように細分化されています。</p> 
+  <p>表 2 に主なイベントアダプタを示しました。 </p> 
+  <p>イベントアダプタにはイベントを処理するアクションを登録します。</p> 
+  <p>自分でアクションを記述することも可能ですが、サイズを変化させるなどのアクションが標準で提供されています (org.jdesktop.lg3d.action パッケージ)。表 3 に主なアクションをまとめました。</p> 
+  <p>表の中で XXBoolean/Float とあるものは、XXBoolean がイベント後の値を指定しておきイベントが発生したらその値にするアクションで、XXFloat がイベントのプロパティ (マウスの位置など) に応じて変更量が変化するアクションになります。 </p> 
+  <p>イベントが発生するとイベントアダプタの processEvent メソッドがコールされます。するとイベントアダプタは登録されているアクションの performAction メソッドをコールします。</p> 
+  <p>&nbsp;</p> 
+  <table style="margin-left: auto; margin-right: auto;"> 
+    <tr> 
+      <th>表 2 主なイベントアダプタ</th> 
+    </tr> 
+    <tr> 
+      <td><table style="border: 1px outset;"> 
+          <tr> 
+            <th style="padding: 2px; border: 1px inset;">クラス名</th> 
+            <th style="padding: 2px; border: 1px inset;">AWTで対応するメソッド</th> 
+          </tr> 
+          <tr> 
+            <td style="padding: 2px; border: 1px inset;">KeyPressedEventAdapter</td> 
+            <td style="padding: 2px; border: 1px inset;">KeyListener#keyPressed</td> 
+          </tr> 
+          <tr> 
+            <td style="padding: 2px; border: 1px inset;">KeyTypedEventAdapter</td> 
+            <td style="padding: 2px; border: 1px inset;">KeyListener#keyTyped</td> 
+          </tr> 
+          <tr> 
+            <td style="padding: 2px; border: 1px inset;">MouseClickedEventAdapter</td> 
+            <td style="padding: 2px; border: 1px inset;">MouseListener#mouseClicked</td> 
+          </tr> 
+          <tr> 
+            <td style="padding: 2px; border: 1px inset;">MouseDraggedEventAdapter</td> 
+            <td style="padding: 2px; border: 1px inset;">MouseMotionListener#mouseDragged</td> 
+          </tr> 
+          <tr> 
+            <td style="padding: 2px; border: 1px inset;">MouseEnteredEventAdapter</td> 
+            <td style="padding: 2px; border: 1px inset;">MouseListener#mouseEntered/mouseExited</td> 
+          </tr> 
+          <tr> 
+            <td style="padding: 2px; border: 1px inset;">MouseMovedEventAdapter</td> 
+            <td style="padding: 2px; border: 1px inset;">MouseMotionListener#mouseMoved</td> 
+          </tr> 
+          <tr> 
+            <td style="padding: 2px; border: 1px inset;">MousePressedEventAdapter</td> 
+            <td style="padding: 2px; border: 1px inset;">MouseListener#mousePressed</td> 
+          </tr> 
+          <tr> 
+            <td style="padding: 2px; border: 1px inset;">MouseWheelEventAdapter</td> 
+            <td style="padding: 2px; border: 1px inset;">MouseWheelListener#mouseWheelMoved</td> 
+          </tr> 
+        </table></td> 
+    </tr> 
+  </table> 
+  <h4>アクション</h4> 
+  <p>アクションはイベント処理に特化しており、イベントの種類には依存しません。そのため、performAction の引数は処理により、引数なしであったり、boolean であったりします。そのために、Action インタフェースの派生インタフェースが定義されており、引数なしであれば ActionNoArg インタフェース、boolean であれば ActionBoolean インタフェースなどを使用します。</p> 
+  <p>イベントアダプタがアクションをコールする場合は、イベントが持つ情報を抽出して performAction の引数にしますが、引数が合わない場合があります。</p> 
+  <p>こういう場合には、アクションの種類を変更するアクションアダプタを使用します。アクションアダプタはrg.jdesktop.lg3d.utils.actionadapter パッケージで定義されています。今回は ActionNoArg インタフェースから ActionBoolean インタフェースに変更する ToogleAdapter クラスを使用しました。</p> 
+  <p>&nbsp;</p> 
+  <table style="margin-left: auto; margin-right: auto;"> 
+    <tr> 
+      <th>表 3 主なアクション</th> 
+    </tr> 
+    <tr> 
+      <td><table style="border: 1px outset;"> 
+          <tr> 
+            <th style="padding: 2px; border: 1px inset;">クラス名</th> 
+            <th style="padding: 2px; border: 1px inset;">説明</th> 
+          </tr> 
+          <tr> 
+            <td style="padding: 2px; border: 1px inset;">AppearanceChangeAction </td> 
+            <td style="padding: 2px; border: 1px inset;">アピアランスの変更</td> 
+          </tr> 
+          <tr> 
+            <td style="padding: 2px; border: 1px inset;">RotateActionBoolean/Float </td> 
+            <td style="padding: 2px; border: 1px inset;">回転</td> 
+          </tr> 
+          <tr> 
+            <td style="padding: 2px; border: 1px inset;">ScaleActionBoolean/Float</td> 
+            <td style="padding: 2px; border: 1px inset;">サイズの変更</td> 
+          </tr> 
+          <tr> 
+            <td style="padding: 2px; border: 1px inset;">TranslateActionBoolean/Float</td> 
+            <td style="padding: 2px; border: 1px inset;">移動</td> 
+          </tr> 
+          <tr> 
+            <td style="padding: 2px; border: 1px inset;">TransparencyActionBoolean/Float</td> 
+            <td style="padding: 2px; border: 1px inset;">透明度の変更</td> 
+          </tr> 
+        </table></td> 
+    </tr> 
+  </table> 
+  <p>&nbsp;</p> 
+  <table style="margin-left: auto; margin-right: auto"> 
+    <tr> 
+      <td><a href="img/lg3devent.gif"><img src="img/lg3devent-t.gif" alt="図 4 LG3D のイベント" width="317" height="349" border="0" /></a></td> 
+    </tr> 
+    <tr> 
+      <th>図 4 LG3D のイベント</th> 
+    </tr> 
+  </table> 
+  <p>&nbsp;</p> 
+  <p>リスト 4 にイベント処理の部分だけ抜きだしてみました。</p> 
+  <p> リスト中の component が Component3D オブジェクトです。</p> 
+  <p>2 行目の Component3D#setAnimation をコールすることで、アニメーションがスムースに行われるようになります。 一種のお約束だと思ってください。</p> 
+  <p>次の 4 行目からがイベントリスナの登録とアクションの登録をおこなっている部分です。</p> 
+  <p>今回はマウスがクリックされたときに回転をさせるので、イベントアダプタに MouseClickedEventAdapter クラス、アクションに RotateActionBoolean クラスを使用します。</p> 
+  <p>RotationActionBoolean クラスはActionBoolean インタフェースをインプリメントしていますが、MouseClickedEventAdapter クラスのコンストラクタにはActionBoolean インタフェースを引数にとるものがありません。そこで、ToggleAdapter クラスを使用して、ActionNoArg インタフェースから ActionBoolean インタフェースに情報の変換をおこないます。</p> 
+  <p>ToggleAdapter オブジェクトは EventAdapter オブジェクトからコールされると、引数を true と false を交互にして ActionBoolean オブジェクトの performAction メソッドをコールします。</p> 
+  <p>RotateActionBoolean クラスのコンストラクタの引数は、回転させるコンポーネント、回転角 (ラジアン)、回転の開始から終了までの時間 (ミリ秒) です。つまり、7 行目では component を 1 秒間かけて、360 度回転させます。</p> 
+  <p>最後に Component3D#setMouseEventPropagatable メソッドをコールします。</p> 
+  <p>デフォルトではイベントは子供のコンポーネントで処理されると、親のコンポーネントには伝達されません。そのため、ここでイベントを処理してしまうと、親のイベント処理までイベントが伝達されなくなり、ドラッグしてフレームを移動することなどができなくなってしまいます。そこで、setMouseEventPropagatable(true) をコールして、親のコンポーネントにイベントを伝達するようにします。 </p> 
+  <p>ソースをコンパイルして、ぜひ実行してみてください (図 5)。誌面ではその動きをお伝えすることはできませんが、いとも簡単にくるくる回るパネルが実現できているはずです。</p> 
+  <p>&nbsp;</p> 
+  <div style="width: 100%;"> 
+    <table> 
+      <tr> 
+        <th>リスト 4 イベント処理 (Monolith3.java より抜粋)</th> 
+      </tr> 
+      <tr> 
+        <td><pre style="padding: 10px; background-color:#DDFFFF;">01:    private void initEventAdapter() {
+02:        component.setAnimation(new NaturalMotionAnimation(1000));
+03:
+04:        component.addListener(
+05:            new MouseClickedEventAdapter(
+06:                new ToggleAdapter(
+07:                    new RotateActionBoolean(component, (float)Math.PI * 2.0f, 1000))));
+08:
+09:        component.setMouseEventPropagatable(true);
+10:    }</pre></td> 
+      </tr> 
+    </table> 
+  </div> 
+  <p>&nbsp;</p> 
+  <table style="margin-left: auto; margin-right: auto;"> 
+    <tr> 
+      <td><a href="img/monolith4.jpg"><img src="img/monolith4-s.jpg" alt="図 5 イベント処理をおこなうことで回転するパネル" width="256" height="192" border="0" /></a></td> 
+    </tr> 
+    <tr> 
+      <th>図 5 イベント処理をおこなうことで回転するパネル</th> 
+    </tr> 
+  </table> 
+  <p>&nbsp;</p> 
+  <p>&nbsp;</p> 
+  <h3>2.5D アプリケーションに仕上げる</h3> 
+  <p>ここまでは 1 枚のイメージだけを表示していましたが、複数枚を表示できるようにしてみましょう。また、表示するときにはイメージにあわせて縦横比を変化させてみます。</p> 
+  <p>マウスのクリックで回転しますが、そのときにイメージの切りかえをおこなうようにしてみましょう。くるくる回っている間にいつのまにかイメージが変化しているというわけです。</p> 
+  <p>ソースをリスト 5 に示しました。</p> 
+  <p>&nbsp;</p> 
+  <h4>今までとの変更点</h4> 
+  <p>今までのソースとの変更点としては</p> 
+  <ol> 
+    <li>サムネイルを追加</li> 
+    <li>images.txt に記述されたイメージファイルをロードする</li> 
+    <li>イメージのロードに Image I/O を使用</li> 
+    <li>テクスチャと縦横比を保持する TextureInfo クラスを作成</li> 
+    <li>テクスチャの変更ができるように、アピアランスに ALLOW_TEXTURE_WRITE を設定</li> 
+  </ol> 
+  <p>LG3D ではタスクバーの中央に起動中のアプリケーションのサムネイルが表示されます。デフォルトだとただのパネルだけになっていまうので、70 行目から 75 行目で、サムネイルをタスクバーに登録しています。</p> 
+  <p>複数のイメージファイルをロードするためには、イメージファイルの一覧を記述したファイル images.txt を使用しています。 最終的に JAR にするので、ClassLoader#getResourceAsStream メソッドを使用してストリームを取りだしています (88 行目)。</p> 
+  <p>イメージのロードには TextureLoader クラスを使用せずに、Image I/O を使用しました。これは images.txt と同様に ClassLoader#getResourceAsStream メソッドを使用するためです (100 行目)。</p> 
+  <p>また、Texture オブジェクトからは元のイメージの幅と高さを取得することができないので、元のサイズを保持するために TextureInfo クラスを作成しました。</p> 
+  <p>このサンプルはイメージの切りかえ、すなわちテクスチャの貼りかえが必要です。テクスチャを貼りかえるには、129 行目に示したようにアピアランスに setCapability メソッドを使用して ALLOW_TEXTURE_WRITE を設定しておきます。 </p> 
+  <p>&nbsp;</p> 
+  <h4>イメージの切りかえ</h4> 
+  <p>さて、リスト 5 の中でグレーで示されている部分がイメージの切りかえをおこなっている部分です。</p> 
+  <p>先ほどまでとは違って、イベント処理は標準で提供されているアクションを使わないので、ActionNoArg インタフェースをインプリメントしたクラスを作成します。ActionNoArg インタフェースは performAction(LgEventSource source) メソッドを実装するだけです。ここでは actionPerfomed メソッドをコールしています (149 から 155 行目)。</p> 
+  <p>actionPerformed メソッドでは 1 つだけ工夫をしました。</p> 
+  <p>クリックした時にテクスチャを切りかえると、回りはじめるときにはすでにテクスチャが切りかわってしまうので、若干切りかえを遅延させるようにさせてみました。</p> 
+  <p>遅延処理は別スレッドで処理させるため、Runnable インタフェースをインプリメントさせた無名クラスを作成しました (172 から 176 行目)。この Runnable オブジェクトを ScheduledExecutorService オブジェクトに処理させます。</p> 
+  <p>ScheduledExecutorService インタフェースは J2SE 5.0 で導入された Concurrency Utilities に含まれるクラスです。これを使用すると、処理の遅延や繰り返し処理が簡単にできます。</p> 
+  <p>ScheduledExecutorService オブジェクトは Executors クラスの newScheduledThreadPool メソッドを使用して取得します (56 行目)。</p> 
+  <p>遅延処理をおこなうには schedule メソッドを使用します (177 行目)。第 2 引数が遅延量、第 3 引数が第 2 引数の時間の単位を示します。TimeUnit クラスは時間の単位を表すクラスで、秒、ミリ秒などが定数として定義されています。</p> 
+  <p>実際にテクスチャの切りかえをおこなっているのが changeTexture メソッドです。</p> 
+  <p>TextureInfo オブジェクトを取りだし (187 行目)、その大きさに応じてパネルとサムネイルの大きさを変更します (188 行目から 191 行目)。</p> 
+  <p>そして、193 行目と 194 行目でパネルから getAppearance メソッドを使用してアピアランスを取りだし、テクスチャをセットします。</p> 
+  <p>これで完成です。</p> 
+  <p>さっそくコンパイルです。クラスが 2 つになったので、クラスパスにカレントディレクトリを含むようにしてください。</p> 
+  <div style="display: table; width: 90%; margin-left: 5%; padding-left: 10px; padding-right: 10px; background-color:#DDFFFF;"> 
+  <pre>C:\lg3d&gt;javac -cp lib\ext\lg3d-core.jar;. MonolithViewer.java</pre> 
+  </div>
+  <p>実行する前に images.txt とロードするイメージファイルを用意してください。</p> 
+  <p>images.txt にはロードするファイルを 1行に 1 ファイルずつ記述します。</p> 
+  <p>実行すると、先ほどと見た目は変わりませんが、クリックするとイメージが切りかわるのがお分かりだと思います。単にイメージを変更するのではなく、このような演出をつけくわえるだけで、まったく違ったアプリケーションに見えてくるから不思議なものです。</p> 
+  <p>ぜひ、皆さんも試してみてその効果を実感してみてください。</p> 
+  <p>&nbsp;</p> 
+  <div style="width: 100%;"> 
+    <table> 
+      <tr> 
+        <th>リスト 5 MonolithViewer クラス</th> 
+      </tr> 
+      <tr> 
+        <td style="background-color:#DDFFFF;"><table width="100%"> 
+            <tr> 
+              <td><pre>001
+002
+003
+004
+005
+006
+007
+008
+009
+010
+011
+012
+013
+014
+015
+016
+017
+018
+019
+020
+021
+022
+023
+024
+025
+026
+027
+028
+029
+030
+031
+032
+033
+034
+035
+036
+037
+038
+039
+040
+041
+042
+043
+044
+045
+046
+047
+048
+049
+050
+051
+052
+053
+054
+055
+056
+057
+058
+059
+060
+061
+062
+063
+064
+065
+066
+067
+068
+069
+070
+071
+072
+073
+074
+075
+076
+077
+078
+079
+080
+081
+082
+083
+084
+085
+086
+087
+088
+089
+090
+091
+092
+093
+094
+095
+096
+097
+098
+099
+100
+101
+102
+103
+104
+105
+106
+107
+108
+109
+110
+111
+112
+113
+114
+115
+116
+117
+118
+119
+120
+</pre></td> 
+              <td><pre>:
+:
+:
+:
+:
+:
+:
+:
+:
+:
+:
+:
+:
+:
+:
+:
+:
+:
+:
+:
+:
+:
+:
+:
+:
+:
+:
+:
+:
+:
+:
+:
+:
+:
+:
+:
+:
+:
+:
+:
+:
+:
+:
+:
+:
+:
+:
+:
+:
+:
+:
+:
+:
+:
+:
+:
+:
+:
+:
+:
+:
+:
+:
+:
+:
+:
+:
+:
+:
+:
+:
+:
+:
+:
+:
+:
+:
+:
+:
+:
+:
+:
+:
+:
+:
+:
+:
+:
+:
+:
+:
+:
+:
+:
+:
+:
+:
+:
+:
+:
+:
+:
+:
+:
+:
+:
+:
+:
+:
+:
+:
+:
+:
+:
+:
+:
+:
+:
+:
+:</pre></td> 
+              <td><pre>import java.awt.image.BufferedImage;
+import java.io.*;
+import java.util.*;
+import java.util.concurrent.*;
+import javax.imageio.ImageIO;
+import javax.vecmath.Vector3f;
+import org.jdesktop.lg3d.sg.Appearance;
+import org.jdesktop.lg3d.sg.utils.image.*;
+import org.jdesktop.lg3d.utils.action.*;
+import org.jdesktop.lg3d.utils.actionadapter.*;
+import org.jdesktop.lg3d.utils.c3danimation.*;
+import org.jdesktop.lg3d.utils.eventadapter.*;
+import org.jdesktop.lg3d.utils.shape.*;
+import org.jdesktop.lg3d.wg.*;
+import org.jdesktop.lg3d.wg.event.LgEventSource;
+ 
+public class MonolithViewer {
+    private static final String IMAGE_LIST_FILE = "images.txt";
+    private static final float ROUND_RATIO = 1.1f;
+    private static final float WIDTH = 0.2f;
+    private static final float HEIGHT = 0.2f;
+    private static final float DEPTH = 0.01f;
+    private static final float EDGE = 0.01f;
+    private static final float BLUR = 0.001f;
+    private List&lt;TextureInfo&gt; textureInfo;
+    private int index;
+    private ScheduledExecutorService service;
+    private FuzzyEdgePanel imagePanel;
+    private FuzzyEdgePanel thumbnailPanel;
+    private Component3D component;
+    private Thumbnail thumbnail;
+  
+    public MonolithViewer() {
+        try {
+            textureInfo = loadTextures();
+        } catch (IOException ex) {
+            System.err.println("イメージのロードに失敗しました");
+            ex.printStackTrace();
+            return;
+        }
+        service = Executors.newScheduledThreadPool(1);
+        Frame3D frame = new Frame3D();
+        // コンポーネントの設定
+        component = new Component3D();
+        imagePanel = initComponent(component, textureInfo.get(0));
+        frame.addChild(component);
+        frame.setPreferredSize(new Vector3f(WIDTH * ROUND_RATIO,
+                                            HEIGHT * ROUND_RATIO,
+                                            DEPTH));
+        // サムネイルの設定
+        thumbnail = new Thumbnail();
+        thumbnailPanel = initComponent(thumbnail, textureInfo.get(0));
+        thumbnail.setPreferredSize(new Vector3f(WIDTH * ROUND_RATIO,
+                                                HEIGHT * ROUND_RATIO,
+                                                DEPTH));
+        frame.setThumbnail(thumbnail);
+        initEventAdapter();
+        frame.changeEnabled(true);
+        frame.changeVisible(true);        
+    }
+  
+    // イメージをロードし、テクスチャを作成する
+    private List&lt;TextureInfo&gt; loadTextures() throws IOException {
+        List&lt;TextureInfo&gt; textureInfo = new ArrayList&lt;TextureInfo&gt;();
+        ClassLoader classloader = this.getClass().getClassLoader();
+        InputStream stream 
+            = classloader.getResourceAsStream(IMAGE_LIST_FILE);
+        if (stream == null) {
+            stream = new FileInputStream(IMAGE_LIST_FILE);
+        }
+        BufferedReader reader
+            = new BufferedReader(new InputStreamReader(stream));
+        while (true) {
+            String imageFilename = reader.readLine();
+            if (imageFilename == null) {
+                break;
+            }
+            InputStream imageStream
+                = classloader.getResourceAsStream(imageFilename);
+            if (imageStream == null) {
+                imageStream = new FileInputStream(imageFilename);
+            }
+            BufferedImage image = ImageIO.read(imageStream);
+            TextureLoader loader = new TextureLoader(image);
+            TextureInfo info = new TextureInfo(loader.getTexture(),
+                                               image.getWidth(),
+                                               image.getHeight());
+            textureInfo.add(info);
+        }
+        if (textureInfo.size() == 0) {
+            throw new IOException();
+        }
+        return textureInfo;
+    }
+  
+    // パネル、アピアランスを生成しコンポーネントに追加
+    private FuzzyEdgePanel initComponent(Component3D component,
+                                         TextureInfo info) {
+        Appearance appearance
+            = new SimpleAppearance(1.0f, 0.6f, 0.6f, 1.0f, 
+                                   SimpleAppearance.DISABLE_CULLING);
+        GlassyPanel basePanel 
+            = new GlassyPanel(WIDTH * ROUND_RATIO,
+                              HEIGHT * ROUND_RATIO,
+                              DEPTH, EDGE, appearance);
+        Appearance imageAppearance
+            = new SimpleAppearance(1.0f, 1.0f, 1.0f, 1.0f, 
+                                   SimpleAppearance.ENABLE_TEXTURE 
+                                   | SimpleAppearance.DISABLE_CULLING);
+        imageAppearance.setCapability(Appearance.ALLOW_TEXTURE_WRITE);
+        imageAppearance.setTexture(info.getTexture());
+         FuzzyEdgePanel panel 
+            = new FuzzyEdgePanel(WIDTH * info.getWidthRatio(),
+                                 HEIGHT * info.getHeightRatio(),
+                                 BLUR, imageAppearance);
+        component.addChild(basePanel);
+        component.addChild(panel);
+        return panel;
+    }
+ </pre></td> 
+            </tr> 
+            <tr> 
+              <td><pre>121
+122
+123
+124
+125
+126
+127
+128
+129
+130
+131
+132
+133
+134
+135
+136
+137
+138
+139
+140
+141
+142
+143
+144
+145
+146
+147
+148
+149
+150
+151
+152
+153
+154
+155
+156
+157
+158
+159
+160
+161
+162
+163
+164
+165
+166
+167
+168
+169
+170
+171</pre></td> 
+              <td><pre>:
+:
+:
+:
+:
+:
+:
+:
+:
+:
+:
+:
+:
+:
+:
+:
+:
+:
+:
+:
+:
+:
+:
+:
+:
+:
+:
+:
+:
+:
+:
+:
+:
+:
+:
+:
+:
+:
+:
+:
+:
+:
+:
+:
+:
+:
+:
+:
+:
+:
+:</pre></td> 
+              <td><pre style="background-color:#CCCCCC;">   // イベントリスナの登録
+    private void initEventAdapter() {
+        component.setAnimation(new NaturalMotionAnimation(1000));
+        component.addListener(
+            new MouseClickedEventAdapter(
+                new ActionNoArg() {
+                    public void performAction(LgEventSource source) {
+                        if (source != null) {
+                            actionPerfomed();
+                        }
+                    }
+                }));
+        component.addListener(
+            new MouseClickedEventAdapter(
+                new ToggleAdapter(
+                    new RotateActionBoolean(component,
+                                    (float)Math.PI * 2.0f, 1000))));
+        component.addListener(
+            new MouseClickedEventAdapter(
+                new ToggleAdapter(
+                    new RotateActionBoolean(thumbnail,
+                                    (float)Math.PI * 2.0f, 1000))));
+        component.setMouseEventPropagatable(true);
+    }
+ 
+    // イベント処理
+    private void actionPerfomed() {
+        Runnable runnable = new Runnable() {
+                public void run() {
+                    changeTexture();
+                }
+            };
+        service.schedule(runnable, 200l, TimeUnit.MILLISECONDS);
+    }
+ 
+    // テクスチャの切り替え
+    private void changeTexture() {
+        index++;
+        if (index == textureInfo.size()) {
+            index = 0;
+        }
+        TextureInfo info = textureInfo.get(index);
+        imagePanel.setSize(WIDTH * info.getWidthRatio(),
+                           HEIGHT * info.getHeightRatio(),
+                           1.0f, 1.0f, 0, 0, 0.0f, 0.0f);
+        thumbnailPanel.setSize(WIDTH * info.getWidthRatio(),
+                               HEIGHT * info.getHeightRatio(),
+                               1.0f, 1.0f, 0, 0, 0.0f, 0.0f);
+        imagePanel.getAppearance().setTexture(info.getTexture());
+        thumbnailPanel.getAppearance().setTexture(info.getTexture());
+    }</pre></td> 
+            </tr> 
+            <tr> 
+              <td><pre>172
+173
+174
+175
+176</pre></td> 
+              <td><pre>:
+:
+:
+:
+:</pre></td> 
+              <td><pre> 
+    public static void main(String[] args) {
+        new MonolithViewer();
+    }
+}</pre></td> 
+            </tr> 
+          </table></td> 
+      </tr> 
+    </table> 
+  </div> 
+  <p>&nbsp;</p> 
+  <div style="width: 100%;"> 
+    <table> 
+      <tr> 
+        <th>リスト 6 TextureInfo クラス</th> 
+      </tr> 
+      <tr> 
+        <td><pre style="padding: 10px; background-color:#DDFFFF;">import org.jdesktop.lg3d.sg.Texture;
+ 
+public class TextureInfo {
+    private Texture texture;
+    private float widthRatio;
+    private float heightRatio;
+ 
+    TextureInfo(Texture texture, int width, int height) {
+        this.texture = texture;
+        if (width > height) {
+            widthRatio = 1.0f;
+            heightRatio = (float)height / width;
+        } else {
+            widthRatio = (float)width / height;
+            heightRatio = 1.0f;
+        }
+    }
+    
+    public Texture getTexture() {
+        return texture;
+    }
+    
+    public float getWidthRatio() {
+        return widthRatio;
+    }
+ 
+    public float getHeightRatio() {
+        return heightRatio;
+    }
+}</pre></td> 
+      </tr> 
+    </table> 
+  </div> 
+  <p>&nbsp;</p> 
+  <h3>デプロイメント</h3> 
+  <p>せっかくここまで作ってきたのですから、タスクバーから起動できるようにしましょう。</p> 
+  <p>そのためにはアイコンと設定ファイルが必要です。アイコンは図 6、設定ファイルはリスト 7 に示しました。</p> 
+  <p>次にクラスファイルとアイコンを JAR にまとめます。</p> 
+  <p>&nbsp;</p> 
+  <div style="display: table; width: 90%; margin-left: 5%; padding-left: 10px; padding-right: 10px; background-color:#DDFFFF;"> 
+    <pre>C:\lg3d>jar cvf monolith.jar MonolithViewer*.class TextureInfo.class monolith.png</pre> 
+  </div> 
+  <p>&nbsp;</p> 
+  <p>できあがった monolith.jar を C:\lg3d\ext にコピーし、monolith.lgcfg は C:\lg3d\etc\lg3d にコピーします。</p> 
+  <p>lg3d-dev.bat では CLASSPATH が必要最低限に設定されているので、このままだと images.txt がロードできません。そこで少しだけ変更しましょう。CLASSPATH を設定しているのは setup.bat です。</p> 
+  <p>setup.bat の中で以下に示す行があります。</p> 
+  <p>&nbsp;</p> 
+  <div style="display: table; width: 90%; margin-left: 5%; padding-left: 10px; padding-right: 10px; background-color:#DDFFFF;"> 
+    <pre>set CLASSPATH=%lgdirjava%/lib/ext/lg3d-core.jar;%lgdirjava%/lib/ext/lg3d-incubator.jar</pre> 
+  </div>
+  <p>&nbsp;</p> 
+  <p>この行を次のように変更します。</p> 
+  <p>&nbsp;</p> 
+  <div style="display: table; width: 90%; margin-left: 5%; padding-left: 10px; padding-right: 10px; background-color:#DDFFFF;"> 
+    <pre>set CLASSPATH=%lgdirjava%;%lgdirjava%/lib/ext/lg3d-core.jar;%lgdirjava%/lib/ext/lg3d-incubator.jar</pre> 
+  </div> 
+  <p>&nbsp;</p> 
+  <p>images.txt は C:\lg3d においてください。</p> 
+  <p>さっそく、lg3d-dev.bat で LG3D を起動してみましょう。アイコンをクリックすれば MonolithViewer が起動するはずです。実行例を図 7 に示しました。 </p> 
+  <p>&nbsp; </p> 
+  <table style="margin-left: auto; margin-right: auto;"> 
+    <tr> 
+      <td style="text-align: center;"><img src="img/monolith.png" alt="図 6 アイコンイメージ monolith.png" width="56" height="65" /></td> 
+    </tr> 
+    <tr> 
+      <th>図 6 アイコンイメージ monolith.png</th> 
+    </tr> 
+  </table> 
+  <p>&nbsp; </p> 
+  <div style="width: 100%;"> 
+    <table> 
+      <tr> 
+        <th>リスト 7 設定ファイル monolithviewer.lgcfg</th> 
+      </tr> 
+      <tr> 
+        <td><pre style="padding: 10px; background-color:#DDFFFF;">&lt;?xml version="1.0" encoding="UTF-8"?&gt; 
+&lt;java version="1.5.0" class="java.beans.XMLDecoder"&gt; 
+ &lt;object class="org.jdesktop.lg3d.scenemanager.config.ApplicationDescription"&gt; 
+  &lt;void property="exec"&gt; 
+   &lt;string&gt;java MonolithViewer&lt;/string&gt; 
+  &lt;/void&gt; 
+  &lt;void property="iconFilename"&gt; 
+   &lt;string&gt;monolith.png&lt;/string&gt; 
+  &lt;/void&gt; 
+  &lt;void property="name"&gt; 
+   &lt;string&gt;Monolith Viewer&lt;/string&gt; 
+  &lt;/void&gt; 
+ &lt;/object&gt; 
+&lt;/java&gt; </pre></td> 
+      </tr> 
+    </table> 
+  </div> 
+  <p>&nbsp;</p> 
+  <table style="margin-left: auto; margin-right: auto;"> 
+    <tr> 
+      <td><a href="img/monolithviewer.jpg"><img src="img/monolithviewer-s.jpg" alt="図 7 MonolithViewer" width="256" height="192" border="0" /></a></td> 
+    </tr> 
+    <tr> 
+      <th>図 7 MonolithViewer</th> 
+    </tr> 
+  </table> 
+  <p>&nbsp;</p> 
+  <h2>おわりに</h2> 
+  <p>かなりかけあしになってしまいましたが、LG3D のプログラミングを一巡りしました。</p> 
+  <p>あまり 3D を意識しなくても、アプリケーションが作れることを感じていただけたでしょうか。</p> 
+  <p>既存の 2D のアプリケーションから、2D のアプリケーションに 3D の使いやすさを加えた 2.5D のアプリケーション、そして革新的な 3D のアプリケーションまで LG3D では幅広く対応をしています。後は、これを読んでいるみなさんのイマジネーションがものをいうのです。</p> 
+  <p>とはいうものの、LG3D はまだ開発がはじまったばかりです。まだまだ足りない機能も多くありますし、使い勝手が悪い部分もあります。Windows の場合だと、ネイティブアプリケーションを 3D 空間内に表示できないという制限もあります。</p> 
+  <p>使ってみてなにか感じるものがあったときこそ、ぜひ LG3D のコミュニティにフィードバックしてください。それが、次の開発のきっかけになるかもしれません。</p> 
+  <p>LG3D のメーリングリストは interest@lg3d.dev.java.net で、登録ページは https://lg3d.dev.java.net/servlets/ProjectMailingListList です。日本語のメーリングリスト interest_ja@lg3d.dev.java.net もあります。登録ページは英語のメーリングリストと同じです。</p> 
+  <p>みなさんのフィードバックが明日の Project Looking Glass を作るのです。 </p> 
+  <p>最後になりましたが、本解説を執筆するにあたりさまざまな助言やコメントをいただきました川原英哉氏、神谷結花氏、えんどうやすゆき氏、おだはらだい氏に感謝いたします。</p> 
+  <p>&nbsp;</p> 
+  <h3>参考</h3> 
+  <p>Welcome to the Wonderland of the Project Looking Glass <br /> 
+    <a href="http://www.javainthebox.net/lg3d/index.html">http://www.javainthebox.net/lg3d/index.html</a></p> 
+  <p>&nbsp;</p> 
+  <h3>ソースのダウンロード</h3> 
+  <p>ソースはすべて Windows で使用することを前提としているため、文字コードは Shift_JIS、改行コードは CR LF になっています。 </p> 
+  <ul> 
+    <li><a href="src/Monolith1.java">Monolith1.java </a></li> 
+    <li><a href="src/Monolith2.java">Monolith2.java</a></li> 
+    <li><a href="src/Monolith3.java">Monolith3.java</a></li> 
+    <li><a href="src/Monolith4.java">Monolith4.java</a></li> 
+    <li><a href="src/MonolithViewer.java">MonolithViewer.java</a></li> 
+    <li><a href="src/TextureInfo.java">TextureInfo.java</a></li> 
+    <li><a href="src/monolithviewer.lgcfg">monolithviewer.lgcfg</a></li> 
+    <li><a href="src/runtutorial.bat">runtutorial.bat</a></li> 
+  </ul> 
+  <p>すべてのソースおよびサンプルのイメージ。lg3d ディレクトリで展開することによりすぐに使用することができます。 </p> 
+  <ul> 
+    <li><a href="sample.zip">sample.zip</a></li> 
+  </ul> 
+  <p>&nbsp;</p> 
+  <hr /> 
+  <p style="font-size: small;">$Revision: 1.1 $ $Date: 2006-05-09 18:16:20 $</small></p> 
+</body>
+</html>

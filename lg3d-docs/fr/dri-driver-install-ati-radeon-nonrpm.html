@@ -1,0 +1,106 @@
+<!DOCTYPE html PUBLIC "-//Tigris//DTD XHTML 1.0 Transitional//EN"
+"http://style.tigris.org/tigris_transitional.dtd">
+<html>
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <meta name="Translator" content="Pierre DUCROQUET" />
+    <title>Installation du pilote DRI pour les ATI Radeon sur une distrib non basée sur rpm</title>
+</head>
+<body>
+<div id="projectdocumentview" class="app">
+
+<hr />
+<h2>Installation du pilote DRI pour les ATI Radeon</h2>
+
+<br />
+
+<p>
+Ces instructions expliquent comment installer les pilotes de l'Infrastructure de 
+Rendu Direct (DRI) pour les cartes graphiques ATI Radeon afin d'activer l'extension
+ de rendu direct requise par le Projet Looking Glass.</p>
+
+<h3>Instructions d'installation</h3>
+<p>
+Ici vous trouverez un guide pour installer les pilotes binaires d'ATI sur une distribution
+non basée sur rpm comme Slackware. Je me réfererai aux commandes nécessaires avec slackware
+mais la plupart des étapes peuvent être appliquées sur les autres distributions.
+</p>
+
+<p>
+<b>Note :</b> Toutes les versions récentes (> 3.12) des pilotes fglrx contiennent une implémentation
+incomplète de GL. Donc il se peut que lg3d ne marche pas correctement avec ces pilotes.
+Si vous rencontrez des problèmes, veuillez essayer les autres <a href="dri-driver-install-ati-radeon.html"> instructions installation</a>. 
+</p>
+
+<ol>
+  <li>Passez en root:<br />
+    <br />
+    <span style="font-family: monospace;"> % su -</span><br />
+    <span style="font-family: monospace;"> Password: </span><b>donnez le mot de passe root</b><br />
+    <span style="font-family: monospace;"> #</span><br />
+    <br />
+  </li>
+  <li>Installez les sources du noyau (kernel sources) depuis le paquet kernel-source de la distrib :<br />
+    <br />
+    <span style="font-family: monospace;"># installpkg kernel-source-2.4.26-noarch-4.tgz</span><br />
+    <br />
+    <b>Note :</b> Dans la distribution Slackware ce paquet est sur le premier CD.
+    <br />
+    <span style="font-family: monospace;">/mnt/cdrom/slackware/k/kernel-source-2.4.26-noarch-4.tgz</span><font
+ face="Courier New, Courier, monospace"><br />
+    <br />
+    </font></li>
+  <li>Mettez à jour la configuration du noyau et les dépendances :<br />
+    <br />
+    <span style="font-family: monospace;"># cd /usr/src/linux</span><br />
+    <span style="font-family: monospace;"># cp /boot/config-ide-2.4.26.config</span><br />
+    <span style="font-family: monospace;"># make oldconfig</span><br />
+    <span style="font-family: monospace;"># make dep</span><br />
+    <br />
+    <b>Note :</b> Vous n'avez pas à recompiler le noyau.<br />
+    <br />
+  </li>
+  <li>Téléchargez les derniers pilotes pour ATI Radeon sur le <a
+ href="http://www.ati.com/">site web d'ATI</a>.<br />
+    <br />
+  </li>
+  <li>Convertissez le rpm en un fichier tar.gz normal avec :<br />
+    <br />
+    <span style="font-family: monospace;"># rpm2tgz fglrx-"version".rpm</span><br />
+    <span style="font-family: monospace;"># cd /</span><br />
+    <span style="font-family: monospace;"># tar zxvf fglrx-"version".tgz</span><br />
+    <span style="font-family: monospace;"># cd /lib/modules/fglrx/build_mod/</span><br />
+    <span style="font-family: monospace;"># chmod +x ./make.sh &amp;&amp; ./make.sh</span><br />
+	<span style="font-family: monospace;"># cd .. &amp;&amp; chmod +x make_install.sh &amp;&amp; ./make_install.sh</span>
+    <br />
+    <br />
+  </li>
+  <li>Lancez fglrxconfig pour configurer X :<br />
+    <br />
+    <span style="font-family: monospace;"># fglrxconfig</span><br />
+ <br />
+  </li>
+  <li>Sur Slackware 10 ainsi que sur de nombreuses distributions utilisant xorg au lien de XFree86, vous
+devrez faire un lien symbolique entre XF86Config-4 et xorg.conf :<br />
+    <br />
+    <span style="font-family: monospace;"># ln -sf /etc/X11/XF86Config-4 /etc/X11/xorg.conf</span><br />
+    <br />
+    Maintenant essayez de lancer X, à moins que vous n'ayez rencontré une erreur dans les étapes précédentes vous devriez avoir une accélération 3D opérationnelle maintenant. Vérifiez le en lançant :<br /><br />
+    <span style="font-family: monospace;">% glxinfo | grep render</span><br />
+    <br />
+    Vous devriez voir: <br /><br />
+    <span style="font-family: monospace;">direct rendering: Yes</span><br />
+    <br />
+    </li>
+   </ol>
+    
+<h3>Remerciements</h3>
+<p>
+L'auteur souhaite remercier Lucian Cionca <a href="mailto:lucian.cionca@gmail.com">lucian.cionca@gmail.com</a>
+pour avoir écrit le guide original, fournissant ainsi une structure de départ.</p>
+    <br />
+  <hr />
+<small>$Revision: 1.1 $ $Date: 2006-05-09 17:46:26 $</small>
+</div>
+</body>
+</html>

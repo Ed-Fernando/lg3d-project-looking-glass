@@ -1,0 +1,387 @@
+<?xml version="1.0" encoding="utf-8"?><!DOCTYPE html PUBLIC "-//Tigris//DTD XHTML 1.0 Transitional//EN"
+"http://style.tigris.org/tigris_transitional.dtd">
+<html>
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  <title>Das Project Looking Glass Developer's Release unter Microsoft Windows</title>
+  <style type="text/css">
+  <!--
+    table, th, td {
+	border-style: none;
+    }
+    table {background-color:#eee}
+    th {font-family:lucida,arial,sans-serif; color:#fff; background-color:#8b8}
+    td {font-family:lucida,arial,sans-serif; color:#333; background-color:#fff}
+  -->
+  </style>
+</head>
+<body> 
+<div id="projectdocumentview" class="app">
+
+<h3>Das Project Looking Glass Developer's Release unter Microsoft Windows laufen lassen</h3>
+ 
+<p>
+  <b>Project Looking Glass l&auml;uft unter Windows!</b>
+</p>
+  
+<p>
+  Das Project Looking Glass (LG3D) unter Windows laufen zu lassen, ist sehr einfach :-)
+  Das Kernst&uuml;ck von LG3D wurde mit der Plattform&uml;bergreifenden Java Technologie 
+  entwickelt, was bedeutet das man es unter mehreren Plattformen laufen lassen kann.
+  So l&auml;uft es auch unter Windows (allerdings gibt es da einige Enschr&auml;nkungen).
+  Um die Installation zu vereinfachen, wurde der Installer als eine exe-Datei ver&ouml;ffentlicht.
+  Diese Dokument beschreibt wie LG3D zu installieren ist und wie du es in deinem Windows System 
+  startest mit Hilfe des Installers.
+</p>
+
+<img src="../images/misc/lg3d-pic-300x300.jpg" width="150" border="0" style="float: right;"/>
+
+<blockquote><small><ol>
+  <li><a href="#Requirements">Systemvoraussetzungen</a></li>
+  <li><a href="#Downloading">Herunterladen des LG3D Installers</a></li>
+  <li><a href="#Installation">Installieren von LG3D</a></li>
+  <li><a href="#Running">LG3D starten</a></li>
+  <li><a href="#Troubleshooting">Problembehebung</a></li>
+  <li><a href="#Resources">N&uuml;tzliche Links</a></li>
+  <li><a href="#FinalWords">Einige anschliessende Worte ...</a></li>
+</ol></small></blockquote>
+
+  
+<h3><a name="Requirements"></a>1. Systemvoraussetzungen</h3> 
+
+<p> 
+  Bitte stelle als erstes sicher, das dein System die folgenden minimalen Anforderungen erf&uuml;llt: 
+</p> 
+
+<center><small>
+  <table border="1" cellpadding="2" cellspacing="2" width="90%"> 
+      <tr> 
+        <th valign="top">Komponenten</th> 
+        
+        <th valign="top">Voraussetzungen</th> 
+      </tr> 
+      <tr> 
+        <th valign="top">Betriebssystem</th> 
+        <td valign="top">Getestet unter Windows XP und Windows 2000</td> 
+      </tr> 
+      <tr> 
+        <th valign="top">CPU</th> 
+        <td valign="top">1.4 GHz oder schneller empfohlen</td> 
+      </tr> 
+      <tr> 
+        <th valign="top">RAM</th> 
+        <td valign="top">512MB empfohlen</td> 
+      </tr> 
+      <tr> 
+        <th valign="top">Graphikkarte</th> 
+        <td valign="top">3D beschl&auml;unigte Grafikkarte, mit mindestens 16MB VRAM und Treibern die OpenGL unterst&uuml;tzen, mit mindestens Version 1.3 oder besser. 
+          16bit oder 32bit Farben.<br /> 
+          <br /> 
+          Getestete Karten:
+          <ul> 
+            <li>ATI MOBILITY RADEON</li> 
+            <li>ATI Radeon 9800 Pro 128MB</li>
+            <li>NVIDIA GeForce4/5200/6600/6800</li> 
+            <li>Intel 855GM/915G</li> 
+          </ul> 
+          <p>
+            Wenn du erfolgreich LG3D mit anderen Karten zum laufen bekommst, oder du mit bestimmten Karten Probleme hast, 
+            lass es uns wissen in unserem <a href="http://forums.java.net/jive/forum.jspa?forumID=80">
+            Diskussionsforum</a>
+          </p>
+        </td> 
+      </tr> 
+      <tr> 
+        <th valign="top">Festplattenplatz</th> 
+        <td valign="top">250MB</td> 
+      </tr> 
+  </table>
+</small></center>
+<br />
+
+<blockquote>
+<h4><a name="Limitations"></a>Einschr&auml;nkungen unter Windows</h4> 
+
+<ul>
+  <li><b>Keine Windowstypischen Programme im 3D Bereich ...</b>
+<p> 
+  Obgleich LG3D für Linux und Solaris Unterstützung für das Laufen lassen der Systemanwendungen
+  innerhalb des LG3D Desktops einschlie&szlig;t, ist diese Eigenschaft nicht für die Windows 
+  Version vorhanden. 
+  Das bedeutet, es ist nicht m&ouml;glich Windowsprogramme innerhalb von LG3D zu starten. 
+  Du kannst, wie immer, Programme entwickeln die als LG3D Programm laufen, so wie der CD Betrachter 
+  und andere LG3D Java Anwendungen. 
+  Mit anderen Worten, die Windows Version wurde entwickelt um Erfahrungen mit LG3D 
+  und der Anwendungsentwicklung zu sammeln, aber nicht um den Windows Desktop zu ersetzen.
+</p> 
+  </li>
+</ul>
+</blockquote>
+
+<h3><a name="Downloading"></a>2. Herunterladen des LG3D Installers</h3> 
+
+<p>
+  Der LG3D Installer f&uuml;r Windows installiert alles was du ben&ouml;tigstum LG3D laufen zu lassen,
+  einschlie&szlig;lig JRE und Java 3D.  
+  Das Paket ist sehr gro&szlig;, aber es vereinfacht sehr deine Installtion.
+</p>
+<p>
+  Der Installer kann von dem folgenden Link herunter geladen werden:
+</p>
+
+<blockquote>
+  <ul>
+    <li>
+      <a href="https://lg3d-core.dev.java.net/files/documents/1834/42515/lg3d-daily-1.0.0_beta1-win32-i686-0610191253-setup.exe">
+
+        LG3D Release 1.0.0 Beta 1 Windows Installer (19 October 2006) 
+      </a>
+    </li>
+  </ul>
+</blockquote>
+
+<p>
+  Lade den Installer mit der <tt><b>exe</b></tt> Datei herunter.
+  Andere Versionen k&ouml;nnen in der "Stable build section" auf der 
+  <a href="https://lg3d-core.dev.java.net/binary-builds.html">
+    Bin&auml;r Pakete Seite
+  </a>gefunden werden.
+</p>
+
+<h3><a name="Installation"></a>3. Installing LG3D</h3> 
+
+<p>
+  Der LG3D Installer f&uuml;r Windows installiert alles was du ben&ouml;tigstum LG3D laufen zu lassen,
+  einschlie&szlig;lig JRE und Java 3D. Es f&uuml;gt auch einen Ordner "LG3D" in deinem Startmen&uuml; hinzu.
+  Beachte das der Installer JRE und Java 3D in einen LG3D spezifischen Ordner kopiert.  
+  Damit ver&auml;ndert die Installation deine existierende Javaumgebung nicht und due mu&szlig;t auch nichts anpassen.
+</p>
+<ol>
+  <li>
+    Suche die gespeicherte Installer exe Datei und starte sie.
+  </li>
+  <br />
+  <li>
+    Windows &ouml;ffnet ein Dialogfenster mit der Meldung 
+    "Security Warning" wenn du die exe Datei startest, wegen "Unknown Publisher".
+    Dr&uuml;cke "Run/ Weiter" in dem Dialogfenster.
+  </li>
+  <br />
+  <li>
+    Der Installer zeigt dir nun die Lizenzvereinbarungen.
+    Lese sie und klicle dann auf "I Agree" wen du damit einverstanden bist.
+  </li>
+  <br />
+  <li>
+    Der Installer fragt dich wohin du es installieren m&ouml;chtest.
+    W&auml;hle den Ordner in den LG3D installiert werden soll, dr&uuml;cke danach auf "Install".
+  </li>
+  <br />
+  <li>
+    Nun wird der Installationsfortschritt angezeigt.
+    Wenn er fertig ist, dr&uuml;cke auf den "Close/ Schlie&szlig;en" Button.
+  </li>  
+</ol>
+
+<p>
+  Nach der erfolgreichen Installation solltest du das "LG3D Project" als Eintrag in deinem
+  Startmen&uuml; sehen, in dem der LG3D launcher, uninstaller und eine Verkn&uuml;pfung zur 
+  LG3D website enthalten ist.
+</p>
+
+<h3><a name="Running"></a>4. LG3D starten</h3> 
+
+<img src="../images/windows/f10-lg3d-win-s.png" width="200" vspace="8" hspace="8" style="float: right;"/>
+
+<p>
+  Nach der erfolgreichen Installation, kannst du LG3D von deinem Startmen&uuml; aus starten:
+</p>
+<blockquote><b>
+  Start -> Programs -> LG3D Project -> Start LG3D Project
+</b></blockquote>
+
+<p>
+  Klicke auf den launcher.  
+  Nach einigen Sekungen geht das LG3D Fenster auf.  Gl&uuml;ckwunsch! 
+  Wenn du Probleme hast,schaue bitte in den  
+  <a href="#Troubleshooting">Problembehebungs</a> s Abschnitt f&uuml;r Hilfe.
+</p>
+
+<blockquote>
+<h4>Kurzanleitung</h4>
+
+<p>
+  Um zu sehen wie du LG3D am schnellsten nutzen kannst, schaue einfach auf 
+  <a href="http://wiki.java.net/bin/view/Javadesktop/FirstRun"> 
+    <b>das LG3D First Run Document</b>
+  </a>.
+  Bitte beachte das die "X Apps Specific Features" nicht f&uuml;r das Windows Release
+  zur Verf&uuml;gung stehen.
+</p>
+
+<p>
+  Entdecke den Looking Glass Desktop und beginne mit den Tr&auml;men bon neuen
+  Wegen den Desktop in 3D zu nutzen! Wenn du bereit bist zum Entwickeln, 
+  schaue &uuml;ber die <a href="lg3d-developers-guide.html">Project
+  Looking Glass Developer's Guide</a> Seite f&uuml;r Informationen &uuml;ber das entwickeln mit
+  dem Project Looking Glass.
+</p>
+
+<h4>Einige kurze FAQs</h4>
+
+<ul>
+  <li>
+    <b>Wie kann ich LG3D in der Konsole minimiert starten?</b>
+    <ol>
+      <li>
+        Klicke auf den LG3D launcher mit der rechten Maustaste. Das zeigt dir eine Auswahlliste.
+      </li>
+      <li>
+        W&auml;hle "Eigenschaften" aus dem Men&uuml;. Das bringt dir ein Einstellungsfenster.
+      </li>
+      <li>
+        Von dem "Shortcut" Tab in dem Fenster, gehe zu "Run:".  W&auml;hle "Minimized/ Minimiert" aus der Pull-down Auswahlliste.
+      </li>
+      <li>
+        Klicke "OK" in dem Einstellungsfenster
+      </li>
+    </ol>
+  </li>
+  <br />
+  <li>
+    <b>Wie kann ich LG3D im Volbildmodus starten?</b>
+    <ol>
+      <li>
+        Rechtsklick auf dne LG3D launcher.  Das zeigt dir eine Auswahlliste.
+      </li>
+      <li>
+        W&auml;hle "Eigenschaften" aus dem Men&uuml;. Das bringt dir ein Einstellungsfenster.
+      </li>
+      <li>
+        Von dem "Shortcut" Tab in dem Fenster, gehe zu "Target:" ("Ziel:").  
+        F&uuml;ge <b><tt>-f</tt></b> an das Ende (nach dem letzten Anf&uuml;hrungsstrich).
+        Es sollte dann in etwa so aussehen: 
+        <table><tr><td><b><tt>...\bin\lg3d-run.bat" -f</tt></b></tr></td></table>
+      </li>
+      <li>
+        Klicke auf "OK" 
+      </li>
+    </ol>
+  </li>
+  <br />
+  <li>
+    <b>Was kann ich noch in dem LG3D Fenster einstellen?</b>
+    <ul>
+      <li>
+        Schau in das
+        <a href="lg3d-window-resizing.html">
+          Resizing and Configuring LG3D Window Document
+        </a>.
+      </li>
+    </ul>
+  </li>
+</ul>
+</blockquote>
+
+<h3><a name="Troubleshooting"></a>5. Problembehebung</h3> 
+<blockquote>
+<h4>Bildschirmaktuallisierung ist sehr langsam</h4>
+<p>
+Die Grafikkarte ist nicht schnell genug um LG3D laufen zu lassen.
+W&auml;hle "Mindestens (16 bit)" Farben:
+<tt><b>Rechtsklick auf den Hintergrund
+        ->w&auml;hle "Eigenschaften"
+        ->w&auml;hle "Einstellungen" in dem "Bildschirmeinstellungen" Fenster
+        ->w&auml;hle "Medium (16bit)" in der "Farbtiefe" Auswahl</b></tt>.
+Du solltest auch pr&uuml;fen, ob es ein Update f&uuml,r deine Graffikkarten Treiber gibt.
+Bitte google f&uuml; Details.
+</p>
+</blockquote>
+<p>
+  <b>Sehe ausserdem:</b>
+  <a href="release-notes.html">Project Looking Glass Developer's
+  Release Notes</a>
+</p>
+<p>
+  Weiterf&uuml;hrende Informationen und bekannte Probleme und Hilfen k&ooml;nnen
+  unter lg3d-core<b> Project Tools </b>-&gt; <b>Issue tracker</b> gefunden werden.
+</p>
+
+<h3><a name="Resources"></a>6. N&uuml;tzliche Links</h3> 
+
+<p>
+  Hier ist eine Liste von Quellen die dich interessieren k&ouml;nnten ...
+</p>
+<ul>
+  <li>
+    <a href="http://wiki.java.net/bin/view/Javadesktop/FirstRun"> 
+      LG3D's erste Starts
+    </a>
+  </li>
+  <li>
+    <a href="http://forums.java.net/jive/forum.jspa?forumID=80">
+      LG3D Discussion Forum
+    </a>
+  </li>
+  <li>
+    <a href="index.html#Reporting_Issues">
+      Reporting Issues
+    </a>
+  </li>
+  <li>
+    <a href="index.html#Staying_Connected">
+      In Verbindung bleiben
+    </a>
+  </li>
+  <li>
+    <a href="index.html#How_to_Contribute">
+      Wie kann ich es unterst&uuml;tzen
+    </a>
+  </li>
+  <li>
+    <a href="index.html#Sub-projects">
+      Ander Unterprojejte nutzen
+    </a>
+  </li>
+  <li>
+    <a href="lg3d-getting-started.html">
+      Anleitung zum starten mit dem Project Looking Glass Developer's Release
+      (f&uuml;r Linux und Solaris x86 Users)
+    </a>
+  </li>
+  <li>
+    <a href="lg3d-developers-guide.html">
+      Project Looking Glass Developer's Guide
+    </a>
+  </li>
+  <li>
+    <a href="tutorial/index.html">
+      Project Looking Glass Tutorials
+    </a>
+  </li>
+  <li>
+    <a href="https://lg3d-core.dev.java.net/files/documents/1834/30923/LG3D-Overview.pdf">
+      Project Looking Glass - A Comprehensive Overview of the Technology (PDF 1.6MB)
+    </a>
+  </li>
+  <li>
+    <a href="index.html#Resources">
+      Andere Quellen
+    </a>
+  </li>
+</ul>
+
+<h3><a name="FinalWords"></a>7. Einige abschliessende Worte ...</h3>
+<p>
+  Danke f&uuml;r das anschauen des Project Looking Glass!
+  Wir warten auf deine Beiträge in dieser aufregenden neuen Desktop Erfahrung!
+</p>
+<br />
+
+<hr />
+  
+<small>$Revision: 1.1 $ $Date: 2007-01-05 12:14:31 $</small>
+
+</div>
+</body>
+</html>

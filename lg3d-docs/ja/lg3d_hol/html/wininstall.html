@@ -1,0 +1,311 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html>
+  <head>
+    <meta http-equiv="content-type" content="text/html; charset=utf-8" />
+    <title>LG3D1.0のインストールと実行方法 ( Windows XP 編 )</title>
+  </head>
+
+  <body bgcolor="white">
+    <h1>JavaOne Tokyo Hands on Lab : <br>
+	Project Looking Glass (LG3D) Basic Programming</h1>
+
+    <h2>LG3Dのインストールと実行方法 ( Windows XP 編 )</h2>
+    <hr>
+    <h3>準備</h3>
+
+    <p>
+	Windows XP で LG3D 1.0 を実行するためのすべてのコンポーネントは Windows XP 専用のインストーラにまとめられています。<br>
+	LG3Dのウェブページからインストーラをダウンロードし、実行するだけでインストールを行えます。
+	<ul>
+	　<li>ウェブページURL　<font color="red"><b>https://lg3d-core.dev.java.net/binary-builds.html</b></font></li>
+	  <li>インストーラ名　<font color="red"><b>Windows XP Mega Bundle</b></font></li>
+	  <li>ウェブページのスクリーンショット<font color="red"><b>↓</b></font></li>
+          <img src="pictures/win/10win_dl.png">
+    </ul>
+	  
+    <blockquote>
+    <font color="red">補足</font>:<br>
+    LG3D 0.7.1から Javadoc が独立したパッケージになりました。
+    (javadoc-lg3d-fcs-rel-0-7-1-generic-0510281819.tar.gz)<br>
+    ただ、現状の配布形式は tar.gz形式のため、Windows環境で解凍するためには
+    別途 tar.gz に対応した解凍ツールが必要になります。<br>
+    そのため、このテキストではJavadocのインストール部分は解説していません。
+    </blockquote>
+    <hr>
+	
+	
+
+    <h3>LG3D Release 1.0 のインストール</h3>
+
+    <p> LG3Dのインストールは<font color="red"><b>&quot;Administrator&quot;権限</b></font>を持つユーザで行う必要があります。<br>
+
+    <p>ここではデスクトップ上に<font color="red"><b>download\lg3d</b></font>
+    というディレクトリを作成し、Windows XP 専用のインストーラーをダウンローしたとします
+    <br><br><br>
+    <img src="pictures/win/download.png">
+    <br><br><br>
+    
+
+    <ul>
+     <li> lg3d-daily-1-0-0-win32-i686-0612191042-setup.exe をダブルクリックし、インストーラを起動します。
+          <br><br><br>
+          <img src="pictures/win/lg3d_100.png">
+          <br><br><br>
+     <li> しばらく待つとインストーラが起動します。<br>
+          ライセンスが表示されるので確認してください。<br>
+          インストールを継続する場合は「<font color="red"><b>I Agree</b></font>」
+          をクリックします。
+          <br><br><br>
+          <img src="pictures/win/lg3d_101.png">
+          <br><br><br>
+     <li> インストールフォルダの選択に移ります。<br>
+          Destination Folderにはインストール先のディレクトリを入力します。
+          この場合、インストール先は「<font color="red"><b>C:\lg3d\</b></font>」になります。
+          <br>続けるには「<font color="red"><b>Install</b></font>」ボタンをクリックします。
+          <br><br><br>
+          <img src="pictures/win/lg3d_102.png">
+          <br><br><br>
+     <li> LG3D Release 1.0がインストールされます。
+          <br><br><br>
+          <img src="pictures/win/lg3d_103.png">
+          <br><br><br>
+     <li> LG3D Release 1.0のインストールの「Completed」が表示されるので、
+          「<font color="red"><b>Close</b></font>」をクリックして、インストーラを終了します。
+          <br><br><br>
+          <img src="pictures/win/lg3d_104.png">
+          <br><br><br>
+    </ul>
+
+    <hr>
+    <h3>LG3Dの実行</h3>
+    <p> LG3Dの実行はスタートメニューから行います。<br>
+        実行手順は以下の通りです。<br>
+    <ul>
+     <li> 「<font color="red"><b>スタートメニュー</b></font>」から
+          「<font color="red"><b>すべてのプログラム</b></font>」⇒
+		  「<font color="red"><b>LG3D Project 1-0-0</b></font>」⇒
+		  「<font color="red"><b>Start LG3D Project 1-0-0</b></font>」を選択します。
+          <br><br><br>
+          <img src="pictures/win/run_101.png">
+          <br><br><br>
+     <li> 下図は実行画面です。
+          <br><br><br>
+          <img src="pictures/win/run_102.png">
+          <br><br><br>
+    </ul>
+  <blockquote>
+   <font color="red"><b>補足</b></font><br>
+   インストールディレクトリの etc\lg3d\displayconfig\j3d1x1 ファイルの設定を変更することにより
+   LG3Dウィンドウの大きさを変更することが出来ます。
+   (ここではc:\lg3d\etc\lg3d\displayconfig\j3d1x1になります)<br>
+   下の例では画面サイズを 1152x864 にしています。
+   画面サイズの代わりに NoBorderFullScreen と指定することでフルスクリーン表示も可能です。<br>
+   変更する箇所を<font color="red"><b>赤(太字)</b></font>で示します。<br>
+   <br><br>
+   <table border width="70%"><tr><td><pre>
+/*
+ ************************************************************************
+ *  
+ * Java 3D Calibration file for single-screen desktop configuration with
+ * neither head tracking nor 6DOF sensor tracking.
+ *  
+ ************************************************************************
+ */
+
+// Create a new screen object and associate it with a logical name and a
+// number.  This number is used as an index to retrieve the AWT GraphicsDevice
+// from the array that GraphicsEnvironment.getScreenDevices() returns.
+// 
+(NewScreen ProjectLookingGlass 0)
+
+// Set the available image area for a full screen.  This is important when
+// precise scaling between objects in the virtual world and their projections
+// into the physical world is desired through use of an explicit ScreenScale
+// view attribute.  The defaults are 0.365 meters for width and 0.292 meters
+// for height.
+// 
+(ScreenAttribute ProjectLookingGlass	PhysicalScreenWidth  0.360)
+(ScreenAttribute ProjectLookingGlass	PhysicalScreenHeight 0.288)
+//(ScreenAttribute ProjectLookingGlass	WindowSize           NoBorderFullScreen)
+//(ScreenAttribute ProjectLookingGlass	WindowSize           (800 600))
+<font color="red"><b>(ScreenAttribute ProjectLookingGlass	WindowSize           (1152x864))</b></font>
+
+
+// Create a view using the defined screen.
+// 
+(NewView view0)
+(ViewAttribute view0 Screen ProjectLookingGlass)
+(ViewAttribute        view0   FrontClipDistance       0.01)
+(ViewAttribute        view0   BackClipDistance        10.0)
+(ViewAttribute view0 WindowEyepointPolicy RELATIVE_TO_COEXISTENCE)
+(ViewAttribute view0 WindowMovementPolicy VIRTUAL_WORLD)
+(ViewAttribute view0 WindowResizePolicy VIRTUAL_WORLD)
+(ViewAttribute view0 ScreenScalePolicy SCALE_EXPLICIT)
+
+// For debugging this will give us the standard scale world and view
+// but in a window. Obviously if the window is reduced in size less of 
+// the world is visible.
+(ViewAttribute view0 CoexistenceCenteringEnable true)
+(ViewAttribute view0 WindowEyepointPolicy RELATIVE_TO_WINDOW)
+(ViewAttribute view0 WindowMovementPolicy PHYSICAL_WORLD)
+
+// Enable stereo viewing if desired
+// (ViewAttribute  view0   StereoEnable            true)
+   </pre></td></tr></table>
+  </blockquote><br><br><br><br>
+
+
+
+
+
+
+<hr>
+<h3>JDK と Java3D のインストールと環境変数の設定</h3>
+Windows版 LG3D は実行のための JRE(Java Runtime Enviroment) が組み込まれていますが、
+開発環境である JDK は含まれていません。<br>
+LG3Dアプリケーションの開発を行うためには JDK 6 と Java3D 1.5 をインストールする必要があります。<br> 
+<!--最後に、システムの環境変数を設定します。<br>-->
+まず、JDK6 のインストーラと Java3D 1.5 のバイナリをダウンロードします。<br>
+以下のファイルは執筆時点(2007/3/1)での最新版です。 できるだけ最新版を利用してください。<br>
+ダウンロードしたファイルは デスクトップ\download\lg3d にあるとします。<br><br>
+
+    <table border>
+    <tr><th>コンポーネント名</th><th>ファイル名</th><th>ダウンロード元</th></tr>
+    <tr><td>JDK 6.0 </td><td> jdk-6-windows-i586.exe </td><td> http://java.sun.com/javase/ja/6/download.html </td></tr>
+    <tr><td>Java 3D 1.5</td><td> java3d-1_5_1-build1-windows-i586.zip </td><td> https://java3d.dev.java.net/binary-builds-pre.html </td></tr>
+    </table>
+
+<ul>
+	<li><b>JDKのインストール</b>
+		<p> インストールは<font color="red"><b>&quot;Administrator&quot;権限</b></font>を持つユーザで行う必要があります。<br>
+		<ol>
+		  <li> jdk-6-windows-i586.exe をダブルクリックし、インストーラを起動します。
+          <br><br><br>
+          <img src="pictures/win/jdk1.png">
+          <br><br><br>
+     <li> しばらく待つとインストーラが起動します。<br>
+          ライセンスが表示されるので確認してください。<br>
+          インストールを継続する場合は「<font color="red"><b>同意する(A)＞</b></font>」をクリックします。
+          <br><br><br>
+          <img src="pictures/win/jdk2.png">
+          <br><br><br>
+     <li> カスタムセットアップの項目に移ります。ここではデフォルト設定のままインストールします。<br>
+          インストール先は「<font color="red"><b>C:\Program Files\Java\jdk1.6.0\</b></font>」になります。
+          <br>続けるには「<font color="red"><b>次へ</b></font>」をクリックします。
+          <br><br><br>
+          <img src="pictures/win/jdk3.png">
+          <br><br><br>
+     <li> JDKがインストールされます。
+          <br><br><br>
+          <img src="pictures/win/jdk4.png">
+          <br><br><br>
+     <li> JDKのインストール途中で、JREのインストールダイアログが表示されます。<br>
+          JREのカスタムセットアップの項目になります。
+          ここではデフォルト設定のままインストールします。<br>
+          「<font color="red"><b>次へ</b></font>」をクリックします。
+          <br><br><br>
+          <img src="pictures/win/jdk5.png">
+          <br><br><br>
+     <li> しばらく待つと、JDKのインストールの終了が表示されます。<br>
+	      「README」ファイルを表示する必要が無い場合は「<font color="red"><b>READMEファイルの表示</b></font>」のチェックボックスを外します。<br>
+          「<font color="red"><b>完了</b></font>」をクリックして、インストーラを終了します。
+          <br><br><br>
+          <img src="pictures/win/jdk6.png">
+		</ol>
+	</li><br><br><br><br>
+	<li><b>Java3Dのインストール</b>
+		<ol>
+	 <li> <font color="red"><b>java3d-1_5_1-build1-windows-i586.zip</b></font> をダブルクリックします。
+          <br><br><br>
+          <img src="pictures/win/java3d1.png">
+          <br><br><br>
+     <li> zipファイル内のフォルダが表示されます。フォルダをダブルクリックします。
+          <br><br><br>
+          <img src="pictures/win/java3d2.png">
+          <br><br><br>
+     <li> <font color="red"><b>j3d-jre.zip</b></font> 圧縮フォルダをダブルクリックします。
+          <br><br><br>
+          <img src="pictures/win/java3d3.png">
+          <br><br><br>
+     <li> <font color="red"><b>bin</b></font>と<font color="red"><b>lib</b></font>が表示されるので、
+          両方選択します。
+          <br><br><br>
+          <img src="pictures/win/java3d4.png">
+          <br><br><br>
+     <li> 「<font color="red"><b>編集</b></font>」→「<font color="red"><b>コピー</b></font>」を選択します。
+          <br><br><br>
+          <img src="pictures/win/java3d5.png">
+          <br><br><br>
+     <li> JDKをインストールしたディレクトリにある jre ディレクトリ
+          (<font color="red"><b>C:\Program Files\Java\jdk1.6.0\jre</b></font>)
+          をエクスプローラで開きます。
+          <br><br><br>
+          <img src="pictures/win/java3d6.png">
+          <br><br><br>
+     <li> 「<font color="red"><b>編集</b></font>」→「<font color="red"><b>貼り付け</b></font>」を選択します。
+          <br><br><br>
+          <img src="pictures/win/java3d7.png">
+          <br><br><br>
+     <li> フォルダの上書き確認が出ますので、「<font color="red"><b>すべて上書き</b></font>」を選択します。
+          <br><br><br>
+          <img src="pictures/win/java3d8.png">
+		</ol>
+	</li><br>
+	これで JDK と Java3D のインストールは完了です。
+
+	<br><br><br>
+			
+
+<!--
+	<li><b>環境変数の設定</b>
+	    <p> 
+		<ol>
+     <li> 「<font color="red"><b>スタートメニュー</b></font>」から
+          「<font color="red"><b>コントロールパネル</b></font>」を選択します。
+          <br><br><br>
+          <img src="pictures/win/setup_01.png">
+          <br><br><br>
+     <li>「<font color="red"><b>パフォーマンスとメンテナンス</b></font>」を選択します。
+          <br><br><br>
+          <img src="pictures/win/setup_02.png">
+          <br><br><br>
+     <li>「<font color="red"><b>システム</b></font>」を選択します。
+          <br><br><br>
+          <img src="pictures/win/setup_03.png">
+          <br><br><br>
+     <li>システムのプロパティダイアログが表示されるので、
+        「<font color="red"><b>詳細設定</b></font>」を選択します。
+          <br><br><br>
+          <img src="pictures/win/setup_04.png">
+          <br><br><br>
+     <li>「<font color="red"><b>環境変数</b></font>」を選択します。 
+          <br><br><br>
+          <img src="pictures/win/setup_05.png">
+          <br><br><br>
+     <li>「<font color="red"><b>新規</b></font>」を選択します。 
+          <br><br><br>
+          <img src="pictures/win/setup_06.png">
+          <br><br><br>
+     <li>変数名に「<font color="red"><b>JAVA_HOME</b></font>」を、
+         変数値に「<font color="red"><b>C:\Program Files\Java\jdk1.6.0_01</b></font>」
+         を入力し、「<font color="red"><b>OK</b></font>」をクリックします。
+          <br><br><br>
+          <img src="pictures/win/setup_07.png">
+          <br><br><br>
+     <li>「<font color="red"><b>OK</b></font>」をクリックします。
+          <br><br><br>
+          <img src="pictures/win/setup_08.png">
+		</ol>
+	</li>
+	-->
+</ul>
+
+
+
+
+  <hr>
+    <ul>
+    <li><a href="index.html">メニューに戻る</a>
+    </ul>
+  </body>
+</html>

@@ -1,0 +1,175 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html>
+  <head>
+    <meta http-equiv="content-type" content="text/html; charset=utf-8" />
+    <title>グラフィックス環境のセットアップ</title>
+  </head>
+
+  <body bgcolor="white">
+    <h1>JavaOne Tokyo Hands on Lab : <br>
+	Project Looking Glass (LG3D) Basic Programming</h1>
+
+    <h2>グラフィックス環境のセットアップ</h2>
+
+    <p> Solaris 10 x86 で LG3D 1.0 を動かすためには下記の環境が必要になります。<br>
+
+     <ul>
+      <li> Pentium 4, Athlon 64 以降の比較的新しいCPU ( 1.x GHz 以上推奨 ) 
+      <li> 512MB 以上のメモリ ( 利用環境によっては 1GB 以上推奨 )
+      <li> NVIDIA Quadro シリーズ ( GeForce FX シリーズも利用できます ) 
+	  <li> テスト済みのビデオカードについては、<br>
+	  <b>Getting started with the Project Looking Glass Developer's Release</b> の <b>1. Platform Requirements</b> を参考してください。<br>
+	  URL： <a href="https://lg3d.dev.java.net/lg3d-getting-started.html">https://lg3d.dev.java.net/lg3d-getting-started.html</a>
+	 </ul>
+	 <blockquote>
+	  <font color="red">補足:</font><br>
+        Solaris Express(次期Solarisのβ版) には NVIDIA社製グラフィックスドライバが統合されているため、下記のグラフィックスドライバのインストールは不要です。 <br>
+        また、グラフィックスコントローラを内蔵しているIntel社製チップセットを搭載した環境 (Intel 915, Intel 945GM(Centrino プロセッサテクノロジ環境)など )
+        でもLG3Dを動かせます。<br>
+	 </blockquote>
+
+    <hr>
+    <a name="driver"><h3>グラフィックスドライバの確認</h3></a>
+
+    <p> システムに NVIDIA社製グラフィックスドライバが入っているかどうかは pkginfoコマンドを用いて調べることができます。<br>
+以下のように、実行した際になにも表示されなければ NVIDIA社製グラフィックスドライバはインストールされていません。
+<br><br>
+     <table border width="70%"><tr><td>
+<pre>
+# <font color="red"><b>pkginfo | grep NVDA</b></font>
+</pre></td></tr></table>
+
+    <hr>
+    <h3><a name="driver">グラフィックスドライバのインストール</h3></a>
+
+    NVIDIAのサイト(<a href="http://www.nvidia.com/object/unix.html">http://www.nvidia.com/object/unix.html</a>)
+    からグラフィックスドライバをダウンロードします。<br>
+    ドキュメント記述時(2007/3/1)の最新版のドライバは 1.0-9746 (NVIDIA-Solaris-x86-1.0-9746.run)です。<br><br>
+
+    グラフィックスドライバはインストールはルートユーザで行います。
+    インストール方法は次の通りです。
+<br><br>
+
+    <table border width="70%"><tr><td>
+     <pre>
+# <font color="red"><b>sh NVIDIA-Solaris-x86-1.0-9746.run</b></font>
+
+A sample xorg configuration file has been copied to /etc/X11/xorg.conf.nvidia
+Copyright 2005 by NVIDIA Corporation.  All rights reserved.
+Use is subject to license terms.
+
+Installation of &lt;NVDAgraphicsr&gt; was successful.
+Copyright 2005 by NVIDIA Corporation.  All rights reserved.
+Use is subject to license terms.
+
+Installation of &lt;NVDAgraphics&gt; was successful.</pre>
+</td></tr></table>
+
+    <p>インストールを終了するとシステムに2つのパッケージ(NVDAgraphics,NVDAgraphicsr)が追加されます。<br>
+    以下のようにpkginfoコマンドを使って確認できます。
+<br><br>
+
+    <table border width="70%"><tr><td>
+     <pre>
+# <font color="red"><b>pkginfo | grep NVDA</b></font>
+system      NVDAgraphics                     NVIDIA Graphics System Software
+system      NVDAgraphicsr                    NVIDIA Graphics System Device Driver</pre>
+     </td></tr></table>
+
+     <p>グラフィックスドライバのインストールが終了したら X-Window環境の設定を行います。
+        (このままではX-Windowは起動しません)<br>
+        NVIDIA社製グラフィックスドライバをインストールすると /etc/X11/xorg.conf.nvidia というファイルがインストールされますので、これを利用します。<br>
+        このファイルはNVIDIA社製グラフィックスドライバ環境での xorg.conf のサンプルファイルです。
+        ほとんどの環境ではこのファイルを /etc/X11/xorg.conf にコピーするだけです。
+<br><br>
+    <table border width="70%"><tr><td>
+     <pre>
+# <font color="red"><b>cp /etc/X11/xorg.conf.nvidia /etc/X11/xorg.conf</b></font></pre>
+    </td></tr></table><br>
+
+     <p> 次に xorg.conf を編集し、AllowGLXWithComposite オプションを有効にします。<br>
+     LG3Dには lg3d-dev, lg3d-app, lg3d-session の 3つのコマンドが用意されていますが、
+     lg3d-sessionコマンドを利用するために必要なオプションです。<br>
+     (このテキストでは lg3d-session を利用しないので、設定しなくても構いません。)
+<br><br>
+
+    <table border width="70%"><tr><td>
+     <pre>
+# Device configured by xorgconfig:
+
+Section &quot;Device&quot;
+    Identifier  &quot;** NVIDIA (generic)                   [nv]&quot;
+    Driver      &quot;nvidia&quot;
+    #VideoRam    131072
+    # Insert Clocks lines here if appropriate
+    <font color="red"><b>Option      &quot;AllowGLXWithComposite&quot; &quot;yes&quot;</b></font>
+EndSection</pre>
+    </td></tr></table><br>
+
+
+     <blockquote>
+     <font color="red">補足</font>:<br>
+     UXGA(1600x1200)を利用したい場合などは /usr/X11/bin/xorgconfig を用いて /etc/X11/xorg.conf を生成します。
+     その後 xorg.conf を編集し、NVIDIA社製グラフィックスドライバ用の設定
+     (Driver &quot;nv&quot; を Driver &quot;nvidia&quot; に書き換える)
+     を行ってください。
+     </blockquote>
+
+    <p> インストール後、リブートします。
+<br><br>
+    <table border width="70%"><tr><td>
+     <pre>
+# <font color="red"><b>init 6</b></font> </pre>
+    </td></tr></table><br>
+
+    <p> NVIDIA Quadroシリーズを利用している場合はNVIDIAのロゴが表示され、
+        ログイン画面が表示されると思います。
+        グラフィックスドライバのインストールおよび設定は終了です。<br>
+
+    <p> NVIDIA GeForce FX シリーズを利用している場合は
+        GUIの表示に失敗します。<br>
+        NVIDIA社製グラフィックスドライバのインストール時点では 
+        NVIDIA GeForce FX シリーズのカード情報が
+        Solarisに登録されないのが原因です。<br>
+    <p> NVIDIA社製グラフィックスドライバを有効にするためには
+       グラフィックスカード情報を登録します。<br>
+        <br>登録方法は次の通りです。<br>
+        <ul>
+         <li> /usr/X11/bin/scanpci コマンドを実行します。
+             PCI情報を表示されるので、
+              グラフィックスカードの vendor, device の値を確認します
+             (下図の<font color="blue"><u>青字(下線)</u></font>の部分)。<br>
+             vendor, device の値のうち「 0x 」と4桁の数値の最初の「 0 」は無視します。<br>
+             つまり、例では vendor = <font color="blue"><u>10de</u></font> , device = <font color="blue"><u>322</u></font>となります。
+         <li> update_drv コマンドでグラフィックスカード情報を登録します。
+         <li> リコンフィグオプション付きでリブートします。
+        </ul>
+ 
+<br><br>
+    <table border width="70%"><tr><td>
+     <pre>
+# <font color="red"><b>/usr/X11/bin/scanpci</b></font>
+
+...
+
+pci bus 0x0000 cardnum 0x1f function 0x05: vendor 0x8086 device 0x24d5
+ Intel Corp. 82801EB AC'97 Audio Controller
+
+pci bus 0x0001 cardnum 0x00 function 0x00: vendor 0x<font color="blue"><u>10de</u></font> device 0x0<font color="blue"><u>322</u></font>
+ nVidia Corporation NV34 [GeForce FX 5200]
+
+pci bus 0x0002 cardnum 0x01 function 0x00: vendor 0x8086 device 0x1019
+ Intel Corp. 82547EI Gigabit Ethernet Controller (LOM)
+
+...
+# <font color="red"><b>update_drv -a -i '&quot;pci<font color="blue"><u>10de</u></font>,<font color="blue"><u>322</u></font>&quot;' nvidia</b></font>
+# <font color="red"><b>reboot -- -r</b></font> </pre>
+    </td></tr></table><br>
+
+    <hr>
+    <ul>
+    <li><a href="index.html">メニューに戻る</a>
+    </ul>
+
+  </body>
+</html>

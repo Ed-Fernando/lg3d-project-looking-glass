@@ -1,0 +1,257 @@
+<!DOCTYPE html PUBLIC "-//Tigris//DTD XHTML 1.0 Transitional//EN"
+"http://style.tigris.org/tigris_transitional.dtd">
+<html>
+  <head>
+    <title>Project Looking Glass Application Tutorial 1</title>
+    <link rel="stylesheet" type="text/css" href="tutorial.css" />
+  </head>
+  <body bgcolor='white'>
+    <p>This tutorial is based upon the tutorial written by Hideya Kawahara.</p>
+    <p>
+    <table>
+      <tr>
+	<th align='left' valign='top'>Aim:</th>
+	<td>To demonstrate the basic steps of creating a 3D application within the lg3d framework</td>
+      </tr>
+      <tr>
+	<th align='left' valign='top'>Requirements:</th>
+	<td>
+To use this tutorial you will need a functional installation of the of
+LG3D and your environment configured for LG3D development. Follow the 
+"<a href="../lg3d-developers-guide.html">Project Looking Glass Developer's Guide</a>" 
+for installation and configuration instructions.
+      </tr>
+      <tr>
+	<td>&#160;</td>
+	<td>If you have been following the previous versions of the tutorials, you will note some changes. Throughout this tutorial I will note the changes, and advantages of the changes made to the API. The 0.6.2 version marks a major change in the API to support many animation tasks, and these have been further refined in the version 0.7.0 release.
+      </tr>
+				
+      <tr><td colspan='2' height='10'>&#160;</td></tr>
+      <tr>
+	<th align='left' valign='top'>Steps:</th>
+	<td>
+	  <ol>
+	    <li><a href='#step1'>Create a root container</a></li>
+	    <li><a href='#step2'>Create a box to put in the container</a></li>
+	    <li><a href='#step3'>Put the box in the container</a></li>
+	    <li><a href='#step4'>Initialize the container</a></li>
+	    <li><a href='#step5'>Compile the code</a></li>
+	    <li><a href='#step6'>Package the Tutorial to run in LG3D</a></li>
+	    <li><a href='#step7'>Run our application</a></li>
+	  </ol>
+	</td>
+      </tr>
+      <tr><td colspan='2' height='10'>&#160;</td></tr>
+      <tr><td colspan='2' height='10'>&#160;</td></tr>
+      <tr>
+        <th class='newstep' valign='top'><a id='step1'>Step 1:</a></th>
+	<th class='newstep'>Create a root container</th>
+      </tr>
+      <tr>
+	<td>&#160;</td>
+	<td>First, we need to create the root container for this 3D application. The <a class='javadoc' href='http://javadesktop.org/lg3d/javadoc/0-7-1-latest/api/index.html?org/jdesktop/lg3d/wg/Frame3D.html'>Frame3D</a> class serves for this purpose. We can extend Frame3D, or simply create one and add components to it. In this example, we'll take the later approach.</td>
+      </tr>
+      <tr><td colspan='2' height='10'>&#160;</td></tr>
+      <tr>
+	<td>&#160;</td>
+	<td><ol><code>Frame3D frame3d = new Frame3D();</code></ol></td>
+      </tr>
+      <tr><td colspan='2' height='10'>&#160;</td></tr>
+      <tr>
+	<th class='newstep' valign='top'><a id='step2'>Step 2:</a></th>
+	<th class='newstep'>Create a box to put in the container</th>
+      </tr>
+      <tr><td colspan='2' height='10'>&#160;</td></tr>
+      <tr>
+	<td>&#160;</td>
+	<td>Now, let's try to put a box of 8cm x 6cm x 4cm at the center of this application. Predefined shapes found under <a class='javadoc' href='http://javadesktop.org/lg3d/javadoc/0-7-1-latest/api/index.html?org/jdesktop/lg3d/utils/shape/package-summary.html'>org.jdesktop.lg3d.utils.shape</a> are handy for this purpose.<br/>
+	By the way, what color would you like to paint it? Let's try pale green for this example. Therefore we need to create an appearance object to handle the color of the box. The API also provides a handy class to specify color, which is <a class='javadoc' href='http://javadesktop.org/lg3d/javadoc/0-7-1-latest/api/index.html?org/jdesktop/lg3d/utils/shape/SimpleAppearance.html'>SimpleAppearance</a>. Additionally you can specify the object's color in a more detailed manner, including shininess and what color it shines, translucency and textures applied to it. You can find out more by looking at the API documentation for <a class='javadoc' href='http://javadesktop.org/lg3d/javadoc/0-7-1-latest/api/index.html?org/jdesktop/lg3d/sg/Appearance.html'>Appearance</a>, <a class='javadoc' href='http://javadesktop.org/lg3d/javadoc/0-7-1-latest/api/index.html?org/jdesktop/lg3d/sg/Material.html'>Material</a> and <a class='javadoc' href='http://javadesktop.org/lg3d/javadoc/0-7-1-latest/api/index.html?org/jdesktop/lg3d/sg/Texture.html'>Texture</a>.</td>
+      </tr>
+      <tr><td colspan='2' height='10'>&#160;</td></tr>
+      <tr>
+	<td>&#160;</td>
+	<td><ol><code>SimpleAppearance app = new SimpleAppearance(0.6f, 0.8f, 0.6f);</code></ol></td>
+      </tr>
+      <tr><td colspan='2' height='10'>&#160;</td></tr>
+      <tr>
+	<td>&#160;</td>
+      <td>Now that we have a default appearance, we can create the box of 8cm x 6cm x 4cm. Note that we need to specify half the length of each dimension to the constructor of the predefined <a href='http://javadesktop.org/lg3d/javadoc/0-7-1-latest/api/index.html?org/jdesktop/lg3d/utils/shape/Box.html'>Box</a> class.  It creates a box that lies within the bounding box, [-x, -y, -z] and [x, y, z], where x, y and z are the first three arguments to the constructor.<br/>
+      <b>Change Note:</b>The <a href='http://javadesktop.org/lg3d/javadoc/0-7-1-latest/api/org/jdesktop/lg3d/utils/shape/Primitive.html#GEOMETRY_NOT_SHARED'>Primitive.GEOMETRY_NOT_SHARED</a> and <a href='http://javadesktop.org/lg3d/javadoc/0-7-1-latest/api/org/jdesktop/lg3d/utils/shape/Primitive.html#GENERATE_NORMALS'>Primitive.GENERATE_NORMALS</a> flags are not needed in the version 0.6.2 of the API, they are handled internally.</td>
+      </tr>
+      <tr><td colspan='2' height='10'>&#160;</td></tr>
+      <tr>
+	<td>&#160;</td>
+	<td><ol><code>Box box = new Box(0.04f, 0.03f, 0.02f, app);</code></ol></td>
+      </tr>
+      <tr>
+	<td>&#160;</td>
+	<td>Project Looking Glass 3D APIs are based on <a href='http://java.sun.com/products/java-media/3D/'>Java 3D</a>. In Java 3D, by default, the metric system is used, where one (1) unit equals one meter. And if configured correctly, by drawing an object of size 0.02 units turns into an object approximately 2cm in size on the screen.<br/>
+	Please note that the default configuration for lg3d is for a perspective view, therefore the drawing size varies depending upon how far away, or how close the object is. By default, the 3D scene manager of lg3d will position the object at a reasonable position where the size is close to the size intended.<br/>
+      </tr>
+      <tr><td colspan='2' height='10'>&#160;</td></tr>
+      <tr>
+	<th class='newstep' valign='top'><a id='step3'>Step 3:</a></th>
+	<th class='newstep'>Put the box in the container</th>
+      </tr>
+			<tr>
+				<td>&#160;</td>
+				<td>To display the box on the screen, we must add the box to the top level container. The box cannot be added directly to the Frame3D, only a <a href='http://javadesktop.org/lg3d/javadoc/0-7-1-latest/api/index.html?org/jdesktop/lg3d/wg/Component3D.html'>Component3D</a> can be added to Frame3Ds (this functionality is inherited from <a href='http://javadesktop.org/lg3d/javadoc/0-7-1-latest/api/index.html?org/jdesktop/lg3d/wg/Container3D.html'>Container3D</a>). Component3D is the base component for all the lg3d components. One component can have multiple <a href='http://javadesktop.org/lg3d/javadoc/0-7-1-latest/api/index.html?org/jdesktop/lg3d/sg/Shape3D.html'>Shape3D</a> objects to define its shape (note that Box inherits Shape3D), and a Frame3D can host multiple Component3Ds (including nested Container3Ds).<br/>Therefore we must create a Component3D.</td>
+			</tr>
+      <tr><td colspan='2' height='10'>&#160;</td></tr>
+      <tr>
+	<td>&#160;</td>
+	<td><ol><code>Component3D comp = new Component3D();</code></ol></td>
+      </tr>
+      <tr><td colspan='2' height='10'>&#160;</td></tr>
+			<tr>
+				<td>&#160;</td>
+				<td>Then add the box to the Component3D.</td>
+			</tr>
+      <tr><td colspan='2' height='10'>&#160;</td></tr>
+      <tr>
+	<td>&#160;</td>
+	<td><ol><code>comp.addChild(box);</code></ol></td>
+      </tr>
+      <tr><td colspan='2' height='10'>&#160;</td></tr>
+			<tr>
+				<td>&#160;</td>
+				<td>Now the Component3D can be added to the root container.</td>
+			</tr>
+      <tr><td colspan='2' height='10'>&#160;</td></tr>
+      <tr>
+	<td>&#160;</td>
+	<td><ol><code>frame3d.addChild(comp);</code></ol></td>
+      </tr>
+      <tr><td colspan='2' height='10'>&#160;</td></tr>
+			<tr>
+	<th class='newstep' valign='top'><a id='step4'>Step 4:</a></th>
+	<th class='newstep'>Initialize the container</th>
+      </tr>
+			<tr>
+				<td>&#160;</td>
+				<td><b>Change Note:</b>The call to setCapabilities() is not longer needed, default capabilities are automatically set, and applied to any children when they are added to the Frame3D</td>
+			</tr>
+      <tr><td colspan='2' height='10'>&#160;</td></tr>
+			<tr>
+				<td>&#160;</td>
+				<td>To assist the <a href='http://javadesktop.org/lg3d/javadoc/0-7-1-latest/scenemanager-api/index.html?org/jdesktop/lg3d/scenemanager/SceneManager.html'>SceneManager</a> (at least in the default scene manager - <a href='http://javadesktop.org/lg3d/javadoc/0-7-1-latest/scenemanager-api/index.html?org/jdesktop/lg3d/scenemanager/glassy/GlassySceneManager.html'>GlassySceneManager</a>) it is useful to set the size hint for the Frame3D. This is used by the SceneManager to arrange 3D applications in the 3D space it manages.<br/><b>Change Note:</b>The naming scheme has been changed from previous versions of API to follow the Swing API standards, therefore setSize has been changed to the more appropriate <a href='http://javadesktop.org/lg3d/javadoc/0-7-1-latest/api/org/jdesktop/lg3d/wg/Container3D.html#setPreferredSize(javax.vecmath.Vector3f)'>setPreferredSize(Vector3f)</a>.</td>
+			</tr>
+      <tr><td colspan='2' height='10'>&#160;</td></tr>
+      <tr>
+	<td>&#160;</td>
+	<td><ol><code>frame3d.setPreferredSize(new Vector3f(0.08f, 0.06f, 0.04f));</code></ol></td>
+      </tr>
+			<tr>
+				<td>&#160;</td>
+				<td>To make the frame visible two steps are required.<br/>First, the frame needs to be added to the scenegraph. The <a href='http://javadesktop.org/lg3d/javadoc/0-7-1-latest/api/org/jdesktop/lg3d/wg/Frame3D.html#changeEnabled(boolean)'>changeEnabled(boolean)</a> call does this. More precisely, the call initiates interaction with the 3D SceneManager and the manager handles the details of the policy for presenting the application (e.g. location, size, etc.).<br/><b>Change note:</b> Previously this was done by the setActive(boolean) method. The function call has been renamed to follow standard Java practices of using setEnabled(boolean) to enable a component. The method <a href='http://javadesktop.org/lg3d/javadoc/0-7-1-latest/api/org/jdesktop/lg3d/wg/Frame3D.html#setEnabled(boolean)'>setEnabled(boolean)</a> can also be used in the same way, however using changeEnabled(boolean) allows for animated changes of enabled status, whereas setEnabled(boolean) will work immediately. This naming convention is standard across the API.</td>
+			</tr>
+
+      <tr><td colspan='2' height='10'>&#160;</td></tr>
+      <tr>
+	<td>&#160;</td>
+	<td><ol><code>frame3d.changeEnabled(true);</code></ol></td>
+      </tr>
+			<tr>
+				<td>&#160;</td>
+				<td>Second, although the frame is active, it must also be made visible. Note <a href='http://javadesktop.org/lg3d/javadoc/0-7-1-latest/api/org/jdesktop/lg3d/wg/Component3D.html#setVisible(boolean)'>setVisible(boolean)</a> is fairly light-weight compared to the changeEnabled() call, therefore changeVisible() should be used to temporarily hide an object.<br/>
+				<b>Change note:</b>Like the changeEnabled note above, this has been changed to allow for animations while making the Frame3D visible within the SceneManager.</td>
+			</tr>
+
+      <tr><td colspan='2' height='10'>&#160;</td></tr>
+      <tr>
+	<td>&#160;</td>
+	<td><ol><code>frame3d.changeVisible(true);</code></ol></td>
+      </tr>
+      <tr><td colspan='2' height='10'>&#160;</td></tr>
+			<tr>
+	<th class='newstep' valign='top'><a id='step5'>Step 5:</a></th>
+	<th class='newstep'>Compile the code</th>
+      </tr>
+			<tr>
+				<td>&#160;</td>
+				<td>We have finished writing the code. The full version includes the required import statements, and various constructor and main methods. Download <a href='code/Tutorial1.java'>Tutorial1.java</a><br/>Now we need to compile the source file. The tutorial requires the lg3d core library and Java 1.5 to compile. The core library can be found under the <code>lib</code> directory of the lg3d distribution (replace <code>$LG3DHOME</code> with the path to the lg3d distribution).</td>
+			</tr>
+      <tr><td colspan='2' height='10'>&#160;</td></tr>
+      <tr>
+	<td>&#160;</td>
+	<td class='command'><ol>javac -cp "$LG3DHOME/lib/ext/lg3d-core.jar" Tutorial1.java</ol></td>
+      </tr>
+      <tr><td colspan='2' height='10'>&#160;</td></tr>
+			<tr>
+	<th class='newstep' valign='top'><a id='step6'>Step 6:</a></th>
+	<th class='newstep'>Package the Tutorial to run in LG3D</th>
+      </tr>
+			<tr>
+				<td>&#32;</td>
+				<td>
+				    Starting with release 0.7.0 applications can be easily added to the taskbar so they can be run. Upon initialization LG3D looks for packaged applications in the ext/app directory.
+				    Therefore to run our tutorial we just need to create a jar file and specify some parameters in the manifest file.<br/>
+				    Manifest files provide basic information about the data contained within the jar file. More information about Manifest files
+				    can be read at <a href="http://java.sun.com/docs/books/tutorial/jar/manifest/index.html" target="_blank">http://java.sun.com/docs/books/tutorial/jar/manifest/index.html</a>.<br/>
+				    We will create a simple manifest file to run this application. Edit a file <a href="code/Tutorial1.MF">Tutorial1.MF</a>:
+				</td>
+			</tr>
+      		<tr><td colspan='2' height='10'>&#32;</td></tr>
+      		<tr>
+				<td>&#160;</td>
+				<td><ol><code>Implementation-Title: Tutorial 1<br/>
+						  Main-Class: Tutorial1<br/>
+					  </code></ol></td>
+      		</tr>
+      		<tr><td colspan='2' height='10'>&#32;</td></tr>
+
+			<tr>
+				<td>&#160;</td>
+				<td>
+					These parameters mean:
+					<ol>
+						<b>Implementation-Title:</b> The name of the application.<br/>
+						<b>Main-Class:</b> This is the standard manifest parameter that specifies the class file to execute when executing a jar file (e.g. java -jar syntax).
+					</ol><br/>
+					Next we create a jar file using the manifiest file and the Tutorial1.class file.
+				</td>
+			</tr>
+      		<tr><td colspan='2' height='10'>&#32;</td></tr>
+      		<tr>
+				<td>&#160;</td>
+				<td><ol><code>jar cmvf Tutorial1.MF Tutorial1.jar Tutorial1.class</code></ol></td>					  </code></ol></td>
+      		</tr>
+      		<tr><td colspan='2' height='10'>&#32;</td></tr>
+			<tr>
+				<td>&#160;</td>
+				<td>
+					Copy the <code>Tutorial1.jar</code> to <code>$LG3DHOME/ext/app</code> creating the directory if it does not exist.
+				</td>
+			</tr>
+
+      		<tr><td colspan='2' height='10'>&#32;</td></tr>
+			<tr>
+				<th class='newstep' valign='top'><a id='step7'>Step 7:</a></th>
+				<th class='newstep'>Run our application</th>
+      		</tr>
+			<tr>
+				<td>&#32;</td>
+				<td>Now that the jar file is copied into the ext/app directory you just need to start lg3d as normal, and the tutorial will be added to the taskbar. It uses the default application icon.</td>
+			</tr>
+      <tr><td colspan='2' height='10'>&#32;</td></tr>
+			<tr>
+				<td>&#32;</td>
+				<td><ol><code>./lg3d-dev</code></ol></td>
+			</tr>
+      <tr><td colspan='2' height='10'>&#32;</td></tr>
+			<tr>
+				<td>&#32;</td>
+				<td>Click on the lg3d button. The lg3d desktop should be displayed with a pale green screen box in the center (as you see below). In actual fact, only a pale green square can be seen - in the <a href='tutorial2.html'>next tutorial</a> the box will be rotated to make it look like a box.</td>
+			</tr>
+			<tr>
+				<td>&#32;</td>
+				<td><img width="80%" src='images/tutorial1.png' alt='The pale green box from Tutorial1'/></td>
+			</tr>
+
+	
+      
+    </table>
+    </p>
+  </body>
+</html>
+

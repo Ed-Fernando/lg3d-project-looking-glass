@@ -1,0 +1,193 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html>
+  <head>
+    <meta http-equiv="content-type" content="text/html; charset=utf-8" />
+    <title>シンプルな3Dオブジェクトの作成</title>
+  </head>
+
+  <body bgcolor="white">
+    <h1>JavaOne Tokyo Hands on Lab : <br>
+        Project Looking Glass (LG3D) Basic Programming</h1>
+    <h2>4.2 シンプルな3Dオブジェクトの作成</h2>
+    
+    <b>この章で行うこと : </b><br>
+    NetBeans を用いて以下のことを行います。
+    <ul>
+      <li> 簡単な LG3D アプリケーションの作成
+      <li> コンパイルおよび実行
+    </ul>
+    <br><br><br>
+
+    <h3> LG3Dアプリケーションの作成の流れについて </h3>
+    
+
+    <table border><tr><td>
+    <img src="pictures/basicflow.png">
+    </td><td valign="top">
+    左図は LG3Dアプリケーション作成の基本的な流れになります。<br>
+    1-2がアプリケーションの土台作り、3-8が表示するコンテンツの作成、9-10が後処理になります。
+    <br>
+    <ul>
+     <li><b>アプリケーションの土台作り</b><br>
+         <p>LG3Dアプリケーションを作成するには、まずフレーム
+         (org.jdesktop.lg3d.wg.Frame3D オブジェクト)を生成します(1)。
+         このフレームが全てのベースになります。<br>
+         <p>次にフレームに追加するコンテナ(org.jdesktop.lg3d.wg.Container3Dオブジェクト)を生成します(2)。
+         このコンテナにはコンポーネントを追加していきます。
+         コンテナは複数のコンポーネントをグループ化してひとつにまとめるためのものです。
+         フレームもコンテナなので直接コンポーネントを追加することも可能です。<br>
+         <p>コンポーネント(org.jdesktop.lg3d.wg.Component3Dオブジェクト)は3Dオブジェクトの土台となるものです。
+         コンポーネントに対しては、位置(座標)、回転角度、イベント処理などを指定できます。
+         ただ、コンポーネントは表示する3Dオブジェクトの形状は含みません。
+         3Dオブジェクトの形状はシェイプと呼ばれるクラス群を利用して生成します。
+         ボックスや球などの簡単なものはあらかじめ用意されています。 自分で作成することもできます。<br>
+     <li><b>表示させるコンテンツの作成</b><br>
+         <p>(3)でシェイプを生成したら、
+         コンポーネントを生成し、シェイプを追加します(4,5)。
+         1つのコンポーネントに複数のシェイプを追加することも可能です。
+         <p>シェイプをコンポーネントに追加したら、コンポーネントにイベント処理を追加します(6)。<br>
+         コンポーネントの用意ができたら、コンポーネントをコンテナに追加します(7)。
+         コンテナは階層化することができます。 
+         コンテナを階層化した場合、子コンテナを親コンテナに追加します(8)。<br>
+     <li><b>後処理</b>
+         <p>
+        最後に、コンテナをフレームに追加し(9)、フレームを表示させて完成です(10)。
+    <br><br>
+</td></tr></table>
+
+    <br><br><br>
+    <h3>シンプルな3Dオブジェクトの作成</h3>
+
+    <p>この章では LG3Dアプリケーション作成の手始めとしてボックスを作成します。<br>
+    LG3Dにあらかじめ用意してあるシェイプである org.jdesktop.lg3d.utils.shape.Box クラスを
+    利用します。<br>
+    このボックスを作成する時、形状を示すために x, y ,z 座標 (すべてfloat) と
+    アピアランスと呼ばれるものが必要になります。<br>
+    作成されるボックスは (0,0,0)を中心とし、各辺の長さが 2x, 2y, 2z となります。
+    また、アピアランスは作成する3Dアプリケーション(ここではボックス)の
+    表面の色や光の反射率を表すものです。<br>
+    ここでは簡単なアピアランスを作成することができる
+    org.jdesktop.lg3d.utils.shape.SimpleAppearance クラスを用いて、
+    不透明な薄い青色を示すアピアランスを作成しています。<br>
+    ボックスのシェイプはコンポーネントに追加し、コンポーネントをフレームに追加しています。
+    ( 今回はコンテナは作成せず、フレームに直接コンポーネントを追加しています。 )
+
+<br><br><br>
+    <ol>
+      <li>右側のパネルの <font color="red"><b>TextureBox.java</b></font>
+      下のリストのように書き換えます。<br>
+      赤(太字)の部分が元のプログラムから変更・追加したところです。
+      <br><br><br>
+      <table border>
+      <tr><td><pre>
+/*
+ * TextureBox.java
+ *
+ * Created on 2005/09/29, 15:42
+ *
+ * To change this template, choose Tools | Options and locate the template under
+ * the Source Creation and Management node. Right-click the template and choose
+ * Open. You can then make changes to the template in the Source Editor.
+ */
+
+package texturebox;
+
+/**
+ *
+ * @author duke
+ */
+<b><font color="red">
+import javax.vecmath.Vector3f;
+import org.jdesktop.lg3d.sg.Appearance;
+import org.jdesktop.lg3d.utils.shape.Box;
+import org.jdesktop.lg3d.utils.shape.SimpleAppearance;
+import org.jdesktop.lg3d.wg.Component3D;
+import org.jdesktop.lg3d.wg.Frame3D;
+</font></b>
+
+public class TextureBox {
+    
+    /** Creates a new instance of TextureBox */
+    public TextureBox() {
+<b><font color="red">       
+        // フレームの生成
+        Frame3D frame = new Frame3D();
+
+        // シェイプの生成および設定
+
+        // 色を指定した Appearance の設定
+        // 引数は R,G,B,アルファ(透過度) で、0-1までのfloat値
+        Appearance appearance
+            = new SimpleAppearance(0.6f, 0.6f, 1.0f, 1.0f);
+
+        // Box の生成
+        // 引数は、 x、y、z 座標、アピアランス
+        // 座標の単位はメートル(float値)
+        // 作成されるのは 横 0.20f, 縦 0.16f, 奥行き 0.12f のボックス
+        Box box = new Box(0.10f, 0.08f, 0.06f, appearance);
+
+        // コンポーネントの生成
+        Component3D component = new Component3D();
+
+        // シェイプをコンポーネントに追加
+        component.addChild(box);
+
+        // コンポーネントをコンテナに追加
+        // ここではコンテナを使用していないので、
+        // 直接フレームに追加
+        frame.addChild(component);
+
+        // フレームの表示
+        // フレームの大きさを設定
+        // 引数は、Java3Dのクラス
+        // javax.vecmath.Vector3f(float x,float y,float z)
+        // x = 幅、y = 高さ, z = 奥行き (単位はメートル)
+        frame.setPreferredSize(new Vector3f(0.1f, 0.08f, 0.06f));
+
+        // フレームの表示
+        frame.changeEnabled(true);
+        frame.changeVisible(true);
+</font></b>
+    }
+    
+    /**
+     * @param args the command line arguments
+     */
+    public static void main(String[] args) {
+        // TODO code application logic here
+<b><font color="red">        new TextureBox();</font></b>
+    }
+    
+}
+      </pre></td></tr></table>
+      <br><br><br>
+      <li> プログラムの記述が終わったら、
+      左側のパネルの
+      <font color="red"><b>TextureBox.java</b></font>を選択し、
+      マウスの右クリックをします。<br>
+      下図のようなメニューが表示されるので
+      「<font color="red"><b>ファイルをコンパイル</b></font>」
+      を選択します。
+      <br><br><br>
+      <img src="pictures/c2_01.png">
+      <br><br><br>
+      <li>コンパイルが成功すると「構築成功」というメッセージが表示されます
+      (下図の最下部を参照)。<br>
+      コンパイルに失敗した場合、
+      この部分に <font color="red"><b>エラーとその内容が表示されます</b></font>。<br>
+      その場合は、プログラムを修正し、再度コンパイル作業を行ってください。<br>
+      <br><br><br>
+      <img src="pictures/c2_02.png">
+      <br><br><br>
+
+     </ol>
+
+    <hr>
+    <ul>
+	<li><a href="c3.html">「4.3 Jarベースのアプリケーションの作成と実行」</a> に進む
+    <br><br>
+    <li><a href="index.html">メニューに戻る</a>
+    </ul>
+
+  </body>
+</html>

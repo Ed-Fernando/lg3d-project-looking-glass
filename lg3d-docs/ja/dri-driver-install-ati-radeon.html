@@ -1,0 +1,152 @@
+<!DOCTYPE html PUBLIC "-//Tigris//DTD XHTML 1.0 Transitional//EN"
+"http://style.tigris.org/tigris_transitional.dtd">
+<html xmlns="http://www.w3.org/TR/xhtml1/transitional" xml:lang="ja"
+ lang="ja">
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  <meta name="Translator" content="Yasuyuki ENDO" />
+  <title>ATI Radeon用のDRIドライバのインストール</title>
+  <style type="text/css"> /* <![CDATA[ */
+@import "preview.css";
+/* ]]> */</style>
+</head>
+<body>
+<div id="projectdocumentview" class="app">
+
+<hr />
+<h2>ATI Radeon用のDRIドライバのインストール</h2>
+
+<br />
+
+<p>
+この手順書は、Project Looking Glassに必要なダイレクトレンダリング拡張を可能にするために、 ATI RadeonグラフィックスカードのDRI (Direct Rendering
+Infrastracture)ドライバをインストールする方法について説明します。</p>
+
+<h3>インストール手順</h3>
+<p>
+ここでは、RedHat 9上でOpenGLライブラリ(LibGL.so)をアップグレードするための手順を示します。
+同時にRadeon 7500ドライバも自動的にアップグレードされます。
+</p>
+
+<ol>
+  <li>次のように、rootになります。<br />
+    <br />
+    <span style="font-family: monospace;">% su root</span><br />
+    <span style="font-family: monospace;"> Password: </span><b>rootパスワードを入力します</b><br />
+    <span style="font-family: monospace;"> #</span><br />
+    <br />
+  </li>
+  <li>RedHat 9ディストリビューションから、次のようにカーネルソースをインストールします。<br />
+    <br />
+    <span style="font-family: monospace;"># rpm -ivh
+kernel-source-2.4.20-8.i386.rpm</span><span
+ style="font-family: monospace;"><br />
+    <br />
+    </span><b>注:</b> RedHat 9 CD-ROM #2をマウントしていれば、<span
+ style="font-family: monospace;">kernel-source</span>パッケージは次の場所にあります。<br />
+    <br />
+    <span style="font-family: monospace;">/mnt/cdrom/RedHat/RPMS/kernel-source-2.4.20-8.i386.rpm</span><span
+ style="font-family: monospace;"><br />
+    <br />
+    </span></li>
+  <li>カーネルコンフィギュレーションおよび依存性を、次のように更新します。<br />
+    <br />
+    <span style="font-family: monospace;"># cd /usr/src/linux-2.4</span><br />
+    <span style="font-family: monospace;"># cp /boot/config-2.4.20-8.config</span><br />
+    <span style="font-family: monospace;"># make oldconfig</span><br />
+    <span style="font-family: monospace;"># make dep</span><br />
+    <br />
+    <b>注:</b> カーネルを再コンパイルする必要はありません。<br />
+    <br />
+  </li>
+  <li>
+<a
+ href="http://dri.sourceforge.net/cgi-bin/moin.cgi/FrontPage">DRIプロジェクトのWebサイト</a>から、次のようにATI Radeonドライバの最新のスナップショットをダウンロードします。<br />
+    <br />
+<b>Download</b>ページ(<a
+ href="http://dri.sourceforge.net/cgi-bin/moin.cgi/Download">http://dri.sourceforge.net/cgi-bin/moin.cgi/Download</a>)の<b>Snapshot</b>セクション中のダウンロード手順に従ってください。<br />
+    <br />
+commonスナップショット(<span
+ style="font-family: monospace;">common-</span><span
+ style="font-style: italic; font-family: monospace;">YYYYMMDD</span><span
+ style="font-family: monospace;">-linux.i386.tar.bz2</span>)、
+およびRadeonスナップショット(<span style="font-family: monospace;">radeon-</span><span
+ style="font-style: italic; font-family: monospace;">YYYYMMDD</span><span
+ style="font-family: monospace;">-linux.i386.tar.bz2</span>)の両方をダウンロード
+する必要があるでしょう。<br />
+    <br />
+  </li>
+  <li>次のようにcommonパッケージを展開し、インストールします。<br />
+    <br />
+    <span style="font-family: monospace;"># tar jxf common-*</span><br />
+    <span style="font-family: monospace;"># cd dripkg</span><br />
+    <span style="font-family: monospace;"># ./install.sh</span><br />
+    <span style="font-family: monospace;"># cd ..</span><br />
+    <span style="font-family: monospace;"># rm -rf dripkg</span><br />
+    <br />
+  </li>
+  <li>次のようにRadeonパッケージを展開し、インストールします。<br />
+    <br />
+    <span style="font-family: monospace;"># tar jxf radeon-*</span><br />
+    <span style="font-family: monospace;"># cd dripkg</span><br />
+    <span style="font-family: monospace;"># ./install.sh</span><br />
+    <span style="font-family: monospace;"># cd ..</span><br />
+    <span style="font-family: monospace;"># rm -rf dripkg</span><br />
+    <br />
+  </li>
+  <li>RedHat 9では、さらにXFree86バイナリもダウンロードし、インストールする必要があるでしょう。<br />
+    <br />
+<b>Download</b>ページ(<a
+ href="http://dri.sourceforge.net/cgi-bin/moin.cgi/Download">http://dri.sourceforge.net/cgi-bin/moin.cgi/Download</a>)の<b>Snapshot</b>セクション中の手順に従ってください。<br />
+    <br />
+    </li>
+  <li><span style="font-family: monospace;">/etc/modules.conf</span>に、次の行を追加します。<br />
+    <br />
+    <span style="font-family: monospace;">pre-install radeon
+/sbin/modprobe -k agpgart</span><br />
+    <br />
+これにより，agpgartモジュールが必ずradeonモジュールより先にロードされるようになります。<br />
+    <br />
+  </li>
+  <li>DRIを有効にするために、<span
+ style="font-family: monospace;">/etc/X11/XF86Config</span>を次のように更新する必要があります。<br />
+    <br />
+次の設定がまだ存在しない場合は、<b>Module</b>セクションに次の行を追加します。<br />
+    <br />
+    <blockquote><span
+ style="font-family: monospace;">Load "glx"</span><br />
+    <span style="font-family: monospace;">Load "dri"</span><br />
+    <br />
+    </blockquote>
+また、必要ならば、以下を含む<b>DRI</b>セクションを追加します。<br />
+    <br />
+    <blockquote><span
+ style="font-family: monospace;">Section "DRI"</span><br />
+    <span style="font-family: monospace;">&nbsp;&nbsp;&nbsp; Mode 0666</span><br />
+    <span style="font-family: monospace;">EndSection</span><br />
+    <br />
+    </blockquote>
+  </li>
+  <li>ここでシステムを再起動してください。<br /><br /></li>
+  <li>最後に、ダイレクトレンダリングが有効であることを確認するために、<span
+ style="font-family: monospace;">glxinfo</span>コマンドを次のように実行します。<br />
+    <br />
+    <span style="font-family: monospace;">% glxinfo | grep "direct
+rendering"</span><br />
+    <br />
+次の実行結果が得られなければいけません。<br />
+    <br />
+    <span style="font-family: monospace;">direct rendering: Yes</span><br />
+  </li>
+</ol>
+<h3>謝辞</h3>
+<p>
+Project Looking Glassチームは、この手順書を提供してくれたLucian Cionca
+<a
+ href="mailto:lucian.cionca@gmail.com"><u>lucian.cionca@gmail.com</u></a>に多大な感謝を捧げます!</p>
+<br />
+<hr />
+<small>$Revision: 1.1 $ $Date: 2006-05-09 17:51:01 $ (英語版Revision: 1.7)</small>
+</div>
+</body>
+</html>

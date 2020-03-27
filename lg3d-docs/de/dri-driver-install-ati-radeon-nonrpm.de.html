@@ -1,0 +1,118 @@
+<!DOCTYPE html PUBLIC "-//Tigris//DTD XHTML 1.0 Transitional//EN"
+"http://style.tigris.org/tigris_transitional.dtd">
+<html>
+	<head>
+		<title>DRI Treiber Installation f&uuml;r ATI Radeon (nicht rpm basierte 
+			Distributionen)</title>
+			<meta name="Translator" content="Christian Ost" />
+	</head>
+	<body>
+		<div id="projectdocumentview" class="app">
+			<hr />
+			<h2>DRI Treiber Installation f&uuml;r ATI Radeon</h2>
+			<br />
+			<p>
+				Die folgenden Anweisungen erkl&auml;ren, wie man die Direct Rendering 
+				Infrastructure (DRI) Treiber f&uuml;r ATI Radeon Graphikkarten installiert, um 
+				die von Projekt Looking Glass ben&ouml;tigte Direct Rendering Extension nutzen 
+				zu k&ouml;nnen.</p>
+			<h3>Installations Anweisungen</h3>
+			<p>
+				Dies ist eine Anleitung zur Installation der ATI-Bin&auml;r-Treiber auf einer 
+				nicht rpm basierten Distribution, wie zum Beispiel Slackware. Ich werde mich 
+				auf die mit Slackware ben&ouml;tigten Befehle beziehen, allerdings k&ouml;nnen 
+				die meisten Schritte genauso gut auf andere Distributionen angewandt werden.
+			</p>
+			<p>
+			<b>Anmerkung: </b> Alle neueren Version der fglrx Treibe (> 3.12), enthalten eine unvollst&auml;ndige
+			GL Implementation. Deshalb k&ouml;nnte es sein, dass lg3d nicht ordnungsgem&auml;&szlig; l&auml;ft. Wenn
+			du also Probleme hast, probiere die andere <a href="dri-driver-install-ati-radeon.html">Installationsanleitung </a> aus.
+			</p>
+			<ol>
+				<li>
+					Werde root:<br />
+					<br />
+					<span style="font-family: monospace;"> % su -</span><br />
+					<span style="font-family: monospace;"> Password: </span><b>Gib das root Passwort 
+						ein</b><br />
+					<span style="font-family: monospace;"> #</span><br />
+					<br />
+				</li>
+				<li>
+					Installiere die Kernel-Quellen aus dem Kernel-Quellen Packet der Distribution:<br />
+					<br />
+					<span style="font-family: monospace;"># installpkg kernel-source-2.4.26-noarch-4.tgz</span><br />
+					<br />
+					<b>Hinweis:</b> In der Slackware Distribution ist das Packet auf der ersten CD 
+					des Sets.
+					<br />
+					<span style="font-family: monospace;">/mnt/cdrom/slackware/k/kernel-source-2.4.26-noarch-4.tgz</span><font face="Courier New, Courier, monospace"><br />
+						<br />
+					</font>
+				</li>
+				<li>
+					Aktualisiere die Kernel Konfiguration und Abh&auml;ngigkeiten:<br />
+					<br />
+					<span style="font-family: monospace;"># cd /usr/src/linux</span><br />
+					<span style="font-family: monospace;"># cp /boot/config-ide-2.4.26.config</span><br />
+					<span style="font-family: monospace;"># make oldconfig</span><br />
+					<span style="font-family: monospace;"># make dep</span><br />
+					<br />
+					<b>Anmerkung:</b> Man muss den Kernel nicht rekompilieren.<br />
+					<br />
+				</li>
+				<li>
+					Lade die neuesten ATI Radeon Treiber von der <a href="http://www.ati.com/">ATI WebSeite</a> herunter.<br />
+					<br />
+				</li>
+				<li>
+					Konvertiere das rpm-Paket in eine gew&ouml;hnliche tar.gz Datei mit:<br />
+					<br />
+					<span style="font-family: monospace;"># rpm2tgz fglrx-"version".rpm</span><br />
+					<span style="font-family: monospace;"># cd /</span><br />
+					<span style="font-family: monospace;"># tar zxvf fglrx-"version".tgz</span><br />
+					<span style="font-family: monospace;"># cd /lib/modules/fglrx/build_mod/</span><br />
+					<span style="font-family: monospace;"># chmod +x ./make.sh &amp;&amp; ./make.sh</span><br />
+					<span style="font-family: monospace;"># cd .. &amp;&amp; chmod +x make_install.sh &amp;&amp; ./make_install.sh</span>
+					<br />
+					<br />
+				</li>
+				<li>
+					Benutze fglrxconfig um X einzurichten:<br />
+					<br />
+					<span style="font-family: monospace;"># fglrxconfig</span><br />
+					<br />
+				</li>
+				<li>
+					Unter Slackware 10, wie auch auf unter anderen Distributionen, die xorg 
+					anstelle von XFree86 benutzen, muss noch ein Symlink zwischen XF86Config-4 und 
+					xorg.conf hergestellt werden:<br />
+					<br />
+					<span style="font-family: monospace;"># ln -sf /etc/X11/XF86Config-4 /etc/X11/xorg.conf</span><br />
+					<br />
+					Nun probiere X zu starten, wenn in den vorherigen Schritten keine Fehler 
+					auftraten, sollte die 3D Beschleunigung nun funktionieren. &Uuml;berpr&uuml;fe 
+					dies mit:<br />
+					<br />
+					<span style="font-family: monospace;">% glxinfo | grep render</span><br />
+					<br />
+					Es sollte:<br />
+					<br />
+					<span style="font-family: monospace;">direct rendering: Yes</span><br />
+					<br />
+					erscheinen
+					<br />
+				</li>
+			</ol>
+			<h3>Danksagungen:</h3>
+			<p>
+				Der Autor m&ouml;chte Lucian Cionca <a href="mailto:lucian.cionca@gmail.com"><u>lucian.cionca@gmail.com</u></a>
+				f&uuml;r das Schreiben der urspr&uuml;nglichen Anleitung danken, durch die er 
+				berets einen ersten Rahmen bereitstellte.</p>
+			<br />
+			<hr />
+			<small>$Revision: 1.1 $ $Date: 2006-05-09 17:46:19 $ (English Version Revision: 
+				1.8) </small>
+		</div>
+	</body>
+</html>

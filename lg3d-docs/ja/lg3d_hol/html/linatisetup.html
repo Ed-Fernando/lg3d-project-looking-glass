@@ -1,0 +1,130 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html>
+  <head>
+    <meta http-equiv="content-type" content="text/html; charset=utf-8" />
+    <title>グラフィックス環境のセットアップ(Linux&ATI編)</title>
+  </head>
+
+  <body bgcolor="white">
+    <h1>JavaOne Tokyo Hands on Lab : <br>
+	Project Looking Glass (LG3D) Basic Programming</h1>
+
+    <h2>グラフィックス環境のセットアップ(Linux & ATI編)</h2>
+
+    <p> LG3D を動かすには 24bit color, OpenGL 1.3以上をサポートした環境が必要です。<br>
+    Linuxの場合、以下の環境が必要となります。<br>
+    <ul>
+     <li> ATI Radeon 8500 以降
+    </ul><br>
+
+    <hr>
+    <h3>ドライバのインストール</h3>
+
+
+    <p>AMD社のATIブランドのグラフィックスドライバは
+    AMD社のATI製品のウェブサイト（ <a href="http://ati.amd.com/jp/index.html">http://ati.amd.com/jp/index.html</a> ）
+    で公開されています。<br>
+    トップページから「ドライバ&amp;ソフトウェア」→「Linux x86」→「Radeon」→「対象となるグラフィックチップを選択」→「Go」と
+    リンクをたどっていくと見つかります。<br>
+    ドキュメント記述時(2007/8)の最新版のドライバは 8.39.4 です。
+
+
+    <p>Radeon 8500 をサポートしているドライバは 8.28.8 が最終リリースとなります。
+	そのため、Radeon 8500の場合は 8.28.8 を利用してください。<br>
+        <br><br>
+
+    <p>ドライバはインストールはルートユーザで行います。<br>
+    インストール方法は次の通りです。
+   (ユーザーの入力したコマンドは<font color="red"><b>赤(太字)</b></font>で示します)
+<br><br>
+
+<ol>
+  <li> ルートユーザになる。
+    
+<br><br><br>
+    <table border width="70%"><tr><td>
+     <pre>
+> <font color="red"><b>su - </b></font>
+Password: <font color="red"><b>←パスワードを入力</b></font>
+#
+     </pre>
+    </td></tr></table>
+<br><br><br>
+     <li> グラフィックスドライバのインストーラを起動します。
+<br><br><br>
+     <table border width="70%"><tr><td><pre>
+# <font color="red"><b>sh ati-driver-installer-8.39.4-x86.x86_64.run</b></font>
+Created directory fglrx-install.IM7081
+Verifying archive integrity... All good.
+Uncompressing ATI Proprietary Linux Driver-8.39.4...............................
+................................................................................
+................................................................................
+................................................................................
+................................................................................
+................................................................................
+................................................................................
+................................................................................
+......................................................................
+==================================================
+ ATI Technologies Linux Driver Installer/Packager
+==================================================
+Detected configuration:
+Architecture: i686 (32-bit)
+X Server: X.Org 7.1 and later releases </pre>
+     </td></tr></table>
+<br><br>
+上記のようにコマンドを実行すると、
+下図のようなインストール用のGUIが表示されますので、指示にしたがって
+グラフィックスドライバをインストールします。<br><br>
+<img src="pictures/ati_setup.jpg">
+<br><br><br>
+     <li> 下記のように aticonfig コマンドを用いて xorg.conf を作成します。<br>
+     aticonfig は自動的にxorg.confを作成するコマンドです。<br><br>
+     <table border width="70%"><tr><td><pre>
+# <font color="red"><b>aticonfig --initial --input=/etc/X11/xorg.conf</b></font></pre>
+     </td></tr></table>
+<br><br><br>
+    <li> Xを再起動します。
+<br><br><br>
+
+    <table border width="70%"><tr><td>
+     <pre>
+# <font color="red"><b>init 3</b></font>
+# <font color="red"><b>init 5</b></font> </pre>
+     </td></tr></table>
+<br><br><br>
+    <li> Xの再起動後、fglrxinfoコマンドで OpenGL設定が正しく行われたことを確認します。
+<br><br><br>
+    <table border width="70%"><tr><td>
+     <pre>
+# <font color="red"><b>fglrxinfo</b></font>
+display: :0.0  screen: 0
+OpenGL vendor string: ATI Technologies Inc.
+OpenGL renderer string: ATI MOBILITY RADEON 9600/9700 Series
+OpenGL version string: 2.0.6650 (8.39.4) </pre>
+     </td></tr></table>
+<br>
+
+<blockquote>
+<font color="red">補足:</font><br>
+　Fedora Core 6/Fedora 7 の Xorg では Composite Extension がデフォルトで有効になっています。
+fglrxドライバでは、DRI と Composite Extension の同時利用がおこなえず、Composite Extension
+が優先されます。そのため、この状態ではLG3D がちゃんと動きません。
+ですので、/etc/X11/xorg.conf に次の行を加えて Composite Extension を無効化します。 <br><br>
+
+<table border><tr><td>
+<pre>
+<font color="red"><b>Section "Extensions"
+Option "Composite" "false"
+EndSection </b></font>
+</pre></td></tr></table>
+</blockquote>
+</ol>
+
+    <hr>
+    <ul>
+    <li><a href="index.html">メニューに戻る</a>
+    </ul>
+
+</body>
+</html>

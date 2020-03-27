@@ -1,0 +1,114 @@
+<!DOCTYPE html PUBLIC "-//Tigris//DTD XHTML 1.0 Transitional//EN"
+"http://style.tigris.org/tigris_transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+  <title>Project Looking Glass 翻訳 - ファイルスタイルガイド</title>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  <meta name="Author" content="Yuichi SAKURABA" />
+<style type="text/css"> /* <![CDATA[ */
+ @import "../preview.css";
+ /* ]]> */</style></head>
+<body>
+<div id="projectdocumentview" class="app">
+<h2>Project Looking Glass 翻訳 - ファイルスタイルガイド</h2>
+
+<p>このドキュメントは、 Project Looking Glass 日本語翻訳プロジェクトで作成するファイルの作成ガイドです。</p>
+
+<h3><a name="location" id="location"></a>ファイルの配置場所</h3>
+<p>翻訳ファイルは <strong>lg3d-core/www/ja ディレクトリ</strong>の下に置くようにしてください。</p>
+<p>基本的には、lg3d-core/www の木構造をここに複製します (イメージファイルなども，翻訳対象にできる) が、ライセンスファイルなどの一部の例外に関しては原文を直接参照してください。</p>
+
+<h3><a name="filename" id="filename"></a>ファイル名</h3>
+<p><strong>原文と同じ</strong> にするようにしてください。</p>
+
+<h3><a name="format" id="format"></a>ファイルフォーマット</h3>
+<p><strong>XHTML 1.0</strong> で行ってください。決して HTML で記述しないでください。</p>
+<p>XHTML 1.0 の DOCTYPE は次のようになります。</p>
+<table width="80%" border="1" align="center" cellpadding="5" cellspacing="2">
+  <tr> 
+    <td bgcolor="#CCFFFF"><pre>&lt;!DOCTYPE html PUBLIC &quot;-//Tigris//DTD XHTML 1.0 Transitional//EN&quot;
+&quot;http://style.tigris.org/tigris_transitional.dtd&quot;&gt;</pre></td>
+  </tr>
+</table>
+<p>この宣言をファイルの先頭につけるようにしてください。</p>
+  <p>基本的には原文も XHTML で記述されているので、それをそのまま使用することができます。</p>
+
+  <h3><a name="charset" id="charset"></a>文字コード</h3>
+<p><strong>UTF-8 </strong> で記述してください。java.net で使用している CollabNet では UTF-8 以外の文字コードだと文字化けを起こしてしまいます。</p>
+<p>ローカルファイルシステム上で閲覧するときのために、つぎのようにファイルの charset を META 要素で定義します。</p>
+<table width="80%" border="1" align="center" cellpadding="5" cellspacing="2">
+  <tr> 
+    <td bgcolor="#CCFFFF"><pre>&lt;meta http-equiv=&quot;Content-Type&quot; content=&quot;text/html; charset=utf-8&quot; /&gt;</pre></td>
+  </tr>
+</table>
+<p>META 要素は &lt;head&gt; ... &lt;/head&gt; の中に記述してください。</p>
+
+<h3><a name="lineseparator" id="lineseparator"></a>改行コード</h3>
+<p><strong>LF</strong> (0x0A) で記述してください。Windows や Macintosh で記述する場合も LF で記述するようにしてください。</p>
+
+<h3><a name="editor" id="editor"></a>HTML エディタ</h3>
+<p>予期せぬフォーマットの書き換えや冗長な要素指定を防ぐために、<strong>HTML エディタはなるべく使用しないでください</strong>。</p>
+<p>テキストエディタを使用して記述するのが最適です。</p>
+<p>ただし、フォーマットの書き換えなどの問題が解決されていることを確認できれば、再び HTML エディタを採用すること検討をする予定です。また、Eclipse 
+  などの統合環境へプラグインとして専用ツールを開発することも、今後の課題となっています。</p>
+
+<h3><a name="stylesheet" id="stylesheet"></a>スタイルシート</h3>
+<p>ローカルファイルシステム上で閲覧するときに、スタイル指定を CollabNet上で閲覧した時と一致させるために、次のようにスタイルシートを指定します。</p>
+<table width="80%" border="1" align="center" cellpadding="5" cellspacing="2">
+  <tr> 
+    <td bgcolor="#CCFFFF"><pre>&lt;style type=&quot;text/css&quot;&gt; /* &lt;![CDATA[ */
+@import &quot;preview.css&quot;;
+/* ]]&gt; */&lt;/style&gt;</pre></td>
+  </tr>
+</table>
+<p><strong>注:</strong> この指定は www/ja にファイルが存在する場合のものです。他のディレクトリの場合は後述するように相対 URI 
+  で記述してください。</p>
+<p>この指定は &lt;head&gt; ... &lt;/head&gt; の中で記述するようにしてください。preview.css は lg3d-core 
+  CVS の www/ja ディレクトリにありますので、ダウンロードしてお使いください。</p>
+
+<h3><a name="hyperlink" id="hyperlink"></a>ハイパーリンク</h3>
+<p>ドキュメント中のハイパーリンクは書き換えの手間を減らすために、https://lg3d-core.dev.java.net/ 以下の URI は相対 
+  URI で記述してください。</p>
+<p><strong>注:</strong> この変更は、原文にも反映します。</p>
+<p>ただし、ドキュメントが未翻訳状態の時には、リンクをクリックしてもエラーになる問題に対処するために、たとえば翻訳終了まで以下のように原文にリダイレクトするダミーページを使用することなども検討します。</p>
+<table width="80%" border="1" align="center" cellpadding="5" cellspacing="2">
+  <tr> 
+    <td bgcolor="#CCFFFF"><pre>&lt;meta http-equiv=&quot;Refresh&quot; content=&quot;1; URL=https://lg3d-core.dev.java.net/foo.html&quot; /&gt;</pre></td>
+  </tr>
+</table>
+
+<h3><a name="translator" id="translator"></a>翻訳者名</h3>
+<p>翻訳者の名前はアルファベットで META 要素で指定してください。</p>
+<table width="80%" border="1" align="center" cellpadding="5" cellspacing="2">
+  <tr> 
+    <td bgcolor="#CCFFFF"><pre>&lt;meta name=&quot;Translator&quot; content=&quot;Yuichi SAKURABA&quot; /&gt;</pre></td>
+  </tr>
+</table>
+<p>この指定は &lt;head&gt; ... &lt;/head&gt; の中で行ってください。</p>
+
+<h3><a name="contents" id="contents"></a>翻訳内容</h3>
+<p>翻訳ファイルの内容は<strong>翻訳文のみ</strong>にしてください。</p>
+<p>つまり、同一ファイル中に原文・翻訳文を併記しないようにします。</p>
+<p>校正用の併記形式は、将来別の方法で実現することを検討する予定です。</p>
+
+<h3><a name="revision" id="revision"></a>CVS のリビジョン</h3>
+<p>翻訳文を最初に CVS に登録する時に、原文の CVS のリビジョン番号はリセットして、別途下記の形式で併記するようにしてください。</p>
+<table width="80%" border="1" align="center" cellpadding="5" cellspacing="2">
+  <tr> 
+    <td bgcolor="#CCFFFF"><pre>$Revision: 1.1 $ $Date: 2006-05-09 18:17:14 $ (英語版Revision: x.y)</pre></td>
+  </tr>
+</table>
+<p>これは読者に最新版であるかどうかを確認する手段を与えると共に、他の翻訳者が CollabNet の差分表示を利用して、ドキュメントの更新を簡単にできるようにするためです。</p>
+<p><strong>注:</strong> 翻訳文更新時には、その元にしたリビジョン番号を忘れずに手で更新するようにしてください。</p>
+
+<h3><a name="commit" id="commit"></a>CVS へのコミット</h3>
+<p>CVS へコミットする時のメッセージは<strong>英語</strong>で記述するようにしてください。</p>
+
+<h3><a name="validation" id="validation"></a>バリデーション</h3>
+<p>XHTML で記述しているので、CVS コミット前に正当性を検証することを推奨します。たとえば、<a href="http://validator.w3.org/">W3C 
+  Markup Validation Service</a> などが利用できます。</p>
+<hr />
+<p><small>$Revision: 1.1 $ $Date: 2006-05-09 18:17:14 $</small></p>
+</div>
+</body>
+</html>

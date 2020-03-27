@@ -1,0 +1,140 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html>
+  <head>
+    <meta http-equiv="content-type" content="text/html; charset=utf-8" />
+    <title>LG3Dのインストール ( Solaris 10 x86編 )</title>
+  </head>
+
+  <body bgcolor="white">
+    <h1>JavaOne Tokyo Hands on Lab : <br>
+	Project Looking Glass (LG3D) Basic Programming</h1>
+
+    <h2>LG3Dのインストール ( Solaris 10 x86編 )</h2>
+    
+	<hr>
+	
+    <h3>準備</h3>
+	Solaris 10 x86 で LG3D 1.0 を実行するためのすべてのコンポーネントは Solaris 10 x86 専用のインストーラにまとめられています。(LG3D Javadocは除く)<br>
+	<font color="red"><b>LG3Dのウェブサイトからインストーラをダウンロードし、実行するだけでLG3Dをインストールすることができます。
+        </b></font>。<br>
+	インストーラはできるだけ最新のものをダウンロードしてください。ダウンロードしたファイルは /tmp ディレクトリ(フォルダ)にあるとします。<br>
+	<b>LG3D Javadoc</b> のインストールについては「<a href="#javadoc">LG3D Javadocのインストール</a>」を参照してください。<br>
+	<ul>
+	　<li>ウェブページURL　<a href="https://lg3d-core.dev.java.net/binary-builds.html"><font color="red"><b>https://lg3d-core.dev.java.net/binary-builds.html</b></font></a></li>
+	  <li>インストーラ名　<font color="red"><b>Solaris x86 Mega Bundle </b></font></li>
+	  <li>ウェブページのスクリーンショット<font color="red"><b>↓</b></font>><br>
+          <img src="pictures/10solaris_dl.png"></li>
+    </ul>
+
+    <hr>
+
+    <h3>LG3D Release 1.0 のインストール</h3>
+
+    <p>「<b>準備</b>」の項目でダウンロードしたファイルは /tmp にあるものと仮定します。<br>
+
+	<li> LG3D Release 1.0 をインストールします。
+	<br><br>
+    <table border width="70%"><tr><td>
+     <pre>
+~ $ <font color="red"><b>cd </b></font>
+~ $ <font color="red"><b>chmod u+x /tmp/lg3d--1-0-0-solaris-i86pc-0612190950.bin</b></font>
+~ $ <font color="red"><b>sh /tmp/lg3d--1-0-0-solaris-i86pc-0612190950.bin</b></font>
+
+This software consists of 3 components, each component with a distinct
+license represented below. By selecting the "accept" button, you are
+accepting the terms of all the licenses for the software.
+
+1) JRE License
+2) Java 3D License
+3) Project Looking Glass License
+
+Pre-Release Software Evaluation Agreement
+
+SUN MICROSYSTEMS, INC. ("SUN") IS WILLING TO LICENSE
+THE JAVA SE DEVELOPMENT KIT (JDK), VERSION 6
+PRE-RELEASE SOFTWARE TO LICENSEE ONLY UPON THE
+CONDITION THAT LICENSEE ACCEPTS ALL OF THE TERMS
+CONTAINED IN THIS LICENSE AGREEMENT ("AGREEMENT").
+PLEASE READ THE TERMS AND CONDITIONS OF THIS AGREEMENT
+CAREFULLY. BY DOWNLOADING OR INSTALLING THIS SOFTWARE,
+LICENSEE ACCEPTS THE TERMS AND CONDITIONS OF THIS
+LICENSE AGREEMENT. INDICATE ACCEPTANCE BY SELECTING
+THE "ACCEPT" BUTTON AT THE BOTTOM OF THIS AGREEMENT.
+IF LICENSEE IS NOT WILLING TO BE BOUND BY ALL THE
+TERMS, SELECT THE "DECLINE" BUTTON AT THE BOTTOM OF
+THE AGREEMENT AND THE DOWNLOAD OR INSTALL PROCESS WILL
+NOT CONTINUE.
+....
+Do you agree to the above license terms? [yes or no]
+<font color="red"><b>yes</b></font>
+Unpacking...
+....
+inflating: lg3d/usr/share/lg3d-jdk/include/jdwpTransport.h
+inflating: lg3d/usr/share/lg3d-jdk/include/classfile_constants.h
+inflating: lg3d/usr/share/lg3d-jdk/COPYRIGHT
+Done.
+~ $
+     </pre>
+    </td></tr></table><br>
+	これで LG3D 1.0 のインストールが終了です。<br>
+	ユーザのホームディレクトリに<font color="red"><b> lg3d </b></font>というディレクトリが作成されています。<br>
+	JDK 6など、LG3D 1.0 に必要なすべてのコンポーネントはこのディレクトリに入っています。<br><br>
+	<font color="red">補足:</font><br>
+	<ul>
+    <li>Daily Buildsの場合は、JDK 6, Java3D 1.5を別途ダウンロードする必要があります。
+	<li>LG3D 1.0 では JAI は不要です。 
+    </ul>
+	</blockquote>
+	
+	
+	
+	
+	
+	
+	
+    <hr>
+    <h3><a name="javadoc">LG3D Javadocのインストール</a></h3>
+    <p> LG3D 0.7.1 から Javadoc は本体からはずされました。<br>
+    LG3Dを利用するだけであれば Javadocは必要ありませんが、
+    LG3Dプログラミングを行う場合には Javadoc は有用なのでインストールします。<br><br>
+    
+	まず、<b>Project Looking Glass Binary Builds</b>（<a href="https://lg3d-core.dev.java.net/binary-builds.html">https://lg3d-core.dev.java.net/binary-builds.html</a>）からJavadocをダウンロードしてください。<br>
+	Javadoc は Stable Builds ではなく、Daily Builds にあります。<br>
+	Daily Builds からできるだけ最新のJavadocをダウンロードしてください。<br>
+	ダウンロードしたファイルは /tmp にあるとします。<br>
+	執筆時点(2007/3/1)での最新版は javadoc-lg3d-daily-dev-1-0-1-linux-i686-0702080130.tar.gz です。
+	
+	<p> ダウンロード後、ファイルを解凍します。
+	
+	
+    解凍時に警告が出ますが無視してかまいません。<br>
+    解凍後にホームディレクトリに<font color="red"><b>lg3d/docs/javadoc</b></font>というディレクトリが作られます。<br>
+	解凍後 @LongLink という不要なファイルを削除します。
+	<br><br>
+	
+    <table border width="70%"><tr><td>
+     <pre>
+~ $ <font color="red"><b>cd</b></font>
+~ $ <font color="red"><b>gunzip -c /tmp/javadoc-lg3d-daily-dev-1-0-1-linux-i686-0702080130.tar.gz | tar xf -</b></font>
+tar: ././@LongLink: タイプフラグ 'L' を認識できません。通常のファイルに変換して います
+tar: ././@LongLink: タイプフラグ 'L' を認識できません。通常のファイルに変換して います
+tar: ././@LongLink: タイプフラグ 'L' を認識できません。通常のファイルに変換して います
+tar: ././@LongLink: タイプフラグ 'L' を認識できません。通常のファイルに変換して います
+tar: ././@LongLink: タイプフラグ 'L' を認識できません。通常のファイルに変換して います
+...
+~ $ <font color="red"><b>rm @LongLink</b></font>
+     </pre>
+    </td></tr></table><br>
+また、以下のURLからも Javadoc を参照することができます。<br><br>
+Javadoc : Project Looking Glass (LG3D) API (英語)<br>
+<a href="http://javadesktop.org/lg3d/javadoc/rel-1-0-0/lg3d/docs/javadoc/api/index.html">http://javadesktop.org/lg3d/javadoc/rel-1-0-0/lg3d/docs/javadoc/api/index.html</a><br>
+Javadoc : LG3D SceneManager API (英語)<br>
+<a href="http://javadesktop.org/lg3d/javadoc/rel-1-0-0/lg3d/docs/javadoc/scenemanager-api/index.html">http://javadesktop.org/lg3d/javadoc/rel-1-0-0/lg3d/docs/javadoc/scenemanager-api/index.html</a>
+
+    <hr>
+    <ul>
+    <li><a href="index.html">メニューに戻る</a>
+    </ul>
+
+  </body>
+</html>

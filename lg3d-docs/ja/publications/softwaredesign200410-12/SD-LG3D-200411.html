@@ -1,0 +1,641 @@
+<!DOCTYPE html PUBLIC "-//Tigris//DTD XHTML 1.0 Transitional//EN"
+"http://style.tigris.org/tigris_transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+  <title>Project Looking Glass の全貌 実践編 1</title>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  <meta name="Author" content="Hideya KAWAHARA" />
+<style type="text/css"> /* <![CDATA[ */
+ @import "../../preview.css";
+ /* ]]> */</style>
+</head>
+<body>
+
+<div id="projectdocumentview" class="app">
+
+<p>Java ベースの次世代デスクトップ環境</p>
+<h2>Project Looking Glass の全貌 </h2>
+
+
+<p>米 Sun Microsystems<br />
+ソフトウェア CTO オフィス，先進開発グループ Project Looking Glass リードエンジニア<br />
+川原 英哉 KAWAHARA Hideya</p>
+<p>櫻庭 祐一 SAKURABA Yuichi<br />
+sakuraba@tk.airnet.ne.jp<br />
+    <a href="http://www5.airnet.ne.jp/sakuraba/java/">http://www5.airnet.ne.jp/sakuraba/java/</a></p>
+
+  <p><strong>初出: <a href="http://www.gihyo.co.jp/magazines/SD/">Software Design</a> 
+    <a href="http://www.gihyo.co.jp/magazines/SD/archive/200411">2004 年 11 月号</a></strong></p>
+
+<p>&nbsp;</p>
+
+  <p>前回 (2004 年 10 月号) の『基礎編』では，Project Looking Glass (以後 LG3D と略します) の概略や開発の経緯などに関して解説しました． 
+    今回から 2 回に渡って掲載する『実践編』では，実際に動かしてみましょう! 今回は，LG3D のインストールと実行，サンプルのビルド，また LG3D 
+    プログラミング の導入部分について解説していきます． 準備は良いですか？</p>
+
+<hr />
+
+<h2>Project Looking Glass 実践編 1</h2>
+
+<h3>Project Looking Glass を試してみよう</h3>
+
+<p>本節では実際に LG3D をインストールして動作させます．
+また，簡単なサンプルも動かしてみたいと思います．</p>
+
+
+<h4>どこで手に入れる？</h4>
+  <p>前回紹介したように，LG3D は java.net でオープンソースとして公開されいてます． URL は，<a href="https://lg3d-core.dev.java.net/">https://lg3d-core.dev.java.net/</a> 
+    です．</p>
+
+<p>現在は Linux 版が公開されていますが，今後 Solaris x86 版が提供される予定です．
+詳しくは後述しますが，LG3D を一部の機能のみが使えるモードで起動させるならば，現状でも Windows や Solaris で動作させることが可能です．</p>
+
+<h5>ダウンロードページ</h5>
+
+  <p>LG3D をダウンロードするには，上記のページの右側の［プロジェクトツール］の中の［ドキュメント］を選択します． ツリーが表示されるので，その中から 
+    stable_builds をクリックすると，左側にダウンロードできるファイルの一覧が表示されます（図1）． この中で最もバージョンの新しいものをダウンロードします． 
+    原稿執筆時点（2004 年9 月）では release_0.51 が最新版です． この場合，ダウンロードするファイルは lg3d-rel-0-5-1.tar.gz 
+    になります．</p>
+  <table border="0" align="center" cellpadding="10" cellspacing="2">
+    <tr> 
+      <td><a href="images200411/fig1-javanet.png"><img src="images200411/fig1-javanet-t.png" alt="ダウンロードページ" width="452" height="240" border="0" /></a></td>
+    </tr>
+    <tr> 
+      <th>図 1 LG3D のダウンロード画面</th>
+    </tr>
+  </table>
+  <h4>Project Looking Glass のインストール</h4>
+
+<h5>グラフィックカードと画面の設定</h5>
+
+<p>LG3D を動かすにはなるべく性能の高いグラフィックカードが必要です．
+LG3D のパフォーマンスは CPU の性能よりも，グラフィックカードの性能の方に大きく影響されるからです．
+グラフィックカードは OpenGL 1.2 以上をサポートしたハードウェアアクセラレーション機能を持ったものを使うようにしてください．
+また，グラフィックカードのドライバも，GPU ベンダのサイトからなるべく最新のものをダウンロードして使うようにしましょう．</p>
+
+<p>最近のグラフィックカードは NVIDIA とATI が二大勢力ですが，どちらかというと NVIDIA の GeForce のほうが相性が良いようです<sup><a href="#note1">注1</a></sup>．</p>
+
+<p>LG3D を動作させるにはディスプレイの色深度を 24 ビットにしてください．
+もし，24 ビット以外である場合，X11 の設定を見直す必要があります．
+SaX2 などの画面設定用ツールがある場合は，それを使用して色深度が行えます．
+ツールがない場合は X11 の設定ファイル (/etc/X11/XF86Config ファイルなど) を直接編集します．
+設定方法の詳しい説明は<a href="#ref1">参考文献 1</a> を参照してください．</p>
+
+<h5>必要なソフトウェアのインストール</h5>
+
+<p>次に LG3D が使用するソフトウェアをダウンロードし，インストールします．</p>
+
+<ul>
+  <li>Java2 Development Kit 5.0 <a href="http://java.sun.com/j2se/1.5.0/download.jsp">http://java.sun.com/j2se/1.5.0/download.jsp</a></li>
+  <li>Java 3D 1.3.2 <a href="https://j3d-core.dev.java.net/servlets/ProjectDocumentList">https://j3d-core.dev.java.net/servlets/ProjectDocumentList</a></li>
+  <li>Java Advanced Imaging API (JAI) 1.1.2 <a href="http://java.sun.com/products/java-media/jai/downloads/download-1_1_2.html">http://java.sun.com/products/java-media/jai/downloads/download-1_1_2.html</a></li>
+</ul>
+
+<p>それぞれのバージョンは原稿執筆時点のものです．
+この中でJava 3D 1.3.2 はまだ正式リリースされていないので，Experimental_Builds の中の最新のもの (原稿執筆時点では 1.3.2-build5) をダウンロードしてください．
+JAI はパッケージがいくつか存在しますが，その中の JDK Install を選択します．</p>
+
+<p>ダウンロードしたパッケージはそれぞれ指示にしたがってインストールしてください．
+これで準備は整いました．</p>
+
+<h5>Project Looking Glass のインストール</h5>
+
+<p>LG3D のインストールは先ほどダウンロードした lg3d-rel-0-5-1.tar.gz をインストールしたいディレクトリに展開するだけです．
+展開したあとのディレクトリ構造を図 2 に示します．</p>
+
+<p>Project Looking Glass は大きく分けて，Java で記述された部分と，X サーバとの連携部分から構成されています．
+Java で記述されたクラスは lib/ext/lg3d-core.jar にまとめられています．
+Xサーバとの連携部分は lib/i386 以下のディレクトリに配置されています．</p>
+
+<p>ext ディレクトリは LG3D が使用するライブラリや，X サーバなど，etc ディレクトリには設定ファイル，docs ファイルにはJavadoc がおいてあります．
+また，起動のためのシェルスクリプトは bin ディレクトリに配置されています．</p>
+
+  <table border="0" align="center" cellpadding="5" cellspacing="2">
+    <tr> 
+      <td><img src="images200411/fig2-package.gif" alt="LG3D のディレクトリ構成" width="547" height="181" border="0" /></td>
+    </tr>
+    <tr> 
+      <th>図 2 LG3D のディレクトリ構成</th>
+    </tr>
+  </table>
+
+<h4>Project Looking Glass の起動</h4>
+
+<p>LG3D には 2 種類の起動方法があります．
+一方が X11 の 1 つのアプリケーションウィンドウとして起動させる方法，もう一方が LG3D が X11 のセッションとなるフルスクリーンで起動する方法です．</p>
+
+<p>ウィンドウで起動させる場合，LG3D の 3D アプリケーションだけがサポートされます．
+X11 のネイティブアプリケーションを LG3D の 3D 空間内で動作させるにはフルスクリーンで起動させる必要があります．</p>
+
+<h5>X11 のウィンドウとして起動</h5>
+
+<p>まずは，ウィンドウとして起動して見ましょう．
+ここでの実行例は Fedra Core 2 を使用しています．</p>
+
+<p>ウィンドウとして起動させるには，LG3D を展開したディレクトリの下にある bin ディレクトリにある lg3d-dev シェルスクリプトを実行します．
+正常に起動すれば図3 のようなウィンドウが表示されるはずです．</p>
+
+<p>もし表示されなかったら，/var/temp/lgserver.log に出力されているログを見てみましょう．
+それぞれの問題については参考文献 1 のトラブルシューティングの項に対処方法が記述されています．</p>
+
+<p>ウィンドウとして起動させる場合は，Windows や Solaris などほかの OS でも起動させることができます．
+Windows では，bin ディレクトリにある lg3d-dev.bat バッチファイルを用いて起動させます．</p>
+
+<h5>フルスクリーンでの起動</h5>
+
+<p>ウィンドウとして起動する方法ははあくまでも 3D アプリの開発/テスト用のために存在しています．
+そのため，X11 のネイティブなアプリケーションなどは動かすことができません．
+これらのアプリケーションを動作させるにはフルスクリーンで動作させる必要があります．</p>
+
+<p>フルスクリーンで起動する方法は，現在使用している X11 のセッションの代わりになります．
+通常X11 のセッション管理には xdm や gdm などが使用されているので，これらを停止させる必要があります．
+停止させる方法はディストリビューションによって異なりますが，ランレベルを変更したり，chkconfig コマンドを使用してサービスを停止させる方法などがあります．</p>
+
+<p>X11 のセッションが停止したら，コンソールから bin ディレクトリにある lg3d-session シェルスクリプトを実行します．
+このシェルスクリプトの起動は root で行ってください．
+正常に起動できればフルスクリーンで LG3D が表示されるはずです．</p>
+
+<p>なお，Fedra Core 2 などのディストリビューションではキーボードを初期化できないため起動できない場合があります．
+この問題に対処するには X11 の設定ファイル (Fedra Core 2 の場合: /etc/X11/xorg.conf) を編集する必要があります．
+設定ファイルの中にキーボードの Input Device セクションがあります．
+この中の</p>
+
+<pre>    Driver “keyboard”</pre>
+
+<p>という部分を次のように変更します．</p>
+
+<pre>    Driver “kbd”</pre>
+
+<p>また，この変更を加えたあとでも，通常の X サーバは問題なく動作します．</p>
+
+<p>以上の操作を行っても起動しない場合は，/var/tmp/lgserver.log や X11 のログファイルをご覧ください．</p>
+
+<p>ウィンドウで起動しているのに，フルスクリーンでは起動しない場合は，グラフィックカードの設定に問題がある場合が多いようです．
+もう一度，グラフィックカードのドライバや設定を見直してみてください．</p>
+
+<h5>操作方法</h5>
+
+<p>LG3D が起動できたので，さっそく操作してみましょう．</p>
+
+<p>LG3D のスクリーンの下部には青の半透明なバーがあります．
+これがタスクバーです．
+左側のアイコンがアプリケーションの起動を行うショートカット，右側が背景の変更となっています．
+一番右側のドクロのアイコンが終了です．</p>
+
+<p>フルスクリーンモードでは，一番左側のアイコンで xterm を起動し，そこからほかのアプリケーションを起動させることができます (図 4)．
+ただし，まだ LG3D が対応していないアプリケーションも多くあるので，すべてのアプリケーションを動作させられるわけではありません．</p>
+
+<p>アプリケーションのウィンドウは非アクティブな状態のとき半透明，アクティブになると不透明に表示されます．
+また，アクティブになるとちょっとだけウィンドウが前に出てくるようになっています．
+ウィンドウを移動させると，移動が終了したときにウィンドウがブレーキのゆり戻しのように動きます．
+このようなアニメーションが LG3D にはいろいろとちりばめられています．
+詳しくは後述しますが，アニメーションを行うための API も要されています．</p>
+
+  <p>その他の LG3D の操作を表 1 に示しました． こういうことは一度試してみるのが一番です． ぜひ，遊んでみてください．</p>
+  <table border="0" align="center" cellpadding="5" cellspacing="2">
+    <tr> 
+      <td><a href="images200411/fig3-lg3d-screenshot1.jpg"><img src="images200411/fig3-lg3d-screenshot1-t.jpg" alt="ウィンドウとしてのLG3D の起動" width="200" height="150" border="0" /></a></td>
+      <td><a href="images200411/fig4-lg3d-screenshot2.jpg"><img src="images200411/fig4-lg3d-screenshot2-t.jpg" alt="LG3D でのアプリケーションの起動" width="200" height="150" border="0" /></a></td>
+    </tr>
+    <tr> 
+      <th>図 3 ウィンドウとしてのLG3D の起動</th>
+      <th>図 4 LG3D でのアプリケーションの起動</th>
+    </tr>
+  </table>
+  <p>&nbsp;</p>
+  <table border="1" align="center" cellpadding="5" cellspacing="2">
+    <tr> 
+      <th>表 1 LG3Dの操作</th>
+    </tr>
+    <tr> 
+      <td><table border="1" align="center" cellpadding="5" cellspacing="5">
+          <tr> 
+            <th valign="top">アクション</th>
+            <th>効果</th>
+          </tr>
+          <tr> 
+            <td valign="top">ウィンドウが表示されていないところで右クリック</td>
+            <td>すべてのウィンドウがサイドに立てられた状態になります．<br />
+              立っている状態の場合は元に戻ります．</td>
+          </tr>
+          <tr> 
+            <td valign="top">タスクバに表示されている縮小表示をクリック</td>
+            <td>クリックされたアプリケーションがアクティブになります．<br />
+              立っている状態であれば，元に戻ります．</td>
+          </tr>
+          <tr> 
+            <td valign="top">ウィンドウをスクリーンの端に接するように移動させる</td>
+            <td>ウィンドウが立ちます．</td>
+          </tr>
+          <tr> 
+            <td valign="top">立っているウィンドウをクリック</td>
+            <td>元の状態に復帰します．</td>
+          </tr>
+          <tr> 
+            <td valign="top">Javaのロゴの部分でマウスをドラッグ</td>
+            <td>ドラッグに応じてウィンドウが回転します．<br />
+              ただし，背景がグランドキャニオンと葉のときだけです．</td>
+          </tr>
+          <tr> 
+            <td valign="top">ルートウィンドウの端の部分でクリック</td>
+            <td>バーチャルデスクトップがパンします．<br />
+              ただし，背景がスタンフォードの場合だけです．</td>
+          </tr>
+          <tr> 
+            <td valign="top">タスクバーの上で右クリック</td>
+            <td>バーチャルデスクトップの全面を縮小表示します．<br />
+              ただし，背景がスタンフォードの場合だけです．<br />
+              縮小表示した画像で拡大したい部分をクリックすると，そのデスクトップが拡大表示されます．</td>
+          </tr>
+        </table></td>
+    </tr>
+  </table>
+  <p>&nbsp;</p>
+  <blockquote><p><a name="note1" id="note1">注1)</a> ATI のRadeon でも動作するのですが，障害もいくつか報告されています．</p></blockquote>
+
+<h4>ソースからのビルド</h4>
+
+<p>普通に使う分にはバイナリパッケージをそのまま使うので全然問題ないのですが，自作の 3D アプリケーションを作るときなどは LG3D をソースからビルドする必要があります．</p>
+
+<p>そこで，サンプルを作る前にソースからのビルドを行ってみましょう！</p>
+
+<h5>java.net への登録</h5>
+
+<p>LG3D は現段階ではソースパッケージは提供されていません．
+このため，ソースを手に入れるには java.net の CVS から取得します．
+java.net の CVS にアクセスするには java.net への登録が必要です．
+登録は無料ですので，この機会にぜひ登録をお勧めします．</p>
+
+<h5>CVS からのダウンロード</h5>
+
+<p>java.net に登録できたら次は CVS からソースのダウンロードを行います．
+CVS のサーバ名は cvs.dev.java.net です．
+図 5 のように CVS にログインしlg3d-coreをチェックアウトします．</p>  <p>username の部分に java.net のユーザ名を入れてください． 同様に password にはパスワードを入力してください． また，CDViewer 
+    などのサンプルが含まれている lg3d-demo-apps も同時にチェックアウトします． もちろん，CVS クライアントに Eclipse などのツールを使ってもかまいません．</p>
+  <table width="80%" border="1" align="center" cellpadding="5" cellspacing="2">
+    <tr> 
+      <td><table width="100%" border="1" cellspacing="2" cellpadding="5">
+          <tr> 
+            <td bgcolor="#000000"> <pre><span style="color:#FFFFFF">&gt; cvs -d :pserver:<strong>username</strong>@cvs.dev.java.net:/cvs login 
+Logging in to :pserver:sakuraba@cvs.dev.java.net:2401:/cvs
+CVS password: <strong>password</strong>
+
+&gt; cvs -d :pserver:<strong>username</strong>@cvs.dev.java.net:/cvs checkout lg3d-core
+     ...
+
+&gt; cvs -d :pserver:<strong>username</strong>@cvs.dev.java.net:/cvs checkout lg3d-demo-apps
+     ...</span></pre></td>
+          </tr>
+        </table></td>
+    </tr>
+    <tr> 
+      <th>図 5 LG3Dソースのダウンロード</th>
+    </tr>
+  </table>
+  <p></p>
+<h5>Project Looking Glass のビルド</h5>
+
+<p>LG3D のビルドには Ant が必要になります．
+インストールしていない場合は <a href="http://ant.apache.org/">http://ant.apache.org/</a> からダウンロードして，インストールしておいてください．</p>
+
+<p>LG3D のビルドは非常に簡単です．
+単に lg3d-core ディレクトリに移動して ant を実行するだけです (図 6)．</p>  <p>lg3d-core のビルドを行うと，自動的に lg3d-demo-apps もビルドします． ビルドが終了すると release ディレクトリが作成され，その下のlg3d 
+    ディレクトリにリリースパッケージが作成されます． lg3d/bin ディレクトリの lg3d-dev/lg3d-session シェルコマンドを使用して 
+    LG3D を起動させることができます．</p>
+  <table width="80%" border="1" align="center" cellpadding="5" cellspacing="2">
+    <tr> 
+      <td><table width="100%" border="1" cellspacing="2" cellpadding="5">
+          <tr> 
+            <td bgcolor="#000000"> <pre><span style="color:#FFFFFF">&gt; cd lg3d-core
+&gt; ant release</span></pre></td>
+          </tr>
+        </table></td>
+    </tr>
+    <tr> 
+      <th>図 6 LG3Dのビルド</th>
+    </tr>
+  </table>
+  <h4>チュートリアルのコンパイル</h4>
+
+<p>lg3d-demo-apps には CDViewer や Lg3dHelp などが含まれていますが，その他にチュートリアル用のサンプルが 3 つ含まれています．
+本稿後半部分および次回でこれらのコードについて解説しますが，その前にこれらをコンパイルして使えるようにしてみましょう．</p>
+
+<h5>サンプルファイルの配置場所</h5>
+
+<p>チュートリアル用サンプルは org.javadesktop.lg3d.apps.tutorial パッケージにある Tutorial1.java，Tutorial2.java，Tutorial3.java の 3 つになります．
+ソースは lg3d-demo-apps/src/classes/ ディレクトリ以下にあります．</p>
+
+<p>実を言うと，これらのクラスファイルはすでに lg3d-core.jar に含まれています．
+しかし，タスクバーに起動用のショートカットがないので，実行できません．
+そこで，以降ではタスクバーにこれらのクラスの起動用ショートカットを登録してみましょう．</p>
+
+<h5>各クラスの内容</h5>
+
+<p>タスクバーを表示しているクラスは， org.javadesktop.lg3d.scenemanager.utils.taskbar.GlassyTaskbar クラスです．
+ソースは lg3d-core/src/classes 以下にあります．</p>
+
+<p>GlassyTaskbar クラスの initialize メソッドでアプリケーションのショートカットを登録しています． 
+ショートカットは org.javadesktop.lg3d.utils.component.Pseudo3DShortcut クラスで表されています．</p>
+
+<p>initialize メソッドの中で Pseudo3DShortcut オブジェクトを登録している部分に，チュートリアル用のサンプルクラスのショートカットを加えたものが，リスト 1 です．
+追加部分は黄色で示しました．</p>
+
+<p>Pseudo3DShortcut のコンストラクタの第 1 引数がアイコンの画像ファイル，第 2 引数がアイコンの大きさ，第 3 引数が実行するコマンドになります．
+現状では，Java のアプリケーションは別プロセスではなく同一の VM 上で動作するようになっています．</p>
+
+  <p>また，アイコン用の画像を用意するのも面倒なので，チュートリアル用には CDViewer のアイコンを借用させてもらいました．</p>
+  <table width="80%" border="1" align="center" cellpadding="5" cellspacing="2">
+    <tr> 
+      <th>リスト 1 ショートカットの登録部分</th>
+    </tr>
+    <tr> 
+      <td><table width="100%" border="1" cellspacing="2" cellpadding="5">
+          <tr> 
+            <td> <table width="100%" border="0" cellspacing="0" cellpadding="0">
+                <tr> 
+                  <td bgcolor="#CCCCCC">&nbsp;</td>
+                  <td bgcolor="#CCCCCC">
+<pre>        Container3D shortcuts = new Container3D();
+        shortcuts.setSize(width, barHeight, barHeight);
+        shortcuts.setLayout(
+            new HorizontalLayout(HorizontalLayout.LEFT_ALIGNMENT, iconSpacing));
+        shortcuts.addChild(
+           new Pseudo3DShortcut("resources/images/icon/system.png", 
+                width * 0.05f, "xterm -display :0"));
+        shortcuts.addChild(
+            new Pseudo3DShortcut("resources/images/icon/staroffice.png", 
+                width * 0.05f, 
+                "java org.jdesktop.lg3d.apps.help.Lg3dHelp"));
+        shortcuts.addChild(
+            new Pseudo3DShortcut("resources/images/icon/CD-s.png", 
+                width * 0.05f,
+                "java org.jdesktop.lg3d.apps.cdviewer.CDViewer"));</pre></td>
+                  <td bgcolor="#CCCCCC">&nbsp;</td>
+                </tr>
+                <tr> 
+                  <td bgcolor="#CCCCCC">&nbsp;</td>
+                  <td bgcolor="#FFFF66"> 
+                    <pre>        shortcuts.addChild(
+            new Pseudo3DShortcut("resources/images/icon/CD-s.png", 
+                width * 0.05f,
+                "java org.jdesktop.lg3d.apps.tutorial.Tutorial1"));
+        shortcuts.addChild(
+            new Pseudo3DShortcut("resources/images/icon/CD-s.png", 
+                width * 0.05f,
+                "java org.jdesktop.lg3d.apps.tutorial.Tutorial2"));
+        shortcuts.addChild(
+            new Pseudo3DShortcut("resources/images/icon/CD-s.png", 
+                width * 0.05f,
+                "java org.jdesktop.lg3d.apps.tutorial.Tutorial3"));</pre></td>
+                  <td bgcolor="#CCCCCC">&nbsp;</td>
+                </tr>
+                <tr> 
+                  <td bgcolor="#CCCCCC">&nbsp;</td>
+                  <td bgcolor="#CCCCCC">
+<pre>        addChild(shortcuts);</pre></td>
+                  <td bgcolor="#CCCCCC">&nbsp;</td>
+                </tr>
+              </table></td>
+          </tr>
+        </table></td>
+    </tr>
+  </table>
+
+  <h5>ビルドの実行</h5>
+
+<p>これでビルドします．
+前述したように，単にビルドするだけでサンプルも含めてビルドをします．
+実行すると図 7のようにタスクバーに CD のアイコンが 4 つ並びます．
+アイコンをクリックすればサンプルを起動させることができます．</p>  <p>図 7 では Tutorial3 クラスを実行しています． どうです，かっこいいでしょう． こんなアプリケーションも簡単に書くことができるのです．</p>
+  <table border="0" align="center" cellpadding="5" cellspacing="2">
+    <tr> 
+      <td><a href="images200411/fig7-tutorial3.jpg"><img src="images200411/fig7-tutorial3-t.jpg" alt="チュートリアルの実行画面" width="200" height="150" border="0" /></a></td>
+    </tr>
+    <tr> 
+      <th>図 7 チュートリアルの実行画面</th>
+    </tr>
+  </table>
+  <h3>プログラムはどんなだ?</h3>
+
+<p>では，実際にサンプルプログラムの中身を見ていくことにしましょう．
+本節では，サンプルを利用して，LG3D のプログラミングの導入部分を解説します．</p>
+
+<p>LG3D の API は大別して，3D アプリケーション構築のための API とシーンマネージャ (ウィンドウマネジャの 3D 版) 向けの APIに分けることができます．
+今回は使用頻度の高い 3D アプリケーション向けの API の基本的な部分について解説します．</p>
+
+<p>ところで本プロジェクトはまだ新しく，API の変更も随時行われています．
+本稿で説明するような基本的な部分ですら将来に渡って API が更新される可能性があることをご承知おきください．</p>
+
+<h4>とりあえず、コードが見たい!</h4>
+
+<p>そうですね．
+とりあえず LG3D の非常に簡単なコードを眺めてみましょう．
+前節で紹介した Tutorial1 クラスをリスト 2 に示します (コメントは簡略化しました)．</p>
+
+  <table width="80%" border="1" align="center" cellpadding="5" cellspacing="2">
+    <tr> 
+      <th>リスト 2 Tutorial1 のコード</th>
+    </tr>
+    <tr> 
+      <td><table width="100%" border="1" cellspacing="2" cellpadding="5">
+          <tr> 
+            <td> <table width="100%" border="0" cellspacing="0" cellpadding="0">
+                <tr> 
+                  <td bgcolor="#CCCCCC"> <pre>package org.jdesktop.lg3d.apps.tutorial;
+				  
+import org.jdesktop.lg3d.wg.Frame3D;
+import org.jdesktop.lg3d.wg.Component3D;
+import org.jdesktop.lg3d.utils.shape.Box;
+import org.jdesktop.lg3d.utils.shape.SimpleAppearance;
+ 
+// 画面上に薄緑色の四角い箱を表示します
+public class Tutorial1 {
+    public static void main(String[] args) {
+        new Tutorial1();
+    }
+	
+    public Tutorial1() {
+        // Step (1) - ルートコンテナの生成
+        Frame3D frame3d = new Frame3D();
+        // Step (2) - 箱の作成
+        SimpleAppearance app = new SimpleAppearance(0.6f, 0.8f, 0.6f);
+        Box box = new Box(0.04f, 0.03f, 0.02f, app);
+        // Step (3) - 箱をルートコンテナに追加
+        Component3D comp = new Component3D();
+        comp.addChild(box);
+        frame3d.addChild(comp);
+        // Step (4) - ルートコンテナの初期化
+        frame3d.setCapabilities();
+        frame3d.setSize(0.04f, 0.03f, 0.02f);
+        frame3d.setActive(true);
+        frame3d.setVisible(true);
+    }
+}</pre></td>
+                </tr>
+              </table></td>
+          </tr>
+        </table></td>
+    </tr>
+  </table>
+
+  <p>画面上に薄緑色の四角い箱を表示するだけのアプリケーションです． 勘の良い方なら何をやっているか大方察しがつくかもしれませんね． 以下ではこのコードを読むために必要な情報を提供していきます．</p>
+
+  <p>アプリケーションプログラミングに関連する LG3D の API は，大別して次の3種類に分けられます．</p>
+  <h4>LG3D 対応アプリケーション構築用 API の分類</h4>
+
+<ul>
+  <li>Java 3D のサブセットの機能を提供するクラス (パッケージは org.jdesktop.lg3d.sg)</li>
+  <li>3D コンポーネントモデルの基盤を提供するクラス (パッケージは org.jdesktop.lg3d.wg)</li>
+  <li>各種ユーティリティクラス (パッケージはorg.jdesktop.lg3d.util)</li>
+</ul>
+
+<h5>Java 3D のサブセットの機能を提供するクラス</h5>
+
+<p>パッケージ org.jdesktop.lg3d.sg 以下にあるクラスは，パッケージ名は異なりますが基本的には Java 3D のサブセットです．
+3D の物体を描画する際に利用します．
+将来的に情報家電などリソースに制限の多い環境への移植の可能性を残すために，Java 3D に比べ API を単純化しました．
+複雑であまり利用されない機能や double を引数に持つメソッドなどが割愛されています．
+これらのクラスの利用方法は Java 3D 関連の書籍など (たとえば<a href="#ref2">参考文献 2</a>) をご参照ください．</p>
+
+<p>また，後述のユーティリティクラスで，よく使う Java 3D の機能をより扱いやすい形式で提供しています．
+実際，リスト 2 では Java 3D の機能は直接使っておらず，Box クラスといったユーティリティクラスを代わりに利用しています．</p>
+
+<h5>3D コンポーネントモデルの基盤を提供するクラス</h5>
+
+<p>パッケージ org.jdesktop.lg3d.wg 以下で提供されるクラスで基本となるのは以下の 4 クラスです．</p>
+
+<ul>
+<li>Component3D</li>
+<li>Container3D</li>
+<li>Frame3D</li>
+<li>Cursor3D</li>
+</ul>
+
+<p>これらは AWT で対応するクラス (クラス名の最後に「3D」が付かないもの) と同様な機能を果たします．</p>
+
+<p>Component3D は，すべての LG3D ウィジェットコンポーネントの基盤となるクラスです．
+Container3D は Compoent3D を派生したクラスで，複数の Compoent3D オブジェクトを「チャイルド」として保持することができます．</p>
+
+<p>Frame3D は Container3D を派生したクラスで，AWT の Frame と同様に LG3D 対応アプリケーションの大元のコンテナ，ルートコンテナになります．
+Cursor3D は Comonent3D を拡張したクラスで，すべての 3D カーソルの基盤となります．
+アプリケーションはこのクラスを派生して独自のカーソルを定義したり，定義済みのカーソルを利用したりできます．
+ここまで読むとリスト 2 の意味がよりよく見えてきたのではないでしょうか．</p>
+
+<h5>各種ユーティリティクラス</h5>
+
+<p>パッケージ org.jdesktop.lg3d.util 以下のサブパッケージに用意されたユーティリティクラス群にはいくつかの種類があるのですが，本稿で利用するものは次の3種類です．</p>
+
+<ul>
+<li>Java 3D関連ユーティリティ</li>
+<li>イベントアダプタとアクションクラス</li>
+<li>イベントアクションクラス</li>
+</ul>
+
+<p>Java 3D 関連ユーティリティとは，利用法を簡便にするための機能を追加するために Java 3D のクラスを派生したもので，例としてはリスト 2 の簡単なプログラム例で利用した SimpleAppearance や Box が挙げられます．
+これらを含めユーティリティクラスの利用方法は比較的簡単なので，以下では使うその場で説明していきます．</p>
+
+<p>イベントアダプタとアクションクラスは若干複雑ですので，次節でもう少し詳しく説明します．</p>
+
+<p>最後のイベントアクションクラスは，イベントに対するあるまとまった処理を提供するユーティリティクラスです．
+たとえばマウスのドラッグによるオブジェクトの移動を実装するクラスがその一例です．
+この利用方法も簡単なので使うその場で説明していきます (次回に取り上げます)．</p>
+
+<h4>イベントアダプタとアクションクラス</h4>
+
+<p>『コンセプト証明バージョン (Proof-of-concept Version)』の経験から，マウスなどの挙動に対してアニメーションを利用した自然なユーザフィードバックを施したことが，LG3D の今までの成功に大きな役割を担ったことがわかりました．</p>
+
+<p>このようなフィードバックをプログラマがアプリケーションで簡単に実装できるように，その要素を部品化して提供することは LG3D API デザインの目標の 1 つでした．
+これらの機能はイベントアダプタやアクションクラスとして，ユーティリティクラスの一部として提供されています．</p>
+
+<p>図 8 にイベントアダプタとアクションクラスのうち主要なものに関して， それらの関連を示します．
+『Action』と呼ばれる抽象化層をイベントを受け取るコードとアニメーションを行うコードの間に設け，それぞれの部品化を促進しています．</p>
+
+  <p>以降では，図 8 のそれぞれの要素について説明します．</p>
+  <table border="0" align="center" cellpadding="5" cellspacing="2">
+    <tr> 
+      <td><img src="images200411/fig8-event.gif" alt="イベントアダプタとアクションクラス間の関連" width="399" height="267" border="0" /></td>
+    </tr>
+    <tr> 
+      <th>図 8 イベントアダプタとアクションクラス間の関連</th>
+    </tr>
+  </table>
+  <h5>イベントアダプタ</h5>
+
+<p>サブパッケージ eventadapter 以下に置かれたイベントアダプタクラスは，LgEventListener インターフェースを実装し，1 つまたは複数の Action インターフェースにイベントで得た情報を伝播できます．
+これらのクラスは，マウスなどのイベントを受け取り，アダプタごとに特定な情報の取り出して前処理をします．</p>
+
+<p>その後，処理結果を引数として，Action インターフェース群 (Action インターフェースを派生したインタフェース群) で定義された performAction() メソッドを呼び出します．</p>
+
+<h5>アクションアダプタ</h5>
+
+<p>サブパッケージ actionadapter 以下に置かれたアクションアダプタクラスは，Action インターフェース群の最低でも 1 つを実装し，1 つまたは複数の Action インターフェースにイベント情報を伝播します．
+たとえば，ある形式の performAction() の呼び出しを別の形式に変換する役割を果たします．</p>
+
+<p>アクションアダプタは省略することも可能ですし，複数段重ねることも可能です．</p>
+
+<h5>アクション</h5>
+
+<p>サブパッケージ action 以下に置かれたアクションクラスは，Action インターフェース群の最低でも 1 つを実装します．
+これらのクラスは performAction() メソッドを介して前処理されたイベント情報を受け取り，典型的には Component3D オブジェクトに対してアニメーションを施します．</p>
+
+<h5>イベントアダプタとアクションクラスの利用例</h5>  <p>リスト 3 に上述のクラスを利用した簡単なコードを示します． これは sourceComp で指定される Component3D オブジェクトがクリックされるたびに，targetComp 
+    で指定される Component3D オブジェクトを 1 秒かけて 180 度行ったり来たり回転する，というものです．</p>
+  <table width="80%" border="1" align="center" cellpadding="5" cellspacing="2">
+    <tr> 
+      <th>リスト 3 イベントアダプタとアクションクラスの利用例</th>
+    </tr>
+    <tr> 
+      <td><table width="100%" border="1" cellspacing="2" cellpadding="5">
+          <tr> 
+            <td> <table width="100%" border="0" cellspacing="0" cellpadding="0">
+                <tr> 
+                  <td bgcolor="#CCCCCC"> <pre>    new MouseClickedEventAdapter(sourceComp
+            new ToggleAdapter(
+                    new RotateAction(targetComp, (float)Math.PI, 1000)));</pre></td>
+                </tr>
+              </table></td>
+          </tr>
+        </table></td>
+    </tr>
+  </table>
+
+  <p>MouseClickedEventAdapter クラスはイベントアダプタの一種です．
+LgEventListener インターフェースを実装しており，sourceComp に対する MouseEvent を受け取るよう自分自身を登録します．</p>
+
+<p>そして，MouseEvent を受け取るたびに，指定されたアクションまたはアクションアダプタクラスの performAction() メソッドを呼び出します．
+この例ではコンストラクタで指定された ToggleAdapter オブジェクトの performAction を呼び出します．</p>
+
+<p>ToggleAdapter クラスはアクションアダプタの一種で， 内部で boolean の状態を保持しています．
+この状態は performAction()メソッドが呼ばれるごとに反転し，その結果を引数に，ActionBoolean インタフェースの performAction() メソッドが呼び出されます．
+この例では，コンストラクタで指定された RotateAction オブジェクトの performAction を呼び出します．</p>
+
+<p>RotationAction クラスは，ActionBoolean インタフェースを実装するアクションの一種です．
+メソッド performAction() を呼び出すと，引数が true であれば指定された角度に，false であればデフォルト値の 0 度に，指定時間で targetComp を回転します．
+角度指定はラジアンで PI，度数で 180 度です．
+アニメーションの時間は 1,000 ミリ秒，すなわち 1 秒です．</p>
+
+<p>このクラスと ToggleAdapter クラスを組み合わせるとこにより「180 度，行ったり来たり」の動作を実現しています．</p>
+
+<p>ところで，このデフォルトのアニメーションは機械的ではなく，人が見ておおむね心地良いと思われるような動きをするように配慮されていることにご注目ください．
+LG3D の重要なポイントの 1 つです．</p>
+
+<h3>次回は</h3>
+
+<p>以上で，サンプルチュートリアルを理解するための基礎知識を解説しました．
+次回は，実際にサンプルチュートリアルを解読しながら，プログラミングを体験してみましょう．
+また，PLG のオープンソースコミュニティに関する話題についても取り上げます．お楽しみに．</p>
+
+
+<h3>参考URL/文献</h3>
+
+<ol>
+<li><a name="ref1" id="ref1" />さぁ、はじめよう Project Looking Glass 開発者リリース<br />
+<a href="https://lg3d-core.dev.java.net/ja/lg3d-getting-started.html">https://lg3d-core.dev.java.net/ja/lg3d-getting-started.html</a></li>
+<li><a name="ref2" id="ref2" />『やさしくわかるJava 3D』（太田篤史著／技術評論社)<br />
+同著者のWeb ページ「Java3DTips」 (<a href="http://www.antun.net/tips/java3d/">http://www.antun.net/tips/java3d/</a>) も参考になります．</li>
+</ol>
+<hr />
+<small>$Revision: 1.1 $ $Date: 2006-05-09 18:17:06 $</small>
+</div>
+</body>
+</html>

@@ -1,0 +1,548 @@
+<!DOCTYPE html PUBLIC "-//Tigris//DTD XHTML 1.0 Transitional//EN"
+"http://style.tigris.org/tigris_transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+  <title>Project Looking Glass の全貌 実践編 2</title>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  <meta name="Author" content="Hideya KAWAHARA" />
+<style type="text/css"> /* <![CDATA[ */
+ @import "../../preview.css";
+ /* ]]> */</style>
+</head>
+<body>
+
+<div id="projectdocumentview" class="app">
+
+<p>Java ベースの次世代デスクトップ環境</p>
+<h2>Project Looking Glass の全貌 </h2>
+
+
+<p>米 Sun Microsystems<br />
+ソフトウェア CTO オフィス，先進開発グループ Project Looking Glass リードエンジニア<br />
+川原 英哉 KAWAHARA Hideya</p>
+<p>櫻庭 祐一 SAKURABA Yuichi<br />
+sakuraba@tk.airnet.ne.jp<br />
+    <a href="http://www5.airnet.ne.jp/sakuraba/java/">http://www5.airnet.ne.jp/sakuraba/java/</a></p>
+
+  <p><strong>初出: <a href="http://www.gihyo.co.jp/magazines/SD/">Software Design</a> 
+    <a href="http://www.gihyo.co.jp/magazines/SD/archive/200412">2004 年 12 月号</a></strong></p>
+
+<p>&nbsp;</p>
+
+<p>今回は，前回 (2004 年 11 月号) に引き続き，Project Looking Glass (以降LG3D) プログラミングについて紹介します．
+今回はチュートリアルプログラムを実際に解読していきます．
+このほか，LG3D プロジェクトの参加方法についても紹介します．</p>
+
+<hr />
+
+<h2>Project Looking Glass 実践編 2</h2>
+
+<h3>Tutorial1</h3>
+
+  <p>前回の解説で LG3D のチュートリアルのコードを解読する準備が整いました．
+それでは，実際にコードを読み解いてみましょう．
+まず，再度 Tutorial1 のコード (リスト 1) を見てください．
+Tutorial1 は画面上に薄緑色の四角い箱を表示するプログラムでした．
+その処理の流れは次のようになっています．</p>
+
+<blockquote><p><a href="#step1-1">Step 1: ルートコンテナの生成</a><br />
+<a href="#step1-2">Step 2: 箱の作成</a><br />
+<a href="#step1-3">Step 3: 箱をルートコンテナに追加</a><br />
+<a href="#step1-4">Step 4: ルートコンテナの初期化</a></p></blockquote>
+
+  <p>この流れに沿って，それぞれのステップについて説明していきます．</p>
+  <table width="80%" border="0" align="center" cellpadding="2" cellspacing="5">
+    <tr> 
+      <th>リスト 1 Tutorial1 のコード</th>
+    </tr>
+    <tr> 
+      <td> <table width="100%" border="0" cellspacing="5" cellpadding="2">
+          <tr> 
+            <td bgcolor="#CCCCCC"><pre>package org.jdesktop.lg3d.apps.tutorial;
+  
+import org.jdesktop.lg3d.wg.Frame3D;
+import org.jdesktop.lg3d.wg.Component3D;
+import org.jdesktop.lg3d.utils.shape.Box;
+import org.jdesktop.lg3d.utils.shape.SimpleAppearance;
+ 
+// 画面上に薄緑色の四角い箱を表示します
+public class Tutorial1 {
+    public static void main(String[] args) {
+        new Tutorial1();
+    }
+ 
+    public Tutorial1() {
+        // Step1: ルートコンテナの生成
+        Frame3D frame3d = new Frame3D();
+ 
+        // Step2: 箱の作成
+        SimpleAppearance app = new SimpleAppearance(0.6f, 0.8f, 0.6f);
+        Box box = new Box(0.04f, 0.03f, 0.02f, app);
+ 
+        // Step3: 箱をルートコンテナに追加
+        Component3D comp = new Component3D();
+        comp.addChild(box);
+        frame3d.addChild(comp);
+ 
+        // Step4: ルートコンテナの初期化
+        frame3d.setCapabilities();
+        frame3d.setSize(0.04f, 0.03f, 0.02f);
+        frame3d.setActive(true);
+        frame3d.setVisible(true);
+    }
+}</pre></td>
+          </tr>
+        </table></td>
+    </tr>
+  </table>
+
+  <h5><a name="step1-1" id="step1-1"></a>■ Step 1: ルートコンテナの生成</h5>
+
+<p>まず最初に，この 3D アプリケーションの大元であるルートコンテナとなる Frame3D を作成します．</p>
+
+<table width="80%" border="0" cellspacing="5" cellpadding="2">
+  <tr> 
+    <td bgcolor="#CCCCCC"><pre>    Frame3D frame3d = new Frame3D();</pre></td>
+  </tr>
+</table>
+
+<h5><a name="step1-2" id="step1-2"></a>■ Step 2: 箱の作成</h5>
+
+<p>次に表示する物を作成します．
+今回はアプリケーションの中央に 4 センチ × 3 センチ × 2 センチの箱を配置してみましょう．
+ここでは，ユーティリティ API で提供されている定義済みの Box クラスを使います．
+色は薄緑にしましょう．</p>
+
+<p>LG3D の世界では，デフォルトで 1 単位は 1 メータに相当します．
+もし画面サイズなどの設定がきちんとされていれば，たとえば長さ 0.02 は画面上ではだいたい 2 センチで表示されます．
+ただし，遠近法を適用しているため状況により見かけのサイズは変わりますので，あくまでも目安として考えてください．</p>
+
+<p>このほか，簡便に色を指定するたのクラス，SimpleAppearance もユーティリティクラスで提供されています．
+引数では色を float で指定し，0 〜 1 の間の値で RGB の順に与えます．
+もしより高度な設定にご興味のある方は，Appearance や Material といったクラスをご参照ください．</p>
+
+<table width="80%" border="0" cellspacing="5" cellpadding="2">
+  <tr> 
+    <td bgcolor="#CCCCCC"><pre>    SimpleAppearance app = new SimpleAppearance(0.6f, 0.8f, 0.6f);</pre></td>
+  </tr>
+</table>
+
+<p>続いて，5 センチ × 4 センチ × 3 センチの箱を作成します．
+今しがた作成した薄緑色もコンストラクタの最後の引数で指定します．</p>
+
+<table width="80%" border="0" cellspacing="5" cellpadding="2">
+  <tr> 
+    <td bgcolor="#CCCCCC"><pre>    Box box = new Box(0.04f,0.03f, 0.02f, app);</pre></td>
+  </tr>
+</table>
+
+<h5><a name="step1-3" id="step1-3"></a>■ Step 3: 箱をルートコンテナに追加</h5>
+
+<p>ここで，この box オブジェクトをルートコンテナである frame3dに追加して終わり，といきたいところですが，1 つ覚えておかなくてはいけない制約があります．
+Frame3D (より厳密には Frame3D の親クラスである Container3D) には，Component3D 以外は追加できません<sup><a href="#note">注</a></sup>．
+
+<p>そこでここでは，新たに Component3D オブジェクトを作成して，それにまず box オブジェクトを追加します．
+ところで，コンテナにチャイルドを追加するメソッドの名前は，AWT では add ですが，LG3D では Java 3D の流れを引継いで addChild となります．</p>
+
+<table width="80%" border="0" cellspacing="5" cellpadding="2">
+  <tr> 
+    <td bgcolor="#CCCCCC"><pre>    Component3D comp = new Component3D();
+    comp.addChild(box);</pre></td>
+  </tr>
+</table>
+
+<p>そして，この Component3D のオブジェクト comp を frame3d に addChildします．</p>
+
+<table width="80%" border="0" cellspacing="5" cellpadding="2">
+  <tr> 
+    <td bgcolor="#CCCCCC"><pre>    frame3d.addChild(comp);</pre></td>
+  </tr>
+</table>
+
+<h5><a name="step1-4" id="step1-4"></a>■ Step 4: ルートコンテナの初期化</h5>
+
+<p>アプリケーションを表示する前にもう少し作業することがあります．
+まず，どんなアプリケーションでも，表示する前に次のメソッドを呼び出す必要があります．
+これをし忘れるとアプリケーションに対して操作ができなくなります．
+現時点では，これは「おまじない」と思っていてください．
+そして，もしマウスカーソルがアプリの上に行かないなどの症状に出会ったら，まず次の呼び出しを忘れていないかどうかをチェックしてください．</p>
+
+<table width="80%" border="0" cellspacing="5" cellpadding="2">
+  <tr> 
+    <td bgcolor="#CCCCCC"><pre>    frame3d.setCapabilities();</pre></td>
+  </tr>
+</table>
+
+<p>また，アプリのサイズのヒントも設定しましょう．
+現在の 3D シーンマネジャの実装はアプリを 3D 空間に配置する際，このヒントの情報を利用しています．</p>
+
+<table width="80%" border="0" cellspacing="5" cellpadding="2">
+  <tr> 
+    <td bgcolor="#CCCCCC"><pre>    frame3d.setSize(0.04f, 0.03f, 0.02f);</pre></td>
+  </tr>
+</table>
+
+<p>Frame3D オブジェクトは生成されても，そのままでは画面に表示されません．
+シーンマネジャにその存在を知らせる必要があります．
+次の呼び出しがそれを行います．</p>
+
+<table width="80%" border="0" cellspacing="5" cellpadding="2">
+  <tr> 
+    <td bgcolor="#CCCCCC"><pre>    frame3d.setActive(true);</pre></td>
+  </tr>
+</table>
+
+<p>続いて最後のステップです．
+シーンマネジャに存在を知らせた後でも，アプリケーションはデフォルトでは非表示の状態にあります．
+以下の呼び出しで，これを表示状態に変えます．
+この呼び出しは setActive()に比べ高速なので，頻繁な非表示/表示の切り替えには通常はこちらを使います．</p>
+
+<table width="80%" border="0" cellspacing="5" cellpadding="2">
+  <tr> 
+    <td bgcolor="#CCCCCC"><pre>    frame3d.setVisible(true);</pre></td>
+  </tr>
+</table>
+
+  <p>これで図 1 のような薄緑の箱が画面上に見えるはずです． 「ただの四角が見えるだけ？」と思われるかもしれません． たしかに，3D の箱のようにみえるようにするためには，ちょっと回転してみる必要がありそうです． 
+    これは次の Tutorial2 でやることにしましょう．</p>
+  <table border="0" align="center" cellpadding="10" cellspacing="2">
+    <tr> 
+      <td><a href="images200412/fig1-tutorial1.png"><img src="images200412/fig1-tutorial1-t.png" alt="Tutorial1 の実行結果" width="200" height="150" border="0" /></a></td>
+    </tr>
+    <tr> 
+      <th>図 1 Tutorial1 の実行結果</th>
+    </tr>
+  </table>
+  <blockquote><p><a name="note" id="note">注)</a> これは Container3D がチャイルドのレイアウトの管理に Component3D に特有の情報を利用するこに起因しています．</p></blockquote>
+
+<h3>Tutorial2</h3>
+
+<p>Tutorial2 では，薄緑色の箱を回転したり，簡単なユーザフィードバックを加てみます．
+リスト 2 はオリジナルから若干簡略化した Tutorial2 のコードです．
+リスト 1 と同様コメントも簡略化しています．
+おおまかな処理の流れは次のようになります．</p>
+
+<blockquote><p><a href="#step2-1">Step1: 3Dアプリの初期化</a><br />
+<a href="#step2-2">Step2: 箱の回転</a><br />
+<a href="#step2-3">Step3: アプリの移動</a><br />
+<a href="#step2-4">Step4: アプリのカーソルの設定</a><br />
+<a href="#step2-5">Step5: ユーザフィードバックの追加</a><br />
+<a href="#step2-6">Step6: ルートコンテナの初期化</a></p></blockquote>
+
+<p>以降では，順を追ってそれぞれのステップについて説明していきます．</p>
+  <table width="80%" border="0" align="center" cellpadding="2" cellspacing="5">
+    <tr> 
+      <th>リスト 2 Tutorial2 のコード (簡略化後)</th>
+    </tr>
+    <tr> 
+      <td> <table width="100%" border="0" cellspacing="5" cellpadding="2">
+          <tr> 
+            <td bgcolor="#CCCCCC"><pre>package org.jdesktop.lg3d.apps.tutorial;
+  
+import org.jdesktop.lg3d.wg.Frame3D;
+import org.jdesktop.lg3d.wg.Component3D;
+import org.jdesktop.lg3d.utils.shape.Box;
+import org.jdesktop.lg3d.utils.shape.SimpleAppearance;
+import org.jdesktop.lg3d.utils.eventaction.ComponentMover;
+import org.jdesktop.lg3d.utils.eventadapter.MouseEnteredEventAdapter;
+import org.jdesktop.lg3d.utils.eventadapter.MouseClickedEventAdapter;
+import org.jdesktop.lg3d.utils.action.ScaleAction;
+import org.jdesktop.lg3d.utils.action.GenericEventPostAction;
+ 
+// 薄緑色の箱をまわしたり，簡単なユーザフィードバックを加えます
+public class Tutorial2 {
+    public static void main(String[] args) {
+        new Tutorial2();
+    }
+ 
+    public Tutorial2() {
+        // Step 1; 3Dアプリの初期化
+        Frame3D frame3d = new Frame3D();
+        SimpleAppearance app = new SimpleAppearance(0.6f, 0.8f, 0.6f, 0.7f);
+        Box box = new Box(0.04f, 0.03f, 0.02f, app);
+        Component3D comp = new Component3D();
+        comp.addChild(box);
+ 
+        // Step 2: 箱の回転
+        comp.setRotationAxis(1.0f, 0.5f, 0.0f);
+        comp.setRotationAngle((float)Math.toRadians(60));
+ 
+        // Step 3: アプリの移動
+        new ComponentMover(comp);
+ 
+        // Step 4: アプリのカーソルの設定
+        comp.setCursor(Cursor3D.MOVE_CURSOR);
+ 
+        // Step 5: ユーザフィードバックの追加
+        new MouseEnteredEventAdapter(comp,
+        new ScaleAction(comp, 1.2f, 500));
+ 
+        // Step 6: ルートコンテナの初期化
+        frame3d.addChild(comp);
+        frame3d.setSize(0.06f, 0.06f, 0.06f);
+        frame3d.setCapabilities();
+        frame3d.setActive(true);
+        frame3d.setVisible(true);
+    }
+}</pre></td>
+          </tr>
+        </table></td>
+    </tr>
+  </table>
+
+<h5><a name="step2-1" id="step2-1"></a>■ Step 1: 3D アプリの初期化</h5>
+
+<p>Tutorial1 と同様の手順でアプリを構築していきます．
+今回は気分をちょっと変えて色を半透明にしてみましょう．
+SimpleAppearance のコンストラクタの第 4 引数で透明度 (アルファ) を指定します．
+1 が不透明，0 が透明です．</p>
+
+<table width="80%" border="0" cellspacing="5" cellpadding="2">
+  <tr> 
+    <td bgcolor="#CCCCCC"><pre>    Frame3D frame3d = new Frame3D();
+    SimpleAppearance app = new SimpleAppearance(0.6f, 0.8f, 0.6f, 0.7f);
+    Box box = new Box(0.04f, 0.03f, 0.02f, app);
+    Component3D comp = new Component3D();
+    comp.addChild(box);</pre></td>
+  </tr>
+</table>
+
+
+<h5><a name="step2-2" id="step2-2"></a>■ Step 2: 箱の回転</h5>
+
+<p>続いて，実際は 3D の箱であることを証明するために箱を少し回転してみましょう．
+Component3D には手軽に回転をするためのメソッドが提供されています．
+最初に回転軸を指定します．</p>
+
+<table width="80%" border="0" cellspacing="5" cellpadding="2">
+  <tr> 
+    <td bgcolor="#CCCCCC"><pre>    comp.setRotationAxis(1.0f, 0.5f, 0.0f);</pre></td>
+  </tr>
+</table>
+
+<p>そのあと角度を指定します．
+デフォルトでは角度はラジアンで指定します．
+そのままでは扱いづらいので，Math.toRadians() を利用して使い慣れた「度数」で角度を指定してみましょう．</p>
+
+<table width="80%" border="0" cellspacing="5" cellpadding="2">
+  <tr> 
+    <td bgcolor="#CCCCCC"><pre>    comp.setRotationAngle((float)Math.toRadians(60));</pre></td>
+  </tr>
+</table>
+
+<p>これで画面上に表示される形に変化が加わりました．</p>
+
+<h5><a name="step2-3" id="step2-3"></a>■ Step 3: アプリケーションの移動</h5>
+
+<p>ところで，現状ではアプリケーションはインタラクティブではありません．
+そこで，便利なユーティリティクラスがあります．</p>
+
+<p>ComponentMover はイベントアクションクラスの一種で，マウスのドラッグに合わせて Component3D を移動します．
+利用方法は極めて単純で，動かしたい Component3D オブジェクトをコンストラクタの引数に与えるだけです．</p>
+
+<table width="80%" border="0" cellspacing="5" cellpadding="2">
+  <tr> 
+    <td bgcolor="#CCCCCC"><pre>    new ComponentMover(comp);</pre></td>
+  </tr>
+</table>
+
+<h5><a name="step2-4" id="step2-4"></a>■ Step 4: アプリケーションのカーソルの設定</h5>
+
+<p>動かせるようになったら，次はユーザにそれを知らせるためにカーソルの形を変えてみましょう．
+ここでは定義済みのカーソルを引数に，対象となっている Component3D の setCursor()メソッドを呼び出します．</p>
+
+<table width="80%" border="0" cellspacing="5" cellpadding="2">
+  <tr> 
+    <td bgcolor="#CCCCCC"><pre>    comp.setCursor(Cursor3D.MOVE_CURSOR);</pre></td>
+  </tr>
+</table>
+
+<h5><a name="step2-5" id="step2-5"></a>■ Step 5: ユーザフィードバックの追加</h5>
+
+<p>最後にイベントアダプタとアクションクラスを利用して簡単なユーザフィードバックを実現してみます．</p>
+
+<p>ここでは MouseEnteredEventAdapter クラスと ScaleAction クラスを組み合わせて，マウスが箱の上に乗ると箱のサイズが少し大きく (1.2 倍に) なるようにしてみましょう．
+アニメーションの遷移時間は 0.5 秒にしてみました．</p>
+
+<table width="80%" border="0" cellspacing="5" cellpadding="2">
+  <tr> 
+    <td bgcolor="#CCCCCC"><pre>    new MouseEnteredEventAdapter(comp,
+                new ScaleAction(comp, 1.2f, 500));</pre></td>
+  </tr>
+</table>
+
+<h5><a name="step2-6" id="step2-6"></a>■ Step 6: ルートコンテナの初期化</h5>
+
+<p>最後に Tutorial1 と同様の手順でルートコンテナを初期化します．
+回転したり拡大したりするので，サイズをちょっと大きめに変更しました．</p>
+
+<table width="80%" border="0" cellspacing="5" cellpadding="2">
+  <tr> 
+    <td bgcolor="#CCCCCC"><pre>    frame3d.addChild(comp);
+    frame3d.setSize(0.06f, 0.06f, 0.06f);
+    frame3d.setCapabilities();
+    frame3d.setActive(true);
+    frame3d.setVisible(true);</pre></td>
+  </tr>
+</table>
+
+  <p>図 2 に Tutorial2 の実行結果を示します． ユーザーフィードバックの設定などを変えて遊んでみてください． LG3D プロジェクトでは，前回紹介した 
+    Tutorial3 のデモ (前回の図7) もありますが，今回はこの解説は省略します． 興味のある方はぜひともコードの解読に挑戦してみてください．</p>
+  <table border="0" align="center" cellpadding="10" cellspacing="2">
+    <tr> 
+      <td><a href="images200412/fig2-tutorial2.jpg"><img src="images200412/fig2-tutorial2-t.jpg" alt="Tutorial2 の実行結果" width="200" height="150" border="0" /></a></td>
+    </tr>
+    <tr> 
+      <th>図 2 Tutorial2 の実行結果</th>
+    </tr>
+  </table>
+  <h3>プロジェクトに参加しよう!</h3>
+
+<p>中身がわかって興味が出ててくるとプロジェクトに参加してみたくなるのが人情というものではないでしょうか．
+読者の方々にもそう思っていただけると大変ありがたいです．</p>
+
+<p>ここでは，プロジェクトに参加するための最初の足がかりであるディスカッションフォーラムへの参加方法を説明します．</p>
+
+<h4>日本語コミュニティ、始動</h4>
+
+<p>嬉しいことに日本語のディスカッションフォーラムが立ち上がり，多くの興味深い議論が既に行われています．
+手始めにこれを覗いてみましょう．
+LG3D の議論は javadesktop.org のディスカッションフォーラムを利用して行われています．
+また，議論の内容は同時に ML にも配信され，ML 経由で議論に参加することも可能です．</p>
+
+<p>javadesktop.org のディスカッションフォーラムには，以下の URL でアクセスできます．</p>
+
+<p><a href="http://www.javadesktop.org/forums/">http://www.javadesktop.org/forums/</a></p>
+
+<p>このページから，中ほど「Java Desktop Technologies」のカテゴリ内にある「<a href="http://www.javadesktop.org/forums/category.jspa?categoryID=27">Project Looking Glass 3D</a>」をクリックしてください (図 3)．
+「<a href="http://www.javadesktop.org/forums/forum.jspa?forumID=56">Interest</a>」「<a href="http://www.javadesktop.org/forums/forum.jspa?forumID=57">Interest Japanese</a>」「<a href="http://www.javadesktop.org/forums/forum.jspa?forumID=58">Documentation Japanese</a>」の 3 つのフォーラムがあるのがわかります (図 4)．</p>
+
+<p>「<a href="http://www.javadesktop.org/forums/forum.jspa?forumID=56">Interest</a>」フォーラムは，英語で LG3D 一般に関する議論をする場です．
+「<a href="http://www.javadesktop.org/forums/forum.jspa?forumID=57">Interest Japanese</a>」は，その日本語版です．
+プロジェクト初期では，あまりコミュニティや議論を区分けしすぎないほうが良いだろうとの考えで，今のところこのフォーラムでインストレーションの問題の報告から新しい 3D UI の話まで，幅広いトピックをカバーしています．</p>
+
+<p>「<a href="http://www.javadesktop.org/forums/forum.jspa?forumID=58">Documentation Japanese</a>」は，LG3D ドキュメントの日本語化プロジェクト用のフォーラムです．</p>
+
+  <p>今回は，後者2 つについて説明します．</p>
+  <table border="0" align="center" cellpadding="10" cellspacing="2">
+    <tr> 
+      <td><a href="images200412/fig3-jdesktop.png"><img src="images200412/fig3-jdesktop-t.png" alt="「Project Looking Glass 3D」カテゴリ" width="358" height="399" border="0" /></a></td>
+    </tr>
+    <tr> 
+      <th>図 3 「Project Looking Glass 3D」カテゴリ</th>
+    </tr>
+    <tr> 
+      <td><a href="images200412/fig4-forum.png"><img src="images200412/fig4-forum-t.png" alt="「Project Looking Glass 3D」の 3 つのフォーラム" width="355" height="289" border="0" /></a></td>
+    </tr>
+    <tr> 
+      <th>図 4 「Project Looking Glass 3D」の 3 つのフォーラム</th>
+    </tr>
+  </table>
+  <h4>日本語で LG3D 一般の議論に参加してみよう</h4>
+
+<p>それでは「<a href="http://www.javadesktop.org/forums/forum.jspa?forumID=57">Interest Japanese</a>」フォーラムをクリックしてみてください．
+そして，気になるスレッドを追ってみましょう．
+なかなかおもしろい議論が進んでいるとは思いませんか?
+さまざまな方々に議論に参加していただいており大変ありがたく思っています．</p>
+
+<p>もし「私はこう思うのだけど」といった考えが浮かんだなら，思い立ったが吉日，さっそく投稿してみましょう．
+初心者の方も参加されてますし，フォーラムはとてもフレンドリーな雰囲気ですので，安心して投稿してください．</p>
+
+<h5>■投稿の仕方</h5>
+
+<p>フォーラムに投稿するには「Guest」のままでもできますが，javadesktop.org のアカウントを作って，名前付きで投稿することをお勧めします．
+名前 (ハンドル名/ユーザ名) を覚えてもらうと，後のコミュニケーションが円滑に進みます．
+アカウントはとても手軽につくれますし，匿名性を保つこともできます．</p>
+
+<h5>■ javadesktop.org のアカウント作成</h5>
+
+<p>前回，LG3D のソースを入手する際に java.net のアカウントを作成しましたが，javadesktop.org のアカウントはそれとは別物です (ちょっとややこしいですね)．</p>
+
+<p>javadesktop.org アカウントを作るには，まずページ右上の緑の右矢印の横にある「Login」をクリックしてください. 
+「User Login」のページに切り替わります．
+ここで下の方にある「Create Account(アカウント作成)」ボタンをクリックすると登録ページが現れます (図 5)．</p>
+
+<p>名前 (Name)，電子メールアドレス (Email)， 希望のユーザ名 (Desired Username)，パスワード (Password) とその確認のための再入力 (Confirm Password) の 5 つが，最低必要な情報です．
+好みに応じて，所在地 (Location)， 職業 (Occupation)，Homepage のURL，略歴 (Biography) を入力しても良いでしょう．</p>
+
+<p>名前と電子メールアドレス入力欄の下の「Show」「Hide」のラジオボタンでは，それらの情報を公開する (Show) か非公開にする (Hide) かを設定します．
+入力内容を確認して，「Create Account」ボタンをクリックすると，アカウントが作成されます．</p>
+
+  <p>「Account Creation Successful」というページが現れればアカウント作成成功です． 「Go to: The mainforums 
+    page」をクリックして，メインページに戻り，再度「Interest Japanese」フォーラムに行って投稿に進みましょう．</p>
+  <table border="0" align="center" cellpadding="10" cellspacing="2">
+    <tr> 
+      <td><a href="images200412/fig5-registrat.png"><img src="images200412/fig5-regist-t.png" alt="javadesktop.org のアカウント登録画面" width="295" height="431" border="0" /></a></td>
+    </tr>
+    <tr> 
+      <th>図 5 javadesktop.org のアカウント登録画面</th>
+    </tr>
+  </table>
+  <h4>投稿してみよう</h4>
+
+<p>投稿するには，フォーラムのメッセージ一覧を表示しているページにある「Post New Topic」をクリックします．</p>
+
+<p>また，返信をするには，返信したい文面の右上にある「Reply」ボタンをクリックします．
+すると「Post Message: 」と書かれたページに切り替わり，そこには「Message:」と題されたテキスト入力エリアと，返信の場合にはその下に返信する元の文面が表示されます．</p>
+
+<p>テキスト入力エリアにメッセージを書き込んだら，「Preview」をクリックして，プレビューを確認しましょう．
+「Message Preview:」というページに切り替わり，入力した内容が灰色の四角の中に表示されているはずです．</p>
+
+<p>もしこれで OK ならば「Post Message」ボタンを，前の画面に戻って編集し直したいのであれば「Go Back/Edit」ボタンをクリックしてください．</p>
+
+<p>投稿できましたか?
+おめでとうございます．
+これであなたもLG3Dコミュニティの一員です!</p>
+
+<h4>ドキュメントの日本語化プロジェクトに参加しよう</h4>
+
+<p>「<a href="http://www.javadesktop.org/forums/forum.jspa?forumID=58">Documentation Japanese</a>」は，LG3D の英語版ドキュメントの日本語化作業用のフォーラムです．
+手始めに「翻訳プロジェクトの現状報告と、新規翻訳者の募集」と題したスレッド (<a href="http://www.javadesktop.org/forums/thread.jspa?threadID=4733">http://www.javadesktop.org/forums/thread.jspa?threadID=4733</a>) を読むと，作業の進め方の雰囲気が伝わってくるのではないかと思います．</p>
+
+<p>メンバが精力的に作業を進めていますので「作業に参加してもいい」という方がいらっしゃったら，ぜひとも手を上げて（フォーラムにその旨投稿して）ください!</p>
+
+<h4>さらに先に進むには</h4>
+
+<p>プロジェクトへのコードの貢献をするにはどうしたら良いのでしょうか．
+コードの貢献には，大きく分けて2 種類あります．
+1 つ目は，LG3D 上で動くプログラムの開発，他方は LG3D コア API とその実装への参加です．
+いずれの場合も，英語でのコミュニケーションが若干必要になります．</p>
+
+<h5>■ LG3D 上で動くプログラムの開発</h5>
+
+<p>開発した LG3D プログラムを共有する場として，lg3d-incubator サブプロジェクトがあります（<a href="https://lg3d-incubator.dev.java.net/">https://lg3d-incubator.dev.java.net/</a>)．
+「3D ブラウザ」や「ピンポン」といったアプリケーションの開発が進んでいます．
+それらの開発に参加してみても良いですし，ご自分で新たにプロジェクトをはじめても良いでしょう．</p>
+
+<p>いずれの場合も「Interest」フォーラムに，簡単な英語で結構ですので，その旨ご一報ください．
+その後の進め方などをご連絡いたします．</p>
+
+<h5>■ LG3D コアAPI とその実装への参加</h5>
+
+<p>コア API とその実装への貢献にはコアチームとの技術内容の議論が不可欠であり，どうしても英語でのコミュニケーション能力が必要になってきます．
+ただし，きちんとしたコードが書ければ，多少まちがえている英語でも何とかなります．
+手始めに「Interest」フォーラムで英語での議論に慣れるのが良いかと思います．
+覗いてみると，色々な国の人が議論に参加しているのがおわかりになると思います．</p>
+
+<hr />
+
+<p>以上，コードの貢献の仕方を簡単に説明しました．
+我こそは，と思われる方は，ぜひとも勇気を出して参加してみてください．
+諸外国のエンジニアとの共同作業を経験できる素晴らしい機会です．
+なお，貢献への詳しい手順に関しては，参考 URL をご覧ください．</p>
+
+<h3>最後に</h3>
+
+<p>以上，基礎編，実践編 1, 2 の 3 回に渡って，LG3D の開発の経緯から，インストール，プログラミング，そしてコミュニティへの参加方法と，欲張りな内容を幅広くカバーしました．読者の皆さんには楽しんでいただけたでしょうか．</p>
+
+<p>LG3D は米国発の技術ではありますが，その発起人が日本人であり，また日本のコミュニティの活動も盛んです．
+今後益々日本人の貢献者が増え，日本が得意とする感性に訴えかける作り込みの技を，LG3D コミュニティを通して大いに世界に発信できれば，との密かな野望を胸に，本稿を終わりたいと思います．</p>
+
+<p>皆さんのプロジェクトへのご参加を心よりお待ちしております．</p>
+
+
+<h5>参考URL</h5>
+  <p>Contributing to Project Looking Glass <a href="https://lg3d.dev.java.net/contribute.html">https://lg3d.dev.java.net/contribute.html</a></p>
+</div>
+</body>
+</html>

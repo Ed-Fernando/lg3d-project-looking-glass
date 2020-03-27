@@ -1,0 +1,4 @@
+Implementation-Title: Slot Box
+Main-Class: SlotBox
+Icon-Filename: slotboxlogo.png
+

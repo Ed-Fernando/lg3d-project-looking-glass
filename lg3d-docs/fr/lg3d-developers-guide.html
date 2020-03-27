@@ -1,0 +1,617 @@
+<!DOCTYPE html PUBLIC "-//Tigris//DTD XHTML 1.0 Transitional//EN" "http://style.tigris.org/tigris_transitional.dtd">
+<html>
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <meta name="Translator" content="Pierre DUCROQUET" />
+    <title>Guide du développeur du Projet Looking Glass</title>
+</head>
+<body>
+<div id="projectdocumentview" class="app">
+<hr />
+<h2>Guide du développeur du Projet Looking Glass</h2>
+<br />
+<p>
+Ce document fournit une introduction à la version pour développeurs du Projet Looking Glass, 
+le projet open source sur java.net de bureau 3D par Sun. Il explique comment configurer un 
+environnement de développement et comment compiler le Projet Looking Glass et les applications
+3D.<br />
+</p>
+<a href="#Getting_Started">1. Pour commencer</a> <br />
+<a href="#Setting_up_your_development">2. Configurer votre environnement de développement</a> <br />
+<a href="#Download_the_Project_Looking_Glass">3. Télécharger la version pour développeurs du
+Projet Looking Glass</a> <br />
+<a href="#Building_Project_Looking_Glass">4. Compiler le Projet Looking Glass</a> <br />
+<a href="#Running_Project_Looking_Glass">5. Lancer le Projet Looking Glass</a> <br />
+<a href="#Getting_the_latest_Project_Looking">6. Obtenir le dernier code source du Projet Looking 
+Glass</a> <br />
+<a href="#A_quick_tour_of_the_Project_Looking">7. Un tour rapide des sources du Projet Looking 
+Glass</a> <br />
+<a href="#Contributing_to_Project_Looking_Glass">8. Contribuer au Projet Looking Glass</a><br />
+<a href="#Learning_how_to_write_3D_applications">9. Apprendre comment écrire des applications 3D
+pour le Projet Looking Glass</a> <br />
+<h3><a name="Getting_Started"></a>1. Pour commencer</h3>
+<p>
+Si vous n'avez pas encore configuré votre environnement d'éxécution, veuillez consulter le <a 
+href="lg3d-getting-started.html">Guide d'installation de la version de développement du Projet Looking Glass</a>
+pour obtenir des informations. Vérifiez que votre système a au moins la configuration requise pour lancer
+le Projet Looking Glass.</p>
+<p>
+Pour développer des applications et des améliorations du Projet Looking Glass vous devrez installer
+certains composants et télécharger le code source du Projet Looking Glass.
+</p>
+<h3><a name="Setting_up_your_development"></a>2. Configurer votre environnement de développement</h3>
+<h4>Télécharger et installer les outils de développement</h4>
+<p>
+Le Projet Looking Glass utilise l'outil de compilation d'Apache ANT pour gérer le processus de 
+compilation. Si vous n'avez pas encore installé ANT, téléchargez la version binaire depuis le
+site web d'apache.org :
+</p>
+<a href="http://ant.apache.org/">http://ant.apache.org/</a> <br />
+<br />
+<b>Note :</b> Les instructions ci-dessous supposent que vous avez téléchargé la version binaire d'ANT dans 
+<span style="font-family: courier new,courier,monospace;">/tmp</span>.<br />
+<br />
+Après avoir téléchargé ANT, installez le :<br />
+<ol>
+  <li>Tout d'abord passez en root :<br />
+    <br />
+    <span style="font-family: courier new,courier,monospace;">
+ % su root<br />
+ Password:</span> <b>donnez le mot de passe root</b><br />
+<span style="font-family: courier new,courier,monospace;">#</span><br />
+    <br />
+  </li>
+  <li>Installez Apache ANT : <span
+ style="font-family: courier new,courier,monospace;"><br />
+    <br />
+# cd /usr/local<br />
+    </span><span style="font-family: courier new,courier,monospace;">#
+tar -xzf /tmp/apache-ant-1.6.1-bin.tar.gz<br />
+    <br />
+    </span></li>
+  <li>Quittez le shell root :<br />
+    <br />
+    <span style="font-family: courier new,courier,monospace;"> # exit<br />
+%<br />
+    <br />
+    </span></li>
+  <li>De nombreuses  variables d'environnement doivent maintenant être règlées. Voici la syntaxe pour bash(1) :
+<span style="font-family: courier new,courier,monospace;"><br />
+    <br />
+ANT_HOME=/usr/local/apache-ant-1.6.1<br />
+    </span><span style="font-family: courier new,courier,monospace;">PATH=$ANT_HOME/bin:$PATH</span><br />
+  </li>
+</ol>
+<h3><a name="Download_the_Project_Looking_Glass"></a>3. Télécharger la version pour développeurs du
+Projet Looking Glass</h3>
+<p>
+Le code source de la version pour développeurs du Projet Looking Glass est disponible sur le projet
+open source <a href="https://lg3d.dev.java.net">LG3D</a> sur <a href="http://www.java.net">java.net</a>.<br />
+</p>
+<h4>Enregistrez vous sur le site web java.net</h4>
+<p>Si vous ne vous êtes pas enregistré précedemment sur <a href="http://www.java.net/">java.net</a> 
+alors vous devrez vous créer un compte avant de pouvoir télécharger le code source :<br />
+</p>
+<ol>
+  <li>Allez sur <a href="http://www.java.net">http://www.java.net</a>
+et cliquez sur le lien <b>Register</b> en haut de la page. </li>
+  <li>Entrez votre nom d'utilisateur et votre adresse mail préférés et cliquez ensuite 
+sur le bouton <b>[Register]</b>.<br />
+  </li>
+  <li>Vous recevrez un mail avec les instructions afin de donner un mot de passe à votre compte. 
+Une fois que vous aurez entré votre mot de passe et accepté le contrat de participation du site java.net,
+vous serez connecté.<br />
+  </li>
+  <li>Maintenant allez sur le <a href="https://lg3d.dev.java.net/">Site web du projet LG3D</a>.</li>
+</ol>
+Pour naviguer dans le code source du coeur du Projet Looking Glass, cliquez sur <b>lg3d-core</b> dans la
+section <b>Subprojects</b> du <a href="https://lg3d.dev.java.net">site web du projet LG3D</a>
+Cliquez ensuite sur <b>Version control</b> dans la section <b>Project&nbsp; tools</b> de la barre latérale.
+Sur le côté droit vous verrez la représentation de l'arborescence du code source sous forme de liens. Vous
+pouvez cliquer dessus pour naviguer dans l'arborescence et télécharger individuellement des fichiers pour 
+les lire.<br />
+<h4>Télécharger le code source de Projet Looking Glass</h4>
+<p>
+La prochaine étape est de télécharger le code source du Projet Looking Glass dans le système de développement
+que vous avez configuré.<br />
+</p>
+<ol>
+  <li>Tout d'abord créez un dossier pour le Projet Looking Glass, par exemple :<br />
+    <br />
+    <span style="font-family: courier new,courier,monospace;"> % mkdir
+-p
+~/projects/lg3d<br />
+% cd ~/projects/lg3d</span><br />
+    <br />
+  </li>
+  <li> Ensuite, connectez vous au serveur CVS cvs.dev.java.net :<br />
+    <br />
+    <span style="font-family: courier new,courier,monospace;"> % cvs -d
+:pserver:<b>username</b>@cvs.dev.java.net:/cvs login <br />
+CVS password:</span> <b>password</b><br />
+    <br />
+Remplacez <b>username</b> et <b>password</b> avec les informations de votre compte java.net.<br />
+    <br />
+  </li>
+  <li>Téléchargez le code source de <b>lg3d-core</b> :<br />
+    <br />
+    <span style="font-family: courier new,courier,monospace;"> % cvs -d
+:pserver:<b>username</b>@cvs.dev.java.net:/cvs
+checkout lg3d-core<br />
+    <br />
+    </span></li>
+  <li>Le projet <b>lg3d-demo-apps</b> contient plusieurs applications 3D, dont l'afficheur de CD et
+quelques tutoriels. Le bureau du Projet Looking Glass a besoin de ces fichiers, donc téléchargez les :<br />
+    <br />
+    <span style="font-family: courier new,courier,monospace;"> % cvs -d
+:pserver:<b>username</b>@cvs.dev.java.net:/cvs
+checkout lg3d-demo-apps</span><br />
+  </li>
+</ol>
+Félicitations ! Vous avez fini de configurer votre environnement de compilation et vous pouvez maintenant 
+compiler le Projet Looking Glass.<br />
+<h3>
+<a name="Building_Project_Looking_Glass"></a>4. Compiler le Projet Looking Glass</h3>
+<p>
+La compilation du Projet Looking Glass est assurée par un fichier de compilation d'ANT (build.xml)
+qui se trouve dans votre dossier lg3d-core. Allez dans ce dossier et lancez la commande ant pour
+compiler le Projet Looking Glass :</p>
+<blockquote> <span style="font-family: courier new,courier,monospace;">%
+cd
+~/projects/lg3d/lg3d-core<br />
+% ant</span><br />
+</blockquote>
+Vous devriez voir un résultat proche de ceci :
+<blockquote> <small><span
+ style="font-family: courier new,courier,monospace;">Buildfile:
+build.xml<br />
+&nbsp;<br />
+init:<br />
+&nbsp;&nbsp;&nbsp; [mkdir] Created dir:
+/home/username/projects/lg3d/lg3d-core/build/classes<br />
+&nbsp;<br />
+unpack-x:<br />
+&nbsp;&nbsp;&nbsp; [untar] Expanding:
+/home/username/projects/lg3d/lg3d-core/ext/lg3d-x11.tar.gz into
+/home/username/projects/lg3d/lg3d-core/ext<br />
+&nbsp;<br />
+compile:<br />
+&nbsp;&nbsp;&nbsp; [javac] Compiling 1 source file to
+/home/username/projects/lg3d/lg3d-core/build-tools<br />
+&nbsp;&nbsp;&nbsp; [javac] Compiling 626 source files to
+/home/username/projects/lg3d/lg3d-core/build/classes<br />
+&nbsp;<br />
+compile-x11:<br />
+&nbsp;<br />
+check-escher:<br />
+&nbsp;&nbsp;&nbsp; [javac] Compiling 25 source files to
+/home/username/projects/lg3d/lg3d-core/build/classes<br />
+&nbsp;<br />
+init:<br />
+&nbsp;<br />
+unpack-x:<br />
+  <br />
+native-x11:<br />
+&nbsp;&nbsp;&nbsp;&nbsp; [exec]
+.:/home/username/projects/lg3d/lg3d-core/src/../build/classes<br />
+&nbsp;<br />
+junit-tests:<br />
+&nbsp;<br />
+no-junit-tests:<br />
+&nbsp;&nbsp;&nbsp;&nbsp; [echo] Skipping junit tests because junit.jar
+is not installed in ext-unbundeled<br />
+&nbsp;<br />
+compile-demo-apps:<br />
+&nbsp;&nbsp;&nbsp; [javac] Compiling 5 source files to
+/home/username/projects/lg3d/lg3d-core/build/classes<br />
+&nbsp;&nbsp;&nbsp;&nbsp; [copy] Copying 4 files to
+/home/username/projects/lg3d/lg3d-core/build/classes/org/jdesktop/lg3d/apps/cdviewer/resources<br />
+&nbsp;&nbsp;&nbsp;&nbsp; [copy] Copying 1 file to
+/home/username/projects/lg3d/lg3d-core/build/classes/org/jdesktop/lg3d/apps/tutorial/resources<br />
+&nbsp;&nbsp;&nbsp;&nbsp; [copy] Copying 1 file to
+/home/username/projects/lg3d/lg3d-core/build/classes/org/jdesktop/lg3d/apps/help/resources<br />
+&nbsp;<br />
+jar:<br />
+&nbsp;&nbsp;&nbsp; [mkdir] Created dir:
+/home/username/projects/lg3d/lg3d-core/build/lib<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; [jar] Building jar:
+/home/username/projects/lg3d/lg3d-core/build/lib/lg3d-core.jar<br />
+&nbsp;<br />
+all:<br />
+&nbsp;<br />
+BUILD SUCCESSFUL<br />
+Total time: 32 seconds</span><br />
+  </small></blockquote>
+<h3>
+<a name="Running_Project_Looking_Glass"></a>5. Lancer le Projet Looking Glass</h3>
+<p>
+Il y a deux façons pour lancer le Projet Looking Glass : dans une fenêtre dans un environnement existant 
+et comme un bureau en plein écran. Ces modes sont décrits dans la section <b>Lancer le Projet Looking Glass</b>
+du <a href="lg3d-getting-started.html#Running_Project_Looking_Glass">Guide d'installation du Projet 
+Looking Glass</a>.
+</p>
+<p>
+Si vous avez des problèmes pour lancer le Projet Looking Glass, consultez la section <b>Problèmes</b>
+du <a href="lg3d-getting-started.html#Troubleshooting">Guide d'installation du Projet 
+Looking Glass</a>.
+</p>
+<h3><a name="Getting_the_latest_Project_Looking"></a>6. Obtenir le dernier code source du Projet Looking 
+Glass<br />
+</h3>
+<p>
+Pour resté à jour des derniers développements du Projet Looking Glass, connectez vous régulièrement
+au serveur CVS java.net et mettez à jour votre espace de travail CVS :
+</p>
+<ol>
+  <li> Allez dans votre dossier ~/projects/lg/lg3d-core :<br />
+    <span style="font-family: courier new,courier,monospace;"><br />
+% cd ~/projects/lg/lg3d-core<br />
+    </span> <br />
+  </li>
+  <li>Supprimez les fichiers d'une compilation précédente :<br />
+    <br />
+    <span style="font-family: courier new,courier,monospace;"> % ant
+clean </span><br />
+    <br />
+  </li>
+  <li>Allez dans le dossier :<br />
+    <br />
+    <span style="font-family: courier new,courier,monospace;"> % cd
+~/projects/lg</span><br />
+    <br />
+  </li>
+  <li>Maintenant mettez à jour votre espace de travail avec le dernier code source du Projet Looking
+Glass :<br />
+    <br />
+    <span style="font-family: courier new,courier,monospace;"> %
+cvs -d :pserver<b>:username</b></span><span
+ style="font-family: courier new,courier,monospace;">@cvs.dev.java.net:/cvs
+update
+-Pd lg3d-core<br />
+    </span><br />
+et mettez à jour les applications de démonstration :<br />
+    <br />
+    <span style="font-family: courier new,courier,monospace;"> % cvs -d
+:pserver<b>:username</b></span><span
+ style="font-family: courier new,courier,monospace;">@cvs.dev.java.net:/cvs
+update
+-Pd lg3d-demo-apps</span><br />
+    <br />
+Remplacez <b>username</b> par votre nom d'utilisateur de java.net.<br />
+  </li>
+</ol>
+<p>
+Maintenant que vous avez compilé avec succès le Projet Looking Glass, pourquoi ne pas continuer
+à lire et faire un rapide tour du dossier <span 
+style="font-family: courier new,courier,monospace;">lg3d-core/</span> pour vous familiariser avec
+le code source ?<br />
+</p>
+<h3><a name="A_quick_tour_of_the_Project_Looking"></a>
+7. Un tour rapide des sources du Projet Looking Glass</h3>
+<p>
+Le code source du Projet Looking Glass se trouve dans le dossier <span
+ style="font-family: courier new,courier,monospace;">lg3d-core/src</span>.
+Voici un aperçu global des différents fichiers du repository CVS de lg3d-core.</p>
+<table style="text-align: left; width: 100%;" border="1" cellpadding="2"
+ cellspacing="2">
+  <tbody>
+    <tr>
+      <td bgcolor="#cccccc">Dossier</td>
+      <td bgcolor="#cccccc">Description</td>
+    </tr>
+    <tr>
+      <td
+ style="text-align: left; vertical-align: top; white-space: nowrap;"><span
+ style="font-family: courier new,courier,monospace;">build/</span></td>
+      <td style="text-align: left; vertical-align: top;">Les fichiers compilés sont stockés dans ce dossier.<br />
+      </td>
+    </tr>
+    <tr>
+      <td
+ style="text-align: left; vertical-align: top; white-space: nowrap;"><span
+ style="font-family: courier new,courier,monospace;">build-tools/</span>
+      </td>
+      <td style="text-align: left; vertical-align: top;">Les outils pour compiler le Projet Looking Glass.<br />
+      </td>
+    </tr>
+    <tr>
+      <td
+ style="text-align: left; vertical-align: top; white-space: nowrap;"><span
+ style="font-family: courier new,courier,monospace;">build.xml</span></td>
+      <td style="text-align: left; vertical-align: top;">Le fichier de contrôle de la compilation pour Ant.<br />
+      </td>
+    </tr>
+    <tr>
+      <td
+ style="text-align: left; vertical-align: top; white-space: nowrap;"><span
+ style="font-family: courier new,courier,monospace;">ext/</span></td>
+      <td style="text-align: left; vertical-align: top;">Plusieurs composants fournis avec le Projet Looking Glass,
+notamment escher (des bindings Java pour X11) et une compilation stable de lg3d-x11.<br />
+      </td>
+    </tr>
+    <tr>
+      <td
+ style="text-align: left; vertical-align: top; white-space: nowrap;"><span
+ style="font-family: courier new,courier,monospace;">ext-unbundled/</span></td>
+      <td style="text-align: left; vertical-align: top;">Un dossier où vous pouvez mettre les composants qui ne sont
+pas prévus pour la distribution avec le Projet Looking Glass (par exemple junit, les chargeurs de Java3D...). Vous 
+pouvez installer là votre propre compilation de lg3d-x11 au lieu d'utiliser $LGX11HOME.<br />
+      </td>
+    </tr>
+    <tr>
+      <td
+ style="text-align: left; vertical-align: top; white-space: nowrap;"><span
+ style="font-family: courier new,courier,monospace;">src/</span></td>
+      <td style="text-align: left; vertical-align: top;">La racine de l'arborescence du code source de lg3d-core.<br />
+      </td>
+    </tr>
+    <tr>
+      <td
+ style="text-align: left; vertical-align: top; white-space: nowrap;"><span
+ style="font-family: courier new,courier,monospace;">&nbsp;&nbsp;&nbsp;
+classes/</span></td>
+      <td style="text-align: left; vertical-align: top;">Tous les fichiers .java sont là.<br />
+Consultez les javadocs du paquet binaire dans <span style="font-family: courier new,courier,monospace;">docs/javadoc/api</span>
+pour plus d'informations.</td>
+    </tr>
+    <tr>
+      <td
+ style="text-align: left; vertical-align: top; white-space: nowrap;"><span
+ style="font-family: courier new,courier,monospace;">&nbsp;&nbsp;&nbsp;
+devscripts/</span></td>
+      <td style="text-align: left; vertical-align: top;">Le code source pour divers scripts de développement du Projet 
+Looking Glass. Ils utilisent des classes dans le dossier <span style="font-family: courier new,courier,monospace;">build/</span>.
+      </td>
+    </tr>
+    <tr>
+      <td
+ style="text-align: left; vertical-align: top; white-space: nowrap;"><span
+ style="font-family: courier new,courier,monospace;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+HelloUniverse</span></td>
+      <td style="text-align: left; vertical-align: top;">Lance la démonstration Java3D montrant un cube tournant dans une 
+session du Projet Looking Glass.<br />
+      </td>
+    </tr>
+    <tr>
+      <td
+ style="text-align: left; vertical-align: top; white-space: nowrap;"><span
+ style="font-family: courier new,courier,monospace;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+README</span></td>
+      <td style="text-align: left; vertical-align: top;">Documentation pour certains des scripts de ce dossier.<br />
+      </td>
+    </tr>
+    <tr>
+      <td
+ style="text-align: left; vertical-align: top; white-space: nowrap;"><span
+ style="font-family: courier new,courier,monospace;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+Xtest<br />
+      </span></td>
+      <td style="text-align: left; vertical-align: top;">Un script pour tester les classes Java X11 sans le support de X11.<br />
+      </td>
+    </tr>
+    <tr>
+      <td
+ style="text-align: left; vertical-align: top; white-space: nowrap;"><span
+ style="font-family: courier new,courier,monospace;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+displayserver</span></td>
+      <td style="text-align: left; vertical-align: top;">Lance le serveur d'affichage.<br />
+      </td>
+    </tr>
+    <tr>
+      <td
+ style="text-align: left; vertical-align: top; white-space: nowrap;"><span
+ style="font-family: courier new,courier,monospace;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+lg3d-dev</span></td>
+      <td style="text-align: left; vertical-align: top;">Lance une session du Projet Looking Glass dans une fenêtre (c'est le
+mode "dévelopeur" ou "pas de X").<br />
+      </td>
+    </tr>
+    <tr>
+      <td
+ style="text-align: left; vertical-align: top; white-space: nowrap;"><span
+ style="font-family: courier new,courier,monospace;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+lg3d-session<br />
+      </span></td>
+      <td style="text-align: left; vertical-align: top;">Lance une session du Projet Looking Glass en plein écran, avec le
+support de X11.<br />
+      </td>
+    </tr>
+    <tr>
+      <td
+ style="text-align: left; vertical-align: top; white-space: nowrap;"><span
+ style="font-family: courier new,courier,monospace;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+setup</span></td>
+      <td style="text-align: left; vertical-align: top;">Un script assistant les autres scripts.<br />
+      </td>
+    </tr>
+    <tr>
+      <td
+ style="text-align: left; vertical-align: top; white-space: nowrap;"><span
+ style="font-family: courier new,courier,monospace;">&nbsp;&nbsp;&nbsp;
+etc/</span></td>
+      <td style="text-align: left; vertical-align: top;">Contient divers fichiers de configuration.<br />
+      </td>
+    </tr>
+    <tr>
+      <td
+ style="text-align: left; vertical-align: top; white-space: nowrap;"><span
+ style="font-family: courier new,courier,monospace;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+jz/</span></td>
+      <td style="text-align: left; vertical-align: top;">Un dossier obsolète.<br />
+      </td>
+    </tr>
+    <tr>
+      <td
+ style="text-align: left; vertical-align: top; white-space: nowrap;"><span
+ style="font-family: courier new,courier,monospace;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+lg3d/</span></td>
+      <td style="text-align: left; vertical-align: top;"><br />
+      </td>
+    </tr>
+    <tr>
+      <td
+ style="text-align: left; vertical-align: top; white-space: nowrap;"><span
+ style="font-family: courier new,courier,monospace;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+README</span></td>
+      <td style="text-align: left; vertical-align: top;">Documentation pour les divers fichiers lgconfig*.<br />
+      </td>
+    </tr>
+    <tr>
+      <td
+ style="text-align: left; vertical-align: top; white-space: nowrap;"><span
+ style="font-family: courier new,courier,monospace;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+lgconfig*</span></td>
+      <td style="text-align: left; vertical-align: top;">Scripts de configuration pour les différents modes dans lesquels
+le Projet Looking Glass peut être lancé.<br />
+      </td>
+    </tr>
+    <tr>
+      <td
+ style="text-align: left; vertical-align: top; white-space: nowrap;"><span
+ style="font-family: courier new,courier,monospace;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+logging.properties</span></td>
+      <td style="text-align: left; vertical-align: top;">Fichier de configuration qui contrôle la verbosité du journal
+d'exécution du serveur d'affichage, <span
+ style="font-family: courier new,courier,monospace;">/var/tmp/lgserver.log</span></td>
+    </tr>
+    <tr>
+      <td style="vertical-align: top; white-space: nowrap;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+      <span style="font-family: courier new,courier,monospace;">displayconfig/</span></td>
+      <td style="vertical-align: top;">Pour les aventureux, ce dossier contient des fichiers qui vous permettent de lancer 
+le Projet Looking Glass dans des environnements d'affichage plus complexes, comme un multi-écrans ou des murs stéréos. Le
+choix de la configuration est contrôlé par lgconfig.xml. <br />
+      <br />
+      <span style="color: red;">ATTENTION !</span> Les configurations d'affichage alternatives n'ont pas encore été testées
+extensivement !<br />
+      </td>
+    </tr>
+    <tr>
+      <td
+ style="text-align: left; vertical-align: top; white-space: nowrap;"><span
+ style="font-family: courier new,courier,monospace;">&nbsp;&nbsp;&nbsp;
+      <small>native/org/jdesktop/lg3d/displayserver/fws/x11/</small></span></td>
+      <td style="text-align: left; vertical-align: top;">Le code en C pour l'intégration de X11.<br />
+      </td>
+    </tr>
+    <tr>
+      <td
+ style="text-align: left; vertical-align: top; white-space: nowrap;"><span
+ style="font-family: courier new,courier,monospace;">&nbsp;&nbsp;&nbsp;
+resources/images/</span></td>
+      <td style="text-align: left; vertical-align: top;">Une série d'images utilisées par le Projet Looking Glass.<br />
+      </td>
+    </tr>
+    <tr>
+      <td
+ style="text-align: left; vertical-align: top; white-space: nowrap;"><span
+ style="font-family: courier new,courier,monospace;">&nbsp;&nbsp;&nbsp;
+scripts/</span></td>
+      <td style="text-align: left; vertical-align: top;">Scripts pour lancer le Projet Looking Glass. Ils utilisent les
+classes des fichiers jar.<br />
+      </td>
+    </tr>
+    <tr>
+      <td
+ style="text-align: left; vertical-align: top; white-space: nowrap;"><span
+ style="font-family: courier new,courier,monospace;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+displayserver</span></td>
+      <td style="text-align: left; vertical-align: top;">Lance le serveur d'affichage (les utilisateurs ne devraient pas 
+le lancer directement).<br />
+      </td>
+    </tr>
+    <tr>
+      <td
+ style="text-align: left; vertical-align: top; white-space: nowrap;"><span
+ style="font-family: courier new,courier,monospace;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+lg3d-dev</span></td>
+      <td style="text-align: left; vertical-align: top;">Lance une session du Projet Looking Glass dans une fenêtre (c'est le
+mode "dévelopeur" ou "pas de X").<br />
+      </td>
+    </tr>
+    <tr>
+      <td
+ style="text-align: left; vertical-align: top; white-space: nowrap;"><span
+ style="font-family: courier new,courier,monospace;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+lg3d-session</span></td>
+      <td style="text-align: left; vertical-align: top;">Lance une session du Projet Looking Glass en plein écran, avec le support
+de X11.<br />
+      </td>
+    </tr>
+    <tr>
+      <td
+ style="text-align: left; vertical-align: top; white-space: nowrap;"><span
+ style="font-family: courier new,courier,monospace;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+setup</span></td>
+      <td style="text-align: left; vertical-align: top;">Un script assistant les autres scripts. (Les utilisateurs ne devraient pas
+le lancer directement).<br />
+      </td>
+    </tr>
+    <tr>
+      <td
+ style="text-align: left; vertical-align: top; white-space: nowrap;"><span
+ style="font-family: courier new,courier,monospace;">tests/</span></td>
+      <td style="text-align: left; vertical-align: top;">Contiendra éventuellement la suite de tests pour le Projet Looking Glass.<br />
+      </td>
+    </tr>
+    <tr>
+      <td
+ style="text-align: left; vertical-align: top; white-space: nowrap;"><span
+ style="font-family: courier new,courier,monospace;">www/</span></td>
+      <td style="text-align: left; vertical-align: top;">Les pages du site java.net et diverses documentations.<br />
+      </td>
+    </tr>
+  </tbody>
+</table>
+<br />
+<h3><a name="Contributing_to_Project_Looking_Glass"></a>8. Contribuer au Projet Looking Glass</h3>
+<h4>Apprenez ce que signifie contribuer</h4>
+<span style="font-weight: normal;">Lisez s'il vous plaît le guide <a 
+href="https://lg3d.dev.java.net/contribute.html">Comment contribuer au projet Looking Glass</a> pour
+plus d'informations sur ce que signifie contribuer, et si cela vous intéresse demandez un compte pour 
+accéder au projet LG3D.</span><br />
+<h4>Demandez l'accès au projet LG3D</h4>
+<p>
+Pour demander l'accès au projet LG3D :
+</p>
+<ol>
+  <li>Si vous n'êtes pas connecté sur <a href="http://www.java.net/">java.net</a>, allez sur <a href="http://www.java.net/">http://www.java.net</a> et connectez vous en entrant votre nom d'utilisateur
+et votre mot de passe dans les champs en haut de la page puis en cliquant sur le bouton [Login].</li>
+  <li>Allez sur <a href="https://lg3d.dev.java.net/">https://lg3d.dev.java.net</a> et ajoutez la page à vos
+marque-pages pour y revenir plus facilement. Vous y retournerez souvent !</li>
+  <li>Cliquez sur le lien <b>Request project membership/role</b>.</li>
+  <li>Choisissez le rôle approprié :<br />
+- Choisissez <b>Observer</b> si vous voulez juste compiler le Projet Looking Glass.<br />
+- Choisissez <b>Developer</b> si vous comptez développer du code pour le Projet Looking Glass et que vous
+comptez contribuer au projet.<br />
+  </li>
+  <li>Après avoir envoyé votre requête, vous recevrez un mail contenant les instructions sur comment accéder
+au projet.<br />
+  </li>
+</ol>
+Maintenant, quand vous allez sur le <a href="https://lg3d.dev.java.net/">site web du projet LG3D</a> vous devrez
+vous connecter pour accéder aux documents du projet.<br />
+<br />
+<h3><a name="Learning_how_to_write_3D_applications"></a>9. Apprendre comment écrire des applications 3D
+pour le Projet Looking Glass</h3>
+<p>Le Projet Looking Glass inclue quelques exemples d'applications 3D que vous pouvez utiliser pour apprendre
+comment écrire des applications exploitant la nature 3D de l'environnement de bureau du Projet Looking Glass.
+Vous pouvez trouver ces exemples dans le projet <a href="http://lg3d-demo-apps.dev.java.net">lg3d-demo-apps</a>.
+</p>
+<p>
+<b>Voir aussi :</b>
+</p>
+<p>
+<a href="../netbeans/NetBeansLookingGlass.html">
+Compiler et lancer le Projet Looking Glass avec NetBeans</a>
+<br />
+<a href="lg3d-getting-started.html">Comment installer la version de développement du Projet Looking Glass</a>
+<br />
+<a href="release-notes.html">Notes de version pour développeurs du Projet Looking Glass</a>
+<br />
+<a href="https://lg3d.dev.java.net/contribute.html">Contribuer au Projet Looking Glass</a> <br />
+</p>
+<hr />
+<small>$Revision: 1.1 $ $Date: 2006-05-09 17:46:26 $</small>
+</div>
+</body>
+</html>

@@ -1,0 +1,233 @@
+/* $Id: preview.css,v 1.1 2006-05-09 17:39:13 hideya Exp $
+	
+   This file is a CSS file for previewing lg3d-core web pages. This is
+   based on "tigris.css" which defines basic default formatting for
+   HTML conforming to Tigris application style. */
+
+/* colors, backgrounds, borders, link indication */
+body {
+	background: #fff;
+	color: #000;
+}
+
+.app h3, .app h4 {
+	background-image: url(../images/nw_maj_rond.gif);
+	background-repeat: no-repeat;
+}
+
+
+a:link, .app a:visited {
+	color: blue;
+}
+
+a:link.selfref, a:visited.selfref {
+	color: #555 !important;
+	text-decoration: none;
+}
+
+a:active, a:hover {
+	color: #f30 !important;
+}
+
+.app h3, .app h4 {
+	color: #fff;
+}
+
+.app h3 {
+	background-color: #333;
+}
+
+.app h3 a:link, .app h3 a:visited, .app h4 a:link, .app h4 a:visited {
+	color: #fff !important;
+	text-decoration: underline;
+}
+
+.app h4 {
+	background-color: #888;
+}
+
+table, th, td {
+	border: none;
+}
+
+#main {
+	border-top: 1px solid #999;
+}
+
+/* font and text properties, exclusive of link indication, alignment, text-indent */
+body, th, td {
+	font-family: Verdana, Helvetica, Arial, sans-serif;
+}
+
+code, pre {
+	font-family: 'Andale Mono', Courier, monospace;
+}
+
+body, .app h3, .app h4, pre, code, h4, table {
+	font-size: x-small;
+	voice-family: "\"}\"";
+	voice-family: inherit;
+	font-size: small;
+}
+
+small {
+	font-size: xx-small;
+	voice-family: "\"}\"";
+	voice-family: inherit;
+	font-size: x-small;
+}
+
+dt {
+	font-weight: bold;
+}
+
+/* box properties (exclusive of borders), positioning, alignments, list types, text-indent */
+#bodycol h2 {
+	margin-top: .3em;
+	margin-bottom: .5em;
+}
+
+#projectdocumentview h2 {
+	margin-top: .3em;
+	margin-bottom: .5em;
+}
+
+p, ul, ol, dl {
+	margin-top: .67em;
+	margin-bottom: .67em;
+}
+
+h3, h4 {
+	margin-bottom: 0;
+}
+
+#bodycol {
+	padding-left: 12px;
+	padding-right: 12px;
+	width: 100%;
+	voice-family: "\"}\"";
+	voice-family: inherit;
+	width: auto;
+}
+
+/* projectdocumentview <- main + bodycol */
+/*    by Sakuraba */
+#projectdocumentview {
+	padding-left: 12px;
+	padding-right: 12px;
+	width: 100%;
+	voice-family: "\"}\"";
+	voice-family: inherit;
+	width: auto;
+}
+
+html>body #bodycol {
+	width: auto;
+}
+
+html>body #projectdocumentview {
+	width: auto;
+}
+
+ol ol {
+	list-style-type: lower-alpha;
+}
+
+ol ol ol {
+	list-style-type: lower-roman;
+}
+
+.app h3, .app h4 {
+	padding: 5px;
+	margin-right: 2px;
+	margin-left: 2px;
+}
+
+.app td, .app th {
+	padding: 2px 3px;
+}
+
+body {
+	padding: 1em;
+}
+
+th, td {
+	text-align: left;
+	vertical-align: top;
+}
+
+dd {
+	margin-bottom: .67em;
+}
+
+.app h3, .app h4 {
+	clear: both;
+}
+
+/* colors, backgrounds, borders, link indication */
+.app h3 {
+	background-color: #036;
+	color: #fff;
+}
+
+.app h3 a, .app h4 a {
+	color: #fff !important;
+}
+
+/* font and text properties, exclusive of link indication, alignment, text-indent */
+#bodycol h2 {
+	font-family: Tahoma, Verdana, Helvetica, Arial, sans-serif;
+	font-size: 1.5em;
+	font-weight: normal;
+}
+
+#projectdocumentview h2 {
+	font-family: Tahoma, Verdana, Helvetica, Arial, sans-serif;
+	font-size: 1.5em;
+	font-weight: normal;
+}
+
+/* java.net dev stylesheet */
+
+/* colors, backgrounds, borders, link indication */ 
+body {
+ color:  #333;
+ }
+.app h3, .app h4 {
+ background-image: none;
+ background-repeat: no-repeat;
+ }
+ 
+.app h3 {
+ background-color: #594FBF;
+ color: #fff;
+ }
+
+a:link, a:visited, .app a:visited {
+ color: #594FBF;
+}
+
+a:link.selfref, a:visited.selfref {
+ color: #555 !important;
+ text-decoration: none;	
+ }
+
+/* box properties (exclusive of borders), positioning, alignments, list types, text-indent */
+
+.app h3, .app h4 {
+ padding: 3px;
+ margin-right: 2px;
+ margin-left: 2px;
+ }
+
+ /* java.net font styles */
+body,th,td,p{font-family:lucida,arial,sans-serif;color:#333}
+
+/* for galley reading */
+.en, table.en td {
+  color: red;
+}
+
+.jp, table.jp td {
+  color: black;
+}

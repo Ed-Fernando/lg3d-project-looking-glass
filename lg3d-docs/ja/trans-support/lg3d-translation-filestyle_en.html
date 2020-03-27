@@ -1,0 +1,136 @@
+<!DOCTYPE html PUBLIC "-//Tigris//DTD XHTML 1.0 Transitional//EN"
+"http://style.tigris.org/tigris_transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+  <title>Project Looking Glass Translation - File Style Guide</title>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  <meta name="Author" content="Yuichi SAKURABA" />
+  <meta name="Translator" content="Kazuhiro Kazama" />
+<style type="text/css"> /* <![CDATA[ */
+ @import "../preview.css";
+ /* ]]> */</style></head>
+<body>
+<div id="projectdocumentview" class="app">
+<h2>Project Looking Glass Translation - File Style Guide</h2>
+
+<p>This document is a guide for the file style which is used in Project Looking Glass Japanese Translation subproject.</p>
+
+<h3><a name="location" id="location"></a>The Location of Translated Files</h3>
+<p>Translated files should be located in <strong>lg3d-core/www/<i>&lt;language name&gt;</i></strong>. The <i>&lt;language name&gt;</i> is 2 letter language codes which is defined in ISO-639.
+For precise information, see
+<a href="http://www.w3.org/WAI/ER/IG/ert/iso639.htm">http://www.w3.org/WAI/ER/IG/ert/iso639.htm</a>.
+</p>
+<p>Basically tree structure of English document under lg3d-core/www is duplicated under this directory.
+So you can also translate image files.
+Note that there is a few exception which you should not translate (e.g. License file etc.)</p>
+
+<h3><a name="filename" id="filename"></a>File Name</h3>
+<p>Use <strong>the same file name</strong> as the original document.</p>
+
+<h3><a name="format" id="format"></a>File Format</h3>
+<p>File format should be <strong>XHTML 1.0</strong>.
+Don't write documents in HTML.
+On CollabNet which hosts LG3D project, all response is returned in XHTML.</p>
+<p>XHTML 1.0 DOCTYPE definition which CollabNet uses is:</p>
+<table width="80%" border="1" align="center" cellpadding="5" cellspacing="2">
+  <tr> 
+    <td bgcolor="#CCFFFF"><pre>&lt;!DOCTYPE html PUBLIC &quot;-//Tigris//DTD XHTML 1.0 Transitional//EN&quot;
+&quot;http://style.tigris.org/tigris_transitional.dtd&quot;&gt;</pre></td>
+  </tr>
+</table>
+<p>You should add this declaration to the beginning of your translation.
+Basically, most of english documents have already had it and there is no need to add it.</p>
+
+  <h3><a name="charset" id="charset"></a>Character Encoding</h3>
+<p>Encode your translation in <strong>UTF-8</strong>.
+The CollabNet system which is used in java.net returns HTTP responses in UTF-8 and display problem may occur with other character encoding.
+</p>
+<p>For preview on your local file system, the following META element is used for specifying charset:</p>
+<table width="80%" border="1" align="center" cellpadding="5" cellspacing="2">
+  <tr> 
+    <td bgcolor="#CCFFFF"><pre>&lt;meta http-equiv=&quot;Content-Type&quot; content=&quot;text/html; charset=utf-8&quot; /&gt;</pre></td>
+  </tr>
+</table>
+<p>It should be placed in &lt;head&gt; ... &lt;/head&gt;</p>
+
+<h3><a name="lineseparator" id="lineseparator"></a>Line Separators</h3>
+<p>Use <strong>LF</strong> (0x0A) for line separators, even on Windows or MacOS.</p>
+
+<h3><a name="editor" id="editor"></a>HTML Editor</h3>
+<p>Don't use <strong>HTML editors</strong> to prevent XHTML files from unexpected modifications or redundant XHTML elements.
+It is suitable to use a text editor.</p>
+<p>In future times, we will consider the use of a HTML editor if we will be able to confirm that there is no problem in it.
+And we have a plan to develop a plug-in for IDE (e.g. Eclipse etc.) to support translation works.</p>
+
+<h3><a name="stylesheet" id="stylesheet"></a>Stylesheet</h3>
+<p>For the preview on your local file system, you can use the following stylesheet in order to get the same look as it on java.net:</p>
+<table width="80%" border="1" align="center" cellpadding="5" cellspacing="2">
+  <tr> 
+    <td bgcolor="#CCFFFF"><pre>&lt;style type=&quot;text/css&quot;&gt; /* &lt;![CDATA[ */
+@import &quot;preview.css&quot;;
+/* ]]&gt; */&lt;/style&gt;</pre></td>
+  </tr>
+</table>
+<p>On the CollabNet system, this declaration is removed and other
+stylesheets are used.</p>
+<p><strong>Note:</strong> 
+This example assumes that your translation file is located in lg3d-core/www/ja.
+If you locate it in anothor directory, you should change the location by using relative URI.</p>
+<p>It should be placed in &lt;head&gt; ... &lt;/head&gt;.
+And "preview.css" is located in lg3d-core/www/ja directory on CVS, you can download and use it.</p>
+
+<h3><a name="hyperlink" id="hyperlink"></a>Hyperlinks</h3>
+<p>Write URIs under https://lg3d-core.dev.java.net/ in relative URI to reduce maintenance costs in rewrite them.</p>
+<p><strong>Note:</strong> Original English documents should be written in the same way.</p>
+<p>To avoid HTTP 404 error (i.e. Not found), you can use the following dummy page to redirect it to the original document:</p>
+<table width="80%" border="1" align="center" cellpadding="5" cellspacing="2">
+  <tr> 
+    <td bgcolor="#CCFFFF"><pre>&lt;meta http-equiv=&quot;Refresh&quot; content=&quot;1; URL=https://lg3d-core.dev.java.net/foo.html&quot; /&gt;</pre></td>
+  </tr>
+</table>
+
+<h3><a name="translator" id="translator"></a>Translator Credit</h3>
+<p>A Translator name are written in the following META element:</p>
+<table width="80%" border="1" align="center" cellpadding="5" cellspacing="2">
+  <tr> 
+    <td bgcolor="#CCFFFF"><pre>&lt;meta name=&quot;Translator&quot; content=&quot;Yuichi SAKURABA&quot; /&gt;</pre></td>
+  </tr>
+</table>
+<p>It should be placed in &lt;head&gt; ... &lt;/head&gt;.</p>
+
+<h3><a name="contents" id="contents"></a>Translation Results</h3>
+<p>You should include only <strong>translated sentences</strong> in your files but not original sentences.
+It means that we don't include multiple language sentences in a file.</p>
+<p>We have a plan to display an original document and its translation in the same page for proofreading.</p>
+
+<h3><a name="revision" id="revision"></a>CVS Revision Number</h3>
+<p>When you commit your translation to CVS for the first time,
+you should reset CVS revision number and add the original revision number in the following format:</p>
+<table width="80%" border="1" align="center" cellpadding="5" cellspacing="2">
+  <tr> 
+    <td bgcolor="#CCFFFF"><pre>$Revision: 1.1 $ $Date: 2006-05-09 18:17:14 $ (English Version Revision: x.y)</pre></td>
+  </tr>
+</table>
+<p>This shows whether it is the newest translation or not and it helps other translator to update existing translation by using CVS diff on CollabNet.</p>
+<p><strong>Note:</strong> When you updates a translation, update its original's revision number by hand.</p>
+
+<h3><a name="commit" id="commit"></a>Commit Messages to CVS</h3>
+<p>Write commit messages to CVS in <strong>English</strong>.
+The reason is:
+<ul>
+<li>The CollabNet system can't treat multiple character encodings and there may be problems for some character encodings.</li>
+<li>All developer and content develper read them.
+So it isn't recommend to use other languages.x</li>
+</ul>
+</p>
+
+<h3><a name="validation" id="validation"></a>Validation</h3>
+<p>LG3D documentations are written in XHTML.
+And they should be validated before committing them to CVS.
+For example, you can use <a href="http://validator.w3.org/">W3C 
+  Markup Validation Service</a>.</p>
+<hr />
+<p><small>$Revision: 1.1 $ $Date: 2006-05-09 18:17:14 $ (Japanese Version Revision: 1.2)</small></p>
+</div>
+</body>
+</html>

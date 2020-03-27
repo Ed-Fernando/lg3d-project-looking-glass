@@ -1,0 +1,365 @@
+<!DOCTYPE html PUBLIC "-//Tigris//DTD XHTML 1.0 Transitional//EN"
+"http://style.tigris.org/tigris_transitional.dtd">
+<html>
+<head>
+  <title>NVIDIA Driver Install Tips for Linux</title>
+</head>
+<body>
+<div id="projectdocumentview" class="app">
+
+<hr />
+<h2>NVIDIA Driver Installation Tips for Linux</h2>
+
+<br />
+
+<h3>Installation Instructions</h3>
+<ol>
+    <li><p>First of all, assume that your system is going to have to build the
+ drivers from source, and make sure you have the kernel sources, compilers
+ and binutils installed.  If you've set your machine up to be a developer
+platform, all this should already be there.  Adding this software if you
+didn't install it initially is usually quite simple and can be done with
+the GUI tools supplied by the distributor.  For Sun's JDS, you'll find, under
+the <b>Launch</b> button menu, <b>Applications</b> &gt; <b>System Tools</b>
+&gt; <b>Install</b></p>
+    </li>
+    
+    <li><p>Then you'll need to semi-build the kernel source - not the whole
+thing, just enough of the preamble to building for the right files
+to be put in place. The simplest way is to cd to <font
+ face="Courier New, Courier, monospace">/usr/src/linux</font> and run first 
+<i>make cloneconfig</i> and then <i>make dep</i>.  But you can also 
+copy the files from <font face="Courier New, Courier, monospace">/boot</font> 
+to the correct places in this source tree and edit them, if you're stuck 
+for disk space:</p>
+   	  
+<blockquote><small><font face="Courier New, Courier, monospace">  cp /boot/vmlinuz.config
+ /usr/src/linux-2.4.19-SuSE/.config</font><br />
+    <font face="Courier New, Courier, monospace">	  cp /boot/vmlinuz.autoconf.h
+ /usr/src/linux-2.4.19-SuSE/include/linux/autoconf.h</font></small><br /><br />
+    &amp; edit <font face="Courier New, Courier, monospace">/usr/src/linux-2.4.19-SuSE/include/linux/version.h</font>
+ to match "<font face="Courier New, Courier, monospace">uname -r</font>".<br />
+  </blockquote>
+   </li>
+
+    <li><p>Go to <a href="http://www.nvidia.com/object/linux.html">http://www.nvidia.com/object/linux.html</a>
+ and click on      the latest version for your platform.&nbsp; This will
+probably  be Linux IA32 for Intel or AMD x86 chip.</p>
+   
+<blockquote><b>Note:</b>&nbsp; In the case of GeForce 3 cards, it's been
+found that only the older "123" drivers seem to work for them.  If you have a 3, download the following files:<br />
+    <br />
+    <small><font face="Courier New, Courier, monospace">                
+       NVIDIA_GLX-1.0-3123.tar.gz<br />
+                          NVIDIA_kernel-1.0-3123.tar.gz</font></small><br />
+    <br />
+        and install using these sources instead.  Otherwise, continue with
+ the next few steps.<br />
+  </blockquote>
+    </li>
+   
+    <li><p>Download the *.run file that it takes you to, and read the instructions
+      but don't try to run it yet.  The README linked to from here is also
+ very useful.  Put the *.run file in an easy-to-reach place.  If you
+see more than one, take the one with the highest pkg number.</p>
+    </li>
+   
+    <li><p>To help you compare the 3D speed of your system before and after
+this  procedure, you can try running some 3D program to see how well it performs
+ with software 3D.  XScreenSaver is installed on most Linux and UNIX systems,
+ so a good option for this is to run <i>xscreensaver-demo</i>, select <b>GLPlanet</b>
+ (for a good example) or <b>Sproingies</b> from the list, and then click
+    <b>Preview.</b>   After watching it perform full screen for a while,
+click a mouse button to get back to the normal screen.  We'll be doing this
+again later.  Also try glxgears - it will print frame rates every 5 seconds,
+giving you a better  comparison.</p>
+    </li>
+   
+    <li><p>Log out to the normal login screen, and then type Ctrl-Alt-F2, which 
+will take you to a new virtual console.  Here you should log in as root, and
+type init 3, which will drop you to a safe, multi user mode without the X environment.</p>
+    </li>
+   
+    <li><p>When the stopping services text stops printing, press Return and
+you should get a prompt back.  Next, type "pkill gdm" to ensure nothing else
+is using X.</p>
+    </li>
+    
+    <li><p>Now run the downloaded script, by typing, for instance:</p>
+   
+<blockquote><big><font face="Helvetica, Arial, sans-serif"><small>      sh
+ NVIDIA-Linux-x86-1.0-4496-pkg2.run</small></font></big><br />
+  </blockquote>
+   
+<blockquote> depending on what the file is called.  It's a shell
+ script, so the initial "sh" is important.  Walk through the
+ text-based install.  For Sun's JDS, there isn't a pre-compiled
+ binary, so it must build one.  If you're going to do this, you need
+ to make sure you have already installed the kernel sources if you
+ haven't done so already.  They should be on the distribution
+ media.</blockquote>
+</li>
+
+    <li><p>If you're using the Java Desktop System distribution on an Athlon 
+PC you should edit the following file, so that you don't get errors about 
+the version of the kernel sources not matching your running kernel:</p>
+   
+<blockquote><small><font face="Courier New, Courier, monospace">       /usr/src/linux-2.4.*/include/linux/version.h</font></small><br />
+  </blockquote>
+   
+<blockquote>      Change line 1 to end with "-athlon" as follows for one
+test system:<br />
+  </blockquote>
+     
+<blockquote><small><font face="Courier New, Courier, monospace">       #define
+ UTS_RELEASE "2.4.19-4GB-athlon"<br />
+    </font></small></blockquote>
+   
+<blockquote>      i.e.  make it match the output of "uname -r"<br />
+  </blockquote>
+   
+<blockquote>Once the NVIDIA install script has finished, it will tell you
+ that if you're running SuSE you should run SaX2 to complete the setup. 
+This  is also true for Sun's JDS, so I'll walk through it here.  For other
+platforms  you'll need to edit the XF86Config file to replace "nv" with "nvidia"
+and  maybe other things.  See the README link off the NVIDIA website (<a
+ href="http://www.nvidia.com/object/linux.html">http://www.nvidia.com/object/linux.html</a>)
+ and the installation notes that best match your configuration on the Project Looking
+ Glass website.</blockquote>
+    </li>
+   
+    <li><p>So, now run SaX2.  Some people have said that using sax2 -m 0=nvidia
+ helps speed this step.  A low-res X session should start, and you should
+end up faced with the SaX2 GUI.  You need to step in turn through the options
+ under Desktop - the others shouldn't bother you just now.
+In order, these are: 
+</p>
+        
+<ul>
+   <li>     
+    <b><a name="Monitor:"></a>Monitor:</b>
+   
+<p>Select your model of monitor in the first tab, or as close
+ as you can get.  Then click on the 3rd tab, <b>Expert,</b> and change the 
+choice box at the top to UseFrameBufferTiming.  Without this setting, I've 
+had real trouble getting SaX2 and XF86 to allow me to use the resolutions 
+I want on these cards.  Then click <b>Finish</b> to get back to the main
+screen.</p>
+   </li>
+ 
+   <li>     
+    <b>Graphics card</b>:
+   
+<p>Click [<b>Change Configuration</b>] and delete the card 
+that's currently set. This is set up for the old driver, and it's easier to
+configure the new drivers this way.  Then click <b>Add new card</b>... and
+select NVIDIA as Vendor and pick your card from the list supplied on the
+right, and <b>Ok</b> that.</p>
+   
+<p>If you put the "-m 0=nvidia" argument to sax2 at the start,
+ this bit might not be necessary - but check it to see.</p>
+   </li>
+
+    <li><b>Colors and Resolutions</b>:
+   
+<p>Click <b>Properties</b> and in the Colors tab choose the 
+color depth you want.  I'd recommend 24 bit, as GeForce cards are optimised 
+for it. You'll then be thrown straight to the Resolutions tab for that color 
+depth.  Pick the highest resolution you can bear, and the deselect all the 
+ones below it (scrolling back down if necessary).  This can be painful, but 
+a number of run-time issues are solved by doing this. If the res. you want
+ isn't there, you can try adding it in the "Expert" tab.</p>
+   
+<p>Then click OK to confirm changes. </p>
+</li>
+   
+    <li><b>Virtual Resolution:</b>
+
+<p>Only if you want to!</p></li>
+
+    <li><b>3D Acceleration:</b>
+   
+<p>If you've correctly set the Graphics card to <b>nvidia,</b>
+ this should now say <b>Enabled.</b>  If not, it will say <b>Not configured</b>. 
+ There's little point trying to fix this here, when the problem is in the 
+configuration of the graphics card.  It's even possible for sax2 to misread 
+this, when the NVIDIA driver is being used, and say unavailable or not enabled
+ when it is to both.  Don't worry too much just yet.</p>
+</li>
+    </ul>
+    </li>
+    
+    <li><p>If at any point during the above you're told that the resolution
+you've selected isn't supported by your monitor, then take careful note
+of this.  It generally means that either you're trying too hard for your
+hardware, or that you haven't configured the monitor properly.  Pay special
+attention to the comments I make in the <a href="#Monitor:">Monitor</a> section
+above, and try other options in that Expert tab pulldown list. If you see
+this dialogue then SaX2 has thrown away your monitor configuration to discipline
+you for suggesting such a thing!</p>
+    </li>
+
+    <li><p>Once everything is happy, click <b>Finalize</b>.  You are now in
+the hands of the Graphics Gremlins, and on your own.  With luck, you'll get
+offered the chance to test the configuration, and on doing so, get to see
+the blue background and grey screen size boxes, with an "Idle timer" in
+the top left.  This is where you get to stretch and move the display to
+best fit your monitor,  but if you wait too long, it will fail out, due to
+that timer.  Note that the menu top right of the resize dialogue lets you
+select by how much you are changing the settings.  Try to get the height
+right, and then the width,  and then go back to the height, and finally move
+it about until it's right.   Note that it's controlling this by tweaking
+the frequencies very mildly, and so changes to one will also effect the other
+setting. So it's a slow crawl to as close to good as you can get.  You'll
+also see the resolution and frequencies being used on this box.  If the resolution
+here doesn't match what you asked for, see the previous paragraph.</p>
+   </li>
+   
+   <li><p>When you've got that, click out, and back at the Test dialogue, click 
+    <b>Save,</b> and you should be done and get dropped back to a text prompt.</p></li>
+ 
+   <li><p>Note: SAX2 routinely breaks important OpenGL symlinks from the NVIDIA
+      driver set. Therefore, the recommended course of action is to:
+<ul>
+<li>Install NVIDIA drivers using their installer,</li>
+<li>Configure color depth and resolution using SAX2 (24 Bit required),</li>
+<li>Re-Install NVIDIA drivers to fix broken links.</li>
+</ul>
+</li>
+
+   <li><p><b>IMPORTANT NOTE FOR DRIVER VERSION 8756:</b> 
+<br><br>
+<A NAME="ALLOWGLXWITHCOMPOSITE"></A>
+If you are using version 8756
+of the NVIDIA driver, you should do the following additional operations:
+<ul>
+<li>If the file <span style="font-family: courier New,Courier,monospace;">/etc/X11/xorg.conf</span> doesn't exist, make a symlink with this name which points 
+to your X11 configuration file, which is typically <span style="font-family: Courier New,Courier,monospace;">/etc/X11/XF86Config</span>. For example:
+<br><br>
+<span style="font-family: Courier New,Courier,monospace;">
+            # cd /etc/X11
+<br>
+            # ln -s XF86Config xorg.conf
+</span>
+</li>
+<br>
+<li>
+Edit <span style="font-family: courier new,courier,monospace;">/etc/X11/xorg.conf</span> and find the <span style="font-family: Courier New,Courier,monospace;">"Device"</span> section that loads the NVIDIA driver. 
+It should look something like this:
+<br><br>
+<span style="font-family: Courier New,Courier,monospace;">
+            Section "Device"
+<br>
+            BoardName    "0x032B"
+<br>
+            BusID        "9:0:0"
+<br>
+            Driver       "nvidia"
+<br>
+            Identifier   "Device[0]"
+<br>
+            VendorName   "NVidia"
+<br>
+            EndSection
+</span>
+<br><br>
+</li>
+<li>
+Insert the following line after the <span style="font-family: courier new,courier,monospace;">VendorName</span> line:
+<br><br>
+<span style="font-family: Courier New,Courier,monospace;">
+            Option "AllowGLXWithComposite" "true"
+</span>
+<br>
+</li>
+</ul>
+	  
+</p>
+   </li>
+
+   <li><p>A good initial test of these new settings is to try typing startx.
+ if all is well, X will start up, first showing you the NVIDIA splash screen 
+(and how wonderful this is to see after hours of fighting) and then a very 
+simple window manager.  From here you can right-click a menu to get a xterm 
+up, and type xdpyinfo|more to see how you're configured.  You're looking to
+see what resolution is set, what colour-depth is set, and that NVIDIA-GLX 
+is in the Extensions list.  If all is well, use the menu to Exit back to the
+text console.</p>
+   </li>
+
+   <li><p>Once you're ready to get back to normal operation, type "init 5" and
+ the ystem should return you to the graphical login prompt.  If this appears, 
+then you can be pretty sure things are working.  There's more tests to perform, 
+though, so log back in.</p>
+   </li>
+
+   <li><p>Run glxinfo and see what it says for server glx vendor string and
+OpenGL vendor string.  Both should say NVIDIA Corporation.  If this says
+anything to do with Mesa or mesasoft, then the GL and GLU libraries still
+aren't configured correctly.  You need to go into /usr/lib and ls -l libGL*.
+ You should see a libGL.so.1.0. &lt;NVIDIA release number&gt; and a libGLcore.so.1.0.
+&lt;NVidia release number&gt;, plus a libGLU.so.1.3. You will probably have
+other files too - and what you want is for the soft links of libGL*.so and
+libGL*.so.1 to point to the respective NVIDIA files.  If you've installed
+Mesa before, you can remove that rpm now - you don't need that any more.
+ You can then make these soft links by hand, e.g.: ln -s libGL.so.1.0.5336
+libGL.so, etc, for each link you need, and for whatever version number you
+actually installed.  It's been suggested that just running the NVIDIA installer
+again helps here, but that doesn't appear to do the job for the system-provided
+libGLU.so. So you're going to have to do this anyway, and it saves you dropping
+to init 3 again.</p>
+
+<p>
+<b>Your end result:</b>
+</p>
+<p>
+What you want in the end is something that looks like this (ls -l libGL*):	
+</p>
+ 
+<blockquote><small><font face="Courier New, Courier, monospace">lrwxrwxrwx
+ ... libGLcore.so.1 -&gt; libGLcore.so.1.0.5336</font><br />
+    <font face="Courier New, Courier, monospace">	 -rwxr-xr-x ... libGLcore.so.1.0.5336</font><br />
+    <font face="Courier New, Courier, monospace">	 -rw-r--r-- ... libGL.la</font><br />
+    <font face="Courier New, Courier, monospace">	 lrwxrwxrwx ... libGL.so
+ -&gt; libGL.so.1</font><br />
+    <font face="Courier New, Courier, monospace">	 lrwxrwxrwx ... libGL.so.1
+ -&gt; libGL.so.1.0.5336</font><br />
+    <font face="Courier New, Courier, monospace">	 -rwxr-xr-x ... libGL.so.1.0.5336</font><br />
+    <font face="Courier New, Courier, monospace">	 -rw-r--r-- ... libGLU.a</font><br />
+    <font face="Courier New, Courier, monospace">	 -rwxr-xr-x ... libGLU.la</font><br />
+    <font face="Courier New, Courier, monospace">	 lrwxrwxrwx ... libGLU.so
+ -&gt; libGLU.so.1.3</font><br />
+    <font face="Courier New, Courier, monospace">	 lrwxrwxrwx ... libGLU.so.1
+ -&gt; libGLU.so.1.3</font><br />
+    <font face="Courier New, Courier, monospace">	 -rwxr-xr-x ... libGLU.so.1.3</font><br />
+    </small></blockquote>
+</li>
+ 
+  <li><p>Having done all this, try glxinfo again. It connects to the X server,
+as a graphical application would, so if run as root, run xhost +localhost
+as the user who logged in, and "export DISPLAY=:0" as root first.  With luck
+this is reporting the correct NVIDIA stuff now. </p></li>
+   
+  <li><p>This is where we re-run <i>xscreensaver-demo</i> or whatever you ran 
+last time to see the 3D performance.  Do the same thing again now and see 
+whether things are really faster or not.  Hopefully, you'll be pretty much
+ amazed!</p></li>
+</ol>
+
+<h3>Acknowledgements</h3>
+
+<p>
+The Project Looking Glass team gratefully thanks Mark Bowyer 
+<a href="mailto:Mark.Bowyer@sun.com"><u>Mark.Bowyer@sun.com</u></a>
+and
+Kyle McDonald
+<a href="mailto:Kyle.McDonald@sun.com"><u>Kyle.McDonald@sun.com</u></a>
+for providing these instructions!
+</p>
+
+<hr />
+<small>$Revision: 1.2 $ $Date: 2006-05-12 22:59:48 $</small>
+
+</div>
+</body>
+</html>

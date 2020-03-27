@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="utf-8"?><!DOCTYPE html PUBLIC "-//Tigris//DTD XHTML 1.0 Transitional//EN"
+"http://style.tigris.org/tigris_transitional.dtd">
+<html>
+<head>
+<title>Resizing and Configuring LG3D Window</title>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+</head>
+<body> 
+
+<h3>Resizing and Configuring LG3D Window</h3>
+ 
+  <p> 
+    By default, LG3D brings up a window of 800x600. 
+    Also, the relationship between the physical screen size and the 
+    size in the LG3D virtual universe is configured in a certain manner
+    (it assumes the screen size to be 36cm by 28.8cm).
+    The following steps show how to configure these settings to
+    fit to your environment.
+  </p>
+  
+  <ol>
+    <li> Locate the file <span style="font-family: courier new,courier,monospace;">j3d1x1</span> 
+      which should be in the following location under the LG3D installation directory:
+    </li>
+    <blockquote> 
+      <pre style="font-family: courier new,courier,monospace; font-weight: bold;">etc/lg3d/displayconfig/j3d1x1</pre>
+    </blockquote>
+    
+    <li> Make a copy of the <span style="font-family: courier new,courier,monospace;">j3d1x1</span> 
+      file.
+    </li><br />
+    
+    <li>Edit the <span style="font-family: courier new,courier,monospace;">j3d1x1</span> 
+      file and change the following properties to reflect the resolution and size 
+      of your display: 
+      <p>First specify the width and height in meters (multiply inches by 0.0254 
+        to get the size in meters, so 11&quot; = 0.2794m). The default entry specifies 
+        a screen that is 14.2&quot; (0.360m) wide by 11.3&quot; (0.288m) high:</p>
+      <blockquote> 
+        <pre style="font-family: courier new,courier,monospace;">(ScreenAttribute ProjectLookingGlass PhysicalScreenWidth&nbsp; <b>0.360</b>)
+(ScreenAttribute ProjectLookingGlass PhysicalScreenHeight <b>0.288</b>)</pre>
+      </blockquote>
+      <p>And change the WindowSize attribute to the size you prefer. 
+        By default, the size is set to 800x600:</p>
+      <blockquote> 
+        <pre style="font-family: courier new,courier,monospace;">(ScreenAttribute ProjectLookingGlass WindowSize&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; (<b>800 600</b>))</pre>
+      </blockquote>
+    </li>
+    
+    <li>Now, when you start Project Looking Glass, it should reflect the configuration
+      you've made.
+    </li><br />
+    
+    <li>If you want to configure the physical screen configuraiton for the
+      fullscreen execution, make the changes in the following file:
+      <blockquote> 
+        <pre style="font-family: courier new,courier,monospace; font-weight: bold;">etc/lg3d/displayconfig/j3d1x1-nbfs</pre>
+      </blockquote>
+    </li>
+  </ol>
+
+<p>
+  If you encounter any issue after modifications, check out the <b>lgserver.log</b> file which is
+  located under the <b>/var/tmp</b> directory for Linux and Solaris, or in the current directory for Windows.
+</p>
+  
+  <hr /> 
+  <small>$Revision: 1.1 $ $Date: 2006-06-17 00:43:13 $</small>
+</body>
+</html>

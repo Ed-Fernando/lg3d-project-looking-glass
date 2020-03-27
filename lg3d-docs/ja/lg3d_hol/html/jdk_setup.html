@@ -1,0 +1,62 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html>
+  <head>
+    <meta http-equiv="content-type" content="text/html; charset=utf-8" />
+    <title>JDKの日本語文字化け修正</title>
+  </head>
+
+  <body bgcolor="white">
+    <h1>JavaOne Tokyo Hands on Lab : <br>
+
+	Project Looking Glass (LG3D) Basic Programming</h1>
+
+    <h2>JDKの日本語文字化け修正</h2>
+    
+    <h3>fontシンボリックリンクによる解消</h3>
+
+    <p> JREのlib内にあるfontsディレクトリにfallbackディレクトリを作成します。<br>
+
+    作成したディレクトリにフォントファイルのシンボリックリンクを作成します。<br>
+     
+    <ol>
+     <li> /usr/java/にJDKをインストールしている場合の例<br>
+
+<br><br><br>
+
+    <table border width="70%"><tr><td>
+     <pre>
+ fallback ディレクトリを作成
+# <font color="red"><b>mkdir /usr/java/jdk1.6.0_01/jre/lib/fonts/fallback</b></font>
+ fallback ディレクトリへ移動
+# <font color="red"><b>cd /usr/java/jdk1.6.0_01/jre/lib/fonts/fallback</b></font>
+ kochi-gothic-subst.ttfへのシンボリックリンクを作成
+# <font color="red"><b>ln -s /usr/share/fonts/japanese/TrueType/kochi-gothic-subst.ttf</b></font>
+ kochi-mincho-subst.ttfへのシンボリックリンクを作成
+# <font color="red"><b>ln -s /usr/share/fonts/japanese/TrueType/kochi-mincho-subst.ttf</b></font>
+     </pre>
+    </td></tr></table>
+<br><br>
+<font color="red">注意：</font>それぞれ設定しているフォントのシンボリックリンクを作成してください。<br>
+<br>
+<br>
+　<hr>
+   <h3>その他の解決方法</h3>
+
+   <p> 上記はあくまで一例であり、Linuxのディストリビューションによって解決方法は多数あります。<br>
+
+   以下に参考となるURLを挙げておきます。<br>
+
+   <ul>
+   <li><a href="http://blogs.sun.com/katakai/entry/fedora_core_5">http://blogs.sun.com/katakai/entry/fedora_core_5</a>
+   <li><a href="http://blogs.sun.com/thaniwa/entry/%28ja%29_m%2B_%26_ipa_font">http://blogs.sun.com/thaniwa/entry/%28ja%29_m%2B_%26_ipa_font</a>
+   <li><a href="http://wiki.netbeans.org/wiki/view/FaqInstallLinuxAsianFontsJa">http://wiki.netbeans.org/wiki/view/FaqInstallLinuxAsianFontsJa</a>
+   </ul>
+<br><br>
+    <hr>
+    <ul>
+    <li><a href="index.html">メニューに戻る</a>
+    </ul>
+
+
+  </body>
+</html>

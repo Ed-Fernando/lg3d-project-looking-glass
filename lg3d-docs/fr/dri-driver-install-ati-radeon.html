@@ -1,0 +1,148 @@
+<!DOCTYPE html PUBLIC "-//Tigris//DTD XHTML 1.0 Transitional//EN"
+"http://style.tigris.org/tigris_transitional.dtd">
+<html>
+<head>
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+	<meta name="Translator" content="Pierre DUCROQUET" />
+	<title>Installation du pilote DRI pour les ATI Radeon</title>
+</head>
+<body>
+<div id="projectdocumentview" class="app">
+
+<hr />
+<h2>Installation du pilote DRI pour les ATI Radeon</h2>
+
+<br />
+
+<p>
+Ces instructions expliquent comment installer les pilotes de l'Infrastructure
+de Rendu Direct (DRI) pour les cartes graphiques ATI Radeon afin d'activer
+l'extension de rendu direct requise par le Projet Looking Glass.</p>
+
+<h3>Instructions d'installation</h3>
+<p>
+Voici la procédure pour mettre à jour les librairies OpenGL (LibGL.so) et implicitement
+les pilotes pour Radeon 7500 sur RedHat 9.
+</p>
+
+<ol>
+  <li>Passez en root:<br />
+    <br />
+    <span style="font-family: monospace;">% su root</span><br />
+    <span style="font-family: monospace;"> Password: </span><b>donnez le mot de passe root</b><br />
+    <span style="font-family: monospace;"> #</span><br />
+    <br />
+  </li>
+  <li>Installez les sources du noyau (kernel sources) de la distribution RedHat 9 :<br />
+    <br />
+    <span style="font-family: monospace;"># rpm -ivh
+kernel-source-2.4.20-8.i386.rpm</span><span
+ style="font-family: monospace;"><br />
+    <br />
+    </span><b>Note :</b> si vous avez monté le cdrom RedHat 9 numéro 2, vous pouvez trouver le paquet
+<span style="font-family: monospace;">kernel-source</span> dans :<br />
+    <br />
+    <span style="font-family: monospace;">/mnt/cdrom/RedHat/RPMS/kernel-source-2.4.20-8.i386.rpm</span><span
+ style="font-family: monospace;"><br />
+    <br />
+    </span></li>
+  <li>Mettez à jour la configuration du noyau et les dépendances :<br />
+    <br />
+    <span style="font-family: monospace;"># cd /usr/src/linux-2.4</span><br />
+    <span style="font-family: monospace;"># cp /boot/config-2.4.20-8.config</span><br />
+    <span style="font-family: monospace;"># make oldconfig</span><br />
+    <span style="font-family: monospace;"># make dep</span><br />
+    <br />
+    <b>Note :</b> Vous n'avez pas à recompiler le noyau.<br />
+    <br />
+  </li>
+  <li>Téléchargez le dernier snapshot pour les pilotes ATI Radeon depuis le <a
+ href="http://dri.sourceforge.net/cgi-bin/moin.cgi/FrontPage">site web du projet DRI</a>: <br />
+    <br />
+Suivez les instructions de téléchargement dans la section <b>Snapshot</b> de la page <b>Download</b> : <a
+ href="http://dri.sourceforge.net/cgi-bin/moin.cgi/Download">http://dri.sourceforge.net/cgi-bin/moin.cgi/Download<br />
+    <br />
+    </a>Vous devrez à la fois télécharger le snapshot common (nommé : <span
+ style="font-family: monospace;">common-</span><span
+ style="font-style: italic; font-family: monospace;">YYYYMMDD</span><span
+ style="font-family: monospace;">-linux.i386.tar.bz2</span>) et le snapshot Radeon 
+(<span style="font-family: monospace;">radeon-</span><span
+ style="font-style: italic; font-family: monospace;">YYYYMMDD</span><span
+ style="font-family: monospace;">-linux.i386.tar.bz2</span>).<br />
+    <br />
+  </li>
+  <li>Extrayez le paquet common et installez le :<br />
+    <br />
+    <span style="font-family: monospace;"># tar jxf common-*</span><br />
+    <span style="font-family: monospace;"># cd dripkg</span><br />
+    <span style="font-family: monospace;"># ./install.sh</span><br />
+    <span style="font-family: monospace;"># cd ..</span><br />
+    <span style="font-family: monospace;"># rm -rf dripkg</span><br />
+    <br />
+  </li>
+  <li>Extrayez le paquet Radeon et installez le:<br />
+    <br />
+    <span style="font-family: monospace;"># tar jxf radeon-*</span><br />
+    <span style="font-family: monospace;"># cd dripkg</span><br />
+    <span style="font-family: monospace;"># ./install.sh</span><br />
+    <span style="font-family: monospace;"># cd ..</span><br />
+    <span style="font-family: monospace;"># rm -rf dripkg</span><br />
+    <br />
+  </li>
+  <li>Sur RedHat 9, vous devrez aussi télécharger et installer les binaires XFree86.<br />
+    <br />
+Suivez les instructions dans la section <b>Snapshot</b> de la page <b>Download</b> : <a
+ href="http://dri.sourceforge.net/cgi-bin/moin.cgi/Download">http://dri.sourceforge.net/cgi-bin/moin.cgi/Download<br />
+    <br />
+    </a></li>
+  <li>Ajoutez la ligne suivant au fichier <span style="font-family: monospace;">/etc/modules.conf</span> :<br />
+    <br />
+    <span style="font-family: monospace;">pre-install radeon
+/sbin/modprobe -k agpgart</span><br />
+    <br />
+Ceci assurera le chargement du module agpgart avant le module radeon.<br />
+    <br />
+  </li>
+  <li>Pour activer DRI, vous devrez mettre à jour le fichier <span
+ style="font-family: monospace;">/etc/X11/XF86Config</span>:<br />
+    <br />
+Ajoutez les lignes suivantes à la section <b>Module</b>
+si elles ne sont pas déjà présentes :<br />
+    <br />
+    <blockquote><span
+ style="font-family: monospace;">Load "glx"</span><br />
+    <span style="font-family: monospace;">Load "dri"</span><br />
+    <br />
+    </blockquote>
+et ajoutez une section <b>DRI</b>, si nécessaire, contenant :<br />
+    <br />
+    <blockquote><span
+ style="font-family: monospace;">Section "DRI"</span><br />
+    <span style="font-family: monospace;">&nbsp;&nbsp;&nbsp; Mode 0666</span><br />
+    <span style="font-family: monospace;">EndSection</span><br />
+    <br />
+    </blockquote>
+  </li>
+  <li>Maintenant, redémarrez votre système.<br /><br /></li>
+  <li>Enfin, pour vérifier que le rendu direct est activé, lancez la commande <span
+ style="font-family: monospace;">glxinfo</span> :<br />
+    <br />
+    <span style="font-family: monospace;">% glxinfo | grep "direct
+rendering"</span><br />
+    <br />
+Vous devriez voir :<br />
+    <br />
+    <span style="font-family: monospace;">direct rendering: Yes</span><br />
+  </li>
+</ol>
+<h3>Remerciements</h3>
+<p>
+L'équipe du Projet Looking Glass remercie gracieusement Lucian Cionca <a
+ href="mailto:lucian.cionca@gmail.com"><u>lucian.cionca@gmail.com</u></a>
+pour avoir fourni ces instructions !</p>
+<br />
+<hr />
+<small>$Revision: 1.1 $ $Date: 2006-05-09 17:46:26 $</small>
+</div>
+</body>
+</html>

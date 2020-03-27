@@ -1,0 +1,104 @@
+<!DOCTYPE html PUBLIC "-//Tigris//DTD XHTML 1.0 Transitional//EN"
+"http://style.tigris.org/tigris_transitional.dtd">
+<html>
+<head>
+  <title>DRI driver installation for ATI Radeon for non-rpm based distros</title>
+</head>
+<body>
+<div id="projectdocumentview" class="app">
+
+<hr />
+<h2>DRI driver installation for ATI Radeon</h2>
+
+<br />
+
+<p>
+These instructions explain how to install the Direct Rendering
+Infrastructure (DRI) drivers for ATI Radeon graphics cards to enable
+the direct rendering extension required by Project Looking Glass.</p>
+
+<h3>Installation Instructions</h3>
+<p>
+Here's a guide for installing the binary ati-drivers on a non-rpm based distribution such as Slackware.
+				I'll be referring to the commands needed with slackware but most steps can be applied for other distributions as well.
+</p>
+
+<p>
+<b>Note: </b> All recent releases (> 3.12) of the fglrx drivers contain an incomplete 
+implementation of GL. So it might be that lg3d is not running correctly with these drivers.
+If you experience problems, please try the other <a href="dri-driver-install-ati-radeon.html"> installation instructions</a>. 
+</p>
+
+<ol>
+  <li>Become root:<br />
+    <br />
+    <span style="font-family: monospace;"> % su -</span><br />
+    <span style="font-family: monospace;"> Password: </span><b>enter root password</b><br />
+    <span style="font-family: monospace;"> #</span><br />
+    <br />
+  </li>
+  <li>Install the kernel sources from the kernel-source package of the distro:<br />
+    <br />
+    <span style="font-family: monospace;"># installpkg kernel-source-2.4.26-noarch-4.tgz</span><br />
+    <br />
+    <b>Note:</b> In the Slackware distribution the package is on the first cd in the set.
+    <br />
+    <span style="font-family: monospace;">/mnt/cdrom/slackware/k/kernel-source-2.4.26-noarch-4.tgz</span><font
+ face="Courier New, Courier, monospace"><br />
+    <br />
+    </font></li>
+  <li>Update the kernel configuration and dependencies:<br />
+    <br />
+    <span style="font-family: monospace;"># cd /usr/src/linux</span><br />
+    <span style="font-family: monospace;"># cp /boot/config-ide-2.4.26.config</span><br />
+    <span style="font-family: monospace;"># make oldconfig</span><br />
+    <span style="font-family: monospace;"># make dep</span><br />
+    <br />
+    <b>Note:</b> You don't need to
+recompile the kernel.<br />
+    <br />
+  </li>
+  <li>Download the latest ATI Radeon drivers from the <a
+ href="http://www.ati.com/">ATI web site</a>.<br />
+    <br />
+  </li>
+  <li>Convert the rpm to a ordinary tar.gz file with:<br />
+    <br />
+    <span style="font-family: monospace;"># rpm2tgz fglrx-"version".rpm</span><br />
+    <span style="font-family: monospace;"># cd /</span><br />
+    <span style="font-family: monospace;"># tar zxvf fglrx-"version".tgz</span><br />
+    <span style="font-family: monospace;"># cd /lib/modules/fglrx/build_mod/</span><br />
+    <span style="font-family: monospace;"># chmod +x ./make.sh &amp;&amp; ./make.sh</span><br />
+	<span style="font-family: monospace;"># cd .. &amp;&amp; chmod +x make_install.sh &amp;&amp; ./make_install.sh</span>
+    <br />
+    <br />
+  </li>
+  <li>Run fglrxconfig to setup X:<br />
+    <br />
+    <span style="font-family: monospace;"># fglrxconfig</span><br />
+ <br />
+  </li>
+  <li>On Slackware 10 as well as any other distros that uses xorg instead of XFree86 you'll have to make a symlink between XF86Config-4 and xorg.conf:<br />
+    <br />
+    <span style="font-family: monospace;"># ln -sf /etc/X11/XF86Config-4 /etc/X11/xorg.conf</span><br />
+    <br />
+    Now try to start X, unless you ran into any errors in the previous steps you should have working 3D acceleration now. Verify this by running:<br /><br />
+    <span style="font-family: monospace;">% glxinfo | grep render</span><br />
+    <br />
+    You should now see: <br /><br />
+    <span style="font-family: monospace;">direct rendering: Yes</span><br />
+    <br />
+    </li>
+   </ol>
+    
+<h3>Acknowledgements</h3>
+			<p>
+			The author would like to thank Lucian Cionca <a
+ href="mailto:lucian.cionca@gmail.com"><u>lucian.cionca@gmail.com</u></a>					
+    for writing the original guide, thus providing an initial framework.</p>
+    <br />
+  <hr />
+<small>$Revision: 1.1 $ $Date: 2006-05-09 17:39:10 $</small>
+</div>
+</body>
+</html>

@@ -1,0 +1,836 @@
+<!DOCTYPE html PUBLIC "-//Tigris//DTD XHTML 1.0 Transitional//EN" "http://style.tigris.org/tigris_transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+  <title>Building and Running Project Looking Glass with NetBeans</title>
+  <meta name="AUTHOR" content="Charlie Hunt">
+  <style type="text/css"> /* <![CDATA[ */
+@import "../preview.css";
+/* ]]> */</style>
+</head>
+<body>
+<div class="app" id="projectdocumentview">
+<h2>Building and Running Project Looking Glass with NetBeans</h2>
+<p>
+This document illustrates how
+easy it is to get a development environment up and running for the
+java.net Project Looking Glass with NetBeans. As you will read in this
+document, using NetBeans as the development tool for building and
+running Project Looking Glass makes Project Looking Glass development
+very simple.
+</p>
+<h3>Getting Started</h3>
+<p>
+To get started you will first need to
+set up your environment. Once you have verified that your environment
+is set up correctly you will be ready to build and run Looking Glass
+from NetBeans.
+</p>
+<h4>Platform Requirements</h4>
+<p>
+Before you start setting up your
+Project Looking Glass development environment, first check to make
+sure your system meets the following minimal requirements.
+</p>
+<table border="1" cellpadding="2" cellspacing="2" width="100%">
+  <tbody>
+    <tr>
+      <td valign="top"><b>Component</b></td>
+      <td valign="top"><b>Linux Platform</b></td>
+    </tr>
+    <tr>
+      <td valign="top">Operating System</td>
+      <td valign="top"> Most modern linux distributions should work,
+although there
+has been problems experienced when running it on a portage-based
+java-install. We suggest following this guide for installing all
+components listed manually instead of using portage. </td>
+    </tr>
+    <tr>
+      <td valign="top">CPU</td>
+      <td valign="top">2 GHz or faster recommended</td>
+    </tr>
+    <tr>
+      <td valign="top">RAM</td>
+      <td valign="top">512MB recommended</td>
+    </tr>
+    <tr>
+      <td valign="top">Graphics Card</td>
+      <td valign="top">3D accelerated graphics card, with at least 16MB
+VRAM and driver support for OpenGL, version 1.2 or greater.<br>
+16bit or 32bit color.<br>
+      <font color="#800000">IMPORTANT!</font> 24-bit display depth is
+required! See instructions below for how to configure this. </td>
+    </tr>
+    <tr>
+      <td valign="top">Disk Space</td>
+      <td valign="top">350MB</td>
+    </tr>
+  </tbody>
+</table>
+<h4>Tested Video Cards</h4>
+<ul>
+  <li> NVIDIA GeForce 2 or equivalent cards using version 1.0-5336 and
+1.0-6629 of the NVIDIA drivers.
+    <p>Please see NVIDIA Driver Installation Tips below.</p>
+    <p>NOTE: It is especially important to consult these instructions
+if you have recently upgraded your driver to 1.0-6629, because LG3D
+requires additional configuration steps for 1.0-6629.</p>
+  </li>
+  <li> ATI Radeon 7500 with DRI drivers. Please see DRI Driver
+installation for ATI Radeon. </li>
+  <li> For device driver configuration instructions for specific cards
+refer to: <a
+ href="https://lg3d-core.dev.java.net/graphics-driver-index.html">Installing
+and Configuring Device Drivers for 3D Desktop Project Looking Glass</a>
+    <p> If you are successful in getting Project Looking Glass to run
+on other cards, or want to report problems with specific cards, please
+let us know using <a
+ href="http://www.javadesktop.org/forums/forum.jspa?forumID=56"> the
+discussion forum</a> </p>
+  </li>
+</ul>
+<h3>Setting up your environment</h3>
+<p>
+Before you can build and run Project
+Looking Glass, you need to install a number of Java components. The
+simplest way to do this is to download all of the components and then
+install them in the order listed below.
+</p>
+<h4>Download the components</h4>
+<p>
+<b>Note:</b> The installation
+instructions assume that you download all of the components into <span
+ style="font-family: courier new,courier,monospace;">/tmp</span>.
+</p>
+<ol>
+  <li><b>Java  6 Mustang Pre-Release JDK, Standard Edition
+  </b><br>
+    <a href="http://download.java.net/jdk6/binaries/">http://download.java.net/jdk6/binaries/</a><br>
+    <br>
+    <b>Note:</b> The installation
+instructions below assume you download the RPM version of the JDK.<br>
+    <br>
+  </li>
+  <li><b>NetBeans 5.5 IDE</b><br>
+    <a
+ href="http://www.netbeans.info/downloads/download.php?type=5.5">http://www.netbeans.info/downloads/download.php?type=5.5</a><br>
+    <br>
+  </li>
+  <li><b>Java 3D SDK 1.5 build 2 or later</b><br>
+    <a href="http://java3d.dev.java.net/binary-builds-pre.html">http://java3d.dev.java.net/binary-builds-pre.html</a><br>
+    <br>
+    <b>Note:</b> Navigate to
+the <span style="font-weight: bold;">Stable builds 1.5.0 </span>and
+download <b>java3d-1_5_0-build3-linux-i586.zip</b> or later.<br>
+    <br>
+  </li>
+  <!--<li><b>Java Advanced Imaging API (JAI) SDK 1.1.2_01 or later</b><br/>
+    <a href="https://jai.dev.java.net/binary-builds.html">https://jai.dev.java.net/binary-builds.html</a><br>
+    <br>
+    There are four types of JAI install: <strong>JDK<sup>TM</sup></strong>, 
+    <strong>JRE</strong>, <strong>CLASSPATH</strong> and <strong>Signed Auto 
+    Installation for browser</strong>. You should select the <strong>JDK<sup>TM</sup> 
+    install</strong> item for Linux (<span
+ style="font-family: courier new,courier,monospace;">jai-1_1_2_01-lib-linux-i586-jdk.bin</span>).<br>
+  </li>-->
+</ol>
+<h4>Install the Components</h4>
+<p>
+After downloading all of the components, install them by following the
+instructions below. </p>
+<ol>
+  <li>First become root:<br>
+    <br>
+    <span style="font-family: courier new,courier,monospace;"> % su root<br>
+Password:</span> <b>enter root password</b><br>
+    <span style="font-family: courier new,courier,monospace;">#</span><br>
+    <br>
+  </li>
+<li>Install the Java 6.0 JDK:<br>
+    <br>
+    <span style="font-family: courier new,courier,monospace;"># cd /tmp<br>
+# ./jdk-6-beta2-bin-b84-linux-i586-&lt;version&gt;-rpm.bin<br>
+# rm jdk-6-beta2-bin-b84-linux-i586-&lt;version&gt;-rpm<br>
+# rm jdk-6-beta2-bin-b84-linux-i586-&lt;version&gt;-rpm.bin</span><br>
+    <br>
+  </li>
+  <li>Install the Java 3D SDK:<br>
+    <br>
+    <span style="font-family: courier new,courier,monospace;"># cd /tmp<br>
+# unzip java3d-1_5_0-build3-linux-i586.zip<br>
+<br>
+Then follow the instructions in the file /tmp/java3d-1_5_0-build3-linux-i586.zip/HOW-TO-INSTALL.TXT. (Answer 'y' to any questions that are asked).<br>
+<br>
+  </li>
+  <!--<li>Install the Java Advanced Imaging API:<br>
+    <br>
+    <span style="font-family: courier new,courier,monospace;"># cd
+/usr/java/jdk1.5.0<br>
+# /bin/bash /tmp/jai-1_1_2-lib-linux-i586-jdk.bin</span><br>
+    <br>
+  </li>-->
+  <li>Exit from the root shell:<br>
+    <br>
+    <span style="font-family: courier new,courier,monospace;"># exit<br>
+%</span><br>
+    <br>
+  </li>
+  <li>Several environment variables now need to be set in your shell
+profile. Here are examples appropriate for bash(1):<br>
+    <span style="font-family: courier new,courier,monospace;"><br>
+JAVA_HOME=/usr/java/jdk1.6.0<br>
+PATH=$JAVA_HOME/bin:$PATH</span><br>
+    <br>
+  </li>
+  <li>Install the NetBeans IDE:<br>
+    <span style="font-family: courier new,courier,monospace;"><br>
+% cd /tmp<br>
+% chmod +x netbeans-5_5-beta-linux.bin<br>
+% ./netbeans-5_5-beta-linux.bin<br>
+% rm netbeans-5_5-beta-linux.bin<br>
+    </span> </li>
+</ol>
+<h4>Register at the java.net web site</h4>
+<p>
+If you haven't previously registered
+at <a href="http://www.java.net">java.net</a> then you'll need to
+create an account:
+</p>
+<ol>
+  <li>Navigate to <a href="http://www.java.net">http://www.java.net</a>
+and click on the <b>Register</b> link
+at
+the top of the page. </li>
+  <li>Enter your preferred user name and e-mail address and then press
+the <b>[Register]</b> button.<br>
+  </li>
+  <li>You'll receive an e-mail message with instructions on how to set
+a password for your account. Once you've entered your password and
+accepted
+the java.net website terms of participation you'll be logged in.<br>
+  </li>
+</ol>
+<h4><a name="Configure_the_color_depth_of_your"></a>Configure the color
+depth of your display</h4>
+<p>
+The Project Looking Glass Developer's Release requires a color depth of
+at least 24 bits. Many systems are configured by default with 16 bit
+color depths and the Project Looking Glass Developer's Release will not
+run correctly at
+this depth. You can identify the current display depth by running the
+following command:
+</p>
+<blockquote><span style="font-family: courier new,courier,monospace;">
+% xdpyinfo | grep "depth of root"<br>
+depth of root window:&nbsp;&nbsp; 24 planes<br>
+  </span></blockquote>
+<p>
+If you see a value lower than 24, you must change the color depth. The
+process for changing the color depth varies by platform. Refer to the
+configuration instructions for your platform below:
+</p>
+<h4>Java Desktop System 1 and 2, and SUSE8.1:</h4>
+<ol>
+  <li>From within a desktop session, run the sax2 command:<br>
+    <br>
+    <span style="font-family: courier new,courier,monospace;">%
+/usr/X11R6/bin/sax2<br>
+SaX: root Password:</span> <b>enter root password</b><br>
+    <br>
+  </li>
+  <li>In the SaX2 application, click on <b>Color and Resolution</b>
+then click the <b>[Properties...]</b> button for the
+currently configured desktop.</li>
+  <li>In the <b>Color selection...</b>
+panel, click on the the menu and choose <b>16.7 Mio. [24 Bit]</b>. <br>
+  </li>
+  <li>On the <b>Resolution(s) for 16.7
+Mio. [24 Bit] colors</b> tab, select the preferred resolution for
+your desktop and press <b>[Ok]</b>.<br>
+  </li>
+  <li>Click the <b>[Finish]</b>
+button, then <b>[Finalize&gt;&gt;]</b>.<br>
+  </li>
+  <li>The <b>SaX2 final steps...</b>
+dialog will open. Click the <b>[Test...]</b>
+button to test the new resolution. <br>
+  </li>
+  <li>A blue test screen should appear, click the <b>[Save]</b> button
+if the display appears
+to be stable, and then <b>[Ok]</b>
+when you return to the SaX2 window, followed by <b>[Yes]</b> to exit
+from SaX2.</li>
+  <li>If the test screen did not appear correctly, the test will exit
+after 30 seconds and your previous desktop session will be restored.
+You should then try alternate resolutions at the 24 bit color depth to
+find a resolution that works for your system.<br>
+  </li>
+  <li>When you are satisfied with the settings, log out and re-login to
+your desktop session and verify that the color depth is now 24 bit or
+higher using the <span
+ style="font-family: courier new,courier,monospace;">xdpyinfo</span>
+command above.</li>
+</ol>
+<h4>RedHat Fedora 2:</h4>
+<ol>
+  <li>First become root:<br>
+    <br>
+    <span style="font-family: courier new,courier,monospace;">% su root<br>
+Password:</span> <b>enter root password</b> <br>
+    <span style="font-family: courier new,courier,monospace;">#</span><br>
+    <br>
+  </li>
+  <li>Edit the file: <span
+ style="font-family: courier new,courier,monospace;">/etc/X11/xorg.conf</span></li>
+  <li>Locate the section of the file labeled: <span
+ style="font-family: courier new,courier,monospace;">Section "Screen"</span><span
+ style="font-family: courier new,courier,monospace;"><br>
+    </span></li>
+  <li>Within this section, locate the entry: <span
+ style="font-family: courier new,courier,monospace;">Identifier
+"Screen0"<br>
+    </span>Change the <span
+ style="font-family: courier new,courier,monospace;">DefaultDepth</span>
+and <span style="font-family: courier new,courier,monospace;">DefaultFbBpp
+    </span>properties
+to:<br>
+    <br>
+    <span style="font-family: courier new,courier,monospace;">DefaultDepth
+24<br>
+DefaultFbBpp 32<br>
+    <br>
+    </span></li>
+  <li>Save the file and then logout and re-login to your desktop
+session and verify that the color depth is now 24 bit or higher using
+the <span style="font-family: courier new,courier,monospace;">xdpyinfo</span>
+command above.<br>
+  </li>
+</ol>
+<h4>RedHat 8, RedHat 9 and other Linux platforms:</h4>
+<p>
+Many Linux platforms use the <span
+ style="font-family: courier new,courier,monospace;">XF86Config</span>
+file to
+configure the display properties. To change the color depth on these
+systems:
+</p>
+<ol>
+  <li>First become root:<br>
+    <br>
+    <span style="font-family: courier new,courier,monospace;">% su root<br>
+Password:</span> <b>enter root password</b> <br>
+    <span style="font-family: courier new,courier,monospace;">#</span><br>
+    <br>
+  </li>
+  <li>Edit the file: <span
+ style="font-family: courier new,courier,monospace;">/etc/X11/XF86Config</span></li>
+  <li>Locate the section of the file labeled: <span
+ style="font-family: courier new,courier,monospace;">Section "Screen"</span>
+and
+change the <span style="font-family: courier new,courier,monospace;">DefaultDepth</span>
+property to
+24:<br>
+    <br>
+    <span style="font-family: courier new,courier,monospace;">DefaultDepth&nbsp;&nbsp;&nbsp;&nbsp;
+24<br>
+    <br>
+    </span></li>
+  <li>Within this section, locate the sub-section labeled <span
+ style="font-family: courier new,courier,monospace;">"Display":<br>
+    <br>
+    </span><span style="font-family: courier new,courier,monospace;">SubSection
+"Display"<br>
+    <br>
+    </span>and change the <span
+ style="font-family: courier new,courier,monospace;">Depth</span>
+property to:<br>
+    <br>
+    <span style="font-family: courier new,courier,monospace;">Depth&nbsp;&nbsp;&nbsp;&nbsp;
+24<br>
+    <br>
+    </span></li>
+  <li>Save the file and then logout and re-login to your desktop
+session and verify that the color depth is now 24 bit or higher using
+the <span style="font-family: courier new,courier,monospace;">xdpyinfo</span>
+command above.</li>
+</ol>
+<h3>Using NetBeans to Build and Run Looking Glass</h3>
+<p>
+Now that you have the necessary
+environment to build Looking Glass, you are ready to launch NetBeans,
+get the Looking Glass source code, build Looking Glass from source
+and run Looking Glass all from within NetBeans.
+</p>
+<h4>Launching NetBeans</h4>
+<p>To launch NetBeans, simply type
+netbeans at the command prompt in a terminal window:</p>
+<p style="margin-bottom: 0in; font-family: courier; margin-left: 40px;">
+% netbeans</p>
+<p>The above command will launch the
+NetBeans IDE.</p>
+<h4>Getting the Looking Glass Source Code</h4>
+<p>
+The next step is to configure the
+NetBeans IDE to retrieve the Looking Glass source code from the
+java.net CVS repository. There are three Looking Glass CVS repositories
+which you must retrieve source file from, <b>lg3d-core</b>, <b>lg3d-demo-apps</b> and <b>lg3d-incubator</b>. 
+The steps to setup and retrieve source files in
+NetBeans is described in the next three sub-sections, Getting the
+lg3d-core source, Getting the lg3d-demo-apps source and Getting the lg3d-incubator source.
+</p>
+<h4>Getting the lg3d-core source</h4>
+<p>
+In the NetBeans IDE, from the main menu
+select CVS &gt; Checkout as shown in Figure 1 below.
+</p><br>
+<img name="Graphic1"
+ src="images/NetBeansLookingGlass_html_Figure1.png" border="0">
+<p><font size="2"><i>Figure 1 CVS &gt; Checkout</i></font>
+</p>
+<!--<p>
+After you have select the Versioning
+&gt; CVS &gt; Check Out menu item, the you will see the "Enabling
+Advanced CVS Command Options" dialog as shown in Figure 2.
+</p>
+<img src="images/NetBeansLookingGlass_html_1c5b4592.png" name="Graphic2"
+ border="0">
+<p><font size="2"><i>Figure 2 Enabling Advanced CVS Command Options</i></font>
+</p>
+<p>
+Mark the checkbox next to the label "Do
+Not Show This Dialog Box Again" as shown in Figure 2 above and
+press the "Check Out" button.
+</p>-->
+<p>
+Next you will see the "CVS Checkout"
+dialog. There are several values you will need to enter on this
+screen. Each of the values below should be entered in this screen.
+</p>
+<pre>    CVS Server Type: pserver<br>    CVS Server Name: cvs.dev.java.net<br>    Port: 2401<br>    User Name: <i>&lt;enter your java.net user name&gt;</i>
+    Repository Path: /cvs
+</pre>
+<pre>    Password: <i>&lt;enter your java.net password&gt;</i>
+</pre>
+<p>Your CVS Checkout form should look very
+similar to the one shown in Figure 2 below.<br><br>
+<img src="images/NetBeansLookingGlass_html_Figure2.png"
+ name="Graphic2" border="0">
+     <p><font size="2"><i>Figure 2 CVS Checkout: establishing connection.</i></font>
+</p>
+     Click the "Next" button. <br>
+<b>Select the Module to Checkout</b><br>
+Enter the name of the module or click the "Browse" button to open the Browse Modules dialog box to search for available modules.<br>
+<pre>    Module(s): lg3d-core<br></pre>
+<b>Select the Branch to Checkout</b><br>
+To check out the current development branch leave this entry blank.<br>
+<span style="font-weight: bold;">Note</span>: If you'd like to check out CVS of one of the released version, select a branch:<br>
+Enter the name of the branch or click the "Browse" button to open the Browse Branches dialog box to search for available branches and tags. <br>
+<br>
+<b>Select the Local Folder</b><br>
+Enter the location of your local working directory or click the "Browse" button to locate the directory.<br>
+<pre>    Working Directory: <i>&lt;source path where to place Looking Glass source files&gt;</i>
+</pre>
+e.g. /home/&lt;user_name&gt;/my-lg3d<br>
+    <br>
+<font color="#800000"><b><i>Remember this directory path, you will need
+to enter it again later</i></b></font>
+<!--<span style="font-weight: bold;">Note</span>: The Revision or
+Tag field you should enter for the latest release would be dev-0-7-0
+instead of dev-0-6.2 so that you check out the most recent revision.<br>
+</p>
+<p>
+Notice the label "You are not logged
+in." below the Password field and Login button. Press the Login
+button now. The label will change to "You are logged in".
+</p>-->
+<p>
+The final CVS Checkout form should look very
+similar to the one shown in Figure 3 below.<br><br>
+<!--<span style="font-weight: bold;">Note</span>: The Revision or
+Tag field you should enter for the latest release would be dev-0-7-0
+instead of dev-0-6.2 so that you check out the most recent revision.</p>
+<p></p>-->
+<img src="images/NetBeansLookingGlass_html_Figure3.png"
+ name="Graphic3" border="0">
+<p><font size="2"><i>Figure 3 CVS Checkout: logged in</i></font>
+</p>
+<p>
+Once you have the CVS Checkout form
+completed press the "Finish" button.
+</p>
+<p>
+After you have pressed the "Finish"
+button, the CVS Checkout form will go away and you will notice the
+output window, the bottom portion of the NetBeans IDE, will display
+the VCS Output from running your CVS checkout. The output in this
+VCS Output window should look very similar to that shown in Figure 4
+below.
+</p>
+<img src="images/NetBeansLookingGlass_html_Figure4.png" name="Graphic4"
+ border="0">
+<p><font size="2"><i>Figure 4 VCS Output Window</i></font>
+</p>
+<p>
+When the CVS checkout is completed, the
+status message at the bottom of the VCS Output window will say it has
+finished the Checkout.
+</p>
+<p>
+From the main menu, select Window &gt;
+Versioning. A Versioning window will now appear at
+the bottom of the NetBeans IDE such as the one shown
+in Figure 5 below. The IDE automatically lists all changed files in this window.
+</p>
+<img src="images/NetBeansLookingGlass_html_Figure5.png" name="Graphic5"
+ border="0">
+<p><font size="2"><i>Figure 5 Versioning Window</i></font>
+</p>
+<h4>Getting the lg3d-demo-apps source</h4>
+<p>
+As you did in the previous section
+"<b>Getting the lg3d-core source</b>", from the main menu select
+CVS &gt; Checkout as shown in Figure 6 below to
+initiate the sequence to retrieve the source code for the
+lg3d-demo-apps.
+</p>
+<img src="images/NetBeansLookingGlass_html_Figure6.png"
+ name="Graphic6" border="0">
+<p>This will again display the "CVS
+Checkout" window. Fill in the values on the "CVS Checkout" form
+as shown in Figure 7 below. <br>
+<span style="font-weight: bold;">Note</span>: To check out the current development branch leave the Branch entry blank.
+</p>
+<p>
+<font color="#800000"><i>IMPORTANT</i>:
+Be sure to use the same working directory you specified in the
+"Getting the lg3d-core source" section and update the Module(s)
+field so that it reads "lg3d-demo-apps".
+</font></p>
+<img src="images/NetBeansLookingGlass_html_Figure7.png" name="Graphic7"
+ border="0">
+<p><font size="2"><i>Figure 7 CVS Checkout (lg3d-demo-apps)</i></font>
+</p>
+<p>
+After specifying the values in the CVS
+Checkout window, press the "Finish" button to initiate the CVS check
+out of the lg3d-demo-apps source.
+</p>
+<p>
+Again, you will notice the output
+window of the NetBeans IDE will display VCS Output for the
+lg3d-demo-apps as shown in Figure 8 below.
+</p>
+<img src="images/NetBeansLookingGlass_html_Figure8.png" name="Graphic8"
+ border="0">
+<p><font size="2"><i>Figure 8 VCS Output (lg3d-demo-apps)</i></font>
+</p>
+<h4>Getting the lg3d-incubator source</h4>
+<p>
+As you did in the previous section
+"<b>Getting the lg3d-demo-apps source</b>", from the main menu select
+CVS &gt; Checkout as shown in Figure 9 below to
+initiate the sequence to retrieve the source code for the
+lg3d-incubator.
+</p>
+<img src="images/NetBeansLookingGlass_html_Figure6.png"
+ name="Graphic9" border="0">
+<p>This will again display the "CVS
+Checkout" window. Fill in the values on the "CVS Checkout" form
+as shown in Figure 10 below. <br>
+<span style="font-weight: bold;">Note</span>: To check out the current development branch leave the Branch entry blank.
+</p>
+<p>
+<font color="#800000"><i>IMPORTANT</i>:
+Be sure to use the same working directory you specified in the
+"Getting the lg3d-core source" section and update the Module(s)
+field so that it reads "lg3d-incubator".
+</font></p>
+<img src="images/NetBeansLookingGlass_html_Figure10.png" name="Graphic10"
+ border="0">
+<p><font size="2"><i>Figure 10 CVS Checkout (lg3d-incubator)</i></font>
+</p>
+<p>
+After specifying the values in the CVS
+Checkout window, press the "Finish" button to initiate the CVS check
+out of the lg3d-incubator source.
+</p>
+<p>
+Again, you will notice the output
+window of the NetBeans IDE will display VCS Output for the
+lg3d-incubator as shown in Figure 11 below.
+</p>
+<img src="images/NetBeansLookingGlass_html_Figure11.png" name="Graphic11"
+ border="0">
+<p><font size="2"><i>Figure 11 VCS Output (lg3d-incubator)</i></font>
+</p>
+<h4>Open the Looking Glass Project in NetBeans</h4>
+<p>
+You are now ready to open the Looking
+Glass project in NetBeans.
+</p>
+<p>
+In the NetBeans IDE, select the File
+&gt;
+Open Project menu item as shown in Figure 12 below.
+</p>
+<img src="images/NetBeansLookingGlass_html_Figure12.png"
+ name="Graphic12" border="0">
+<p><font size="2"><i>Figure 12 File &gt; Open Project</i></font>
+</p>
+<p>
+This will display the "Open Project"
+dialog. Traverse to the working directory you specified in the CVS
+Checkout and select the lg3d-core project. Notice there is a small
+icon on the lg3d-core folder and next to the name lg3d-core
+indicating it is a NetBeans project. An example "Open Project"
+dialog is displayed in Figure 13 which shows a working directory of
+/home/huntch/my-lg3d.
+</p>
+<img src="images/NetBeansLookingGlass_html_Figure13.png"
+ name="Graphic13" border="0">
+<p><font size="2"><i>Figure 13 Open Project</i></font>
+</p>
+<p>
+After selecting the lg3d-core project,
+press the "Open Project Folder" button to load the Looking Glass
+NetBeans project into the NetBeans IDE.
+</p>
+<p>In the projects window of the NetBeans
+IDE you will see the "lg3d-core" project as show in Figure 14
+below.
+</p>
+<img src="images/NetBeansLookingGlass_html_Figure14.png"
+ name="Graphic14" border="0">
+<p><font size="2"><i>Figure 14 lg3d-core</i></font>
+</p>
+<p>
+You now have successfully loaded the
+Looking Glass project into NetBeans. You are now ready to build
+Looking Glass in NetBeans.
+</p>
+<h4>Building the Looking Glass Project in NetBeans</h4>
+<p>
+In the NetBeans project window, right
+click on the lg3d-core project and select "Build Project as shown
+in Figure 15 below.
+</p>
+<img src="images/NetBeansLookingGlass_html_Figure15.png"
+ name="Graphic15" border="0">
+<p><font size="2"><i>Figure 15 Build Project</i></font>
+</p>
+<p>
+This will initiate a build of the
+Looking Glass project. You will notice in the bottom of the NetBeans
+IDE, the output window will show the results of building the Looking
+Glass source files. An example NetBeans output window from building
+Looking Glass is shown in Figure 16 below.
+</p>
+<img src="images/NetBeansLookingGlass_html_Figure16.png"
+ name="Graphic16" border="0">
+<p><font size="2"><i>Figure 16 Looking Glass build output</i></font>
+</p>
+<p>
+When the build of Looking Glass has
+completed, you will see a status message at the bottom of the output
+window saying it has finished building Looking Glass.
+</p>
+<p>
+You have now successfully built Looking
+Glass in NetBeans. Next you will run the Looking Glass window manager
+from NetBeans.
+</p>
+<h4>Running Looking Glass Project in NetBeans</h4>
+<p>
+To run the Looking Glass window manager
+from NetBeans, right click on the lg3d-core project and select the
+"Run Project" option as shown Figure 17 below.
+</p>
+<img src="images/NetBeansLookingGlass_html_Figure17.png"
+ name="Graphic17" border="0">
+<p><font size="2"><i>Figure 17 Running Looking Glass</i></font>
+</p>
+<p>
+If you have configured your environment
+for running the Looking Glass window manager as described in this
+document and you have successfully built Looking Glass in NetBeans,
+you will see a window running the Looking Glass window manager which is
+very similar to that shown in Figure 16 below. There are additional
+applications being added to the Looking Glass window manager at the
+time of this writing. So, the applications shown on the task bar may
+differ slightly from those shown in Figure 18.
+</p>
+<img src="images/NetBeansLookingGlass_html_Figure18.png"
+ name="Graphic18" border="0" width="700" height="500">
+<p><font size="2"><i>Figure 18 Looking Glass Window Manager</i></font>
+</p>
+<p>
+Notice that by clicking the CD icon on
+the taskbar it will open the CD viewer, a 3D demo application. If you
+mouse over the stack of CDs and click on the CD images you will see
+the application in action.
+</p>
+<p>
+For additional operational information,
+click the icon to the right of the CD Viewer on the taskbar. This
+will open a panel that summarizes the operations supported by the
+demo. Note that the left most icon, a computer, launches an xterm
+window. This item demonstrates X11 application integration and may
+not work in all configurations.
+</p>
+<p>
+The far right icon, skull and cross
+bones, when clicked will exit the Looking Glass window manager.
+</p>
+<p>
+That's all there is to having an
+environment where you can build and run the Looking Glass window
+manager. Fun isn't it?<br>
+</p>
+<p>
+</p>
+<p>
+</p>
+<h3>Setting up a NetBeans Project for Looking Glass Demo Apps<br>
+</h3>
+<p>
+</p>
+<p>Now that you have enjoyed the ease at which you can build and run
+Looking Glass in NetBeans, it is time to setup a NetBeans project so
+you can make modifications to the lg3d-demo-apps in addition to being
+able to modify the source code of lg3d-core.<br>
+</p>
+<p>Early in this document you retrieved the source files for
+lg3d-demo-apps in the section title, "Getting the lg3d-demo-apps
+source". In this section you will setup a NetBeans project so you can
+make modifications to the lg3d-demo-apps, see those changes by
+rebuilding and running Looking Glass in NetBeans.<br>
+</p>
+<p>To setup a NetBeans project for lg3d-demo-apps, you tell NetBeans to
+create a new project as shown in Figure 19 by selecting File &gt; New
+Project from the main menu.<br>
+</p>
+<p><img src="images/Figure19.png" title="" alt=""
+ style="width: 227px; height: 41px;"><br>
+</p>
+<p><font size="2"><i>Figure 19 Create a New Project</i></font><br>
+</p>
+<p>After selecting the File &gt; New Project menu item, the NetBeans
+IDE will launch the New Project wizard. In the New Project wizard
+select the General Category and Java Project with Existing Sources
+project type as shown in Figure 20.<br>
+</p>
+<p><img src="images/Figure20.png" title="" alt=""
+ style="width: 627px; height: 439px;"><br>
+</p>
+<p><font size="2"><i>Figure 20 Choosing a General Java Project with
+Existing Sources</i></font><br>
+</p>
+<p>Press the Next button to go to the Name and Location screen of the
+New Project wizard. Enter a project name. I chose a project name of
+"lg3d-demo-apps-nb-prj". Enter the path to the directory of the
+lg3d-demo-apps source. The lg3d-demo-apps source is the directory you
+specified&nbsp; in the "Getting the lg3d-demo-apps source" section.
+Then, uncheck the "Set as Main Project" check box.<br>
+</p>
+<p><span style="font-weight: bold;">Note</span>:<span
+ style="font-style: italic;"> If you forget to uncheck the "Set as Main
+Project" check box, you can
+always set the lg3d-core project as the main project in the Projects
+window at any
+time by right clicking on the lg3d-core project and selecting the "Set
+Main Project" option.</span></p>
+<p>An example screen shot of the New Project wizard for the directory
+where I placed the lg3d-demo-apps source is shown in Figure 21.<br>
+</p>
+<p><img src="images/Figure21.png" title="" alt=""
+ style="width: 628px; height: 315px;"><br>
+</p>
+<p><font size="2"><i>Figure 21 New Project Name and Project Location<br>
+</i></font></p>
+<p>Press the Next button to go to the Existing Sources screen of the
+New Project wizard. On the Existing Sources screen you tell NetBeans
+where to find source files for the lg3d-demo-apps.<br>
+</p>
+<p>Add the lg3d-demo-apps source folder by clicking on the Add Folder
+button for the Source Package Folders. Traverse to and select the
+lg3d-demo-apps/src/classes directory. Example screen shot for my
+development environment is shown in Figure 22.<br>
+</p>
+<p><img src="images/Figure22.png" title="" alt=""
+ style="width: 640px; height: 375px;"><br>
+</p>
+<p><font size="2"><i>Figure 22 Location of lg3d-demo-apps sources<br>
+</i></font></p>
+<p>Press the Finish button to leave the New Project wizard.<br>
+</p>
+<p>In order to leverage NetBeans syntax highlighting, code completion
+and instant compilation, we need to tell NetBeans where to find the
+lg3d-core class files which the lg3d-demo-apps depends upon. You do
+this by right clicking on the newly created project for lg3d-demo-apps
+in the projects window and selecting the "Properties" option as shown
+in Figure 23.<br>
+</p>
+<p><img src="images/Figure23.png" title="" alt=""
+ style="width: 327px; height: 353px;"><br>
+<font size="2"><i>Figure 23 Selecting lg3d-demo-apps project properties</i></font><br>
+</p>
+<p>Tell tell NetBeans where to find the dependent lg3d-core class
+files, on the Project Properties window, select "Libraries" for
+Categories and select the "Compile" tab as shown in Figure 24.<br>
+</p>
+<p><img src="images/Figure24.png" title="" alt=""
+ style="width: 681px; height: 363px;"><br>
+</p>
+<p><font size="2"><i>Figure 24 Selecting compile time libraries</i></font><br>
+</p>
+<p>Click on the "Add Jar/Folder" button to add the
+lg3d-core/build/classes directory.&nbsp; Traverse to and select the
+lg3d-core/build/classes directory. The path to this directory will be
+the one you specified as the directory in the "Getting the lg3d-core
+source" section earlier.</p>
+<p>An example screen shot showing the path to lg3d-core directory I
+used is shown in Figure 25.<br>
+</p>
+<p><img src="images/Figure25.png" title="" alt=""
+ style="width: 679px; height: 361px;"><br>
+</p>
+<p><font size="2"><i>Figure 25 Selecting compile time libraries</i></font></p>
+<p><br>
+Press the "Ok" button to leave the "Project Properties" wizard. You
+will see NetBeans update lg3d-demo-apps classpath information with the
+lg3d-core class files.<br>
+<br>
+Expand the lg3d-demo-apps project to the source file
+org.jdesktop.lg3d.apps.tapps.WebIcon.java as shown in Figure 26.</p>
+<p><img src="images/Figure26.png" title="" alt=""
+ style="width: 397px; height: 337px;"><br>
+</p>
+<p><font size="2"><i>Figure 26 Expanding the lg3d-demo-apps source tree<br>
+<br>
+</i></font>Double click on the WebIcon.java file to load it in the
+NetBeans editor. You can make edits to this file and compile it
+directly by either pressing the shortcut key "F9" or by selecting the
+Build &gt; Compile menu item.<br>
+<br>
+You can edit any file under the newly created lg3d-demo-apps project
+and compile it. To test your modifications or changes to any of the
+lg3d-demo-apps source code in the Looking Glass window manager, just
+right click the lg3d-core project in the projects window and select
+"Run Project" or select "Run &gt; Main Project" from the main
+menu.&nbsp; Or, you can simply press "F6" to compile the edited file.
+Remember the lg3d-core project is the project you run the Looking Glass
+window manager with. It will automatically pick up your modifications
+to the lg3d-demo-apps project.<br>
+</p>
+<p></p>
+<p></p>
+<h3>Acknowledgments</h3>
+<p>
+The Project Looking Glass team gratefully thanks Charlie Hunt (huntch)
+for providing these instructions!
+</p>
+<hr>
+<small> $Revision: 1.5 $ $Date: 2006-08-23 17:31:35 $ </small>
+</div>
+</body>
+</html>

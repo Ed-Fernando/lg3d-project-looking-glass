@@ -1,0 +1,293 @@
+<html><head><title>Project Looking Glass Application Tutorial 3</title>
+
+    <link rel="stylesheet" type="text/css" href="../tutorial.css"/></head>
+  <body bgcolor="white">
+    <p>This tutorial is based upon the tutorial written by Hideya Kawahara.</p>
+    <p>
+    <table>
+      <tr>
+        <th align="left" valign="top">Aim:</th>
+        <td>To demonstrate more complex manipulations and user interaction with a 3D application within the lg3d framework. We will create a sphere with the Earth texture and a small handle to move it.</td>
+      </tr>
+      <tr>
+        <th align="left" valign="top">Requirements:</th>
+        <td>This tutorial builds upon <a href='tutorial1.html'>Tutorial 1</a> and <a href='tutorial2.html'>Tutorial 2</a>.<br/>To
+use this tutorial you will need a functional installation of the of
+lg3d. The stable version is the best version to begin with. This version is located
+at the <a href="http://lg3d-core.dev.java.net/">lg3d-core</a> web site. Follow the "<a href="https://lg3d-core.dev.java.net/lg3ddevelopersguide.html">Getting started with Project Looking Glass</a>" link for installation instructions.<br/>
+Note: You do not need to run the lg3d-session version.</td>
+      </tr>
+                        <tr>
+                                <td>&#32;</td>
+                                <td>Additionally, you need to have the Java 1.5 SDK. This is available at the <a href="http://java.sun.com/j2se/1.5/">Sun Java</a> web site.</td>
+                        </tr>
+
+      <tr>
+        <th align="left" valign="top">Steps:</th>
+        <td>
+          <ol>
+            <li><a href="#step1">Initialize the 3D application</a></li>
+            <li><a href="#step2">Create a Textured Sphere</a></li>
+            <li><a href="#step3">Setup Some Simple Behabiours for the Earth</a></li>
+            <li><a href="#step4">Add a more complexe action adapter</a></li>
+            <li><a href="#step5">Initialize the Container</a></li>
+            <li><a href="#step6">Compile the code</a></li>
+            <li><a href="#step7">Run our application</a></li>
+          </ol>
+        </td>
+      </tr>
+      <tr><td colspan='2' height='10'>&#32;</td></tr>
+      <tr>
+        <th class="newstep" valign="top"><a id="step1">Step 1:</a></th>
+        <th class="newstep">Initialize the 3D application</th>
+      </tr>
+      <tr>
+        <td>&#32;</td>
+        <td>Just like in <a href='tutorial1.html'>Tutorial 1</a> the first step is to create a <a class='javadoc' href='http://javadesktop.org/lg3d/javadoc/rel-0-6-1/api/index.html?org/jdesktop/lg3d/wg/Frame3D.html'>Frame3D</a>.
+        </td>
+      </tr>
+      <tr><td colspan='2' height='10'>&#32;</td></tr>
+      <tr>
+        <td>&#32;</td>
+        <td><code><ol>
+                Frame3D frame3d = new Frame3D();</ol></code>
+        </td>
+      </tr>
+      <tr><td colspan='2' height='10'>&#32;</td></tr>
+      <tr>
+        <td>&#32;</td>
+        <td>In this tutorial we will be demonstration two behaviors, <a class='javadoc' href='http://javadesktop.org/lg3d/javadoc/rel-0-6-1/api/index.html?org/jdesktop/lg3d/utils/action/RotateAction.html'>RotateAction</a> and <a class='javadoc' href='http://javadesktop.org/lg3d/javadoc/rel-0-6-1/api/index.html?org/jdesktop/lg3d/utils/action/ResilientRotateAction.html'>ResilientRotateAction</a>. These are conflicting actions (you cannot have an object rotate and rotate resiliently) therefore we must create a container to house the sphere and then we can apply the <code>ResilientRotateAction</code> to the container itself.</td>
+        </tr>
+      <tr><td colspan='2' height='10'>&#32;</td></tr>
+        <tr>
+                <td>&#32;</td>
+                <td><code><ol>
+                Container3D top = new Container3D();
+		</ol></code>
+                </td>
+        </tr>
+	<tr><td colspan='2' height='10'>&#32;</td></tr>
+      <tr>
+        <th class="newstep" valign="top"><a id="step2">Step 2:</a></th>
+        <th class="newstep">Create a textured sphere</th>
+      </tr>
+      <tr>
+        <td>&#32;</td>
+        <td>The <a class='javadoc' href='http://javadesktop.org/lg3d/javadoc/rel-0-6-1/api/index.html?org/jdesktop/lg3d/utils/shape/SimpleAppearance.html'>SimpleAppearance</a> class provides a useful constructor that takes the location of a texture to load.</td>
+                        </tr>
+      <tr><td colspan='2' height='10'>&#32;</td></tr>
+                        <tr>
+        <td>&#32;</td>
+        <td><code><ol>SimpleAppearance earthApp = null;<br/>
+        try {<br/>
+	  <ol>earthApp = new SimpleAppearance(&quot;earth.jpg&quot;);</ol>
+        } catch (Exception e) {<br/>
+          <ol>System.err.println(&quot;Failed to load texture: &quot; + e);</ol>
+        }
+	</ol></code>
+        </td>
+      </tr>
+      <tr><td colspan='2' height='10'>&#32;</td></tr>
+      <tr>
+        <td>&#32;</td>
+        <td>
+                Now we can create the sphere using this textured appearance. Be sure to specify <a class='javadoc' href='http://javadesktop.org/lg3d/javadoc/rel-0-6-1/api/index.html?org/jdesktop/lg3d/utils/shape/Primitive.html#GENERATE_TEXTURE_COORDS'>Primitive.GENERATE_TEXTURE_COORDS</a> so that the texture coordinates will be generated along with the position coordinates.
+                </td></tr>
+      <tr><td colspan='2' height='10'>&#32;</td></tr>
+                        <tr>
+        <td>&#32;</td>
+        <td><code><ol>Sphere earth = new Sphere(0.03f,
+            <ol>Primitive.GENERATE_NORMALS | Primitive.GENERATE_TEXTURE_COORDS | Primitive.GEOMETRY_NOT_SHARED,</ol>
+            <ol>36, earthApp);</ol></ol></code>
+        </td>
+      </tr>
+      <tr><td colspan='2' height='10'>&#32;</td></tr>
+      <tr>
+        <td>&#32;</td>
+        <td>Now the sphere can be added to a <a class='javadoc' href='http://javadesktop.org/lg3d/javadoc/rel-0-6-1/api/index.html?org/jdesktop/lg3d/wg/Component3D.html'>Component3D</a>, set it's position, and set the cursor for it.<br/>
+	Note we can set a cursor for each <code>Component3D</code>.
+        </td>
+                        </tr>
+      <tr><td colspan='2' height='10'>&#32;</td></tr>
+                        <tr>
+        <td>&#32;</td>
+        <td><code><ol>Component3D earthComp = new Component3D();<br/>
+        earthComp.addChild(earth);<br/>
+        earthComp.setTranslation(0.0f, 0.0f, -0.01f);<br/>
+        earthComp.setCursor(Cursor3D.E_RESIZE_CURSOR);</ol></code>
+        </td>
+      </tr>
+      <tr><td colspan='2' height='10'>&#32;</td></tr>
+      <tr>
+        <th class="newstep" valign="top"><a id="step3">Step 3:</a></th>
+        <th class="newstep">Setup some simple behaviors for the earth</th>
+      </tr>
+                        <tr>
+                                <td>&#32;</td>
+                                <td>
+                                      <p>A number of actions are provided by the API. I suggest having a look through the <a class='javadoc' href='http://javadesktop.org/lg3d/javadoc/rel-0-6-1/api/index.html?org/jdesktop/lg3d/utils/action/package-summary.html'>org.jdesktop.lg3d.utils.action</a>, <a class='javadoc' href='http://javadesktop.org/lg3d/javadoc/rel-0-6-1/api/index.html?org/jdesktop/lg3d/utils/actionadapter/package-summary.html'>org.jdesktop.lg3d.utils.actionadapter</a> and <a class='javadoc' href='http://javadesktop.org/lg3d/javadoc/rel-0-6-1/api/index.html?org/jdesktop/lg3d/utils/eventadapter/package-summary.html'>org.jdesktop.lg3d.utils.eventadapter</a> packages.</p>
+                                       <p>For this tutorial we will be implementing a <code>RotateAction</code>, a <a class='javadoc' href='http://javadesktop.org/lg3d/javadoc/rel-0-6-1/api/index.html?org/jdesktop/lg3d/utils/action/ScaleAction.html'>ScaleAction</a> and a <a class='javadoc' href='http://javadesktop.org/lg3d/javadoc/rel-0-6-1/api/index.html?org/jdesktop/lg3d/utils/action/GenericEventPostAction.html'>GenericEventPostAction</a>. The <code>GenericEventPostAction</code> is a generic action for posting <a class='javadoc' href='http://javadesktop.org/lg3d/javadoc/rel-0-6-1/api/index.html?org/jdesktop/lg3d/displayserver/event/LgEvent.html'>LgEvent</a>s (have a look at the <a class='javadoc' href='http://javadesktop.org/lg3d/javadoc/rel-0-6-1/api/index.html?org/jdesktop/lg3d/wg/event/package-summary.html'>org.jdesktop.lg3d.wg.event</a> package) to the display server.</p>
+                                </td>
+                        </tr>
+      <tr><td colspan='2' height='10'>&#32;</td></tr>
+      <tr>
+        <td>&#32;</td>
+        <td><code><ol>earthComp.setRotationAxis(0.0f, 1.0f, 0.0f);<br/>
+        new MouseClickedEventAdapter(earthComp,<br/>
+        <ol>new ToggleAdapter(new RotateAction(earthComp, (float)Math.PI, 1000)));</ol>
+        <br/>
+        new MouseClickedEventAdapter(earthComp,<br/>
+        <ol>new GenericEventPostAction(
+        <ol>Frame3DToFrontEvent.class, frame3d));</ol></ol>
+        <br/>
+        top.addChild(earthComp);
+        </td>
+      </tr>
+      <tr><td colspan='2' height='10'>&#32;</td></tr>
+                        <tr>
+        <th class="newstep" valign="top"><a id="step4">Step 4:</a></th>
+        <th class="newstep">Add a more complex action adapter</th>
+      </tr>
+                        <tr>
+                                <td>&#32;</td>
+                                <td>To demonstrate a more complex example of an action adapter we will add a handle to the earth to aid in dragging the earth about.
+                                </td>
+                        </tr>
+      <tr><td colspan='2' height='10'>&#32;</td></tr>
+      <tr>
+        <td>&#32;</td>
+        <td><code><ol>
+                SimpleAppearance handleApp = new SimpleAppearance(1.0f, 0.0f, 0.0f, 0.5f);<br/>
+                Sphere handle = new Sphere(0.003f, handleApp, Primitive.GENERATE_NORMALS | Primitive.GEOMETRY_NOT_SHARED);<br/>
+                Component3D handleComp = new Component3D();<br/>
+                handleComp.addChild(handle);<br/>
+                handleComp.setCursor(Cursor3D.MOVE_CURSOR);<br/>
+                handleComp.setTranslation(0.0f, 0.05f, 0.0f);<br/>
+                new MouseEnteredEventAdapter(handleComp,<br/>
+                <ol>new ScaleAction(handleComp, 1.5f, 200));</ol></ol></code>
+        </td>
+      </tr>
+      <tr><td colspan='2' height='10'>&#32;</td></tr>
+                        <tr>
+                                <td>&#32;</td>
+                                <td>Now we need to allow the handle to be grabbed to drag the sphere about. We use the <a class='javadoc' href='http://javadesktop.org/lg3d/javadoc/rel-0-6-1/api/index.html?org/jdesktop/lg3d/utils/eventaction/ComponentMover.html#ComponentMover(org.jdesktop.lg3d.wg.Component3D, org.jdesktop.lg3d.wg.Component3D)'>ComponentMover</a> to enable this action. Note this time we use two arguments - the first one is the item that can be grabbed, and the second is the item moved by the one that we drag. Since we move the entire application, we specify the <code>frame3d</code> object.
+                                </td>
+                        </tr>
+      <tr><td colspan='2' height='10'>&#32;</td></tr>
+      <tr>
+        <td>&#32;</td>
+        <td><code><ol>
+                new ComponentMover(handleComp, frame3d);</ol></code>
+        </td>
+      </tr>
+      <tr><td colspan='2' height='10'>&#32;</td></tr>
+                        <tr>
+                                <td>&#32;</td>
+                                <td>We can now add the handle to the <code>Container3D</code></td>
+                        </tr>
+      <tr><td colspan='2' height='10'>&#32;</td></tr>
+                        <tr>
+                                <td>&#32;</td>
+                                <td><code><ol>
+                                        top.addChild(handleComp);</ol></code>
+                                </td>
+                        </tr>
+      <tr><td colspan='2' height='10'>&#32;</td></tr>
+                        <tr>
+                                <td>&#32;</td>
+                                <td>
+                                        Moving the earth about should not be an easy task! Therefore we shall add some visual effects to show the struggle. The following achieves the wiggle motion when the application is dragged.
+                                </td>
+                        </tr>
+      <tr><td colspan='2' height='10'>&#32;</td></tr>
+                        <tr>
+                                <td>&#32;</td>
+                                <td><code><ol>
+                                        top.setRotationAxis(0.0f, 1.0f, 0.0f);<br/>
+                                        new MouseDraggedEventAdapter(handleComp,<br/>
+                                        <ol>new Float2Splitter(
+                                            <ol>new FloatDiffer(
+                                                <ol>new FloatScaler(500f, (float)Math.toRadians(30),
+                                                    <ol>new ResilientRotateAction(top, 1500))),</ol></ol>
+                                                   null));</ol></ol></ol></code>
+                                </td>
+                        </tr>
+      <tr><td colspan='2' height='10'>&#32;</td></tr>
+                        <tr>
+                                <td>&#32;</td>
+                                <td>
+                                        First we set the rotation axis for the rotation movement, and use <a class='javadoc' href='http://javadesktop.org/lg3d/javadoc/rel-0-6-1/api/index.html?org/jdesktop/lg3d/utils/action/ResilientRotateAction.html'>ResilientRotateAction</a> to actually wiggle the application. The <a class='javadoc' href='http://javadesktop.org/lg3d/javadoc/rel-0-6-1/api/index.html?org/jdesktop/lg3d/utils/actionadapter/Float2Splitter.html'>Float2Splitter</a>, <a class='javadoc' href='http://javadesktop.org/lg3d/javadoc/rel-0-6-1/api/index.html?org/jdesktop/lg3d/utils/actionadapter/FloatDiffer.html'>FloatDiffer</a> and <a class='javadoc' href='http://javadesktop.org/lg3d/javadoc/rel-0-6-1/api/index.html?org/jdesktop/lg3d/utils/actionadapter/FloatScaler.html'>FloatScaler</a> convert and adjust the x and y values generated by <a class='javadoc' href='http://javadesktop.org/lg3d/javadoc/rel-0-6-1/api/index.html?org/jdesktop/lg3d/utils/eventadapter/MouseDraggedEventAdapter.html'>MouseDraggedEventAdapter</a> into a float that can be used for the rotation action.
+                                </td>
+                        </tr>
+			<tr><td colspan='2' height='10'>&#32;</td></tr>
+                        <tr>
+        <th class="newstep" valign="top"><a id="step5">Step 5:</a></th>
+        <th class="newstep">Initialize the container</th>
+      </tr>
+                        <tr>
+                                <td>&#32;</td>
+                                <td>
+                                        Finally, we can add the frame to the container and initialize it to make it visible, as described in <a href='tutorial1.html#step4'>Tutorial 1</a> step 4. Note, since the sphere has different dimension and has been rotated and scaled, a large hint size should be given to the SceneManager to avoid conflicts with other 3D applications.
+                                </td>
+                        </tr>
+      <tr><td colspan='2' height='10'>&#32;</td></tr>
+                        <tr>
+        <td>&#32;</td>
+        <td><code><ol>
+                frame3d.addChild(top);<br/>
+                frame3d.setSize(0.06f, 0.10f, 0.08f);<br/>
+                frame3d.setCapabilities();<br/>
+                frame3d.setActive(true);<br/>
+                frame3d.setVisible(true);</ol></code>
+                        </td>
+      </tr>
+      <tr><td colspan='2' height='10'>&#32;</td></tr>
+                        <tr>
+        <th class="newstep" valign="top"><a id="step6">Step 6:</a></th>
+        <th class="newstep">Compile the code</th>
+      </tr>
+                        <tr>
+                                <td>&#32;</td>
+                                <td>
+                                We have finished writing the code. The full version includes the required import statements, and various constructor and main methods. Download <a href="../code/0.6.1/Tutorial3.java">Tutorial3.java</a>. Additionally you need the earth texture image. Download <a href='code/earth.jpg'>earth.jpg</a> - note this needs to be in the same directory as the application is run from (the same directory as the class file if you follow these instructions).<br/>
+Now we need to compile the source file. The tutorial requires the lg3d core
+library and Java 1.5 to compile. The core library can be found under
+the <code>lib</code> directory of the lg3d distribution (replace $LG3DHOME with the path to the lg3d distribution).
+</td>
+                        </tr>
+      <tr><td colspan='2' height='10'>&#32;</td></tr>
+      <tr>
+        <td>&#32;</td>
+        <td class="command"><ol>javac -cp "$LG3DHOME/lib/ext/lg3d-core.jar" Tutorial3.java</ol></td>
+      </tr>
+      <tr><td colspan='2' height='10'>&#32;</td></tr>
+                        <tr>
+        <th class="newstep" valign="top"><a id="step7">Step 7:</a></th>
+        <th class="newstep">Run our application</th>
+      </tr>
+                        <tr>
+                                <td>&#32;</td>
+                                <td>To run the tutorial, simply execute the runtutorial script with the name of the class file (without the .class extension)</td>
+                        </tr>
+      <tr><td colspan='2' height='10'>&#32;</td></tr>
+                        <tr>
+                                <td>&#32;</td>
+                                <td><code><ol>./runtutorial Tutorial3</ol></code></td>
+                        </tr>
+      <tr><td colspan='2' height='10'>&#32;</td></tr>
+                        <tr>
+                                <td>&#32;</td>
+                                <td>
+                                The lg3d desktop should be displayed with the earth textured sphere centered as you see below. The handle should be visible and can be grabbed allowing movement of the sphere.
+                                </td>
+                        </tr>
+                        <tr>
+                                <td>&#32;</td>
+                                <td><img width="80%" src="images/tutorial3.png" alt="The earth textured sphere from Tutorial3"/></td>
+                        </tr>
+
+
+
+    </table>
+    </p>
+  </body></html>

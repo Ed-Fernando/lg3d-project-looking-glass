@@ -1,0 +1,4 @@
+Implementation-Title: Tutorial 2
+Main-Class: Tutorial2
+Icon-Filename: tutorial2.png
+

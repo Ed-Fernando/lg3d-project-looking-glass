@@ -1,0 +1,56 @@
+========
+
+PresentationBox.jar is a LG3D application to do presentation for LG3D HoL.
+
+Installation :
+Please put PresentationBox.jar into $lg3d/ext/app dir.
+
+Usage :
+left click the box  - next page
+right click the box - previous page
+click the "-" bar   - minimize the application (original animation)
+click the "x" bar   - exit the application
+click the Toggle button    - change slide (JP to EN , EN to JP)
+middle click the thumbnail - minimize the application (default animation)
+right click the thumbnail  - exit the application
+
+Comments:
+If you want to change presentation slide.
+Please see source codes (PresentationBox_src.zip).
+This application needs two presentation slide (Japanese version and English version).
+Japanese slide informations are in list_ja.txt, English slide informations are in list_en.txt.
+This application requires gif/jpg/png as presentation slide format.
+Text files of slide list and presentation slides have to be in the Presentation.jar.
+
+======== Japanese EUC-JP ==============
+
+PresentationBox.jar は LG3D HoL 用のプレゼンテーションツール(スライド)です。
+
+インストール方法 :
+PresentationBox.jar を $lg3d/ext/app ディレクトリにコピーしてください。
+
+使い方 :
+ボックスをクリック     : 次のページ
+ボックスを右クリック   : 前のページ
+"-" バーをクリック     : 最小化(オリジナルアニメーション)
+"x" バーをクリック     : 終了
+トグルボタンをクリック : 英語・日本語の切り替え
+サムネイルを中クリック : 最小化(デフォルトアニメーション)
+サムネイルを右クリック : 終了
+
+コメント:
+プレゼン内容を変更したい場合等で、大幅な変更をしたい場合は
+ソースコード(PresentationBox_src.zip)
+を参照してください。
+現在のPresentation.jarの仕様では、
+- 英語・日本語の2種類のスライドが同じ枚数必須
+- スライドのフォーマットは gif, jpg, png のいずれか
+になります。
+
+なお、list_ja.txt,list_en.txtにスライドのリストが保存されているので
+別途用意する必要があります。
+全てのファイルは Presentation.jar に含まれている必要があります。
+
+--
+Yasuhiro.Fujitsuki@Sun.COM
+

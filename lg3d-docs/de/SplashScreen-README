@@ -1,0 +1,44 @@
+
+README for SplashScreen, v1.10 
+
+This README describes the SplashScreen element within the Project Looking Glass.
+
+A.	DESCRIPTION
+B. 	CONFIGURING.
+C.	UPDATES.
+
+
+
+A.	DESCRIPTION.
+
+
+This README describes a splashscreen, executed at start-up. - Operational within both the ./lg3d-dev and 
+the ./lg3d-session environments. 
+Upon first run of Project Looking Glass after an 'ant' compile, a SplashDefaults.XML file is created in the 
+src/etc/lg3d directory. This default-set display consists of a pre-configured image and a text message, 
+lasting for three seconds. For the purpose of personalisation, user preferences can be made to this xml file.
+
+
+B.	CONFIGURING.
+
+
+If a user wishes, changes can be made to this XML file in order to make Project Looking Glass more personal.
+Although the XML file is self explanatory, the four settings are :
+ 
+1. runSplash - A means to turn on/off the splashscreen (default = true)
+2. showText - A means to turn on/off the display message option. (default = true)
+3. imageLocation - The location of the image to be displayed (default = resources/images/splash/GrandSplash.png)
+4. messageText - The text greeting to be displayed, if showText, above is set to <true> (default = "Welcome.")
+
+
+C.	UPDATES.
+
+
+	Changes made since v1.00.
+
+1.	The xml file re-located from lg3d-core/src/devscripts to the lg3d-core/src/etc/lg3d directory.
+2.	Modified the xml file to give all operators read / write permissions. 
+3.	Resolved ant compiler issue regarding owner permission errors. 
+
+
+(Dated 03/12/04 - PhilD)

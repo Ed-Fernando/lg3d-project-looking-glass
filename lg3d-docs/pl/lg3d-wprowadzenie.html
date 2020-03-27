@@ -1,0 +1,871 @@
+<!DOCTYPE html PUBLIC "-//Tigris//DTD XHTML 1.0 Transitional//EN"
+"http://style.tigris.org/tigris_transitional.dtd">
+<html>
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  <title>Wprowadzenie do Projektu Looking Glass</title>
+  <style type="text/css">
+  <!--
+    table, th, td {
+	border-style: none;
+    }
+    table {background-color:#eee}
+    th {font-family:lucida,arial,sans-serif; color:#fff; background-color:#8b8}
+    td {font-family:lucida,arial,sans-serif; color:#333; background-color:#fff}
+  -->
+  </style>
+</head>
+<body>
+<div id="projectdocumentview" class="app">
+
+<h3>Wprowadzenie do Projektu Looking Glass - <i>Systemy Linuks/Solaris</i></h3>
+<p>
+  <b>Witaj na stronach Projektu Looking Glass!</b>
+</p>
+
+<p>
+  Ten dokument ma służyć pomocą przy instalacji i uruchamianiu środowiska
+  Looking Glass (LG3D) na komputerach działających pod kontrolą systemów Linuks i Solaris x86.
+  Aby maksymalnie uprościć proces instalacji LG3D jest udostępniane w formie tak zwanej 
+  "mega-paczki", czyli archiwum zawierającego wszystkie potrzebne pakiety. 
+  Ten dokument opisuje jak ją zainstalować w systemie.
+</p>
+<p>
+  Aby rozpocząć musisz najpierw skonfigurować swoje środowisko. 
+  Mimo iż konfiguracja sterowników karty graficznej może być dokuczliwa,
+  sama instalacja LG3D jest bardzo prosta. Aby ściągnąć, zainstalować i uruchomić LG3D zapoznaj się
+  z następującymi informacjami:
+</p>
+
+<img src="../images/misc/lg3d-pic-300x300.jpg" width="150" border="0" style="float: right;"/>
+
+<blockquote><small>
+<ol>
+  <li><a href="#wymagania">Wymagania</a></li>
+  <li><a href="#pobieranie">Pobieranie i instalacja LG3D</a></li>
+  <li><a href="#uruchamianie">Uruchamianie LG3D</a></li>
+  <li><a href="#linki">Przydatne linki</a></li>
+  <li><a href="#poslowie">Parę słów na koniec...</a></li>
+</ol>
+<!--<ul>
+  <li><a href="#RunningSessionMode">APPENDIX A: Running Session Mode</a></li>
+  <li><a href="#ColorDepth">APPENDIX B: Color Depth Configuration</a></li>
+  <li><a href="#BringingDownX">APPENDIX C: Bringing Down X Session</a></li>
+  <li><a href="#Troubleshooting">APPENDIX D: Troubleshooting</a></li>
+</ul>-->
+</small></blockquote>
+
+
+<h3><a name="wymagania"></a>1. Wymagania</h3> 
+
+<p> 
+  Najpierw sprawdź czy Twój system spełnia następujące minimalne wymagania: 
+</p> 
+
+<center><small>
+  <table border="1" cellpadding="2" cellspacing="2" width="90%"> 
+      <tr> 
+        <th valign="top">komponent</th> 
+        
+        <th valign="top">Wymagania</th> 
+      </tr> 
+      <tr> 
+        <th valign="top">System operacyjny</th> 
+        <td valign="top">
+          <p>
+            <b>Linux x86:</b> LG3D można bez problemów zainstalować na większości nowszych, 
+            popularnych dystrybucji .
+          </p>
+          <p>
+            <b>Linux AMD64:</b> Wersja 0.8.1 nie jest jeszcze dostępna dla procesorów 64 bitowych.
+          </p>
+          <p>
+            <b>Solaris x86:</b> LG3D jest dostępne dla Solarisa x86 S10_b74 (lub późniejszego). 
+          </p>
+        </td> 
+      </tr> 
+      <tr> 
+        <th valign="top">Procesor</th> 
+        <td valign="top">1.4 GHz lub szybszy</td> 
+      </tr> 
+      <tr> 
+        <th valign="top">RAM</th> 
+        <td valign="top">512MB</td> 
+      </tr> 
+      <tr>
+        <a name="RequirementsGraphicsCard"></a>
+        <th valign="top">Karta grafiki</th> 
+        <td valign="top">
+          <p>z akceleracją 3D, z minumum 32 MB wbudowanej pamięci VRAM oraz sterownik do obsługi 
+          OpenGL w wersji przynajmniej 1.3 (środowisko LG3D może być uruchomione na 
+          sterowniku OpenGL w wersji 1.2, ale wersja 1.3 jest zalecana do płynnego działania). 
+          24 bitowa głębia koloru jest wymagana dla integracji z X11.
+          </p>
+          <p>
+            <b>Linux x86:</b> 
+            Jesli posiadasz kartę Nvidia musisz użyć sterownika przynajmniej o numerze wersji: 
+            <a href="http://www.nvidia.com/object/linux_display_archive.html">1.0-8756 
+            (lub późniejszego)</a>. 
+            Informacji o konfiguracji kart NVIDIA szukaj 
+            <a href="../nvidia-driver-install-tips.html">tutaj</a>.
+            Niektóre karty wymagają dodatkowej konfiguracji w celu uruchomienia LG3D.
+            Instrucje konfiguracji dla róźnych kart graficznych znajdziesz pod tym adresem: 
+            <a href="../graphics-driver-index.html">Instalacja i Konfiguracja Sterowników
+            dla Looking Glass</a>
+          </p>
+          <p>
+            <b>Solaris x86:</b> 
+            W trakcie pisania tego poradnika, jedynymi kartami graficznymi ze wsparciem dla OpenGL
+            dostępnymi dla systemu Solaris x86 były niektóre karty firmy Nvidia (zobacz poniżej). 
+            Potrzebujesz sterownika co najmniej w wersji: 
+            <a href="http://www.nvidia.com/object/solaris_display_archive.html">1.0-8756 
+            (lub nowszej)</a>. 
+            Przejrzyj <a href="../nvidia-driver-install-tips-solx86.html">ten poradnik</a> 
+            aby uzyskać więcej informacji.  W chwili obecnej LG3d na Solarisie można uruchomić 
+            tylko na następujących kartach firmy Nvidia:
+            <ul>
+              <li>Quadro FX 4000</li>
+              <li>Quadro FX 3000</li>
+              <li>Quadro FX 1100</li>
+              <li>Quadro FX 500</li>
+              <li>NVS 280</li>
+            </ul>
+          </p>
+          <p>
+            Jeśli udało się Tobie uruchomić LG3D na innej karcie grafiki, lub chcesz zgłosić jakiś 
+            problem, skorzystaj z 
+            <a href="http://forums.java.net/jive/forum.jspa?forumID=80">
+            forum dyskusyjnego</a>
+          </p>
+        </td> 
+      </tr> 
+      <tr> 
+        <th valign="top">Miejsce na dysku</th> 
+        <td valign="top">po zainstalowaniu środowisko zajmuje ~350 MB</td> 
+      </tr> 
+  </table>
+</small></center>
+<br />
+
+<h3><a name="pobieranie"></a>2. Pobieranie i instalacja LG3D</h3> 
+<p>
+  Project Looking Glass rozprowadzany jest w wielu formach,
+  między innymi są dostępne pakiety .deb dla Debiana i bazujących na nim dystrybucji, 
+  binarne mega paczki i pakiety dla Solarisa. Binarne mega-paczki oraz pakiety dla Debiana zawierają 
+  wszystko co potrzebne do uruchomienia środowiska, w tym JRE(Java Runtime Environment) w wersji 1.6
+  oraz Javę3D.
+</p>
+  W dystrybucjach bazujących na Debianie (jak Ubuntu) zalecamy instalację z  
+  pakietów .deb. W innych dystrybucjach Linuksa oraz dla Solarisa x86
+  zalecanym sposobem instalacji jest pobranie mega paczek.
+  Będąc na stronie głównej projektu wystarczy kliknąć na link >>Ściągnij i zainstaluj: 
+  Linuks/Solaris x86<<. 
+  Ściąganie trochę potrwa, ale w ten sposób mamy wszystko w jednym pakiecie, bez potrzeby ingerencji 
+  w system.
+</p>
+<p>
+  W sekcji Stable build na 
+  <a href="https://lg3d-core.dev.java.net/binary-builds.html">
+    tej stronie</a> znajdują się także inne pakiety binarne.
+  Zapoznaj się ze <a href="../release-notes.html">szczegółami dotyczącymi bieżącego wydania</a></b>.
+</p>
+
+<p>
+  Mega paczka rozprowadzana jest jako plik z rozszerzeniem <tt><b>bin</b></tt> .
+</p>
+
+<h4><a name="Megabundle"></a>2.1 Instalacja z mega paczki </h4> 
+
+<p>
+  Instalator LG3D instaluje środowisko oraz wszystkie wymagane komponenty jak JRE oraz Java 3D.  
+  Należy zwrócić uwagę, że instalator umieszcza JRE oraz Java 3D w katalogu z LG3D. 
+  Tak więc instalacja LG3D nie ma wpływu na istniejącą instalację Javy w systemie.
+</p>
+
+<ol type="a">
+<li>
+    Ściągnij mega-paczkę dla swojego systemu operacyjnego :
+    <blockquote>
+      <ul>
+        <li>
+          <a href="https://lg3d-core.dev.java.net/files/documents/1834/46210/lg3d--1-0-0-linux-i686-0612190943.bin">
+            LG3D Wersja 1.0.0 Mega-paczka dla systemu Linuks x86 (19 Grudnia 2006) 
+          </a>
+        </li>
+        <br />
+        <li>
+          <a href="https://lg3d-core.dev.java.net/files/documents/1834/46219/lg3d--1-0-0-solaris-i86pc-0612190950.bin">
+            LG3D Wersja 1.0.0 Mega-paczka dla systemu Solaris x86 (19 Grudnia 2006)
+          </a>
+        </li>
+      </ul>
+    </blockquote>
+  </li>
+  <li>
+    Przejdź do katalogu z plikiem instalatora (możesz go umieścić w dowolnym katalogu, na przykład w swoim katalogu domowym). 
+    Na potrzeby tego artykułu przyjmijmy, że instalator jest w katalogu 
+    <span style="font-family: courier new,courier,monospace;">/tmp/lg3d-...-.bin</span>
+  </li>
+  <br />
+  <li>
+    Przejdź do katalogu, do którego chcesz zainstalować LG3D.
+    <p><b>W systemie Linux: Najlepiej zainstalować LG3D w katalogu <tt>/usr/share</tt>.
+    Możesz wybrać inny katalog. ale wówczas sesja LG3D nie zostanie dodana do GDM.</b>
+  </li>
+  <br />
+  <li>
+    Teraz uruchom skrypt instalatora poleceniem:<br />
+    <br />
+    <span style="font-family: courier new,courier,monospace;">
+      % sh /tmp/lg3d-...-.bin
+    </span> 
+    <p><b>W systemie Linux: Jeśli wybrałeś instalację LG3D w katalogu <tt>/usr/share</tt> musisz
+    wydać tą komendę jako root.</b>
+    </p>
+    Podczas procesu instalacji zostanie stworzony podkatalog o nazwie "<tt>lg3d</tt>" i do niego zostaną wypakowane wszystkie pliki.
+  </li>
+  <br />
+  <li>
+    Przewiń tekst umowy licencyjnej wciskając spację.
+Zaakceptuj licencję wpisując "yes" i naciskając [enter]
+  </li>
+  <br>
+  <li>
+    Jeśli wpiszesz "yes", instalator rozpocznie rozpakowywać elementy do podkatalogu
+    "<tt>lg3d</tt>".
+    Gdy proces instalacji się zakończy wyświetli się "<tt>Done.</tt>". 
+  </li>
+  <br>
+  Uwaga! Nie ma potrzeby dalszej konfiguracji (na przykład edycji zmiennej PATH, itp). 
+  Zaraz po rozpakowaniu pakietu mamy do dyspozycji w pełni działające środowisko.
+  <br><br>
+  <li>
+    Dodawanie LG3D jako sesji w GDM (<b>tylko Linuks</b>):
+  </li>
+    <p>
+    W systemie Linuks LG3D może być uruchamiane bezpośrednio
+    jako sesja w GDM. W trybie tym LG3D wyświetlane jest na pełnym ekranie i staje się prawdziwym menadżerem okien. 
+    <p>
+    Aby to skonfigurować, musisz mieć uprawnienia roota i wykonać następujące komendy:
+    <p>
+    <tt># cd /usr/share/lg3d/bin
+    <br>	
+    # ./postinstall</tt>
+    <p>
+    Uwaga: jest to możliwe tylko gdy LG3D zostało zainstalowane w katalogu 
+    <tt>/usr/share</tt>.
+  <br />
+  <li>
+  Na tym etapie instalacja LG3D jest zakończona.
+  </li>
+</ol>
+<h4><a name="Debian"></a>2.2 Instalacja paczek .deb (dystrybucje oparte na Debianie)</h4> 
+<p>
+Paczki te zostały zbudowane i przetestowane na Ubuntu Dapper,
+jednakże powinny one bez problemów chodzić pod innymi dystrybucjami z rodziny Debiana.
+</p>
+Możesz pobrać i zainstalować paczki dla Debiana na dwa sposoby :
+<ol type="a">
+  <li>
+    Ściągnij 3 paczki .deb z 
+    <a href="https://lg3d-core.dev.java.net/binary-builds.html">
+      tej strony</a> a następnie zainstaluj je tą komendą:
+    <br><br>
+    <tt>% sudo dpkg -i lg3d_jdk*.deb lg3d_java3d*.deb lg3d-core*.deb</tt>
+    </p>
+    <p>
+    Uwaga: instalacja paczki <tt>lg3d-core*.deb</tt> automatycznie dodaje LG3D jako sesję w GDM. 
+    Nie trzeba wtedy samemu uruchamiać skryptu postinstall.
+  </li>
+  <p> ALBO </p>
+  <li>
+    Użyj <i>apt'a</i> lub <i>Synaptic'a</i> (na Ubuntu) wykonując następujące kroki
+    (będziesz potrzebować uprawnień <i>root'a</i> tak więc wykonaj najpierw komendę
+    <tt>sudo bash</tt>) :
+    <ul>
+      <li>
+	Są 3 repozytoria LG3D. W <i>Stable</i> znajdziesz najświeższe
+    stabilne wydania (0.8.1, 1.0 itd.). W <i>Testing</i>
+	znajdują się pakiety testowe (alpha, beta itd.) dla najnowszego wydania, natomiast w <i>Unstable</i> 
+    są night-buildy.
+        Aby móc korzystać z tych repozytoriów, dodaj następujące linie do pliku
+	<tt>/etc/apt/sources.list</tt> i zakomentuj/odkomentuj odpowiednie
+	linie.
+
+        <pre>
+  	## LG3D repsoitory
+  	  deb http://javadesktop.org/lg3d/debian stable contrib
+  	# deb http://javadesktop.org/lg3d/debian testing contrib
+  	# deb http://javadesktop.org/lg3d/debian unstable contrib
+        </pre>
+      </li>
+      <li>
+        Wtedy możesz już wykonać instalację: 
+        <pre>
+          % apt-get update
+  	  % apt-get install lg3d-core
+        </pre>
+        ALBO, w systemie Ubuntu (lub potomnych), <br>
+        <ul>
+          <li>
+      	    uruchom menadżera pakietów <i>Synaptic</i> z menu <i>System/Administration</i> ,
+      	  </li>
+      	  <li>
+      	    kliknij przycisk <i>Reload</i> a następnie
+      	  </li>
+      	  <li>
+      	    <i>Search</i> i wpisz <tt>lg3d</tt>, zaznacz <tt>lg3d-core</tt>.
+      	  </li>
+      	  <li>
+      	    Kliknij przycisk <i>Apply</i> aby ściągnąć i zainstalować wybrany pakiet
+      	  </li>
+	</ul>
+      </li>
+    </ul>
+    <br/>
+    Wybranie <tt>lg3d-core</tt> do instalacji powinno automatycznie wybrać/zaznaczyć
+    <tt>lg3d-jdk</tt> i <tt>lg3d-java3d</tt> do instalacji. Będziesz musiał zaakceptować warunki 3 licencji
+    dla lg3d, jdk oraz java3d.
+    <br/>
+    <br/>
+    Uwaga: Obecnie tylko repozytoria <i>Testing</i> i <i>Unstable</i> działają prawidłowo. 
+    Możesz zainstalować wydanie 0.8.1 (na własną odpowiedzialność) używając
+    repozytorium <i>Stable</i> lecz możesz się natknąć na problem z zależnościami.
+  </li>
+</ol>
+<h3><a name="uruchamianie"></a>4. Uruchamianie LG3D</h3> 
+<img src="images/lg_snapshot-s.png" width="200" vspace="8" hspace="8" style="float: right;"/>
+
+<p>
+  Środowisko Loking Glass można uruchomić w kilu trybach:
+</p>
+<ol>
+  <li><a name="RunningDevMode"><b>Tryb testowy (lg3d-dev)</b> :
+    W tym trybie, LG3D uruchamiane jet w odzdielnym oknie na Twoim pulpicie. 
+    Jest to najprostszy sposób na odpalenie LG3D, jednak ten tryb umożliwia tylko 
+    na uruchamianie aplikacji wbudowanych w LG3D, jak na przykład przeglądarka CD. 
+    Natywne aplikacje dla X11, takie jak xterm będą uruchamianie na zewnątrz środowiska; 
+    pojawią się w sesji iksów, z której wystartowano LG3D. <br />
+    Aby uruchomić LG3D w <i>trybie testowym</i> :
+    <p/>
+    <ol type=a>
+      <li>
+        Sprawdź czy Twoja karta grafiki obsługuje OpenGL w wersji 1.3 lub późniejszej :<br />
+        <br />
+        <span style="font-family: courier new,courier,monospace;">
+          % glxinfo | grep "GLX version"<br />
+          GLX version: 1.3<br />
+        </span>
+      <br />
+        Jeśli wyświetli się wartość mniejsza niż 1.3, zaktualizuj sterownik karty graficznej. 
+        Więcej informacji znajduje się w 
+        <a href="#RequirementsGraphicsCard">części dotyczącej kart graficznych w rozdziale "Wymagania"</a>.
+        LG3D można uruchomić na OpenGL w wersji 1.2, jednak wersja 1.3 jest zalecana.
+      </li>
+      <br />
+      <li>
+          Przejdź do katalogu, w którym zainstalowałeś  LG3D.
+      </li>
+      <br />
+      <li>
+        Uruchom <i>tryb testowy</i> wpisując:<br />
+	<br />
+	<span style="font-family: courier new,courier,monospace;">
+	  % bin/lg3d-dev<br />
+	</span>
+      </li>
+    </ol>
+    <p>
+      Jeśli instalacja LG3D sie powiodła, pojawi się splash
+      screen a za chwilę główne okno ze środowiskiem LG3D.
+      Klikając na ikonkę płyty CD na panelu uruchmomi się przeglądarka płyt CD , trójwymiarowa 
+      aplikacja demonstrująca zalety środowiska LG3D. Najedź kursorem myszki na stos płyt i kliknij na wybrany krążek
+      aby zobaczyć szczegóły.
+
+      Na wiki zamieściliśmy artykuł opisujący jak poruszać się w nowym środowisku (rozmieszcać okna w 
+      przestrzeni 3D, uruchamiać i obsługiwać aplikacje): 
+      <a href="http://wiki.java.net/bin/view/Javadesktop/FirstRun"> 
+	<b>LG3D First Run (tekst w języku angielskim)</b>
+      </a>
+      (wskazówki umieszczone w rozdziale "X Apps Specific Features" nie mają zastosowania w <i>trybie programisty</i>).
+      Jeśli napotkasz jakieś trudności, zapoznaj się z sekcją  
+      <a href="#Troubleshooting">Rozwiązywanie problemów</a>.
+    </p>
+  </li>
+  <br />
+
+  <li><a name="RunningAppMode"><b>Tryb aplikacji (lg3d-app)</b> :
+    W trybie tym LG3D jest wyświetlane w osobnym oknie (tak jak w trybie testowym)
+    ale możliwa jest integracja z natywnymi aplikacjami (dla systemu X11). <br />
+     Aby uruchomić LG3D w <i>trybie aplikacji</i> :
+    <p/>
+    <ol type=a>
+      <li>
+         Sprawdź czy Twoja karta grafiki obsługuje OpenGL w wersji 1.3 lub późniejszej:<br />
+        <br />
+        <span style="font-family: courier new,courier,monospace;">
+          % glxinfo | grep "GLX version"<br />
+          GLX version: 1.3<br />
+        </span>
+        <br />
+         Jeśli wyświetli się wartość mniejsza niż 1.3, zaktualizuj sterownik karty graficznej. 
+         Więcej informacji znajduje się w 
+        <a href="#RequirementsGraphicsCard">części dotyczącej kart graficznych w rozdziale "Wymagania"</a>.
+        LG3D można uruchomić na OpenGL w wersji 1.2, jednak wersja 1.3 jest zalecana.
+      </li>
+      <br />
+      <li>
+        Przejdź do katalogu, w którym zainstalowałeś LG3D.
+      </li>
+      <br />
+      <li>
+        Uruchom <i>tryb aplikacji</i> wpisując:<br />
+        <br />
+        <span style="font-family: courier new,courier,monospace;">
+          % bin/lg3d-app<br />
+        </span>
+      </li>
+    </ol>
+
+    <p>
+      Oprócz funkcjonalności, ktorą poznałeś uruchamiając LG3D w <i>trybie testowym</i>, 
+      teraz możesz uruchamiać aplikacje dla iksów wewnątrz LG3D (w tym samym oknie co środowisko).
+      Otwórz wirtualny terminal 
+      <tt>xterm</tt> klikając na jego ikonkę na pasku zadań.
+      Powinieneś zobaczyć okno <tt>xterm</tt> pływające w przestrzeni 3D.
+
+      Jeśli napotkasz jakieś trudności, zapoznaj się z sekcją  
+      <a href="#Troubleshooting">Rozwiązywanie problemów</a>.
+    </p>
+
+    <p>
+      Jeśli chcesz, możesz uruchamiać LG3D w trybie aplikacji w zmasymalizowanym oknie 
+      korzystając z opcji "<tt>-f</tt>" :
+      <blockquote>
+      <span style="font-family: courier new,courier,monospace;">
+	% bin/lg3d-app -f
+      </span>
+      </blockquote>
+      Jeśli chcesz się dowiedzieć więcej o konfiguracji okna LG3D , przygotowaliśmy artykuł 
+      <a href="../lg3d-window-resizing.html">
+	Resizing and Configuring LG3D Window (tekst w języku angielskim)
+      </a>.  
+    </p>
+    <p>
+    <b>W systemie Linux</b>: jeśli zainstalowałeś LG3D w katalogu <tt>/usr/share/lg3d</tt> i uruchomiłeś
+    skrypt <tt>postinstall</tt> podczas procesu instalacji, istnieje jeszcze jeden sposób 
+    na uruchomienie trybu aplikacji. LG3D zostało dodane jako osobna sesja w menadżerze sesji GDM.
+    Podczas ładowania systemu, gdy pojawi się ekran wyboru sesji użytkownika, 
+    po prostu klinij przycisk "Sesja" i wybierz z menu
+    pozycję "Looking Glass". W tym trybie GNOME się nie uruchamia i LG3D zachowuje się jak natywny menadżer okien.
+    </p>
+
+  </li>
+</ol>
+
+<p>
+  Poznaj Looking Glass i zastanów się w jaki sposób można wzbogacić interakcję z użytkownikiem
+   wykorzystując 3D! Kiedy będziesz gotów napisać pierwszą trójwymiarową aplikację
+  , zapoznaj się z  <a href="../lg3d-developers-guide.html">Przewodnikiem dla programistów
+  </a> w celu dowiedzenia się więcej na temat tworzenia aplikacji korzystając z Looking Glass.
+</p>
+
+<h3><a name="linki"></a>5. Przydatne linki</h3> 
+
+<p>
+  Poniżej znajduje się lista odnośników do przydatnych materiałów...
+</p>
+<ul>
+  <li>
+    <a href="http://wiki.java.net/bin/view/Javadesktop/FirstRun"> 
+      LG3D - Pierwsze uruchomienie
+    </a>
+  </li>
+  <li>
+    <a href="http://forums.java.net/jive/forum.jspa?forumID=80">
+      Forum dyskusyjne Projektu LG3D
+    </a>
+  </li>
+  <a href="../release-notes.html">
+    Szczegóły dotyczące bieżącego wydania
+  </a>
+  <li>
+    <a href="index.html#Reporting_Issues">
+      Zgłaszanie błędów/sugestii
+    </a>
+  </li>
+  <li>
+    <a href="index.html#Staying_Connected">
+      Jak być na bieżąco?
+    </a>
+  </li>
+  <li>
+    <a href="index.html#How_to_Contribute">
+      Jak można pomóc?
+    </a>
+  </li>
+  <li>
+    <a href="index.html#Sub-projects">
+      Lista podprojektów
+    </a>
+  </li>
+  <li>
+    <a href="lg3d-pod-windows.html">
+      Uruchamianie środowiska Looking Glass na Microsoft Windows
+    </a>
+  </li>
+  <li>
+    <a href="../lg3d-developers-guide.html">
+      Przewodnik po Projekcie Looking Glass dla programistów
+    </a>
+  </li>
+  <li>
+    <a href="../tutorial/index.html">
+      Tutoriale
+    </a>
+  </li>
+  <li>
+    <a href="https://lg3d.dev.java.net/pl/pdf/LG3D-Overview-PL.pdf">
+      Wprowadzenie do Projektu Looking Glass" (PDF 980KB)
+    </a>
+  </li>
+  <li>
+    <a href="index.html#Resources">
+      Inne źródła informacji
+    </a>
+  </li>
+</ul>
+
+<h3><a name="poslowie"></a>6. Parę słów na koniec...</h3>
+<p>
+  Dziękujemy za zainteresowanie Projektem Looking Glass!
+</p>
+</div>
+<br />
+<hr /><!-- --------------------------------------------------------- -->
+<br />
+
+<h3><a name="ColorDepth"></a>Dodatek A: Konfiguracja głębi koloru</h3>
+
+<blockquote>
+<h4>Java Desktop System wersje 1 i 2 oraz SUSE 8.1:</h4>
+
+<ol>
+  <li>Uruchom program sax2 komendą:<br />
+    <br />
+    <span style="font-family: courier new,courier,monospace;">
+% /usr/X11R6/bin/sax2<br />
+SaX: root Password:</span> <b>wprowadź hasło administratora</b><br />
+    <br />
+  </li>
+  <li>Gdy aplikacja SaX2 się uruchomi, kliknij na przycisk <b>Color and Resolution</b> a następnie na <b>[Properties...]</b>.</li>
+  <li>Na panelu <b>Color selection...</b>, kliknij na menu i wybierz <b>16.7 Mio. [24 Bit]</b>. <br />
+  </li>
+  <li>Na zakładce <b>Resolution(s) for 16.7
+Mio. [24 Bit] colors</b>, wybierz preferowaną rozdzielczość i zatwierdź przyciskiem <b>[Ok]</b>.<br />
+  </li>
+  <li>Kliknij przycisk <b>[Finish]</b>
+a następnie <b>[Finalize&gt;&gt;]</b>.<br />
+  </li>
+  <li>Otworzy się nowe okno dialogowe. Kliknij na przycisk <b>[Test...]</b>
+aby przetestować nową rozdzielczość. <br />
+  </li>
+  <li>Powinien pojawić się niebieski ekran testowy, kliknij na <b>[Save]</b> jeśli wszystko jest w porządku, 
+  a potem na <b>[Ok]</b>
+gdy powrócisz do głównego okna programu SaX2, kliknij <b>[Yes]</b> aby zakończyć.</li>
+  <li>Jeśli podczas wyświetlania ekranu testowego pojawiły się jakieś błędy, test zakończ y się po 30 sekundach
+  i poprzednie ustawienia zostaną przywrócone.
+Spróbuj wtedy ustawić inną rozdzielczość, tak aby Twój system pracował bez zarzutu.<br />
+  </li>
+  <li>Gdy skonfigurujesz już swój system, wyloguj się i zaloguj jeszcze raz i sprawdź czy głebia koloru wynosi teraz 
+  24 bity lub więcej wydając polecenie <span style="font-family: courier new,courier,monospace;">xdpyinfo</span>.</li>
+</ol>
+
+<h4>RedHat Fedora 2:</h4>
+
+<ol>
+  <li>Najpierw uzyskaj prawa administratora:<br />
+    <br />
+    <span style="font-family: courier new,courier,monospace;">
+% su root<br />
+Password:</span> <b>wprowadź hasło administratora</b> <br />
+<span style="font-family: courier new,courier,monospace;">#</span><br />
+    <br />
+  </li>
+  <li>Wyedytuj plik: <span style="font-family: courier new,courier,monospace;">/etc/X11/xorg.conf</span></li>
+  <li>Znajdź sekcję zatytuowaną: <span
+ style="font-family: courier new,courier,monospace;">Section "Screen"</span><span
+ style="font-family: courier new,courier,monospace;"><br />
+    </span></li>
+  <li>W tej sekcji znajdź linijkę: <span
+ style="font-family: courier new,courier,monospace;">Identifier "Screen0"<br />
+    </span>Zmień <span style="font-family: courier new,courier,monospace;">DefaultDepth</span>
+i <span style="font-family: courier new,courier,monospace;">DefaultFbBpp </span>na:<br />
+    <br />
+    <span style="font-family: courier new,courier,monospace;">DefaultDepth 24<br />
+DefaultFbBpp 32<br />
+    <br />
+    </span></li>
+  <li>Zapisz plik i wyloguj się i zaloguj jeszcze raz i sprawdź czy głebia koloru wynosi teraz 
+  24 bity lub więcej wydając polecenie <span style="font-family: courier new,courier,monospace;">xdpyinfo</span>.<br />
+  </li>
+</ol>
+
+<h4>RedHat 8, RedHat 9 i inne dystrybucje Linuksa:</h4>
+
+<p>
+Wiele dystrybucji Linuksa używa pliku <span
+ style="font-family: courier new,courier,monospace;">XF86Config</span> do konfiguracji właściwości wyświetlania grafiki.
+ Aby zmienić głębię kolorów w takich systemach:
+</p>
+
+<ol>
+  <li>Najpierw uzyskaj prawa administratora:<br />
+    <br />
+    <span style="font-family: courier new,courier,monospace;">
+% su root<br />
+Password:</span> <b>wprowadź hasło administratora</b> <br />
+<span style="font-family: courier new,courier,monospace;">#</span><br />
+    <br />
+  </li>
+  <li>Wyedytuj plik: <span style="font-family: courier new,courier,monospace;">/etc/X11/XF86Config</span></li>
+  <li>Znajdź sekcję zatytuowaną: <span
+ style="font-family: courier new,courier,monospace;">Section "Screen"</span> i zmień <span style="font-family: courier new,courier,monospace;">DefaultDepth</span>
+na
+24:<br />
+    <br />
+    <span style="font-family: courier new,courier,monospace;">DefaultDepth&nbsp;&nbsp;&nbsp;&nbsp;
+24<br />
+    <br />
+    </span></li>
+  <li>W tej sekcji zmajdź pod-sekcję zatytuowaną<span
+ style="font-family: courier new,courier,monospace;">"Display":<br />
+    <br />
+    </span><span style="font-family: courier new,courier,monospace;">SubSection
+"Display"<br />
+    <br />
+    </span>i zmień <span style="font-family: courier new,courier,monospace;">Depth</span>
+na:<br />
+    <br />
+    <span style="font-family: courier new,courier,monospace;">Depth&nbsp;&nbsp;&nbsp;&nbsp;
+24<br />
+    <br />
+    </span></li>
+  <li>Zapisz plik i wyloguj się i zaloguj jeszcze raz i sprawdź czy głebia koloru wynosi teraz 
+  24 bity lub więcej wydając polecenie <span style="font-family: courier new,courier,monospace;">xdpyinfo</span>.</li>
+</ol>
+
+<h4>Solaris x86 :</h4>
+
+<p>
+Solaris x86 używa pliku <span
+ style="font-family: courier new,courier,monospace;">xorg.conf</span> do przechowywania konfiguracji serwera 
+  Xorg, który jest wykorzystywany przez Projekt Looking Glass. Aby zmienić głębię kolorów w systemie Solaris x86:
+</p>
+
+<ol>
+  <li>Najpierw uzyskaj prawa administratora:<br />
+    <br />
+    <span style="font-family: courier new,courier,monospace;">
+% su root<br />
+Password:</span> <b>wprowadź hasło administratora</b> <br />
+<span style="font-family: courier new,courier,monospace;">#</span><br />
+    <br />
+  </li>
+  <li>Wyedytuj plik: <span style="font-family: courier new,courier,monospace;">/etc/X11/xorg.conf</span></li>
+  <li>Znajdź sekcję zatytuowaną: <span
+ style="font-family: courier new,courier,monospace;">Section "Screen"</span> i zmień <span style="font-family: courier new,courier,monospace;">DefaultDepth</span>
+na 
+24:<br />
+    <br />
+    <span style="font-family: courier new,courier,monospace;">DefaultDepth&nbsp;&nbsp;&nbsp;&nbsp;
+24<br />
+    <br />
+    </span></li>
+  <li>Zapisz plik i wyloguj się i zaloguj jeszcze raz i sprawdź czy głebia koloru wynosi teraz 
+  24 bity lub więcej wydając polecenie <span style="font-family: courier new,courier,monospace;">xdpyinfo</span>.</li>
+</ol>
+</blockquote>
+
+<br />
+<hr /><!-- --------------------------------------------------------- -->
+<br />
+
+<h3><a name="BringingDownX"></a>Dodatek B: Zamykanie sesji X'sów</h3>
+
+<p>
+  Instrukcje zamykania sesji Xsów różnią się w zależności od platformy, 
+  tak więc postępuj zgodnie z instrukcjami przeznaczonymi dla Twojej platformy. 
+  Jeśli używasz systemu, który nie jest opisany prawdopodobnie cały proces przebiega podobnie.
+  Wtedy użyj podanych tu instrukcji jako przewodnika i poinformuj Nas czy się udało i jakie były różnice!
+</p>
+
+<blockquote>
+<h4>Sun Java Desktop System/SuSE 8.1:</h4>
+
+<p>
+JDS/SuSE 8.1 używa X Display Manager'a (xdm) do zarządzania sesjami użytkownika.
+Aby uruchomić Projekt Looking Glass musisz najpierw zamknąć xdm. Ponieważ ten proces jest 
+przywracany automatycznie, musisz go wyłączyć używając komendy
+ <span style="font-family: courier new,courier,monospace;">chkconfig</span>
+:
+</p>
+
+<ol>
+  <li>Najpierw uzyskaj prawa administratora:<br />
+    <br />
+    <span style="font-family: courier new,courier,monospace;">
+% su root<br />
+Password:</span> <b>wprowadź hasło administratora</b> <br />
+<span style="font-family: courier new,courier,monospace;">#</span><br />
+    <br />
+  </li>
+  <li>Wyłącz usługę xdm:<br />
+    <br />
+    <span style="font-family: courier new,courier,monospace;">
+# /sbin/chkconfig -d xdm<br />
+xdm&nbsp; 0:off&nbsp;&nbsp; 1:off&nbsp;&nbsp; 2:off&nbsp;&nbsp;
+3:off&nbsp;&nbsp; 4:off&nbsp;&nbsp; 5:off&nbsp;&nbsp; 6:off<br />
+    <br />
+    </span></li>
+  <li>Zamknij aplikacje działające w trybie graficznym i zapisz wszystkie pliki nad którymi pracujesz. 
+  Następnie wyłącz menadżera sesji:<br />
+    <br />
+    <span style="font-family: courier new,courier,monospace;"> # pkill gdm-binary<br />
+    <br />
+    </span></li>
+  <li>Teraz przeskocz do rozdziału <a href="#uruchamianie">Uruchamianie Looking Glass</a> .</li>
+</ol>
+<p>
+<b>Uwaga:</b> Aby re-aktywować menadżera sesji, jako administrator wykonaj następującą komendę, a następnie zrestartuj swój system:
+</p>
+<blockquote><span
+ style="font-family: courier new,courier,monospace;"># /sbin/chkconfig -a xdm</span><br />
+</blockquote>
+
+<h4>RedHat 9:</h4>
+<p>
+RedHat używa GNOME Display Manager (gdm) do zarzadzania sesjami użytkownika.
+Nie jest konieczne wyłączanie gdm, możesz po rostu przejść do niższego run
+level'a gdzie gdm nie jest aktywny:
+</p>
+
+<ol>
+  <li>Najpierw uzyskaj prawa administratora:<br />
+    <br />
+    <span style="font-family: courier new,courier,monospace;">
+% su root<br />
+Password:</span> <b>wprowadź hasło administratora</b><br />
+<span style="font-family: courier new,courier,monospace;">#</span><br />
+    <br />
+    </li>
+  <li>Zamknij aplikacje działające w trybie graficznym i zapisz wszystkie plik nad którymi pracujesz. 
+  Następnie zmień run level na 4:<br />
+    <br />
+    <span style="font-family: courier new,courier,monospace;"> # /sbin/init 4<br />
+    <br />
+    </span>Bieżąca sesja X powinna się zakończyć i powinna wyświetlić się konsola.<br />
+    <br />
+  </li>
+  <li>Teraz przeskocz do rozdziału <a href="#uruchamianie">Uruchamianie Looking Glass</a> .</li>
+</ol>
+<p>
+<b>Uwaga:</b> Aby przywrócić GNOME
+Display Manager'a, wprowadź następującą komendą jako administrator:
+</p>
+<blockquote><span
+ style="font-family: courier new,courier,monospace;"># /sbin/init 5</span><br />
+</blockquote>
+
+<h4>Fedora Core 3 64-bit:</h4>
+
+<p>
+Aby uruchomić Projekt Looking Glass w trybie pełnoekranowym na 64-bitowej wersji systemu
+Fedora Core 3 potrzebnych jest parę zmian w konfiguracji. Będziesz musiał mieć dostęp do 32-bitowego systemu Linuks 
+lub 32-bitowego modułu X11 dla Linuksa, aby przeprowadzić ten proces.
+</p>
+
+<ol>
+  <li>Muszisz skopiować zawartość katalogu <span
+ style="font-family: courier new,courier,monospace;">/usr/X11R6/lib/modules</span>
+z 32-bitowej wersji systemu Linuks do odpowiadającego mu katalogu w Twoim systemie. 
+Zanim to zrobisz, wykonaj kopię zapasową katalogu <span
+ style="font-family: courier new,courier,monospace;">/usr/X11R6/lib/modules</span>
+w Twoim 64-bitowym systemie (aby w razie czego można go było bez problemu przywrócić):<br />
+    <br />
+    <span style="font-family: courier new,courier,monospace;">
+# cd /usr/X11R6/lib<br />
+# cp -r modules modules.orig<br />
+    </span><br />
+Następnie, użyj komendy scp w celu bezpiecznego skopiowania plików z 32-bitowego
+systemu do Twojego 64-bitowego systemu:<br />
+    <br />
+    <span style="font-family: courier new,courier,monospace;">
+# scp -r root@<span style="font-style: italic;">32bithost</span>:/usr/X11R6/lib/modules
+/usr/X11R6/lib/modules<br />
+    </span><br />
+gdzie <span
+ style="font-style: italic; font-family: courier new,courier,monospace;">32bithost</span><span
+ style="font-family: courier new,courier,monospace;"> </span>jest nazwą 32-bitowego systemu Linux.<br />
+    <br />
+  </li>
+  <li>Upewnij się, że w pliku <span
+ style="font-family: courier new,courier,monospace;">xorg.conf</span>
+ wartość głębi jest ustawiona na 24 tak jak jest to pokazane poniżej:<br />
+    <br />
+    <span style="font-family: courier new,courier,monospace;">
+Section "Screen"<br />
+Identifier "Screen0"<br />
+Device "Videocard0"<br />
+Monitor "Monitor0"<br />
+<b>DefaultDepth 24</b><br />
+SubSection "Display"<br />
+Viewport 0 0<br />
+<b>Depth 24</b><br />
+Modes "1680x1050" "1280x800" "1024x768" "800x600" "640x480"<br />
+EndSubSection<br />
+EndSection<br />
+    <br />
+</span>
+  </li>
+  <li>Przejdź do następnego rozdziału aby dowiedzieć się jak uruchomić lg3d w trybie sesji.<br />
+    <br />
+[Autorami instrukcji w tym rozdziale są <a
+ href="http://www.javadesktop.org/forums/profile.jspa?userID=1354">qgonjon</a>
+i <a
+ href="http://www.javadesktop.org/forums/profile.jspa?userID=1522">marve</a>.
+Zapoznaj się z <a
+ href="http://www.javadesktop.org/forums/thread.jspa?forumID=56&amp;threadID=3465&amp;messageID=17942#17942">tym wątkiem na Forum</a>.]<br />
+  </li>
+</ol>
+
+<h4>Solaris x86:</h4>
+<p>
+Aby uruchomić Projekt Looking Glass w trybie sesji na systemie Solaris x86, muszisz najpierw
+zamknąć sesję CDE i wyłączyć jego rozruch podczas startu systemu.
+W tym celu zaloguj się jako administrator i wprowadź następującą komendę:
+<br><br>
+<span style="font-family: courier new,courier,monospace;">
+# /usr/dt/bin/dtconfig -d
+</span>
+<br><br>
+następnie zresetuj swój komputer.
+</p>
+</blockquote>
+
+<br />
+<hr /><!-- --------------------------------------------------------- -->
+<br />
+
+Jeśli masz inne problemy z uruchamianiem Looking Glass na swoim komputerze, prosimy zapoznaj się z
+dodatkiem C dostępnym pod adresem:
+<a href="https://lg3d.dev.java.net/lg3d-getting-started.html#Troubleshooting">https://lg3d.dev.java.net/lg3d-getting-started.html#Troubleshooting</a>.
+Na razie jest on dostępny tylko w angielskiej wersji językowej. Pracujemy jednak nad polskim tłumaczeniem.
+<br />
+<hr /><!-- --------------------------------------------------------- -->
+<br /> 
+
+<small> $Revision: 1.4 $ $Date: 2006-12-23 11:59:59 $ </small>
+</div>
+</body>
+</html>

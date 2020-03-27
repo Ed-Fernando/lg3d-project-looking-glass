@@ -1,0 +1,869 @@
+<!DOCTYPE html PUBLIC "-//Tigris//DTD XHTML 1.0 Transitional//EN"
+"http://style.tigris.org/tigris_transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+  <title>Projekt LG3D Core</title>
+  <meta name="Translator" content="Petr Hejl" />
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  <style type="text/css"> /* <![CDATA[ */
+@import "preview.css";
+/* ]]> */</style>
+</head>
+<body>
+
+<div class="app" id="projectdocumentview"> 
+  <table style="float: right;" border="0" cellpadding="2" cellspacing="2">
+  <tr>
+    <td>
+  <a href="../index.html">
+    <img vspace="0" hspace="0"
+      alt="Anglická stránka"
+      style="border: 1px solid ; float: right; width: 48px;"
+      src="../images/icon/lang-english.png" />
+  </a>
+    </td>
+  </tr>  
+  <tr>
+    <td>
+  <a href="../zh/index.html">
+    <img vspace="0" hspace="0"
+      alt="Čínská stránka"
+      style="border: 1px solid ; float: right; width: 48px;"
+      src="../images/icon/lang-chinese-simp.png" />
+  </a>
+    </td>
+  </tr>
+  <tr>
+    <td>
+  <a href="../fr/index.html">
+    <img vspace="0" hspace="0"
+      alt="Francouzská stránka"
+      style="border: 1px solid ; float: right; width: 48px;"
+      src="../images/icon/lang-french.png" />
+  </a>
+    </td>
+  </tr> 
+  <tr>
+    <td>
+  <a href="../de/index.html">
+    <img vspace="0" hspace="0"
+      alt="Německá stránka"
+      style="border: 1px solid ; float: right; width: 48px;"
+      src="../images/icon/lang-german.png" />
+  </a>
+    </td>
+  </tr>
+  <tr>
+    <td>
+  <a href="../it/index.html">
+    <img vspace="0" hspace="0"
+      alt="Italská stránka"
+      style="border: 1px solid ; float: right; width: 48px;"
+      src="../images/icon/lang-italian.png" />
+  </a>
+    </td>
+  </tr>
+  <tr>
+    <td>
+  <a href="../ja/index.html">
+  	<img vspace="0" hspace="0"
+	alt="Japonská stránka"
+	style="border: 1px solid ; float: right; width: 48px;"
+	src="../images/icon/lang-japanese.png" />
+  </a>		
+    </td>
+  </tr>
+  <tr>
+    <td>
+  <a href="../es/index.html">
+    <img vspace="0" hspace="0"
+      alt="Španělská stránka"
+      style="border: 1px solid ; float: right; width: 48px;"
+      src="../images/icon/lang-spanish.png" />
+  </a>
+    </td>  
+  </tr>
+</table>
+
+  <a href="../images/misc/lg3d-pic-300x300.jpg">
+    <img vspace="8" hspace="8"
+      alt="LG3D"
+      style="border: 0px solid ; float: left; width: 120px;"
+      src="../images/misc/lg3d-pic-120x120.jpg" />
+  </a>
+
+<br />
+<h2><font color="#88bb88"><b>Vítejte v Projektu Looking Glass!</b></font></h2>  
+
+<p align="right">
+  <font color="#cc0000">
+    <b><font size="+1">S</font>tažení a instalace:</b>
+  </font>
+  <a href="lg3d-getting-started.html"><b>Linux/Solaris x86</b></a>,
+  <a href="../lg3d-on-windows.html"><b>Windows</b></a>
+  &nbsp;&nbsp;
+</p>
+<br />
+
+<iframe src="https://lg3d-core.dev.java.net/nonav/taskbar.html" frameborder="0" height="75px" width="100%"></iframe>
+
+<p>
+Co kdyby váš desktop byl skutečným 3D prostředím?
+Co kdyby se vaše databáze CD či filmů stala 3D jukeboxem?
+
+Projekt Looking Glass je založen na technologii Java a zkoumá rozšíření
+uživatelských možností používání desktopu a aplikací prostřednictvím
+3D&nbsp;zobrazení a vizualizace. Jedná se o&nbsp;open source projekt
+založený a vyvinutý v&nbsp;Advanced Development divizi společnosti Sun
+Microsystems. Podporuje běh existujících nemodifikovaných aplikací
+v&nbsp;3D&nbsp;prostředí a navíc obsahuje API pro 3D&nbsp;manažer oken
+a vývoj aplikací. V&nbsp;současné době je integrace existujících aplikací
+podporována na platformě Linuxu a Solarisu&nbsp;x86. Prostředí pro 3D aplikační
+vývoj je dostupné na platformách Linux, Solaris a Windows.
+</p>
+  <a href="/branding/images/lg3d-core/lg_snapshot.png">
+    <img vspace="8" hspace="8"
+      alt="Projekt Looking Glass" title="Projekt Looking Glass"
+      style="border: 0px solid ; float: right; width: 200px; height: 145px;"
+      src="/branding/images/lg3d-core/lg_snapshot-s.png" />
+  </a>
+<p>
+Projekt Looking Glass se zatím nachází ve své ranné fázi. Potřebujeme vaši
+pomoc k&nbsp;prozkoumání mnoha nápadů v&nbsp;oblasti dektopu a aplikací.
+Kód Projektu jsme dali k&nbsp;dispozici komunitě, aby
+mohla prozkoumat všechny aspekty technologie, namísto omezování
+přístupu na několik vyvolených. Věříme, že otevřený vývoj je výborný
+model pro využití této obrovské vzrušující příležitosti. Zapojte se tedy
+a pojďte s&nbsp;námi inovovat uživatelské rozhraní počítače!
+</p>
+
+<p>
+Technologie Java je primárním programovacím jazykem. Věříme, že
+se jedná o&nbsp;dobrou volbu, zejména kvůli vysoké produktivitě a bohaté
+sadě podpůrných API, na nichž lze stavět. Nutno podotknout, že plánujeme
+i&nbsp;mapování do&nbsp;C++ a se systémem tedy budou moci pracovat
+i&nbsp;nativní aplikace.
+</p>
+
+<p><a href="../lg3d-faq.html">Často kladené dotazy (FAQ)</a></p>
+
+<center>
+<table style="width: 100%; text-align: left;" border="1" cellpadding="4"
+ cellspacing="4">
+  <tbody>
+    <tr>
+    
+      <td bgcolor="#f4eeff">
+      <h3>Novinky</h3>
+      
+      <p>
+        <b>Verze&nbsp;0.7.1</b> je nyní dostupná
+        <b><a href="../binary-builds.html">
+        zde, v&nbsp;sekci Stable Builds</a></b>!
+      </p>
+	  
+      <p>
+        <b><a href="https://lg3d-livecd.dev.java.net/">
+        Vydáno LG3D LiveCD verze&nbsp;2.3</a></b>!
+      </p>
+      <br>
+      
+      <p>
+        Chcete-li rychle začít, nahlédněte do dokumentu 
+        <b><a href="lg3d-getting-started.html">"Začínáme s&nbsp;Projektem
+	    Looking Glass"</a></b>.
+      </p>
+      <br>
+
+      <p>
+        <b>Získejte nejnovější informace
+	v&nbsp;</b><a href="http://www.javadesktop.org/forums/forum.jspa?forumID=56"><b>
+        diskusním fóru</b></a>!
+      </p>
+      </td>
+      
+      <td bgcolor="#eeffe8">
+      <h3>Významný přispěvatel</h3>
+      <p>
+      <img vspace="8" hspace="8"
+	alt="Christian Ost"
+	style="border: 0px solid ; float: left; width: 100px;"
+ 	src="../images/contributors/cost.jpg" />
+        <b>Christian Ost (cost)</b>
+      </p>
+      <p>
+        "Myšlenku LiveCD přinesl do diskuze v&nbsp;říjnu 2004 Pierre. Na
+    projektu jsem začal pracovat na jaře roku 2005 a potřeboval jsem zhruba
+	půl roku, než jsem získal použitelný prototyp. Jednak kvůli tomu, že jsem
+	se ztratil v&nbsp;závislostech debian balíčků a také proto, že stále ještě
+	navštěvuji školu (závěrečné zkoušky mám v&nbsp;létě 2006) a tudíž mám
+	velmi málo volného času v&nbsp;kterém mohu přispívat do projektu. Avšak
+	během práce na LiveCD jsem se také hodně naučil a k&nbsp;dokončení jistě
+	ještě spousta práce	zbývá."
+      </p>
+      <p>
+        Jak můžete vidět výše, Christian je člověk, který tvrdě pracoval na
+	tvorbě LG3D LiveCD. Nedávno vytvořil LiveCD ver.&nbsp;2.3, které zvedlo
+	vlnu zájmu z&nbsp;celého světa. Jeho práce pomohla mnoha lidem ve
+	vyzkoušení LG3D. Jeho blog o&nbsp;LiveCD můžete najít
+	<a href="http://lg3d-livecd.blogspot.com/">zde</a>.
+	Velké díky Christianovi!
+      </p>
+      
+      <p align="right">
+        <a href="lg3d-contributorspotlight.html">
+          Další významní přispěvatelé</a>
+        <br />
+        <a href="http://wiki.java.net/bin/view/Javadesktop/DeveloppementTeam">
+          Wiki info o&nbsp;vývojovém týmu LG3D</a>
+      </p>
+      </td>
+    </tr>
+    
+    <tr>
+      <td bgcolor="#eeffe8">
+      <h3>Podporované klíčové vlastnosti</h3>
+      <p>
+V&nbsp;této chvíli se zaměřujeme na poskytnutí základní funkčnosti pro
+3D&nbsp;výzkum a na vyladění počáteční platformy. Současná platforma
+podporuje následující klíčové vlastnosti:
+      </p>
+      <ul>
+        <li>Počáteční integrace (<a href="../x-application-status.html">app status</a>)
+	    existujících aplikací (X11 client)</li>
+        <li>Client-server scenegraph platform</li>
+        <li>Serverside behavior execution</li>
+        <li>Podpora pro generic event system</li>
+        <li>Počáteční sada core API pro tvorbu sady 3D&nbsp;komponent</li>
+        <li>Podpora pro utility poskytující animovaný user feedback</li>
+      </ul>
+      </td>
+      
+      <td bgcolor="#f4eeff">
+      <h3>Pro ty, kteří nevydrží jen čekat....</h3>
+      <p>
+Chcete-li nainstalovat a používat vývojové prostředí, nahlédněte do dokumentu
+"<a href="../lg3d-getting-started.html">Začínáme s&nbsp;Projektem Looking Glass</a>".
+Jste-li uživatelem Windows, zkuste
+"<a href="../lg3d-on-windows.html">Spouštění Vývojářské verze LG3D na Microsoft Windows</a>".
+      </p>
+      <p>
+Ve chvíli, kdy máte funkční vývojové prostředí, měli byste si přečíst
+dokument "<a href="../lg3d-developers-guide.html">Příručka vývojáře
+Projektu Looking Glass</a>", kde najdete detailní informace o&nbsp;projektu
+a tvorbě 3D&nbsp;aplikací pro něj. Pokud používáte NetBeans, podívejte se do
+dokumetu "<a href="../netbeans/NetBeansLookingGlass.html">Sestavování a spouštění LG3D pomocí NetBeans</a>".
+A "<a href="../tutorial/">Tutoriály Projektu Looking Glass</a>" vysvětlují,
+jak programovat LG3D aplikace.
+      </p>
+      <p>
+Pokud jste připraveni přispět do projektu kódem či dokumentací, přečtěte si
+"<a href="https://lg3d.dev.java.net/contribute.html">Contributing to
+Project Looking Glass</a>", kde se dozvíte podmínky.
+      </p>
+      
+      <p>
+
+      </p>
+      </td>
+    </tr>
+  </tbody>
+</table>
+</center>
+<br />
+
+<a name="Sub-projects"></a>
+<h3>Probíhající podprojekty</h3>
+
+<p> 
+Zde se nachází seznam podprojektů probíhajících pod lg3d-core (a
+lg3d-demo-apps, lg3d-incubator). 
+Díky za vaše nabídky! Pokud chcete něco navrhnout, je to skvělé! Prosím,
+napište do <a href="http://www.javadesktop.org/forums/thread.jspa?threadID=3482&amp;tstart=0">
+tohoto threadu</a> na javadesktop.org fóru a sdělte nám své nápady.
+Je-li téma specifické pro integraci s&nbsp;X11, podívejte se na
+<a href="https://lg3d-x11.dev.java.net/">stránky projektu lg3d-x11</a>.
+Pokud byste chtěli vypomoci s některým z podprojektů, napište prosím do fóra.
+Jsem si jistý, že týmy budou za další pomoc velmi vděčné.
+</p>
+
+  <a href="../images/screenshot/lg3d-imageviewer.jpg">
+    <img vspace="8" hspace="8"
+	  alt="Zoetrope - LG3D Prohlížeč obrázků"
+      style="border: 0px solid; float: right; width: 150px;"
+      src="../images/screenshot/lg3d-imageviewer-tn.jpg" />
+  </a>
+
+<ul>
+  <li>
+    <a href="http://javadesktop.org/lg3d/javadoc/0-7-1-latest/api/index.html">
+      <b>Javadoc API 0.7.1</b></a><br />
+    <p>
+      Kirk Turner (gameldar), Hideya Kawahara (hideya)
+    </p>
+  </li>
+  <li>
+    <a href="../tutorial/index.html">
+      <b>Tutoriály Projektu Looking Glass</b><br />
+    </a>
+    <p>
+      Kirk Turner (gameldar)
+    </p>
+  </li>
+  <li>
+    <b>3D Swing L&amp;F</b><br />
+    <p>
+      Kirk Turner (gameldar), Paul Byrne (paulby)
+    </p>
+  </li>
+  <li>
+    <b>Splashscreen</b><br />
+    <p>
+      Phil Dowell (phild)
+    </p>
+  </li>
+  <li>
+    <a href="https://lg3d-art.dev.java.net/">
+      <b>Projekt lg3d-art</b><br />
+    </a>
+    <p>
+      Tento projekt je místem pro sdílení dodatečných modelů a umělěckých
+      zdrojů Projektu Looking Glass. Velmi oceníme vaši účast!
+    </p>
+  </li> 
+    
+  <li>
+    <a href="https://lg3d-incubator.dev.java.net/">
+      <b>Projekty v&nbsp;lg3d-incubator</b><br />
+    </a>
+
+<table style="text-align: left;" border="1" cellpadding="2"
+ cellspacing="2" bgcolor="#f4eeff">
+  <caption></caption>
+  <tbody>
+    <tr>
+      <th>Jméno
+      </th>
+      <th>Popis
+      </th>
+      <th>Classpath
+      </th>
+      <th>Vlastníci
+      </th>
+    </tr>
+    <tr>
+      <th>Pingpong
+      </th>
+      <td>Jednoduchá 3D&nbsp;hra
+      </td>
+      <td>org.jdesktop.lg3d.apps.pingpong
+      </td>
+      <td>Johann Glaser (hansiglaser)
+      </td>
+    </tr>
+    <tr>
+      <th>Launcher
+      </th>
+      <td>Prototyp programu pro spouštění aplikací
+      </td>
+      <td>org.jdesktop.lg3d.apps.luncher
+      </td>
+      <td>Henrik Baastrup (hbaastrup)
+      </td>
+    </tr>
+    <tr>
+      <th>Browser3D
+      </th>
+      <td>3D&nbsp;webový prohlížeč
+      </td>
+      <td>org.jdesktop.lg3d.apps.browser3d
+      </td>
+      <td>beer28, David Vallejo (dragmor) 
+      a David Weizades (ddew)
+      </td>
+    </tr>
+    <tr>
+      <th>DemoJMFJ3D
+      </th>
+      <td>JMF přehrávač pro LG3D
+      </td>
+      <td>org.jdesktop.lg3d.apps.jmf23D
+      </td>
+      <td>sat1196
+      </td>
+    </tr>
+    <tr>
+      <th>Aim3d
+      </th>
+      <td>3D&nbsp;AIM klient
+      </td>
+      <td>org.jdesktop.lg3d.apps.wilkoaim3d
+      </td>
+      <td>Jack Wu (wulabs)
+      </td>
+    </tr>
+    <tr>
+      <th>Zoetrope
+      </th>
+      <td>Prohlížeč obrázků
+      </td>
+      <td>org.jdesktop.lg3d.apps.zoetrope
+      </td>
+      <td>Yuichi Sakuraba (sakuraba)
+      </td>
+    </tr>
+    <tr>
+      <th>BlackGoat
+      </th>
+      <td>Čtení emailu
+      </td>
+      <td>org.jdesktop.lg3d.apps.blackgoat
+      </td>
+      <td>Dai Odahara (dai)
+      </td>
+    </tr>
+    <tr>
+      <th>JavaWorkSpace
+      </th>
+      <td>Síťový inteligentní 3D&nbsp;workspace
+      </td>
+      <td>org.jdesktop.lg3d.apps.intel3d
+      </td>
+      <td>Ashish (sri_ashish7s)
+      </td>
+    </tr>
+    <tr>
+      <th>Gol3D
+      </th>
+      <td>Hra života
+      </td>
+      <td>org.jdesktop.lg3d.apps.gol3d
+      </td>
+      <td>dwarfy_lenain (dwarfy)
+      </td>
+    </tr>
+    <tr>
+      <th>Clock
+      </th>
+      <td>3D&nbsp;hodiny
+      </td>
+      <td>org.jdesktop.lg3d.apps.clock
+      </td>
+      <td>Juan Gonz&aacute;lez (opsi)
+      </td>
+    </tr>
+    <tr>
+      <th>Ls3D
+      </th>
+      <td>"ls" ve&nbsp;3D
+      </td>
+      <td>org.jdesktop.lg3d.apps.ls3d
+      </td>
+      <td>Endo Yasuyuki (yasuyuki)
+      </td>
+    </tr>
+    <tr>
+      <th>BgManager
+      </th>
+      <td>Správce pozadí
+      </td>
+      <td>org.jdesktop.lg3d.apps.bgmanager
+      </td>
+      <td>Radek Kierner (radeczka)
+      </td>
+    </tr>
+    <tr>
+      <th>Fm3D
+      </th>
+      <td>3D manažer souborů
+      </td>
+      <td>Neurčeno
+      </td>
+      <td>John Maltby (jmaltby)
+      </td>
+    </tr>    
+    <tr>
+      <th>Weather
+      </th>
+      <td>Pozadí s aktuálním počasím
+      </td>
+      <td>org.jdesktop.lg3d.apps.weather
+      </td>
+      <td>Brian Hursey (bhursey)
+      </td>
+    </tr>
+    <tr>
+      <th>StartMenu
+      </th>
+      <td>3D Start Menu
+      </td>
+      <td>org.jdesktop.lg3d.apps.startmenu
+      </td>
+      <td>Colin Bullock (cmbullock)
+      </td>
+    </tr>
+    <tr>
+      <th>
+      </th>
+      <td>
+      </td>
+      <td>
+      </td>
+      <td>
+      </td>
+    </tr>
+  </tbody>
+</table>
+    
+
+  </li>
+  
+  
+  <li>
+    <b>Překlad dokumentace</b><br />
+    <p>
+</p><table style="width: 100%; text-align: left;" border="1" cellpadding="2"
+ cellspacing="2" bgcolor="#eeffe8">
+  <caption></caption>
+  <tbody>
+    <tr>
+      <th>Jazyk
+      </th>
+      <th>Vlastníci
+      </th>
+    </tr>
+    <tr>
+      <th>Čínština
+      </th>
+      <td>Wen Peng (wenpeng)
+      </td>
+    </tr>
+    <tr>
+      <th>Čeština
+      </th>
+      <td>
+        Petr Hejl (sickboy)
+      </td>
+    </tr>
+    <tr>
+      <th>Holandština
+      </th>
+      <td>Martjin Kools (marve)
+      </td>
+    </tr>
+    <tr>
+      <th>Francouzština
+      </th>
+      <td>jibe77, Pierre (pinaraf)
+      </td>
+    </tr>
+    <tr>
+      <th>Němčina
+      </th>
+      <td>Christian Ost (cost) a Maik Ladwig (moonfire)
+      </td>
+    </tr>
+    <tr>
+      <th>Italština
+      </th>
+      <td>
+        Giordano Fracasso (giosquad) a Danilo Bonardi (trix180)
+      </td>
+    </tr>
+    <tr>
+      <th>
+        <a href="../ja/trans-support/index.html">
+          Japonština
+        </a>
+      </th>
+      <td>
+        Yuka Kamiya (kyuka), Hideyuki Otokawa (otokawa), Yuichi Sakuraba
+        (sakuraba), Kazuhiro Kazama (kazama) a Endo Yasuyuki (yasuyuki)
+      </td>
+    </tr>
+    <tr>
+      <th>Rumunština
+      </th>
+      <td>
+        Abibula Aygun (aygun)
+      </td>
+    </tr>
+    <tr>
+      <th>Španělština
+      </th>
+      <td>Sergio Ivan Marcin (bitbeat)
+      </td>
+    </tr>
+  </tbody>
+</table>
+    <p></p>
+    <ul>
+      <li>
+        <b>Odkazy</b>
+        <ul>
+          <li>
+            <a href="../ja/trans-support/lg3d-translation-filestyle_en.html">
+              Formát přeložených souborů<br />
+            </a>
+          </li>
+        </ul>
+      </li>
+    </ul>
+  </li>
+  <li>
+    <b>Wiki</b><br />
+    <a href="http://wiki.java.net/bin/view/Javadesktop/ProjectLookingGlass">
+        Hlavní stránka LG3D Wiki
+    </a>
+    <p>
+</p><table style="width: 100%; text-align: left;" border="1" cellpadding="2"
+ cellspacing="2" bgcolor="#f4eeff">
+  <caption></caption>
+  <tbody>
+    <tr>
+      <th>Předmět
+      </th>
+      <th>Vlastníci
+      </th>
+    </tr>
+    <tr>
+      <td>
+        <a href="http://wiki.java.net/bin/view/Javadesktop/ProjectLookingGlass#KnowledgeBase">
+          Knowledge-base
+        </a>
+      </td>
+      <td>
+        Martijn Kools (marve), David Weizades (ddew), Paul Shoemaker (t0rn)
+      </td>
+    </tr>
+    <tr>
+      <td>
+        <a href="http://wiki.java.net/bin/view/Javadesktop/ProjectLookingGlass#UiIdeas">
+          Nápady a diskuze pro 3D&nbsp;rozhraní
+        </a>
+      </td>
+      <td>
+        Paul Shoemaker (t0rn), qgnjon, David Weizades (ddew)
+      </td>
+    </tr>
+    <tr>
+      <td>
+        <a href="http://wiki.java.net/bin/view/Javadesktop/ProjectLookingGlass#Looking_Glass_3D_Development">
+          LG3D vývojový tým/uvolněné verze
+        </a>
+      </td>
+      <td>
+        Van der Haegen Mathieu (dwarfy)
+      </td>
+    </tr>
+    <tr>
+      <td>
+        <a href="http://wiki.java.net/bin/view/Javadesktop/AppDevelopmentTips">
+          Tipy pro vývoj LG3D aplikací
+        </a>
+      </td>
+      <td>
+        Van der Haegen Mathieu (dwarfy)
+      </td>
+    </tr>
+    <tr>
+      <td>
+        <a href="http://wiki.java.net/bin/view/Javadesktop/DocumentationPage">
+          Projekty pro vylepšení dokumentace
+        </a>
+      </td>
+      <td>
+        Van der Haegen Mathieu (dwarfy)
+      </td>
+    </tr>	
+  </tbody>
+</table>
+   <p></p>
+  </li>
+</ul>
+<br />
+
+
+<a name="How_to_Contribute"></a>
+<h3>Jak se můžete zapojit</h3>
+
+<p>
+Jako první krok zvažte prosím účast jako pozorovatel projektu,
+což předpokládá, že se seznámíte s&nbsp;projektem a budete přispívat do
+<a href="http://www.javadesktop.org/forums/forum.jspa?forumID=56">diskusního
+fóra</a>.
+Nahlédněte prosím také do dokumentu <a
+href="https://lg3d.dev.java.net/contribute.html">Contributing to
+Project Looking Glass</a>, který obsahuje další informace o&nbsp;tom jak je
+možné se zapojit do projektu. Přečtěte si rovněž <a
+href="https://javadesktop.dev.java.net/govern.html">JavaDesktop
+Community Governance Guidelines</a>, kde najdete obecné postupy pro
+spoluúčast v&nbsp;projektech JavaDesktop komunity, jako je například právě
+Projekt Looking Glass.
+</p>
+
+<a name="Reporting_Issues"></a>
+<h3>Oznamování problémů a chyb</h3>
+
+<p>
+Informace o&nbsp;aktuálních problémech a chybách lze nalézt pod položkou
+<a href="../servlets/ProjectIssues"><b>Issue tracker</b></a>
+umístěnou v&nbsp;<b>Project tools</b> na postranní liště.
+Zde můžete vyhledávat problémy a defekty nebo najít konkrétní chybu.
+Pokud objevíte chybu, která ještě nebyla zadána, vyplňte údaje a
+zadejte ji. Pro nalezení souvisejících informací můžete také
+prohledávat archiv emailů na
+<a href="http://www.javadesktop.org/forums/forum.jspa?forumID=56">diskusním
+fóru na javadesktop.org</a>.
+</p>
+
+<p>
+Když reportujete chybu, snažte se prosím, co nejpřesněji specifikovat
+příznaky, se kterými jste se setkali a popsat prostředí vašeho počítače.
+Pokud dojde k&nbsp;pádu LG3D, následující log soubory poskytnou
+užitečné informace:
+</p>
+<ul>
+  <li><tt>/var/tmp/lgserver.log</tt></li>
+  <li><tt>/var/log/Xorg.0.log</tt><br />
+Tento log může být velmi dlouhý. Prosím, věnujte pozornost řádkům začínajícím
+<tt>(EE)</tt> a všechny podezřelé nahlašte.</li>
+  <li><tt>hs_err_pid####.log</tt><br />
+I&nbsp;tento log může být velmi dlouhý. Prosím, zašlete vše od začátku
+souboru, až po řádku
+<br />
+"<tt>--- P R O C E S S ---</tt>". </li>
+</ul>
+<p>Pokud nemáte zkušenosti s&nbsp;hlášením chyb, můžete nahlédnout do těchto
+úvodních dokumentů: </p>
+<ul>
+  <li><a href="https://javadesktop.dev.java.net/reportbug.html">Průvodce</a>
+vytvořením užitečného hlášení chyby</li>
+  <li><a
+ href="https://www.dev.java.net/nonav/docs/ddIssues_EnterModify.html#entryfields">
+Rychlý úvod do Issue Tracking</a> </li>
+</ul>
+
+<a name="Staying_Connected"></a>
+<h3>Zůstaňte informováni</h3>
+
+<p>Projekt Looking Glass je neustále vyvíjen. Nejlepší způsob, jak zůstat
+informován, je zapsat se do mailing listů projektu. Klikněte na
+položku <b>Mailing lists</b> v&nbsp;sekci <b>Project tools</b> postranní lišty
+na <a href="https://lg3d.dev.java.net/">https://lg3d.dev.java.net/</a>.
+Zde si můžete, podle úrovně vašeho zájmu, vybrat z&nbsp;několika mailing listů.
+</p>
+<ul>
+  <li>Pokud vás zajímají <span style="color: red;">novinky</span>,
+zapište se do <a href="mailto:announce@lg3d.dev.java.net">announce@lg3d.dev.java.net</a>.<br />
+  </li>
+</ul>
+<ul>
+  <li>Jste-li vývojář a <span style="color: red;">chcete diskutovat
+vývoj a chyby Projektu Looking Glass</span>, zapište se do <a
+ href="mailto:interest@lg3d.dev.java.net">interest@lg3d.dev.java.net</a>.
+  </li>
+</ul>
+<ul>
+  <li>Jestliže vás zajímá <span style="color: red;">téma licencování</span>,
+pak zvolte <a href="mailto:lg3d_license@dev.java.net">lg3d_license@dev.java.net</a>.<br />
+  </li>
+</ul>
+
+<a name="Resources"></a>
+<h3>Zdroje informací</h3>
+
+<ul>
+  <li> <a href="../lg3d-faq.html">FAQ - Často kladené dotazy</a>
+  </li>
+  <li> <a href="../lg3d-getting-started.html">Začínáme s&nbsp;Projektem
+Looking Glass</a>
+  <ul>
+    <li> <a href="../nvidia-driver-install-tips.html">Tipy pro instalaci
+ovladačů NVIDIA</a> </li>
+<!--    <li> <a href="../dri-driver-install-ati-radeon.html">Instalace DRI
+	ovladače pro ATI&nbsp;Radeon</a> </li>
+	<li> <a href="jds-3d-acceleration.html">3D&nbsp;akcelerace na laptopu
+	Tadpole Talin JDS (ATI&nbsp;Radeon M9)</a> </li>
+    <li> <a href="../dri-driver-install-ati-radeon-nonrpm.html">
+	Instalace binárního ovladače ATI v&nbsp;distribucích, které nejsou
+	založené na rpm</a>
+	<p>Psáno pro Slackware, ale většinu kroků lze použít i&nbsp;v&nbsp;jiných
+	distribucích.</p>
+    </li>-->
+	<li> <a href="http://dri.freedesktop.org/wiki/"> Direct Rendering Open Source Projekt (DRI) </a> </li>
+	<li> <a href="http://www.javadesktop.org/forums/thread.jspa?threadID=7816&amp;start=0&amp;tstart=0"> Vlákno v&nbsp;LG3D fóru, popisující problém s&nbsp;kartami ATI </a> </li>
+  </ul>
+  </li>
+  <li> <a href="../lg3d-on-windows.html">
+Spouštění Vývojářské verze Projektu Looking Glass v&nbsp;prostředí Microsoft Windows
+ </a></li>
+ <li> <a href="http://wiki.java.net/bin/view/Javadesktop/FirstRun">
+První spuštění LG3D
+  </a> </li> 
+  <li> <a href="../lg3d-developers-guide.html">Příručka vývojáře Projektu
+Looking Glass</a> </li>
+  <li> <a href="../netbeans/NetBeansLookingGlass.html">
+Sestavování a spouštění LG3D pomocí NetBeans
+  </a> </li>
+  <li><a href="../tutorial/">Tutoriály Projektu Looking Glass</a></li>
+  <li> <a href="http://java.sun.com/docs/codeconv/">
+Konvence pro psaní kódu v&nbsp;programovacím jazyce Java</a> </li>
+  <li> <a href="../jar-app-deployment.html">
+Deployment aplikací v&nbsp;LG3D založený na jar
+  </a> </li>
+  
+  <li> <a
+ href="http://www.javadesktop.org/forums/forum.jspa?forumID=56">javadesktop.org
+fórum: Projekt Looking Glass 3D</a> </li>
+  <li> <a href="https://lg3d-core.dev.java.net/issues/query.cgi">Dotaz
+do databáze chyb</a> </li>
+  <li>JavaOne prezentace
+    <ul>
+      <li><a href="https://lg3d-core.dev.java.net/files/documents/1834/16804/J12005-TS-7992.pdf">
+        JavaOne 2005 prezentace (PDF 1.5MB) 
+      </a></li>
+      <li><a href="https://lg3d-core.dev.java.net/files/documents/1834/5964/J1-2004-TS1586-final.pdf">
+        JavaOne 2004 prezentace (PDF 900KB) 
+      </a></li>
+    </ul>
+  </li>
+  <li> <a href="http://java.sun.com/developer/technicalArticles/javaopensource/plg.html">
+Projekt Looking Glass: Jeho architektura a první náhled API</a> </li>
+  <li> <a
+ href="https://lg3d-core.dev.java.net/files/documents/1834/7596/LG3DAPIOverview-DRAFT.pdf">
+ DRAFT - Přehled návrhu LG3D API (PDF 330KB) </a> </li>
+  <li> <a href="http://javadesktop.org/lg3d/javadoc/0-7-0-latest/api/index.html"> LG3D Verze 0.7.0 Javadoc </a> </li>
+  <li> <a href="http://wiki.java.net/bin/view/Javadesktop/PortingTo062">
+Jak přejít na API&nbsp;0.6.2 - Wiki stránka</a></li>
+  <li>
+    <a href="http://wiki.java.net/bin/view/Javadesktop/SummerOfCode2005">
+      Projekty Summer of Code 2005</font> sponzorované Googlem
+    </a> 
+  </li>
+  <li> <a href="../lg3d-related-technologies.html">Související technologie</a>
+  </li>
+  <li> <a href="../lg3d-ui-design.html">Diskuse návrhu uživatelského rozhraní</a> </li>
+  <li>Sdílení nových myšlenek -- Přepis chat-sessions z&nbsp;irc
+    <ul>
+      <li><a href="../lg3dchat-2005-01-06.log">Chat o&nbsp;implementaci databázového filesystemu</a></li>
+    </ul>
+  </li>  
+</ul>
+
+<h3>Několik slov na závěr...</h3>
+
+  <p>Děkujeme za váš zájem o&nbsp;projekt a čas strávený na těchto stránkách.
+    Doufáme, že se také zapojíte a spolu s&nbsp;námi prozkoumáte tuto zábavnou
+    příležitost. Máme také irc kanál, zatím však není příliš aktivní. Najdete
+    jej jako #lg3d na irc.freenode.net </p>
+
+<p>
+Vývojový tým Projektu Looking Glass
+</p>
+
+<hr />
+<small> $Revision: 1.1 $ $Date: 2006-05-09 17:44:59 $ (English Version Revision: 1.181)</small>
+</div>
+</body>
+</html>

@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?> 
+<java version="1.5.0" class="java.beans.XMLDecoder"> 
+ <object class="org.jdesktop.lg3d.scenemanager.config.ApplicationDescription"> 
+  <void property="exec"> 
+   <string>java MonolithViewer</string> 
+  </void> 
+  <void property="iconFilename"> 
+   <string>monolith.png</string> 
+  </void> 
+  <void property="name"> 
+   <string>Monolith Viewer</string> 
+  </void> 
+ </object> 
+</java>

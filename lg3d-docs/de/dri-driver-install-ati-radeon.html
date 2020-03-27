@@ -1,0 +1,163 @@
+<!DOCTYPE html PUBLIC "-//Tigris//DTD XHTML 1.0 Transitional//EN"
+"http://style.tigris.org/tigris_transitional.dtd">
+<html>
+	<head>
+		<title>DRI Treiber Installation f&uuml;r ATI Radeon</title>
+		<meta name="Translator" content="Christian Ost" />
+	</head>
+	<body>
+		<div id="projectdocumentview" class="app">
+			<hr />
+			<h2>DRI Treiber Installation f&uuml;r ATI Radeon</h2>
+			<br />
+			<p>
+				Die folgenden Anweisungen erkl&auml;ren, wie man die Direct Rendering 
+				Infrastructure (DRI) Treiber f&uuml;r ATI Radeon Graphikkarten installiert, um 
+				die von Projekt Looking Glass ben&ouml;tigte Direct Rendering Extension nutzen 
+				zu k&ouml;nnen.</p>
+			<h3>Installations Anweisungen</h3>
+			<p>
+				Hier ist die Vorgehensweise, um die OpenGL Bibliothek (LibGL.so) zu 
+				aktualisieren (Getestet mit dem Radeon 7500 Treiber auf RedHat 9).
+			</p>
+			<ol>
+				<li>
+					Werde root:<br />
+					<br />
+					<span style="font-family: monospace;">% su root</span><br />
+					<span style="font-family: monospace;"> Password: </span><b>Gib das root Passwort 
+						ein</b><br />
+					<span style="font-family: monospace;"> #</span><br />
+					<br />
+				</li>
+				<li>
+					Installiere die Kernel-Quellen aus der RedHat 9 Distribution:<br />
+					<br />
+					<span style="font-family: monospace;"># rpm -ivh
+kernel-source-2.4.20-8.i386.rpm</span><span style="font-family: monospace;"><br />
+						<br />
+					</span><b>Anmerkung:</b> if you have mounted the RedHat 9 cdrom #2, you can 
+					find the
+					<span style="font-family: monospace;">kernel-source</span>
+					package in:<br />
+					<br />
+					<span style="font-family: monospace;">/mnt/cdrom/RedHat/RPMS/kernel-source-2.4.20-8.i386.rpm</span><span style="font-family: monospace;"><br />
+						<br />
+					</span></li>
+				<li>
+					Aktualisiere die Kernel Konfiguration und Abh&auml;ngigkeiten:<br />
+					<br />
+					<span style="font-family: monospace;"># cd /usr/src/linux-2.4</span><br />
+					<span style="font-family: monospace;"># cp /boot/config-2.4.20-8.config</span><br />
+					<span style="font-family: monospace;"># make oldconfig</span><br />
+					<span style="font-family: monospace;"># make dep</span><br />
+					<br />
+					<b>Anmerkung:</b> Man muss den Kernel nicht rekompilieren.<br />
+					<br />
+				</li>
+				<li>
+					Lade den neuesten Snapshot der ATI Radeon Treiber von der <a href="http://dri.sourceforge.net/cgi-bin/moin.cgi/FrontPage">
+						DRI Projekt Homepage</a> herunter:
+					<br />
+					<br />
+					Folge den Download-Anweisungen im <b>Snapshot</b> Abschnitt der <b>Download</b> 
+					Seite: <a href="http://dri.sourceforge.net/cgi-bin/moin.cgi/Download">http://dri.sourceforge.net/cgi-bin/moin.cgi/Download<br />
+						<br />
+					</a>Man muss sowohl den allgemeinen Snapshot (genannt:
+					<span style="font-family: monospace;">common-</span><span style="font-style: italic; font-family: monospace;">JJJJMMTT</span><span style="font-family: monospace;">-linux.i386.tar.bz2</span>) 
+					und den Radeon Snapshot (<span style="font-family: monospace;">radeon-</span><span style="font-style: italic; font-family: monospace;">JJJJMMTT</span><span style="font-family: monospace;">-linux.i386.tar.bz2</span>) 
+					herunterladen.<br />
+					<br />
+				</li>
+				<li>
+					Entpacke das allgemeine Paket und installiere es:<br />
+					<br />
+					<span style="font-family: monospace;"># tar jxf common-*</span><br />
+					<span style="font-family: monospace;"># cd dripkg</span><br />
+					<span style="font-family: monospace;"># ./install.sh</span><br />
+					<span style="font-family: monospace;"># cd ..</span><br />
+					<span style="font-family: monospace;"># rm -rf dripkg</span><br />
+					<br />
+				</li>
+				<li>
+					Entpacke das Radeon Paket und installiere es:<br />
+					<br />
+					<span style="font-family: monospace;"># tar jxf radeon-*</span><br />
+					<span style="font-family: monospace;"># cd dripkg</span><br />
+					<span style="font-family: monospace;"># ./install.sh</span><br />
+					<span style="font-family: monospace;"># cd ..</span><br />
+					<span style="font-family: monospace;"># rm -rf dripkg</span><br />
+					<br />
+				</li>
+				<li>
+					Auf RedHat 9 m&uuml;ssen auch die XFree86 Bin&auml;rdateien heruntergeladen und 
+					installiert werden.<br />
+					<br />
+					Folge den Anweisungen im <b>Snapshot</b> Abschnitt der <b>Download</b> Seite: <a href="http://dri.sourceforge.net/cgi-bin/moin.cgi/Download">
+						http://dri.sourceforge.net/cgi-bin/moin.cgi/Download<br />
+						<br />
+					</a>
+				</li>
+				<li>
+					F&uuml;ge die folgende Zeile zu
+					<span style="font-family: monospace;">/etc/modules.conf</span>
+					hinzu:<br />
+					<br />
+					<span style="font-family: monospace;">pre-install radeon
+/sbin/modprobe -k agpgart</span><br />
+					<br />
+					Dies stellt sicher, dass das agpgart Modul for dem Radeon Modul geladen wird.<br />
+					<br />
+				</li>
+				<li>
+					Um DRI einzuschalten, muss noch
+					<span style="font-family: monospace;">/etc/X11/XF86Config</span>
+					aktualisiert werden:<br />
+					<br />
+					F&uuml;ge die folgenden Zeilen zum <b>Module</b> Abschnitt hinzu, wenn sie 
+					nicht bereits dort stehen:<br />
+					<br />
+					<blockquote><span style="font-family: monospace;">Load "glx"</span><br />
+						<span style="font-family: monospace;">Load "dri"</span><br />
+						<br />
+					</blockquote>und schreibe, wenn n&ouml;tig eine <b>DRI</b> section, die 
+					Folgendes enth&auml;lt:<br />
+					<br />
+					<blockquote><span style="font-family: monospace;">Section "DRI"</span><br />
+						<span style="font-family: monospace;">&nbsp;&nbsp;&nbsp; Mode 0666</span><br />
+						<span style="font-family: monospace;">EndSection</span><br />
+						<br />
+					</blockquote>
+				</li>
+				<li>
+					Starte nun das System neu.<br />
+					<br />
+				</li>
+				<li>
+					Zuletzt benutze das
+					<span style="font-family: monospace;">glxinfo</span>
+					Kommando, um sicherzustellen, dass DirectRendering erfolgreich l&auml;uft:<br />
+					<br />
+					<span style="font-family: monospace;">% glxinfo | grep "direct
+rendering"</span><br />
+					<br />
+					Es sollte:<br />
+					<br />
+					<span style="font-family: monospace;">direct rendering: Yes</span><br />
+					<br />
+					erscheinen
+					<br />
+				</li>
+			</ol>
+			<h3>Danksagungen:</h3>
+			<p>
+				Das Projekt Looking Glass Team dankt Lucian Cionca <a href="mailto:lucian.cionca@gmail.com">
+					<u>lucian.cionca@gmail.com</u></a> herzlich f&uuml;r das zur Verf&uuml;gung 
+				stellen dieser Anweisungen!</p>
+			<br />
+			<hr />
+			<small>$Revision: 1.1 $ $Date: 2006-05-09 17:46:19 $ (English Version Revision: 
+				1.8) </small>
+		</div>
+	</body>
+</html>

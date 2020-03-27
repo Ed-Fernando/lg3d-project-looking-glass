@@ -1,0 +1,716 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html>
+  <head>
+    <meta http-equiv="content-type" content="text/html; charset=utf-8" />
+    <title>マウスイベント・アクションの作成</title>
+  </head>
+
+  <body bgcolor="white">
+    <h1>JavaOne Tokyo Hands on Lab : <br>
+        Project Looking Glass (LG3D) Basic Programming</h1>
+    <h2>4.6 マウスイベント・アクションの作成</h2>
+
+   <b>この章で行うこと : </b><br>
+   作成したボックスを拡張してマウスイベントおよびアクションを作成します。<br>
+   以下の２種類を実装してみます。
+    <ol>
+      <li> マウスボタンを押している間、ボックスが回転する
+      <ul>
+        <li> LG3D標準のアクションを利用します
+      </ul>
+      <li> マウスの左クリックでボックスを90度回転させ、
+           右クリックでボックスを逆方向に90度回転させる
+      <ul>
+        <li> アクションを新規に作成します
+      </ul>
+    </ol>
+
+    <br>
+	<hr>
+    <h3>マウスイベント・アクションの概要</h3>
+
+    <p>ここまでに行ってきた内容はLG3Dアプリケーションの表示の部分です。<br>
+    この章ではイベント処理の実装を行います。<br>
+    
+    <p>LG3Dでイベント処理を行うためには <b>イベントアダプタ</b> と <b>アクション</b> を用意します。
+    <br><br>
+    <table border>
+    <tr><th> イベントアダプタ </th>
+    <td>イベントアダプタはイベントが発生したときに呼び出されるクラスです。<br>
+    イベントアダプタはイベントから情報を取得し、
+    イベントアダプタに登録されているアクションのperformAction()メソッドを呼び出します。<br>
+    イベントアダプタは org.jdesktop.g3d.utils.eventadapterパッケージで定義されており
+    EventAdapterインタフェースを実装しています。
+    </td></tr>
+    <tr><th> アクション </th>
+    <td>
+    アクションはイベントが発生した際に行う処理を定義するためのクラスです。
+    org.jdesktop.lg3d.utils.action.Actionインタフェースを親とした派生インタフェース群が提供されているので、
+    これらのインタフェースのいずれかを実装したクラスでイベント処理を定義します。
+    </td></tr>
+    </table>
+
+    <br><br><br>
+    イベントアダプタとアクションを利用したイベント処理の作成方法は次のようになります。<br>
+        <ul>
+         <li> シェイプを含んだコンポーネントを作成する
+         <li> イベント発生時に行う動作(アクション)を定義する
+         <li> アクションを含むイベントアダプタを作成する
+         <li> コンポーネントにイベントアダプタを登録する
+        </ul><br>
+        
+    <p>LG3Dでは、基本的で簡単なアクションをいくつか提供していますが、
+    自分で作成することもできます。<br>
+    ここでは、まず標準で提供されているアクションを利用してマウスイベントの作成を行います。
+    その後、オリジナルのアクションを作成してみます。
+    <br><br><br>
+
+	<hr>
+    <h3>既存のアクションを利用したアニメーション</h3>
+
+    <p> ここでは、作成したコンポーネント上でマウスのボタンを押している続けている間にゆっくりと1回転し、
+        マウスのボタンをはなすと元に戻るというイベント処理を作成してみます。<br>
+        このイベント処理は次のイベントアダプタおよびアクションを用いて実装します。
+        <br><br><br>
+        <table border>
+        <tr><th> イベントアダプタ </th>
+        <td> org.jdesktop.lg3d.utils.eventadapter.MousePressedEventAdapter クラス<br><br>
+        マウスのボタンを押している間のイベント処理を行うためのイベントアダプタ<br>
+        このイベントアダプタは次に示す3種類のインタフェースのいずれかを実装したアクションを設定することができます。
+        <ul>
+         <li> org.jdesktop.lg3d.utils.action.ActionBoolean
+         <li> org.jdesktop.lg3d.utils.action.ActionBooleanFloat2
+         <li> org.jdesktop.lg3d.utils.action.ActionBooleanFloat3
+        </ul>
+        </td></tr>
+        <tr><th> アクション </th>
+        <td> org.jdesktop.lg3d.utils.action.RotateActionBoolean クラス<br><br>
+        イベント発生時にコンポーネントを回転させるためのアクションです。
+        コンストラクタの引数として、回転させたいオブジェクト、回転角度(ラジアン)、
+        回転にかかる時間(ミリ秒)を取ります。
+        </td>
+        </tr></table>
+        <br><br>
+
+    <ol>
+      <li> TexureBox.javaを以下のように変更します。<br>
+      変更箇所は<font color="red"><b>赤(太字)</b></font>で示します。<br>
+      <br>
+      adapter と thumbAdapter という2つのイベントアダプタ(MousePressedEventAdapterオブジェクト)を作成します。
+      作成したイベントアダプタは両方とも component (ボックスのコンポーネントのオブジェクト)に登録します。<br>
+      これにより、ボックス上でマウスのボタンを押し続けることにより、ボックスと同時にサムネイルも回転します。<br>
+      ボックスとサムネイルは 10秒間で 1回転するようにしています。<br>
+      <br>
+      イベント処理を追加する前に、ボックスのコンポーネントとサムネイルの setAnimation()メソッドを呼び出しています
+      ( component.setAnimation(),thumbComponent.setAnimation() )。
+      これはアニメーション時にどのような動きをするかを定義したものです。
+      プログラム中に出てくる設定は滑らかなアニメーションをするための設定です。
+      アニメーションをさせたいオブジェクトに対するお約束の処理と考えてください。
+      <br><br><br>
+      <table border>
+      <tr><td><pre>
+/*
+ * TextureBox.java
+ *
+ * Created on 2005/09/29, 15:42
+ *
+ * To change this template, choose Tools | Options and locate the template under
+ * the Source Creation and Management node. Right-click the template and choose
+ * Open. You can then make changes to the template in the Source Editor.
+ */
+
+package texturebox;
+
+/**
+ *
+ * @author duke
+ */
+
+import java.io.IOException;
+import java.net.URL;
+import java.lang.ClassLoader;
+import javax.vecmath.Vector3f;
+import org.jdesktop.lg3d.sg.Appearance;
+import org.jdesktop.lg3d.sg.Shape3D;
+import org.jdesktop.lg3d.utils.shape.Box;
+import org.jdesktop.lg3d.utils.shape.SimpleAppearance;
+import org.jdesktop.lg3d.wg.Component3D;
+import org.jdesktop.lg3d.wg.Frame3D;
+import org.jdesktop.lg3d.wg.Thumbnail;
+<font color="red"><b>import org.jdesktop.lg3d.utils.action.RotateActionBoolean;
+import org.jdesktop.lg3d.utils.actionadapter.ToggleAdapter;
+import org.jdesktop.lg3d.utils.c3danimation.NaturalMotionAnimation;
+import org.jdesktop.lg3d.utils.eventadapter.MousePressedEventAdapter;</b></font>
+
+public class TextureBox {
+    
+    /** Creates a new instance of TextureBox */
+    public TextureBox() {
+        
+        // フレームの生成
+        Frame3D frame = new Frame3D();
+
+        // Box の生成
+        // 引数は、 x、y、z 座標、アピアランス
+        // 座標の単位はメートル(float値)
+        // 作成されるのは 横 0.20f, 縦 0.16f, 奥行き 0.12f のボックス
+        Box box = new Box(0.10f, 0.08f, 0.06f, Box.GENERATE_TEXTURE_COORDS, null);
+
+        setTextures(box);
+
+        // コンポーネントの生成
+        Component3D component = new Component3D();
+
+        // シェイプをコンポーネントに追加
+        component.addChild(box);
+
+        
+        // サムネイル用の Box(シェイプ) の生成
+        // サイズはコンポーネントのサイズの10分の1にします。
+        Box thumbBox = new Box(0.010f, 0.008f, 0.006f,
+                               Box.GENERATE_TEXTURE_COORDS, null);
+
+        // サムネイル用の Box(シェイプ)にテクスチャを貼る
+        setTextures(thumbBox);
+        
+        // コンポーネントを生成し、Box(シェイプ)を格納する
+        Component3D thumbComponent = new Component3D();
+        thumbComponent.addChild(thumbBox);
+
+        // サムネイルの生成
+        Thumbnail thumbnail = new Thumbnail();
+
+        // サムネイルにコンポーネントを格納
+        thumbnail.addChild(thumbComponent);
+
+        // サムネイルのサイズを設定
+        // このサイズもコンポーネントのサイズの10分の1にします。
+        thumbnail.setPreferredSize(new Vector3f(0.010f, 0.008f, 0.006f));
+
+        <font color="red"><b>
+        // 滑らかに動かすためのお約束
+        component.setAnimation(new NaturalMotionAnimation(1000));
+        // マウスボタンを押しているときのイベント処理を行うためのイベントアダプタ
+        MousePressedEventAdapter adapter = new MousePressedEventAdapter(
+                new RotateActionBoolean(component, (float)(Math.PI * 2.0), 10000));
+        //Ｙ軸を回転軸と設定します
+        component.setRotationAxis(0, 1, 0);
+        // コンポーネントにイベントアダプタを登録
+        component.addListener(adapter);
+        
+        // コンポーネントの上でマウスボタンを押した場合に
+        // サムネイルも同じようにアニメーションをさせるためのイベントアダプタ
+        thumbComponent.setAnimation(new NaturalMotionAnimation(1000));
+        MousePressedEventAdapter thumbAdapter = new MousePressedEventAdapter(
+                new RotateActionBoolean(thumbComponent, (float)(Math.PI * 2.0), 10000));
+        //サムネイルもＹ軸を回転軸と設定します
+        thumbComponent.setRotationAxis(0, 1, 0);
+        
+        // イベントをコンポーネントに登録する
+        // コンポーネント(ボックス)上でマウスボタンを押している時に
+        // サムネイルも動くようにするためにコンポーネントに登録しています
+        // サムネイル(thumbComponent)にイベントアダプタを登録しないでください
+        component.addListener(thumbAdapter);
+
+        // コンポーネントにイベントリスナを追加した際に必要なお約束
+        component.setMouseEventPropagatable(true);
+</b></font>
+        
+        // サムネイルの追加
+        // サムネイルの追加は Frame3D.setThumbnail() を使用します
+        frame.setThumbnail(thumbnail);
+
+
+        // コンポーネントをコンテナに追加
+        // ここではコンテナを使用していないので、
+        // 直接フレームに追加
+        frame.addChild(component);
+
+        // フレームの表示
+        // フレームの大きさを設定
+        frame.setPreferredSize(new Vector3f(0.1f, 0.08f, 0.06f));
+
+        // フレームの表示
+        frame.changeEnabled(true);
+        frame.changeVisible(true);
+
+    }
+        
+    private void setTextures(Box box){
+        URL url = null;    
+        ClassLoader loader = this.getClass().getClassLoader();
+		
+        // シェイプの生成および設定
+        // ボックス６面の画像を指定した Appearance の設定
+        Appearance appearanceFront = null;
+        Appearance appearanceRight = null;
+        Appearance appearanceLeft = null;
+        Appearance appearanceTop = null;
+        Appearance appearanceBottom = null;
+        Appearance appearanceBack = null;  
+        
+        // SimpleAppearance オブジェクトを作成する際に、
+        // テクスチャファイルの読み込みに失敗した場合 IOException
+        // を発生させますので、それに対応するためにException処理を追加
+        try {
+            url = loader.getResource("photo01.jpg");
+            appearanceFront = new SimpleAppearance( url );
+            url = loader.getResource("photo02.jpg");
+            appearanceRight = new SimpleAppearance( url );
+            url = loader.getResource("photo03.jpg");
+            appearanceLeft = new SimpleAppearance( url );
+            url = loader.getResource("photo04.jpg");
+            appearanceTop = new SimpleAppearance( url );
+            url = loader.getResource("photo05.jpg");
+            appearanceBottom = new SimpleAppearance( url );
+            url = loader.getResource("photo06.jpg");
+            appearanceBack = new SimpleAppearance( url );            
+        } catch (IOException ex) {
+            System.err.println("画像ファイルの読み込みに失敗しました。");
+            ex.printStackTrace();
+        }
+        
+        // 正面
+        Shape3D shape = box.getShape(Box.FRONT);
+        shape.setAppearance(appearanceFront);
+
+        // 右側
+        shape = box.getShape(Box.RIGHT);
+        shape.setAppearance(appearanceRight);
+
+        // 左側
+        shape = box.getShape(Box.LEFT);
+        shape.setAppearance(appearanceLeft);
+
+        // 上
+        shape = box.getShape(Box.TOP);
+        shape.setAppearance(appearanceTop);
+
+        // 下(底面)
+        shape = box.getShape(Box.BOTTOM);
+        shape.setAppearance(appearanceBottom);
+
+        // 後
+        shape = box.getShape(Box.BACK);
+        shape.setAppearance(appearanceBack);
+    }
+    
+    /**
+     * @param args the command line arguments
+     */
+    public static void main(String[] args) {
+        // TODO code application logic here
+        new TextureBox();
+
+    }
+    
+}
+      </pre></td></tr></table>
+      <br><br><br>
+      <li> <b>「4.3 Jarベースのアプリケーションの作成と実行」</b> にある <a href="c3.html#jar">「JARベースのアプリケーションの作成」 の ステップ８</a>　を参考して、プロジェクトを構築します。<br>
+	  同ページにある <a href="c3.html#run">「JARベースのアプリケーションの実行」</a> を参考して、アプリケーションの実行を行います。<br><br>
+          実行後、ボックス上で<font color="red"><b>マウスのボタンを押し続ける</b></font>とゆっくりと
+          ボックスとサムネイルが回転します。
+          また、マウスのボタンを離すと元に戻ります。
+      <br><br><br>
+      <img src="pictures/c6_01.jpg">
+      <br><br><br>
+    </ol>
+
+
+
+
+
+	<hr>
+    <h3>アクションの作成</h3>
+
+    <p>次はマウスをクリックしたときに 90度づつ回転するようにプログラムを変更します。<br>
+    マウスをクリックした場合のイベントアダプタは
+    org.jdesktop.lg3d.utils.eventadapter.MouseClickedEventAdapter クラスです。<br>
+    MouseClickedEventAdapter クラスはコンストラクタの引数として、
+    次のインタフェースのいずれかを実装したアダプタが必要です。
+       <ul>
+         <li> org.jdesktop.lg3d.utils.action.ActionNoArg
+         <li> org.jdesktop.lg3d.utils.action.ActionFloat2
+         <li> org.jdesktop.lg3d.utils.action.ActionFloat3
+        </ul>
+    <br>
+    ここでは ActionNoArgインタフェースを実装したクラスを作成します。<br>
+    <blockquote>
+      <font color="red"><b>補足:</b></font><br>
+      アクションを作成するために利用するインタフェースの名前は
+      イベント発生時に呼び出される performAction() メソッドの引数に対応しています。
+      (引数のうち、先頭の org.jdesktop.lg3d.wg.event.LgEventSource を除いたもの)<br>
+      上記のインタフェースの performActionメソッドは次のようになっています。<br>
+      <ul>
+       <li>ActionNoArg.performAction(LgEventSource source)
+       <li>ActionNoArg.performAction(LgEventSource source, float x, float y)
+       <li>ActionNoArg.performAction(LgEventSource source, float x, float y, float z)
+      </ul>
+      <p> performAction()メソッド実行時に渡される LgEventSource オブジェクトはイベントの発生元です。 
+    </blockquote>
+<br><br>
+    <ol>
+      <li> アクションを作成するために新しいクラスを作成します。<br>
+           左側のパネルが「<font color="red"><b>プロジェクト</b></font>」となっていることを確認し、
+           TextureBoxプロジェクト内の
+           「<font color="red"><b>ソースパッケージ</b></font>」→「<font color="red"><b>texturebox</b></font>」を選択します。<br>
+            選択後、右クリックでメニューが表示されるので
+            「<font color="red"><b>新規</b></font>」→「<font color="red"><b>Java クラス</b></font>」
+            を選択します。
+      <br><br><br>
+      <img src="pictures/c6_02.png">
+      <br><br><br>
+      <li> クラス情報を入力するためのダイアログが表示されます。<br>
+          <ul>
+           <li> クラス名 : <font color="red"><b>SpinAction</b></font>
+           </ul>
+           と入力し、「<font color="red"><b>完了</b></font>」を選択します。
+      <br><br><br>
+      <img src="pictures/c6_03.png">
+      <br><br><br>
+      <li> 左側のパネルに「<font color="red"><b>SpinAction</b></font>」
+           が追加されます。<br>
+           また、右側のソースコードエディタに「<font color="red"><b>SpinAction</b></font>」
+           が表示されます。
+      <br><br><br>
+      <img src="pictures/c6_04.png">
+      <br><br><br>
+      <li> SpinAction.javaを以下のように変更します。<br><br>
+      org.jdesktop.lg3d.utils.action.Actionの派生インタフェースは
+      イベント発生時に呼び出されるperformActionメソッドが必要とする変数が応じたものが用意されています。<br>
+      ここでは引数と特に必要としない org.jdesktop.lg3d.utils.action.ActionNoArg インタフェースを実装しています。<br>
+      <br>SpinActionクラスのメソッドはコンストラクタとperformAction()の2つになります。<br>
+      コンストラクタでは、
+      <ul>
+        <li> 回転させたいコンポーネント
+        <li> 回転する角度
+        <li> 回転にかかる時間
+      </ul>
+      を引数にしています。<br>
+      performAction()はイベント発生時に実際に行うアクションを実装するためのメソッドです。
+      ここではコンポーネントを90度回転させています。<br>
+      引数の org.jdesktop.lg3d.wg.event.LgEventSource オブジェクトはイベント発生元で、
+      イベント発生時にイベントアダプタからアクションに渡されます。
+      <br><br><br>
+      <table border>
+      <tr><td><pre>
+/*
+ * SpinAction.java
+ *
+ * Created on 2005/10/09, 14:47
+ *
+ * To change this template, choose Tools | Options and locate the template under
+ * the Source Creation and Management node. Right-click the template and choose
+ * Open. You can then make changes to the template in the Source Editor.
+ */
+
+package texturebox;
+<font color="red"><b>
+import org.jdesktop.lg3d.utils.action.ActionNoArg;
+import org.jdesktop.lg3d.wg.Component3D;
+import org.jdesktop.lg3d.wg.event.LgEventSource;
+</b></font>
+/**
+ *
+ * @author duke
+ */
+<font color="red"><b>
+public class SpinAction implements ActionNoArg{
+
+    private Component3D target;
+    private float diff;
+    private int duration;
+    private float angle;
+
+    // コンストラクタ
+    // target   回転させたいコンポーネント
+    // diff     回転させる角度 (ラジアン)
+    // duration 回転に要する時間 (ミリ秒)
+    public SpinAction(Component3D target, float diff, int duration) {
+        if (target == null) {
+            throw new IllegalArgumentException("targetオブジェクトが指定されていません");
+        }
+
+        this.target = target;
+        this.diff = diff;
+        this.duration = duration;
+    }
+
+    // イベント処理をおこなうためのメソッド
+    public void performAction(LgEventSource source) {
+        // target.getFinalRotationAngle() は現在の回転角度(ラジアン)を
+        // 取得するためのメソッドです。
+        // このメソッドに diff(回転させる角度)を足して、
+        // 新しい回転させる角度を定義します。
+        angle = target.getFinalRotationAngle() + diff;
+        // angle ... 最終的な回転角度
+        // duration ... 回転に要する時間
+        // です。実際に回転する角度は diff 
+        // ( 最終的な回転角度 angle - 現在の回転角度 getFinalRotationAngle() )
+        // になります
+        target.changeRotationAngle(angle, duration);
+    }
+
+}</b></font>
+      </pre></td></tr></table>
+      <br><br><br>
+      <li> 右側のソースコードエディタから「<font color="red"><b>TextureBox</b></font>」を選択し、
+           TextureBox.javaの編集画面に切り替えます。
+      <br><br><br>
+      <img src="pictures/c6_05.png">
+      <br><br><br>
+      <li> TexureBox.javaを以下のように変更します。<br><br>
+      イベントアダプタとして org.jdesktop.lg3d.utils.eventadapter.MouseClickedEventAdapter クラスを利用しています。<br>
+      イベントアダプタ生成時のコンストラクタの第1引数はマウスのボタンを定義しています。<br>
+      マウスのボタンは org.jdesktop.lg3d.wg.event.MouseEvent3Dクラス内の Enum変数 ButtonId に定義されており、
+      <ul>
+        <li> ButtonId.BUTTON1 = 左ボタン
+        <li> ButtonId.BUTTON2 = 中ボタン
+        <li> ButtonId.BUTTON3 = 右ボタン
+      </ul>
+      を示しています。<br>
+      ここでは、マウスの左クリックと右クリックの際のイベント処理の作成をしており、
+      左クリックで 90度回転、右クリックで逆方向に90度回転します。
+      <br>
+      <br>
+      また、登録するアクションは先ほど作成した SpinAction クラスを利用しています。
+      <br><br><br>
+
+      <table border>
+      <tr><td><pre>
+/*
+ * TextureBox.java
+ *
+ * Created on 2005/09/29, 15:42
+ *
+ * To change this template, choose Tools | Options and locate the template under
+ * the Source Creation and Management node. Right-click the template and choose
+ * Open. You can then make changes to the template in the Source Editor.
+ */
+
+package texturebox;
+
+/**
+ *
+ * @author duke
+ */
+
+import java.io.IOException;
+import java.net.URL;
+import java.lang.ClassLoader;
+import javax.vecmath.Vector3f;
+import org.jdesktop.lg3d.sg.Appearance;
+import org.jdesktop.lg3d.sg.Shape3D;
+import org.jdesktop.lg3d.utils.shape.Box;
+import org.jdesktop.lg3d.utils.shape.SimpleAppearance;
+import org.jdesktop.lg3d.wg.Component3D;
+import org.jdesktop.lg3d.wg.Frame3D;
+import org.jdesktop.lg3d.wg.Thumbnail;
+import org.jdesktop.lg3d.utils.c3danimation.NaturalMotionAnimation;
+<font color="red"><b>import org.jdesktop.lg3d.utils.eventadapter.MouseClickedEventAdapter; 
+import org.jdesktop.lg3d.wg.event.MouseEvent3D.ButtonId;</b></font>
+
+public class TextureBox {
+    
+    /** Creates a new instance of TextureBox */
+    public TextureBox() {
+        
+        // フレームの生成
+        Frame3D frame = new Frame3D();
+
+        // Box の生成
+        // 引数は、 x、y、z 座標、アピアランス
+        // 座標の単位はメートル(float値)
+        // 作成されるのは 横 0.20f, 縦 0.16f, 奥行き 0.12f のボックス
+        Box box = new Box(0.10f, 0.08f, 0.06f, Box.GENERATE_TEXTURE_COORDS, null);
+
+        setTextures(box);
+
+        // コンポーネントの生成
+        Component3D component = new Component3D();
+
+        // シェイプをコンポーネントに追加
+        component.addChild(box);
+
+        
+        // サムネイル用の Box(シェイプ) の生成
+        // サイズはコンポーネントのサイズの10分の1にします。
+        Box thumbBox = new Box(0.010f, 0.008f, 0.006f,
+                               Box.GENERATE_TEXTURE_COORDS, null);
+
+        // サムネイル用の Box(シェイプ)にテクスチャを貼る
+        setTextures(thumbBox);
+        
+        // コンポーネントを生成し、Box(シェイプ)を格納する
+        Component3D thumbComponent = new Component3D();
+        thumbComponent.addChild(thumbBox);
+
+        // サムネイルの生成
+        Thumbnail thumbnail = new Thumbnail();
+
+        // サムネイルにコンポーネントを格納
+        thumbnail.addChild(thumbComponent);
+
+        // サムネイルのサイズを設定
+        // このサイズもコンポーネントのサイズの10分の1にします。
+        thumbnail.setPreferredSize(new Vector3f(0.010f, 0.008f, 0.006f));
+
+        
+        // 滑らかに動かすためのお約束
+        component.setAnimation(new NaturalMotionAnimation(1000));
+        //Ｙ軸を回転軸と設定します
+        component.setRotationAxis(0, 1, 0);
+<font color="red"><b>
+        // 左クリックで回転
+        // 回転角度は 90度
+        MouseClickedEventAdapter leftClickedAdapter = 
+                new MouseClickedEventAdapter(ButtonId.BUTTON1,
+                new SpinAction(component, (float)(Math.PI / 2.0), 1000));
+
+        // 右クリックで逆回転
+        // 回転角度は -90度
+        MouseClickedEventAdapter rightClickedAdapter = 
+                new MouseClickedEventAdapter(ButtonId.BUTTON3,
+                new SpinAction(component, - (float)(Math.PI / 2.0), 1000));
+
+        // コンポーネントにイベントアダプタを登録
+        component.addListener(leftClickedAdapter);
+        component.addListener(rightClickedAdapter);
+
+        // イベント発生時にサムネイルも同じアクションを行うようにするため、
+        // サムネイルにも同じアクションを設定する
+        thumbComponent.setAnimation(new NaturalMotionAnimation(1000));
+        //サムネイルもＹ軸を回転軸と設定します
+        thumbComponent.setRotationAxis(0, 1, 0);
+		
+        // 左クリックで回転
+        MouseClickedEventAdapter thumbLeftClickedAdapter = 
+                new MouseClickedEventAdapter(ButtonId.BUTTON1,
+                new SpinAction(thumbComponent, (float)(Math.PI / 2.0), 1000));
+
+        // 右クリックで逆回転
+        MouseClickedEventAdapter thumbRightClickedAdapter = 
+                new MouseClickedEventAdapter(ButtonId.BUTTON3,
+                new SpinAction(thumbComponent, - (float)(Math.PI / 2.0), 1000));
+
+        // コンポーネントがクリックされた時にサムネイルも回転させるために
+        // イベントアダプタをコンポーネントに登録します
+        component.addListener(thumbLeftClickedAdapter);
+        component.addListener(thumbRightClickedAdapter);
+</b></font>
+        // コンポーネントにイベントリスナを追加した際に必要なお約束
+        component.setMouseEventPropagatable(true);
+
+        
+        // サムネイルの追加
+        // サムネイルの追加は Frame3D.setThumbnail() を使用します
+        frame.setThumbnail(thumbnail);
+
+
+        // コンポーネントをコンテナに追加
+        // ここではコンテナを使用していないので、
+        // 直接フレームに追加
+        frame.addChild(component);
+
+        // フレームの表示
+        // フレームの大きさを設定
+        frame.setPreferredSize(new Vector3f(0.1f, 0.08f, 0.06f));
+
+        // フレームの表示
+        frame.changeEnabled(true);
+        frame.changeVisible(true);
+
+    }
+        
+    private void setTextures(Box box){
+        URL url = null;    
+        ClassLoader loader = this.getClass().getClassLoader();
+		
+        // シェイプの生成および設定
+        // ボックス６面の画像を指定した Appearance の設定
+        Appearance appearanceFront = null;
+        Appearance appearanceRight = null;
+        Appearance appearanceLeft = null;
+        Appearance appearanceTop = null;
+        Appearance appearanceBottom = null;
+        Appearance appearanceBack = null;  
+        
+        // SimpleAppearance オブジェクトを作成する際に、
+        // テクスチャファイルの読み込みに失敗した場合 IOException
+        // を発生させますので、それに対応するためにException処理を追加
+        try {
+            url = loader.getResource("photo01.jpg");
+            appearanceFront = new SimpleAppearance( url );
+            url = loader.getResource("photo02.jpg");
+            appearanceRight = new SimpleAppearance( url );
+            url = loader.getResource("photo03.jpg");
+            appearanceLeft = new SimpleAppearance( url );
+            url = loader.getResource("photo04.jpg");
+            appearanceTop = new SimpleAppearance( url );
+            url = loader.getResource("photo05.jpg");
+            appearanceBottom = new SimpleAppearance( url );
+            url = loader.getResource("photo06.jpg");
+            appearanceBack = new SimpleAppearance( url );            
+        } catch (IOException ex) {
+            System.err.println("画像ファイルの読み込みに失敗しました。");
+            ex.printStackTrace();
+        }
+        
+        // 正面
+        Shape3D shape = box.getShape(Box.FRONT);
+        shape.setAppearance(appearanceFront);
+
+        // 右側
+        shape = box.getShape(Box.RIGHT);
+        shape.setAppearance(appearanceRight);
+
+        // 左側
+        shape = box.getShape(Box.LEFT);
+        shape.setAppearance(appearanceLeft);
+
+        // 上
+        shape = box.getShape(Box.TOP);
+        shape.setAppearance(appearanceTop);
+
+        // 下(底面)
+        shape = box.getShape(Box.BOTTOM);
+        shape.setAppearance(appearanceBottom);
+
+        // 後
+        shape = box.getShape(Box.BACK);
+        shape.setAppearance(appearanceBack);
+    }
+    
+    /**
+     * @param args the command line arguments
+     */
+    public static void main(String[] args) {
+        // TODO code application logic here
+        new TextureBox();
+
+    }
+    
+}
+      </pre></td></tr></table>
+
+
+      <br><br><br>
+      <li> <b>「4.3 Jarベースのアプリケーションの作成と実行」</b> にある <a href="c3.html#jar">「JARベースのアプリケーションの作成」 の ステップ８</a>　を参考して、プロジェクトを構築します。<br>
+	  同ページにある <a href="c3.html#run">「JARベースのアプリケーションの実行」</a> を参考して、アプリケーションの実行を行います。<br><br>
+        実行画面は下図のようになります。<br>
+        ボックスをクリックまたは右クリックしてください。
+      <br><br><br>
+      <img src="pictures/c6_06.jpg">
+      <br><br><br>
+     </ol>
+
+    <hr>
+    <ul>
+    <li><a href="c7.html">「4.7 Swingを利用する (JFrame編)」</a> に進む
+    <br><br>
+    <li><a href="index.html">メニューに戻る</a>
+    </ul>
+
+  </body>
+</html>

@@ -1,0 +1,257 @@
+<!DOCTYPE html PUBLIC "-//Tigris//DTD XHTML 1.0 Transitional//EN"
+"http://style.tigris.org/tigris_transitional.dtd">
+<html>
+	<head>
+		<title>Projekt Looking Glass - Anmerkungen zum Entwickler-Release Release 0.5.1
+			<meta name="Translator" value="Christian Ost" />
+		</title>
+		<meta http-equiv="content-type" content="text/html; charset=ISO-8859-1">
+	</head>
+	<body>
+		<h2>Projekt Looking Glass - Anmerkungen zum Entwickler-Release
+			<br />
+			Release 0.5.1&nbsp;</h2>
+		Diese Release-Bemerkungen enthalten wichtige Informationen &uuml;ber das 
+		Projekt Looking Glass Entwickler-Release (Version 0.5.1). Zus&auml;tzlich zu 
+		den gr&ouml;&szlig;eren &Auml;nderungen seit dem vorherigen Release (0.5.0), 
+		werden hier noch bekannte Einschr&auml;nkungen, Bugs, technsiche Anmerkungen 
+		und andere Informationen angesprochen. Lies dieses Dokument, bevor du beginnst 
+		das Entwickler-Release inb der Version 0.5.1 des Projekt Looking Glass 3D 
+		Desktops zu benutzen.
+		<br />
+		<br />
+		<a href="#Overview of the changes">1. &Uuml;berblick &uuml;ber die &Auml;nderungen</a><br />
+		<a name="#Rendering_fixes">&nbsp;&nbsp;&nbsp;&nbsp;1.1 Rendering Verbesserungen</a><br />
+		<a name="#Config_fixes">&nbsp;&nbsp;&nbsp;&nbsp;1.2 Ver&auml;nderungen an den 
+			Konfigurationsdateien</a><br />
+		<a name="#Gnome_fixes">&nbsp;&nbsp;&nbsp;&nbsp;1.3 Verbesserungen an der GNOME 
+			Unterst&uuml;tzung </a>
+		<br />
+		<a name="#Misc_bug_fixes">&nbsp;&nbsp;&nbsp;&nbsp;1.4 Diverse Bugfixes</a><br />
+		<a href="#Application status">2. Anwendungsstatus</a><br />
+		<a href="#Limitations_of_this_release">3. Begrenzungen dieses Releases</a><br />
+		<a href="#Known_Bugs">4. Bekannte Bugs<br />
+		</a>
+		<br />
+		<h3><a name="Overview_of_the_changes"></a>1. &Uuml;berblick &uuml;ber die 
+			&Auml;nderungen</h3>
+		Dieser Abschnitt liefert einen &Uuml;berblick &uuml;ber die &Auml;nderungen, 
+		die an Projekt Looking Glass seit der letzten Version (0.5.0) durchgef&uuml,hrt 
+		wurden.
+		<h4><a name="Rendering_fixes"></a>1.1 Rendering Verbesserungen</h4>
+		Die signifikanteste &Auml;nderung ist, dass das PLG-unterst&uuml;tzende X11 
+		Release, das mit PLG ausgeliefert wird, auf X.org X11R6.8 aktualisiert wurde. 
+		Dieses neue X11 Release behebt viele Renderfehler. Die meisten X11 Anwendungen 
+		rendern nun ihre Fenster korrekt. (Trotzdem wurden immer noch von manchen 
+		ATI-Systemen signifikante Rendering Probleme gemeldet.).
+		<br />
+		<br />
+		<h4><a name="Config_fixes"></a>1.2 Ver&auml;nderungen an den Konfigurationsdateien</h4>
+		Zus&auml;tzlich erkennt der neue X11 Server nun die X11 Konfigurationsdatei 
+		/etc/X11/xorg.conf. Das vorherige Release erkannte diese Datei nicht und 
+		verusrachte viele Probleme bei der Erkennung der Eingabeger&auml;te. In dem 
+		letzten Release war es deshalb notwendig einen Symlink als Workaround f&uuml;r 
+		dieses Problem zu erstellen. Dies ist f&uuml;r viele Systeme nicht l&auml;nger 
+		notwendig.
+		<br />
+		<br />
+		<b>Kein Workaround n&ouml;tig</b>: Wenn die X11 Konfigurationsdatei auf dem 
+		System /etc/X11/xorg.conf oder /etc/X11/XF86Config hei&szlig;t, braucht man 
+		keinen Symlink.
+		<br />
+		<br />
+		<b>Immer noch Workaround notwendig</b>: Wenn die X11 Konfigurationsdatei auf 
+		dem System /etc/X11/XF86Config-4 ist, m&uuml;ssen die folgenden Schritte vor 
+		dem Aufruf von lg3d-session durchgef&uuml;hrt werden:
+		<br />
+		<br />
+		(Werde root)<br />
+		<br />
+		<code># cd /etc/X11</code><br />
+		<code># ln -s XF86Config-4 xorg.conf</code><br />
+		<br />
+		<h4><a name="Gnome_fixes"></a>1.3 Verbesserungen an der GNOME Unterst&uuml;tzung</h4>
+		Der Xorg Server, der im lg3d-core Projekt enthalten ist, scheint nun relativ 
+		gut zu funktionieren, wenn GNOME statt lg3d-session ausgef&uuml;hrt wird. Wenn 
+		du in diesem Modus Bugs entdeckts, bitte melde sie bei dem lg3d-core Projekt. 
+		</p>
+		<h4><a name="Misc_bug_fixes"></a>1.4 Diverse Bugfixes</h4>
+		Die folgenden Bugs wurden in diesem Release behoben:
+		<br />
+		<br />
+		2&nbsp;&nbsp; P3 WM_PROTOCOLS 250 Fehlermeldung
+		<br />
+		17 P3 Fensterauswahl kann ein Fenster vom Bildschirm verschieben.
+		<br />
+		24 P3 Memory Leak, wenn ein Fenster geschlossen wird
+		<br />
+		67 P4 Bitmap: Zeichnen des Datei-Buttons ist korrumpiert
+		<br />
+		81 P1 Ausf&uuml;hren der selben Anwendung Back-to-Back verursacht einen 
+		Lightpipe Fehler
+		<br />
+		79 P3 xgc: Text 16 &uuml;berflie&szlig;t die Subwindow Grenzen
+		<br />
+		83 P4 DS sollte nur Sch&auml;den an einem Fentser verfolgen, wenn es gezeichnet 
+		ist
+		<br />
+		91 P3 Uniconify setzt das Fenster nicht an die korrekte Stelle
+		<br />
+		<h3><a name="Application_status"></a>2. Anwendungsstatus</h3>
+		Dieser Abschnitt zeigt den aktuellen Zustand von wichtigen X11 Anwendungen, die 
+		das Team im Moment debuggt.
+		<br />
+		<br />
+		Die gr&ouml;&szlig;te &Auml;nderung seit dem letzten Release war, dass Mozilla 
+		Navigator von Rot (Anwendung l&auml;ft gar nicht) zu Gelb (enigerma&szlig;en 
+		benutzbar) fortgeschritten ist.
+		<br />
+		<br />
+		Gr&uuml;n&nbsp;&nbsp;= Anwendun hat keine gr&ouml;&szlig;eren Bugs; prinzipiell 
+		benutzbar
+		<br />
+		Gelb = Anwendung hat einige signifikante Bugs, ist allerdings eingerma&szlig;en 
+		benutzbar)
+		<br />
+		Rot&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; = Anwendung hat so viele Bugs, dass sie 
+		unbenutzbar ist
+		<br />
+		<br />
+		<p><b>Mozilla Navigator</b>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Gelb
+			<br />
+			<br />
+			Bug: Men&uuml;s und Hilfefenster erscheinen nicht ordentlich. Manchmal 
+			st&ouml;rt das Hilfsfenster f&uuml;r das URLfenster die Eingabe von Text. 
+			Manchmal k&ouml;nnen die Scrollbars bei verschiedenen URLs das System zum 
+			Auf&auml;ngen bringen.
+		</p>
+		<p><b>Emacs</b>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Gelb
+			<br />
+			<br />
+			Das Bewegen des Cursors auf Schaltfl&auml;chen unterhalb der Men&uuml;leiste 
+			kann emacs veranlassen ein segv Signal zu senden. (Au&szlig;erdem erhalte ich 
+			ein BadWindow von ChangeProperty).
+		</p>
+		<p><b>gnome-calculator</b>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Gelb
+			<br />
+			<br />
+			Das Ausf&uuml;hren von 96 * 3 h&auml;ngt die Anwendung nicht l&auml;nger auf, 
+			sondern generiert einen XCompositeRedirectWindow BadAccess Fehler. Das System 
+			h&auml;ngt sich ebenfalls auf, wenn auf Help/About geklickt und dann nach 9 
+			gewechselt wird.
+		</p>
+		<p><b>Mozilla Mail</b>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Rot
+			<br />
+			<br />
+			Konnte nicht wegen Navigator Men&uuml;problemen nicht gestartet werden.
+		</p>
+		<p><b>Nautilus</b>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Rot
+			<br />
+			<br />
+			Ich erhalte jede Art von Corba und anderen Problemen.
+		</p>
+		<p><b>Evolution</b>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Rot
+			<br />
+			<br />
+			Ich bekomme Tonnen an Corba und Konfigurationsfehlern.
+		</p>
+		<p><b>StarOffice Word</b>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Rot
+			<br />
+			<br />
+			Anwendung startet nicht.
+		</p>
+		<p><b>StarOffice Spreadsheet</b>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Rot
+			<br />
+			<br />
+			Anwendung startet nicht.
+		</p>
+		<p><b>StarOffice Presenter</b>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Rot
+			<br />
+			<br />
+			Anwendung startet nicht.
+		</p>
+		<p><b>Netbeans</b>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Rot
+			<br />
+			<br />
+			Ein kleines schwarzes Fenster erscheint. Nach einer Weile verschwindet es. Dann 
+			&ouml;ffnet ein Dialog in der rechten Ecke des Bildschirms, der teilweise 
+			au&szlig;erhalb des anzeigbaren Bereichs ist. Ich klicke auf yes und erhalte 
+			einen BadWindow Fehler von ReparentWindow.
+		</p>
+		<p><b>Realplay</b>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Rot
+			<br />
+			<br />
+			GetWindowAttributes: Badwindow und realplay meldet segv.
+		</p>
+		<p><b>Gaim</b>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Rot
+			<br />
+			<br />
+			LightPipe Fehler: init_window: konnte nicht Fensterattribute lesen, sowie 
+			andere Fehlermeldungen.
+		</p>
+		<p><b>gtk-demo</b>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Rot
+			<br />
+			<br />
+			Klick auf das Source-Tab verursacht eine java.lang.NullPointerException in 
+			X11Client.mapNotify
+		</p>
+		<p><b>freecell</b>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Rot
+			<br />
+			<br />
+			Wie bei Mozilla sind Men&uuml;s und Hilfefenster fehlerhaft. Bewegen des 
+			Cursors auf die New Schaltfl&auml;che ruft ein fehlerhaftes Hilfefenster auf.
+		</p>
+		<h3><a name="Limitations_of_this_release"></a>3. Begrenzungen dieses Releases</h3>
+		<p>- Dieses Release unterst&uuml;tzt nur eine einzelne Instanz von lg3d-session pro 
+			Maschine. Nur ein Bildschirm wird unterst&uuml;tzt. Konfigurationen mit mehr 
+			als einem Bildschirm, entweder getrennt, oder kombiniert(Xinerama Modus) werden 
+			noch nicht unterst&uuml;tzt.<br />
+		<p>- <b>Warnung:</b> Shells, die durch einen Klick auf das Terminal-Icon aufgerufen 
+			werden, geh&ouml;ren automatisch dem Benutzer root. Also ist entsprechende 
+			Vorsicht geboten, wenn Befehle in diese Shells eingegeben werden.<br />
+			<br />
+			- Anwendungen, die den ganzen Bildschirm nutzen (also Vollbild Modus), werden 
+			nicht lauff&auml;hig sein. OpenOffice Presenter ist so eine Anwendung.
+			<br />
+		</p>
+		<p><b>Anmerkung</b>: Died folgenden Bugs treten nur dann auf, wenn der Eingabefokus 
+			auf einem 3D-Objekt oder Anwendung liegt. Sie bleiben bei normalen 
+			X11-Anwendungen aus.
+		</p>
+		<p>- X11 Eingabemethoden werden nicht f&uuml;r 3D Scene-Graph Objekte. Folglich ist 
+			es nicht m&ouml;glich, mehrtastige Zeichen einzugeben.<br />
+		</p>
+		<p>
+			- Tastaturabfragen funktionieren nur eingeschr&auml;nkt f&uuml;r 3D Scene-Graph 
+			Objekte.
+			<br />
+		</p>
+		<p>-&nbsp;Die <b>Meta</b>, <b>Alt</b> und <b>Alt_graph</b> Tasten sind noch nicht 
+			f&uuml;r 3D Scene-Graph Objekte implementiert.
+		</p>
+		<p>-&nbsp;Die <b>Num Lock</b> Taste ebenfalls nicht.
+		</p>
+		<h3><a name="Known_Bugs"></a>4. Bekannte Bugs Bugs</h3>
+		Um eine Liste bekannter Bugs zu erhalten, besuche 
+		https://lg3d-core.dev.java.net und klicke auf Issue Tracker. W&auml;hle "Query 
+		database", navigiere zum unteren Ende der ge&ouml;ffneten Seite und klicke auf 
+		"Submit query".
+		<br />
+		<br />
+		<br />
+		<b>Siehe auch:</b><br />
+		<br />
+		<a href="lg3dgettingstarted.html">Mit dem Projekt Looking Glass 3D Desktop beginnen </a>
+		<br />
+		<a href="file:///tmp/evolution-500-5377/app-launcher-V3mhHZ/lg3ddevelopersguide.html">
+			Projekt Looking Glass </a><a href="file:///tmp/evolution-500-5377/app-launcher-V3mhHZ/lg3ddevelopersguide.html">
+			3D Desktop </a><a href="lg3ddevelopersguide.html">Einf&uuml;hrung f&uuml;r 
+			Entwickler</a><br />
+		<br />
+		<br />
+		<br />
+		<br />
+		<small>$Revision: 1.1 $ $Date: 2006-05-09 17:46:20 $ (English Version Revision: 
+			1.9)</small>
+	</body>
+</html>

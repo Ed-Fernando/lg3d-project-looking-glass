@@ -1,0 +1,791 @@
+<!-- saved from url=(0022)http://internet.e-mail -->
+<!DOCTYPE html PUBLIC "-//Tigris//DTD XHTML 1.0 Transitional//EN"
+"http://style.tigris.org/tigris_transitional.dtd">
+<html>
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  <title>开始配置Project Looking Glass开发版</title>
+</head>
+<body>
+<div id="projectdocumentview" class="app">
+
+<hr />
+<h2>开始配置Project Looking Glass开发版 </h2>
+
+<p><b>欢迎加入Project Looking Glass！</b></p>
+
+<p>本文档可帮您快速完成Project Looking Glass开发版工作环境的配置。</p>
+<p>首先您需要设置您的运行环境。运行环境正确设置之后，就可以下载、安装Project Looking Glass
+了。</p>
+
+<p>
+<a href="#Platform_Requirements">1. 平台要求</a> <small>软、硬件要求</small><br />
+<a href="#Setting_up_your_Project_Looking_Glass">2. 设置Project Looking Glass运行环境</a> <small>下载、安装相关组件</small><br />
+<a href="#Installing_the_Project_Looking_Glass">3. 安装Project Looking Glass开发版</a><br />
+<a href="#Running_Project_Looking_Glass">4. 运行Project Looking
+Glass</a> <small>如何启动Project Looking Glass桌面会话</small><br />
+<a href="#Troubleshooting">5. 问题解决</a><br />
+<a href="#Staying_connected_with_Project">6. 与Project Looking Glass保持联系</a> 
+<small>怎样保持联系 </small><br />
+<a href="#Some_final_words">7. 写在最后</a><br />
+</p>
+
+<h3><a name="Platform_Requirements"></a>1. 平台要求</h3>
+  <p> 在您着手设置Project Looking Glass开发环境之前，请先检查一下，看看您的系统是否满足下列最低要求： </p>
+<table border="1" cellpadding="2" cellspacing="2" width="100%">
+  <tbody>
+    <tr>
+      <td width="14%" valign="top"><b>项目</b></td>
+      <td width="86%" valign="top"><b>Linux平台</b></td>
+    </tr>
+    <tr>
+      <td valign="top">操作系统</td>
+      <td valign="top">Project Looking Glass已在Sun
+Java 桌面系统第1版和第2版、RedHat 9、SuSE Linux 8.1.等系统上测试通过。</td>
+    </tr>
+    <tr>
+      <td valign="top">CPU</td>
+      <td valign="top">2 GHz，或更快（建议）</td>
+    </tr>
+    <tr>
+      <td valign="top">RAM</td>
+      <td valign="top">512MB</td>
+    </tr>
+    <tr>
+      <td valign="top">图形卡<b>*</b><br />
+      </td>
+      <td valign="top">3D加速图形卡，支持1.2或1.2版以上的OpenGL。<br />
+      <b>注意：需要24位真彩色。</b>
+这方面的配置可参考下列指导。<br />
+      <br />
+      <b>已经通过测试的图形卡：</b> <br />
+      <ul>
+        <li>NVIDIA GeForce 2，或同等的采用 <a
+ href="http://www.nvidia.com/object/linux_display_ia32_1.0-5336.html">1.0-5336</a>
+版NVIDIA驱动的图形卡。<br />
+请参考<a href="nvidia-driver-install-tips.html"> NVIDIA 驱动程序安装技巧</a>。 </li>
+       <li>ATI Radeon 7500，带DRI驱动。请参考<a
+ href="../dri-driver-install-ati-radeon.html">ATI Radeon的DRI驱动程序安装</a>。<br />
+        </li>
+      </ul>
+关于特定显卡的驱动程序配置，请参考：<a href="../graphics-driver-index.html">Project Looking Glass
+3D桌面的设备驱动程序安装与配置</a><br />
+      <br />
+如果您发现其它显卡可成功运行Project Looking Glass，请通过下列EMail地址告诉我们： <a
+ href="mailto:interest@lg3d.dev.java.net"><u>interest@lg3d.dev.java.net</u></a>。<br />
+      <br />
+如果您发现特定显卡运行Project Looking Glass会出现问题，请通过下列EMail地址向我们汇报： <a
+ href="mailto:issues@lg3d-core.dev.java.net"><u>issues@lg3d-core.dev.java.net</u>。</a>
+      </td>
+    </tr>
+    <tr>
+      <td valign="top">磁盘空间</td>
+      <td valign="top">350MB</td>
+    </tr>
+  </tbody>
+</table>
+
+<h3><a name="Setting_up_your_Project_Looking_Glass"></a>2. 设置您的Project Looking Glass环境</h3>
+<p>
+
+您需要先安装几个Java组件，然后才能运行Project Looking Glass。最简单的方法是
+按下列顺序逐个下载、安装这些组件。
+</p>
+
+<h4>下载组件：</h4>
+
+<p>
+<b>注:</b> 本安装指导默认您把所有的组件都下载到了<span
+ style="font-family: courier new,courier,monospace;">/tmp</span>目录下。
+</p>
+
+<ol>
+    <li><b>Java 2 SDK, 标准版1.5.0 Beta 2 或更近版本</b><br />
+    <a href="http://java.sun.com/j2se/1.5.0/download.jsp">http://java.sun.com/j2se/1.5.0/download.jsp</a><br />
+    <br />
+    <b>注:</b> 本安装指导默认您下载的是RPM版JDK。<br />
+    <br />
+  </li>
+  <li><b>Java 3D SDK 1.3.2-build4 或更近版本</b><br />
+    <a href="https://j3d-core.dev.java.net/servlets/ProjectDocumentList"><u>https://j3d-core.dev.java.net/servlets/ProjectDocumentList<br />
+    <br />
+      </u></a><b>注:</b> 访问<b>j3d-core</b>/<b>Experimental_Builds</b>/<b>1.3.2-build4</b> 
+      子目录，下载 <b>java3d-1_3_2-build4-linux-i586.tar.gz</b>.<br />
+    <br />
+  </li>
+  <li><b>Java高级图象API (JAI) 1.1.2 JDK </b><br />
+    <a
+ href="http://java.sun.com/products/java-media/jai/downloads/download-1_1_2.html">http://java.sun.com/products/java-media/jai/downloads/download-1_1_2.html</a><br />
+    <br />
+    <b>注:</b>选择<b>JDK(TM)
+安装：JDK中的安装包下载</b>。阅读并接受软件许可协议，然后选择 <b>Linux
+JDK安装</b>(<span style="font-family: courier new,courier,monospace;">jai-1_1_2-lib-linux-i586-jdk.bin</span>)。<br />
+  </li>
+</ol>
+
+<h4>安装组件</h4>
+
+<p>
+下载全部组件之后，按下列指导进行安装。
+</p>
+
+<ol>
+  <li>首先，以root身份登录：<br />
+    <br />
+    <span style="font-family: courier new,courier,monospace;">
+ % su root<br />
+ Password:</span> <b>输入root密码。</b><br />
+<span style="font-family: courier new,courier,monospace;">#</span><br />
+    <br />
+  </li>
+  <li>安装Java 2 SDK:<br />
+    <br />
+    <span style="font-family: courier new,courier,monospace;">
+# cd /tmp<br />
+# /bin/bash jdk-1_5_0-beta2-linux-i586-rpm.bin<br />
+# rm jdk-1_5_0-beta2-linux-i586.rpm<br />
+# rm jdk-1_5_0-beta2-linux-i586-rpm.bin</span><br />
+    <br />
+  </li>
+  <li>安装Java 3D SDK:<br />
+    <br />
+    <span style="font-family: courier new,courier,monospace;">
+# cd /tmp<br />
+# tar -zxf java3d-1_3_2-build4-linux-i586.tar.gz<br />
+# cd /usr/java/jdk1.5.0/jre<br />
+# /usr/java/jdk1.5.0/bin/jar xvf
+/tmp/java3d-1_3_2-build4-linux-i586/j3d-132-build4-linux-x86.jar<br />
+# cd /tmp<br />
+# rm -r java3d-1_3_2-build4-linux-i586</span><br />
+    <br />
+  </li>
+  <li>安装Java高级图象API:<br />
+    <br />
+    <span style="font-family: courier new,courier,monospace;">
+# cd /usr/java/jdk1.5.0<br />
+# /bin/bash /tmp/jai-1_1_2-lib-linux-i586-jdk.bin</span><br />
+    <br />
+  </li>
+  <li>退出root shell:<br />
+    <br />
+    <span style="font-family: courier new,courier,monospace;">
+# exit<br />
+%</span><br />
+    <br />
+  </li>
+  <li>现在需要对您的Shell profile里的几个变量进行设置。下面的例子适用于bash(1):<br />
+    <span style="font-family: courier new,courier,monospace;"><br />
+JAVA_HOME=/usr/java/jdk1.5.0<br />
+PATH=$JAVA_HOME/bin:$PATH</span><br />
+  </li>
+</ol>
+<h3><a name="Installing_the_Project_Looking_Glass"></a> 3. 安装Project Looking Glass的开发版</h3>
+
+<h4>到java.net网站上进行注册</h4>
+
+  <p> 如果您以前未在<a href="http://www.java.net">java.net</a>上注册，那么您需要注册，建立一个帐号： </p>
+<ol>
+  <li>访问 <a href="http://www.java.net">http://www.java.net</a>
+，在网页顶端点击<b>Register</b>链接。 </li>
+  <li>输入您的用户名和e-mail地址，然后按<b>[Register]</b>按钮。<br />
+  </li>
+  <li>您将会接到一封EMail，告诉您怎样为自己的帐号设置密码。输入您的密码，
+  并接受java.net网站的参与条款，然后您就可以登录网站了。<br />
+  </li>
+</ol>
+
+<h4>下载Project Looking Glass的安装包</h4>
+
+<ol>
+  <li>访问<a href="https://lg3d-core.dev.java.net">https://lg3d-core.dev.java.net</a>
+，点击侧面导航条上<b>项目工具</b>栏下的<b>文档&amp;文件</b>。</li>
+  <li>访问右面树形目录下的<b>lg3d-core</b>/<b>stable_builds</b>。这里有一个表格，里面
+列出了稳定的版本。</li>
+    <li>点击<b>release_x.y</b>形式的链接 (这里x.y是版本号，例如：0.5)，选择想要保存下载文件的目录， 例如： /tmp</li>
+  <li>进入您想要安装Project Looking Glass的目录当中，释放文件：<br />
+    <br />
+    <span style="font-family: courier new,courier,monospace;">
+% cd /home/username<br />
+% tar -zxf /tmp/lg3d-<b>x.y</b>.tar.gz</span><br />
+    <br />
+    <b>注:</b> 您需要将<span
+ style="font-family: courier new,courier,monospace;"><b>x.y</b></span>
+替换成您所下载的实际版本号（例如：<span
+ style="font-family: courier new,courier,monospace;"><b>0.5</b>）。<br />
+    </span><br />
+文件将释放到当前目录下一个名为 <span
+ style="font-family: courier new,courier,monospace;">lg3d</span>的子目录当中。</li>
+</ol>
+
+<h4><a name="Configure_the_color_depth_of_your"></a>设置您的显示色彩深度</h4>
+
+<p>
+Project Looking Glass开发版要求色彩深度为24位。许多系统是按16位深度配置色彩的，这种
+情况下Project Looking Glass开发版无法正确运行。您可以运行下列指令，获取当前系统的
+色彩深度：
+
+</p>
+
+<blockquote><span
+ style="font-family: courier new,courier,monospace;">
+% xdpyinfo | grep "depth of root"<br />
+depth of root window:&nbsp;&nbsp; 24 planes<br />
+</span></blockquote>
+<p>
+如果显示色彩深度低于24位，您需要更改色彩深度的设置。更改色彩深度设置
+的方法在不同平台之间各不相同。请参考下列指导，找出适合于您的平台的
+方法：
+</p>
+
+<h4>Java桌面系统1和2，以及SUSE8.1:</h4>
+
+<ol>
+  <li>在桌面会话当中运行sax2指令：<br />
+    <br />
+    <span style="font-family: courier new,courier,monospace;">
+% /usr/X11R6/bin/sax2<br />
+SaX: root Password:</span> <b>输入root密码</b><br />
+    <br />
+  </li>
+    <li>SaX2应用程序当中，点击<b>Color and Resolution</b>，然后点击<b>[Properties...]</b>按钮，设置当前桌面。</li>
+  <li>在<b>Color selection...</b>面板中，在菜单里选择<b>16.7 Mio. [24 Bit]</b>. <br />
+  </li>
+  <li>在<b>Resolution(s) for 16.7
+Mio. [24 Bit] colors</b>标签里，选择您想要的屏幕分辨率，然后点击<b>[Ok]</b>。<br />
+  </li>
+  <li>点击<b>[Finish]</b>
+按钮，然后点击<b>[Finalize&gt;&gt;]</b>.<br />
+  </li>
+  <li>会出现<b>SaX2最后的步骤...</b>
+对话框。点击<b>[Test...]</b>
+按钮，对新的设置进行测试。 <br />
+  </li>
+    <li>会出现一个蓝色的测试窗口。如果窗口显示没有问题，就点击<b>[Save]</b>按钮，然后点击<b>[Ok]</b> 保存，回到SaX2窗口，再按<b>[Yes]</b>退出SaX2。</li>
+    <li>如果测试窗口无法正确显示，30秒钟之后会自动回到桌面，恢复先前的设置。您应该在24位色彩下多试几种分辨率，找到适合于您的系统的分辨率。<br />
+  </li>
+  <li>如果您对设置结果满意，就可以退出，重新登录桌面会话，用前面的<span style="font-family: courier new,courier,monospace;">xdpyinfo</span>指令验证现在的色彩深度为24位或更高。</li>
+</ol>
+
+<h4>RedHat Fedora 2:</h4>
+
+<ol>
+  <li>先登录为root：<br />
+    <br />
+    <span style="font-family: courier new,courier,monospace;">
+% su root<br />
+Password:</span> <b>输入root密码</b> <br />
+<span style="font-family: courier new,courier,monospace;">#</span><br />
+    <br />
+  </li>
+  <li>编辑文件：<span style="font-family: courier new,courier,monospace;">/etc/X11/xorg.conf</span></li>
+  <li>找到标有<span
+ style="font-family: courier new,courier,monospace;">Section "Screen"</span>的部分：<span
+ style="font-family: courier new,courier,monospace;"><br />
+    </span></li>
+  <li>在这部分找到标有: <span
+ style="font-family: courier new,courier,monospace;">Identifier "Screen0"<br />
+    </span>的行，将 <span style="font-family: courier new,courier,monospace;">DefaultDepth</span>
+和<span style="font-family: courier new,courier,monospace;">DefaultFbBpp </span>属性改为：<br />
+    <br />
+    <span style="font-family: courier new,courier,monospace;">DefaultDepth 24<br />
+DefaultFbBpp 32<br />
+    <br />
+    </span></li>
+  <li>保存文件，退出，再重新登陆到桌面会话，用上面的<span style="font-family: courier new,courier,monospace;">xdpyinfo</span>
+指令验证您的色彩深度已经是24位了。<br />
+  </li>
+</ol>
+
+<h4>RedHat 8, RedHat 9 及其它Linux平台：</h4>
+
+  <p> 许多Linux平台通过<span
+ style="font-family: courier new,courier,monospace;">XF86Config</span>文件来设置显示属性。可通过下列方法更改色彩深度： 
+  </p>
+
+<ol>
+  <li>首先，登陆为root：<br />
+    <br />
+    <span style="font-family: courier new,courier,monospace;">
+% su root<br />
+Password:</span> <b>输入密码</b> <br />
+<span style="font-family: courier new,courier,monospace;">#</span><br />
+    <br />
+  </li>
+  <li>编辑该文件：<span style="font-family: courier new,courier,monospace;">/etc/X11/XF86Config</span></li>
+  <li>找到标有 <span
+ style="font-family: courier new,courier,monospace;">Section "Screen"</span> 的部分，将
+<span style="font-family: courier new,courier,monospace;">DefaultDepth</span>
+属性改为24：<br />
+    <br />
+    <span style="font-family: courier new,courier,monospace;">DefaultDepth&nbsp;&nbsp;&nbsp;&nbsp;
+24<br />
+    <br />
+    </span></li>
+  <li>在这部分，找到标有<span
+ style="font-family: courier new,courier,monospace;">"Display"的子栏目:<br />
+    <br />
+    </span><span style="font-family: courier new,courier,monospace;">SubSection
+"Display"<br />
+    <br />
+    </span>，然后将<span style="font-family: courier new,courier,monospace;">Depth</span>
+属性改为：<br />
+    <br />
+    <span style="font-family: courier new,courier,monospace;">Depth&nbsp;&nbsp;&nbsp;&nbsp;
+24<br />
+    <br />
+    </span></li>
+  <li>保存文件，退出，然后重新登陆到您的桌面会话，并通过前面的
+  <span style="font-family: courier new,courier,monospace;">xdpyinfo</span>
+指令验证色彩深度已为24位。</li>
+</ol>
+
+<h3><a name="Running_Project_Looking_Glass"></a>4. 运行Project
+Looking Glass</h3>
+
+<p>
+运行Project Looking Glass的方式有两种。可以在桌面环境中的一个窗口里运行
+，也可以全屏方式运行。但Project Looking Glass的一个关键优点，就是可以不经
+修改运行以前的X11应用程序，这一点只有在全屏模式下才能实现。要想验证Project Looking
+Glass安装是否正确，最简单的方法是在现有桌面上运行演示程序。如果演示程序能够
+正常运行，您就可以将系统设置为全屏运行Project Looking Glass了。注：在3D应用程序
+以及窗口管理器（场景管理器）增强功能的开发和测试过程中，在桌面的窗口中运行Project
+Looking Glass是个好办法。
+</p>
+
+<h4>在现有桌面环境的窗口中运行Project Looking Glass</h4>
+
+  <p> 在这种模式下，Project Looking Glass会话运行在您桌面上的一个窗口当中。这种方式最简单，但只能运行Project Looking 
+    Glass 3D应用程序，比如CD 选择器。xterm之类的X11应用程序将会显示在X会话当中。 </p>
+
+<ol>
+  <li>用您的帐号登陆，进入Project Looking Glass安装目录：<br />
+    <br />
+    <span style="font-family: courier new,courier,monospace;">
+% cd /home/username/lg3d/bin</span><br />
+    <br />
+  </li>
+  <li>启动Project Looking Glass会话：<br />
+    <br />
+    <span style="font-family: courier new,courier,monospace;"> % ./lg3d-dev</span><br />
+  </li>
+</ol>
+  <p> 如果您已经成功安装了Project Looking Glass，您就应该可以看到运行在一个窗口里的Project Looking Glass了。 </p>
+<a href="../images/lg_snapshot.png"> <img
+ alt="Project Looking Glass Screenshot" style="float: right;"
+ src="https://lg3d-core.dev.java.net/images/lg_snapshot-s.png"
+ width="200" /> </a>
+  <p> 点击任务条上的CD图标，就可以打开CD浏览器，－ 一个3D演示程序。 把鼠标移到CD架上，点击CD图象，观察应用程序是怎样动作的。要想了解更多 操作信息，可在任务条上点击CD浏览器左边的图标，这时会弹出一个面板，介绍 
+    这个演示程序所支持的各项功能。注：最左边的电脑图标是用来执行xterm窗口的，这样可以演示X11应用程序在Project Looking Glass中集成的情况。只有在全屏 
+    模式下，这个图标才有效。关于全屏方式的配置，请参阅下一部分。 </p>
+
+<h4>全屏运行Project Looking Glass</h4>
+
+  <p> 通过这种方式，您可以全屏运行Project Looking Glass，并在里面运行各种应用程序， 包括本地X11应用程序。全屏运行Project 
+    Looking Glass之前，您必须先退出X会话。只有在Linux系统中，才能采用这种模式运行。最终，这种模式将成为LG3D的主要 运行模式，不仅在Linux，而且在Solaris系统中也要实现。 
+  </p>
+
+  <p> <b>注：关于全屏模式，还有大量工作需要完成。到目前为止，仅有少数X11应用程序 可在这种模式下顺利运行而不出任何错误。还有很多方面需要完善。一些重要的应用程序，例如：mozilla、staroffice、evolution、realplayer，以及大部分 
+    GNOME应用程序的集成还存在明显问题。我们正积极地对这些问题进行总结。如果您遇到了什么问题，请向我们汇报。</b> </p>
+  <p> 关于不同平台，我们提供了不同的指南，请按照与您的平台相对应的指南进行操作。如果您的平台在这里没列出来，那您只好参照这些指南进行操作，遇到不同的地方请告诉我们。 
+  </p>
+
+<h4>Sun Java Desktop System/SuSE 8.1:</h4>
+
+  <p> JDS/SuSE 8.1 采用X 显示管理器 (xdm)来管理用户会话。要想运行Project Looking Glass，您必须先关掉xdm。因为xdm是自动加载的，所以必须通过 
+    <span style="font-family: courier new,courier,monospace;">chkconfig</span> 
+    指令关闭xdm： </p>
+
+<ol>
+  <li>先登陆为root：<br />
+    <br />
+    <span style="font-family: courier new,courier,monospace;">
+% su root<br />
+Password:</span> <b>输入root密码</b> <br />
+<span style="font-family: courier new,courier,monospace;">#</span><br />
+    <br />
+  </li>
+  <li>关闭xdm服务：<br />
+    <br />
+    <span style="font-family: courier new,courier,monospace;">
+# /sbin/chkconfig -d xdm<br />
+xdm&nbsp; 0:off&nbsp;&nbsp; 1:off&nbsp;&nbsp; 2:off&nbsp;&nbsp;
+3:off&nbsp;&nbsp; 4:off&nbsp;&nbsp; 5:off&nbsp;&nbsp; 6:off<br />
+    <br />
+    </span></li>
+  <li>现在关闭所有桌面应用程序，保存所有打开的文件。然后关掉显示管理器：<br />
+    <br />
+    <span style="font-family: courier new,courier,monospace;"> # pkill gdm-binary<br />
+    <br />
+    </span></li>
+  <li>现在跳到<a href="#Starting_the_Project_Looking_Glass">启动Project Looking Glass桌面会话</a>部分。</li>
+</ol>
+<p>
+<b>注：</b>要想重新激活X显示管理器，需要登陆为root，输入下列指令，然后重启系统：
+</p>
+<blockquote><span
+ style="font-family: courier new,courier,monospace;"># /sbin/chkconfig -a xdm</span><br />
+</blockquote>
+
+<h4>RedHat 9:</h4>
+  <p> RedHat9采用GNOME显示管理器(gdm)来管理用户会话。您只需切换为低级别运行状态，这样gdm就不活动了，而不必禁用gdm。 </p>
+
+<ol>
+  <li>首先，登陆为root：<br />
+    <br />
+    <span style="font-family: courier new,courier,monospace;">
+% su root<br />
+Password:</span> <b>输入root密码</b><br />
+<span style="font-family: courier new,courier,monospace;">#</span><br />
+    <br />
+    </li>
+  <li>关闭所有桌面应用程序，保存所有打开的文件。然后切换到运行级4上：<br />
+    <br />
+    <span style="font-family: courier new,courier,monospace;"> # /sbin/init 4<br />
+    <br />
+    </span>这样您的X会话就会中止，您会回到控制台提示符状态。<br />
+    <br />
+  </li>
+  <li>现在跳到<a href="#Starting_the_Project_Looking_Glass">启动
+  Project Looking Glass桌面会话</a>部分。</li>
+</ol>
+  <p> <b>注：</b>要想重新运行GNOME显示管理器，可以root身份登陆，在控制台输入下列指令： </p>
+<blockquote><span
+ style="font-family: courier new,courier,monospace;"># /sbin/init 5</span><br />
+</blockquote>
+
+<h4>Fedora Core 3 64-bit:</h4>
+
+<p>
+要在64-bit版Fedora Core 3 上运行Project Looking Glass，需要做一些特别的改动。
+注：需要访问32位Linux系统或32位X11模块才能实现这些改动。
+</p>
+
+<ol>
+  <li>您需要将32位Linux系统 <span
+ style="font-family: courier new,courier,monospace;">/usr/X11R6/lib/modules</span>
+目录下的内容拷到64位系统同名目录下。进行这一步之前，别忘了先备份64位系统<span
+ style="font-family: courier new,courier,monospace;">/usr/X11R6/lib/modules</span>
+目录下的内容：<br />
+    <br />
+    <span style="font-family: courier new,courier,monospace;">
+# cd /usr/X11R6/lib<br />
+# cp -r modules modules.orig<br />
+    </span><br />
+然后，用scp指令将32位系统下的相关文件安全拷贝到64位系统下：<br />
+    <br />
+    <span style="font-family: courier new,courier,monospace;">
+# scp -r root@<span style="font-style: italic;">32bithost</span>:/usr/X11R6/lib/modules
+/usr/X11R6/lib/modules<br />
+    </span><br />
+其中<span
+ style="font-style: italic; font-family: courier new,courier,monospace;">32bithost</span><span
+ style="font-family: courier new,courier,monospace;"> </span>是32位Linux系统的主机名称。<br />
+    <br />
+  </li>
+  <li>请确保您的<span
+ style="font-family: courier new,courier,monospace;">xorg.conf</span>
+文件已将色彩深度设为24位，如下黑体所示：<br />
+    <br />
+    <span style="font-family: courier new,courier,monospace;">
+Section "Screen"<br />
+Identifier "Screen0"<br />
+Device "Videocard0"<br />
+Monitor "Monitor0"<br />
+<b>DefaultDepth 24</b><br />
+SubSection "Display"<br />
+Viewport 0 0<br />
+<b>Depth 24</b><br />
+Modes "1680x1050" "1280x800" "1024x768" "800x600" "640x480"<br />
+EndSubSection<br />
+EndSection<br />
+    <br />
+</span>
+  </li>
+  <li>进行到下一部分，按全屏方式启动Project Looking Glass<br />
+    <br />
+      [这部分指南内容由 <a
+ href="http://www.javadesktop.org/forums/profile.jspa?userID=1354">qgonjon</a> 
+      和 <a
+ href="http://www.javadesktop.org/forums/profile.jspa?userID=1522">marve</a>提供，向他们表示敬意！参阅 
+      <a
+ href="http://www.javadesktop.org/forums/thread.jspa?forumID=56&amp;threadID=3465&amp;messageID=17942#17942">这个话题</a>。]<br />
+  </li>
+</ol>
+
+<h4><a name="Starting_the_Project_Looking_Glass"></a>启动Project Looking Glass桌面会话</h4>
+
+<p>
+从控制台（而不是在X会话当中）启动Project Looking Glass的方法：
+</p>
+
+<ol>
+  <li>登陆为root，进入Project Looking Glass的安装目录：<br />
+    <br />
+    <span style="font-family: courier new,courier,monospace;"> # cd
+/home/username/lg3d/bin</span><br />
+    <br />
+  </li>
+  <li>启动Project Looking Glass桌面会话<br />
+<span style="font-family: courier new,courier,monospace;">
+    <br />
+# ./lg3d-session<br />
+    <br />
+      </span>几秒钟后，Project Looking Glass桌面就会显示出来。恭喜您！如果您启动Project Looking Glass桌面会话时遇到问题，请参考 
+      <a href="#Troubleshooting">问题的解决</a> 部分，寻求帮助。</li>
+</ol>
+<p>
+现在，您可以在Project Looking Glass桌面上遨游，发挥您的想象力，创造性
+地开发3D程序了！ 如果您已经准备要进行开发了，请跳到 
+<a href="lg3d-developers-guide.html">Project
+Looking Glass开发指南</a>，了解Project Looking Glass程序开发方面的信息。
+</p>
+
+<h3><a name="Troubleshooting"></a>5. 问题的解决 </h3>
+
+<blockquote>
+<h4>no core pointer</h4>
+<p>
+RedHat Fedora Core 2上会出现这个问题，其它的系统可能也会出现这
+个问题。可以登陆为root，按下列方法临时解决这个问题(由sgiunchi提供)：
+</p>
+<blockquote><span
+ style="font-family: courier new,courier,monospace;"># ln -s
+/etc/X11/xorg.conf /etc/X11/XF86Config-4</span><br />
+</blockquote>
+    <p> 如果要想一劳永逸地解决这个问题，需要对lg3d-core中包含的X11的版本进行升级。现行版本是Xorg 6.7，需要把这个版本升级为Xorg最新发布的稳定版本。</p>
+<h4>"main"线程中出现下列异常：
+java.lang.UnsatisfiedLinkError:
+/usr/java/jdk1.5.0/jre/lib/i386/libj3dcore-ogl.so:<br />
+/usr/java/jdk1.5.0/jre/lib/i386/libj3dcore-ogl.so:
+symbol glMultiDrawArraysEXT, version LIBGL not defined in file
+libGL.so.1 with link time reference</h4>
+<p>
+导致这个问题的原因是，ATI设备驱动程序缺少glMultiDrawArraysEXT扩展。
+解决方法是，到<a
+ href="http://dri.sourceforge.net/cgi-bin/moin.cgi/FrontPage">Direct
+Rendering Open Source</a> (DRI)项目去寻找驱动程序，替换掉Radeon的驱动程序。
+关于安装过程，可参考<a href="../dri-driver-install-ati-radeon.html">
+ATI Radeon DRI驱动程序</a>.
+</p>
+<p>
+注：将libGL.so升级为最新的Mesa程序库并不能解决这个问题。
+</p>
+  <h4>pkill: 27863 - Operation not permitted<br />
+java.rmi.server.ExportException: Port already in use: 1099; nested
+exception
+is: <br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; java.net.BindException: Address already
+in
+use...<br />
+  </h4>
+
+    <p>这段提示信息是说，<span
+ style="font-family: courier new,courier,monospace;">rmiregistry </span>进程已在运行，<span style="font-family: courier new,courier,monospace;">lg3d-dev</span> 
+      无法再新建一个实例。典型情况下，当 <span
+ style="font-family: courier new,courier,monospace;">rmiregistry</span> 由root用户启动，而<span style="font-family: courier new,courier,monospace;">lg3d-dev</span> 
+      lg3d由非root用户运行时，就会出现这种错误。解决方法是，不要以root身份启动<span style="font-family: courier new,courier,monospace;">rmiregistry</span>进程。登陆为root，结束这个进程： 
+    </p>
+<blockquote>
+<span
+ style="font-family: courier new,courier,monospace;">
+ % su root<br />
+ Password: <b>输入root密码</b> <br />
+ # pkill rmiregistry<br />
+ # exit</span><br />
+</blockquote>
+<p>
+现在就可以用非root身份运行 <span style="font-family: courier new,courier,monospace;">lg3d-dev</span>
+指令，启动Project Looking Glass了。
+</p>
+  <h4>Fatal Server error: Cannot establish any listening sockets</h4>
+<p>当您用lg3d-session启动Project Looking Glass时，会出现下列错误提示：
+</p>
+<blockquote><span
+ style="font-family: courier new,courier,monospace;">
+_XSERVTransSocketUNIXCreateListener: ...SocketCreateListener() failed<br />
+_XSERVTransMakeAllCOTSServerListeners: server already running<br /><br />
+Fatal server error:<br />
+Cannot establish any listening sockets - Make sure an X server<br />isn't already running</span></blockquote>
+<p>
+首先，请确定您想要启动<span
+ style="font-family: courier new,courier,monospace;">lg3d-session</span>的显示屏上没有X11在运行。
+ 然后检查一下，能不能找到<span style="font-family: courier new,courier,monospace;">/tmp/.X11-unix/X0
+</span>文件，这是上次会话遗留下来的文件。删掉这个文件，再重新启动<span style="font-family: courier new,courier,monospace;">lg3d-session</span>，即可解决问题。
+</p>
+
+  <h4>屏幕更新特别慢</h4>
+<p>这通常是显卡配置不当造成的。首先，可做下列检查：</p>
+<ul>
+  <li>在X11会话当中运行<span style="font-family: courier new,courier,monospace;">glxinfo</span>
+指令，确保<b>direct rendering</b>属性已设为
+<b>Yes</b>。还要注意 
+<b>OpenGL</b>，要确保您的图形加速设备支持OpenGL。<br />
+- 对于NVIDIA卡，可运行<span style="font-family: courier new,courier,monospace;">xdpyinfo</span>
+，看看有没有GLX或NVIDIA-GLX属性显示出来。<br />
+    <br />
+如果没有见到这些属性，那么您所安装的驱动程序可能不合适，要么就是3D选项
+没有打开。请访问设备生产商的网站，看看3D/OpenGL设备驱动应该怎样安装
+和配置。<br />
+    <br />
+  </li>
+  <li>检查X服务器的日志文件<span
+ style="font-family: courier new,courier,monospace;">/var/log/XFree86.0.log</span>
+，看看有没有错误，以及加载的是哪个驱动程序。<br />
+  </li>
+</ul>
+
+  <h4>libGL error: failed to open DRM: operation not permitted</h4>
+<p>
+（运行lg3d-dev时可能会遇到这个问题）。
+</p>
+<p>
+如果即使3D加速已经打开，Project Looking Glass运行仍然非常慢，那么请检查
+一下控制台上有没有下列提示：
+</p>
+<blockquote><span
+ style="font-family: courier new,courier,monospace;">
+libGL error: failed to open DRM: Operation not permitted<br />
+libGL error: reverting to (slow) indirect rendering</span></blockquote>
+
+  <p>如果有，说明您登陆的帐号没有权限运行DRI （基层直接渲染）。有的情况下只有
+  root才有权限访问DRI。好像只有RedHat存在这个问题，而JDS、SuSE不会遇到
+  这个问题。如果您遇到了这个问题，可在XFree86Config或XF86Config
+  文件中将DRI权限设为：</p>
+
+<blockquote> <span
+ style="font-family: courier new,courier,monospace;">Section "DRI"<br />
+Group "video"<br />
+Mode 0666<br />
+EndSection</span><br />
+</blockquote>
+
+  <p>您还需要在<span
+ style="font-family: courier new,courier,monospace;"> /etc/security/console.perms</span>中将<span
+ style="font-family: courier new,courier,monospace;">&lt;dri&gt;</span> profile从0600改为0666：<br />
+  </p>
+  <blockquote><span
+ style="font-family: courier new,courier,monospace;">&lt;xconsole&gt; 0600
+&lt;dri&gt; 0666 root</span></blockquote>
+  <p>如果您用的是NVIDIA卡，请将<span
+ style="font-family: courier new,courier,monospace;">/dev/nvidia*</span>权限改为0666:<br />
+  </p>
+  <blockquote><span
+ style="font-family: courier new,courier,monospace;"># chmod a+rw /dev/nvidia*</span></blockquote>
+  <h4>An unexpected exception has been detected in native code outside
+the VM</h4>
+<p>
+尽管已经打开了3D加速，还是提示下列错误信息，Project Looking Glass随之退出：
+</p>
+<blockquote><span
+ style="font-family: courier new,courier,monospace;">An unexpected exception has
+been detected
+in native code outside the VM.<br />
+Unexpected Signal : 11 occurred at PC=0x0<br />
+Function=[Unknown.]<br />
+Library=(N/A)</span><br />
+</blockquote>
+  <p>请检查错误提示中有没有下列内容：
+  </p>
+<blockquote>
+<span
+ style="font-family: courier new,courier,monospace;">&lt;addr-range&gt; r-xp
+00000000 03:05
+61763 /usr/lib/GL/libGL.so.1.3.mesasoft<br />
+&lt;addr-range&gt; rw-p 001b4000 03:05 61763
+/usr/lib/GL/libGL.so.1.3.mesasoft</span>
+</blockquote>
+
+  <p>如果有，说明您安装了MESA软件OpenGL库。用安装包工具（例如：rpm）卸载这些
+程序库，然后用root身份登陆，到 <span
+ style="font-family: courier new,courier,monospace;">/usr/lib</span> 
+检查一下，确保存在下列符号关联，并且指向了正确的OpenGL库。关联格式如下
+（其中x、y为数字）：<br />
+  </p>
+  <blockquote><span
+ style="font-family: courier new,courier,monospace;">
+libGLcore.so.1 -&gt; libGLcore.so.1.x<br />
+libGL.so -&gt; libGL.so.x<br />
+libGLU.so -&gt; libGLU.so.x.y<br /></span></blockquote>
+<p>
+如果关联不正确，您需要登陆为root，把它们改正过来。比方说，如果您有一个
+<span style="font-family: courier new,courier,monospace;">
+libGLU.so.1</span>文件，却没有<span
+ style="font-family: courier new,courier,monospace;">libGLU.so</span>
+ 关联，那就需要创建一个：
+</p>
+  <blockquote><span
+ style="font-family: courier new,courier,monospace;"># ln -s /usr/lib/libGLU.so.1 /usr/lib/libGLU.so</span><br /></blockquote>
+
+<p>
+对于每一个缺失的关联，都按同样的方法创建。
+</p>
+
+  <h4> Failed to load the NVIDIA driver</h4>
+  <p>有若干个原因可能导致这个驱动程序加载失败：<br />
+  </p>
+  <ul>
+    <li>NVIDIA驱动是为linux.*bigmem编译的。如果您的Linux系统有两个镜像，
+	bigmem和linux*up，就用前一个的驱动。否则驱动就无法正常加载。<br />
+      <br />
+    </li>
+    <li>NVIDIA驱动需要找到分配给显卡IRQ。通常，OS引导之前，BIOS当中就应该已经
+	设置好了。但有的BIOS当中，这个IRQ可能被关闭了。可把这个中断打开试试。<br />
+      <br />
+    </li>
+    <li>参考NVIDIA驱动程序安装指南，看看有没有其它详细信息。</li>
+  </ul>
+</blockquote>
+<p>
+<b>参阅：</b>
+</p>
+<p>
+<a href="../release-notes.html">Project Looking Glass开发版说明</a>
+</p>
+<p>
+关于目前存在的问题的更多信息，可在lg3d-core<b>
+项目工具</b>&gt; <b>问题跟踪</b>下找到。您可以对您遇到的问题进行查询。
+</p>
+
+<h3><a name="Staying_connected_with_Project"></a>6. 与Project Looking Glass
+保持联系</h3>
+
+<p>
+Project Looking Glass项目处于不断的进展当中。了解Project Looking Glass最新进展的最好方式是订阅Project Looking Glass邮件组，点击 侧面导航条上<b>项目工具</b> 栏目下的<b>邮件组</b> <a
+ href="https://lg3d.dev.java.net/">https://lg3d.dev.java.net/</a>即可。
+根据您的兴趣所在，有若干个专题的邮件组可供您选择。</p>
+<ul>
+  <li>如果您只想了解这方面的<span style="color: red;">新闻</span>，请
+订阅<a href="mailto:announce@lg3d.dev.java.net">announce@lg3d.dev.java.net</a>。<br />
+  </li>
+</ul>
+<ul>
+  <li>如果您是开发人员，想<span style="color: red;">探讨Project Looking Glass方面的问题</span>，请订阅<a
+ href="mailto:interest@lg3d.dev.java.net">interest@lg3d.dev.java.net</a>。
+  </li>
+</ul>
+<ul>
+  <li>如果您对<span style="color: red;">许可证问题</span>感兴趣，请订阅 <a href="mailto:lg3d_license@dev.java.net">lg3d_license@dev.java.net</a>。<br />
+  </li>
+</ul>
+
+<h3><a name="Some_final_words"></a>7. 写在最后的话</h3>
+<p>
+感谢您花时间访问本站，感谢您对Project Looking Glass的支持！&nbsp; 我们希望您加入我们的项目，和我们
+分享项目开发的乐趣和机会。
+</p>
+<p>
+Project Looking Glass开发小组
+</p>
+<p>
+<b>参阅：</b>
+</p>
+<p>
+<a href="../release-notes.html">Project Looking Glass开发版说明</a><br />
+<a href="lg3d-developers-guide.html">Project Looking Glass开发人员指南</a><br />
+<a href="../graphics-driver-index.html">为Project Looking Glass的3D桌面安装和配置驱动程序</a><br />
+</p>
+<hr /> 
+<small> $修订版本: 1.18 $ $日期: 2004/10/11 16:51:32 $ </small>
+</div>
+</body>
+</html>

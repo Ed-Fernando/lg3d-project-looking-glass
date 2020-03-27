@@ -1,0 +1,442 @@
+<!DOCTYPE html PUBLIC "-//Tigris//DTD XHTML 1.0 Transitional//EN"
+"http://style.tigris.org/tigris_transitional.dtd">
+<html>
+<head>
+  <title>Installation de la version de d&eacute;veloppement de Looking Glass sur Microsoft Windows</title>
+</head>
+<body>
+<div id="projectdocumentview" class="app">
+<hr />
+<h2>Installation de la version de d&eacute;veloppement de Looking Glass sur Microsoft Windows</h2>
+<p><b>Looking Glass fonctionne sur Windows!</b></p>
+<p>
+Looking Glass est ind&eacute;pendant de la plate-forme, gr&acirc;ce au langage Java.
+Cela signifie que vous pouvez l&#039;ex&eacute;cuter du moment qu&#039;une machine virtuelle
+java est install&eacute; sur votre machine. Ce document vous aidera &agrave; installer la
+version de d&eacute;veloppement de Looking Glass sur un syst&egrave;me Windows.
+</p>
+<p>Pour d&eacute;marrer, nous devons installer un certains de d&eacute;pendances. Ensuite
+nous pourrons nous int&eacute;resser &agrave; Looking Glass &agrave; proprement dit.
+Project Looking Glass.</p>
+<p>
+<a href="#Platform_Requirements">1. Configuration requise</a> <small>Mat&eacute;riel et logiciel</small><br />
+<a href="#Known_Issues_with_Project_Looking_Glass_">2. Probl&egrave;mes connu &agrave; propos de LG sur Windows</a><br />
+<a href="#Setting_up_your_Project_Looking_Glass">3. Installer les d&eacute;pendances
+</a> <small>T&eacute;l&eacute;charger et installer les composants
+</small><br />
+<a href="#Installing_the_Project_Looking_Glass">4. Installer la version de 
+d&eacute;veloppement de Looking Glass</a><br />
+<a href="#Running_Project_Looking_Glass">5. D&eacute;marrer Looking Glass
+</a> <small>Comment d&eacute;marrer une session<br />
+</small><a href="#Resizing_the_Project_Looking_Glass">6. Redimensionner la fen&ecirc;tre d&#039;ex&eacute;cution
+de Looking Glass</a>
+</p>
+<h3><a name="Platform_Requirements"></a>1.  Configuration requise</h3>
+<p>
+Avant d&#039;installer les composants n&eacute;cessaires, v&eacute;rifiez d&#039;abord que
+votre ordinateur est suffisamment puissant.
+</p>
+<table border="1" cellpadding="2" cellspacing="2" width="100%">
+  <tbody>
+    <tr>
+      <td valign="top"><b>Composant</b></td>
+      <td valign="top"><b></b></td>
+    </tr>
+    <tr>
+      <td valign="top">Syst&egrave;me d&#039;exploitation</td>
+      <td valign="top">Windows 2000 ou XP</td>
+    </tr>
+    <tr>
+      <td valign="top">Processeur</td>
+      <td valign="top">1.4 GHz ou plus</td>
+    </tr>
+    <tr>
+      <td valign="top">RAM</td>
+      <td valign="top">512Mo recommend&eacute;s</td>
+    </tr>
+    <tr>
+      <td valign="top">Carte graphique</td>
+      <td valign="top">Carte graphique avec acc&eacute;l&eacute;ration 3D, avec 16Mo
+de VRAM et les pilotes supportant OpenGL, version 1.2 ou plus.<br />
+      nombre de couleurs : 16bit ou 32bit.<br />
+      <br />
+      <b>Cartes test&eacute;es :</b> <br />
+      <ul>
+        <li>ATI MOBILITY RADEON</li>
+        <li>NVIDIA GeForce4</li>
+      </ul>
+Si vous r&eacute;ussissez &agrave; ex&eacute;cuter Looking Glass sur une autre carte,
+faites le nous avoir sur  <a
+ href="mailto:interest@lg3d.dev.java.net"><u>interest@lg3d.dev.java.net</u></a><br />
+      <br />
+Pour nous informer des probl&egrave;mes avec certaines cartes, envoyez nous un e-mail sur <a
+ href="mailto:issues@lg3d-core.dev.java.net"><u>issues@lg3d-core.dev.java.net</u></a>
+      </td>
+    </tr>
+    <tr>
+      <td valign="top">Espace disque</td>
+      <td valign="top">250 Mo</td>
+    </tr>
+  </tbody>
+</table>
+<br />
+<h3><a name="Known_Issues_with_Project_Looking_Glass_"></a>2. 
+Probl&egrave;mes connu &agrave; propos de LG sur Windows</h3>
+<h4>le support de X11</h4>
+<p>
+Looking Glass inclus le support des applications X11. Windows ne fournit 
+cependant pas de support pour  X11, donc il n&#039;est pas possible d&#039;ex&eacute;cuter 
+d&#039;application X11 dans Looking Glass pour Windows. Il n&#039;est pas, pour l&#039;
+instant, possible d&#039;ex&eacute;cuter des applications natives de Windows dans 
+Looking Glass. Vous pouvez, cependant, d&eacute;velopper et ex&eacute;cuter des
+application 3D dans Looking Glass, tel que le visualisateur de CD et bien
+d&#039;autres applications java 3D.
+</p>
+<h4>En plein-&eacute;cran</h4>
+<p>
+Vous ne pouvez pas remplacer le bureau Windows par Looking Glass,
+cependant, vous pouvez faire en sorte que la fen&ecirc;tre de Looking Glass
+occupe tout l&#039;&eacute;cran. Nous verrons cela dans la partie 6, "<a
+ href="#Resizing_the_Project_Looking_Glass">Redimensionner la fen&ecirc;tre d&#039;ex&eacute;cution
+de Looking Glass</a>" pour plus de d&eacute;tails.
+</p>
+<h3><a name="Setting_up_your_Project_Looking_Glass"></a>3. Installer les d&eacute;pendances</h3>
+<p>
+Avant de d&eacute;marrer Looking Glass, vous devez installer un certain nombre de composants java. 
+Nous allons t&eacute;l&eacute;charger  tous ces composants et les installer dans l&#039;ordre suivant.
+</p>
+<h4>T&eacute;l&eacute;charger les composants</h4>
+<ol>
+  <li><b>Java 2 SDK, Standard Edition 1.5 ou sup&egrave;rieure</b><br />
+    <a href="http://java.sun.com/j2se/1.5.0/download.jsp">http://java.sun.com/j2se/1.5.0/download.jsp</a><br />
+    <br />
+    <b>Note:</b> Choisissez le 
+ <b>JDK</b> et non la <b>JRE</b><br />
+    <br />
+  </li>
+  <li><b>Java 3D SDK 1.3.2-build4</b><br />
+    <a href="https://j3d-core.dev.java.net/servlets/ProjectDocumentList"><u>https://j3d-core.dev.java.net/servlets/ProjectDocumentList<br />
+    <br />
+    </u></a><b>Note:</b> S&eacute;lectionnez le sous-dossier <b>j3d-core</b>/<b>Release_Builds</b>/<b>1.3.2</b> et t&eacute;l&eacute;chargez
+    <b>
+java3d-1_3_2-windows-i586.zip</b><br />
+    <br />
+  </li>
+  <li><b>Java Advanced Imaging API (JAI)
+1.1.2 JDK </b><br />
+    <a
+ href="http://java.sun.com/products/java-media/jai/downloads/download-1_1_2.html">http://java.sun.com/products/java-media/jai/downloads/download-1_1_2.html</a><br />
+    <br />
+    <b>Note:</b> S&eacute;lectionnez <b>"JDK(TM)
+Install: Bundle for installation in a JDK"</b>. T&eacute;l&eacute;charger le <b>premier</b> <b>choix </b>,sous <b> Windows</b>
+qui est un fichier .jar (<span
+ style="font-weight: bold; font-family: courier new,courier,monospace;"
+ class="nonu">jai-1_1_2-windows-i586-jar.zip</span>). <b>Ne prenez pas les
+JDK/JRE</b>, ils ne s&#039;installent pas avec le JDK 1.5.0.<br />
+  </li>
+</ol>
+<h4>Installation des composants</h4>
+<p>
+Apr&egrave;s avoir t&eacute;l&eacute;charg&eacute; les composants, nous allons les installer 
+en suivant les instructions suivantes.
+</p>
+<ol>
+  <li>D&eacute;marrer en mode "Administrateur".<br />
+    <br />
+  </li>
+  <li>Installation du kit de d&eacute;veloppement Java (SDK)<br />
+    <br />
+- Dans l&#039;explorateur Windows, localisez l&#039;installateur de Java
+(<span
+ style="font-family: courier new,courier,monospace; font-weight: bold;">jdk-1_5_0-windows-i586.exe</span>)
+et d&eacute;marrez le.<br />
+- Suivez les instructions qui vous serons donn&eacute;es &agrave; l&#039;&eacute;cran.<br />
+- Le kit de d&eacute;veloppement (JDK) sera install&eacute; dans <span
+ style="font-family: courier new,courier,monospace; font-weight: bold;">C:\Program
+Files\Java\jdk1.5.0</span> (le chemin DOS
+8.3 est <span
+ style="font-family: courier new,courier,monospace; font-weight: bold;">c:\progra~1\java\jdk1.5.0</span>).<br />
+- Ajoutez le &agrave; votre variable PATH:<br />
+    <br />
+    <span style="font-family: courier new,courier,monospace;">C:\&gt;</span><span
+ style="font-weight: bold; font-family: courier new,courier,monospace;">set
+PATH="C:\Program Files\Java\jdk1.5.0\bin";%PATH%</span><br />
+    <br />
+    </li>
+  <li>Installation du kit de d&eacute;veloppement Java 3D (SDK)<br />
+    <br />
+- Dans l&#039;explorateur Windows, localisez le fichier zip de Java 3D ZIP
+(<span
+ style="font-weight: bold; font-family: courier new,courier,monospace;">java3d-1_3_2-build4-windows-i586.zip</span>)
+et ouvrez le.<br />
+- D&eacute;compressez les fichiers dans un r&eacute;pertoire temporaire.<br />
+- Ouvrez une fen&ecirc;tre DOS et placez vous dans le r&eacute;pertoire : <span
+ style="font-weight: bold; font-family: courier new,courier,monospace;">C:\Program
+Files\Java\jdk1.5.0\jre</span>:<br />
+    <br />
+    <span style="font-family: courier new,courier,monospace;">C:\&gt;<b>cd \progra~1\java\jdk1.5.0\jre</b></span><br />
+    <br />
+    D&eacute;compressez le fichier jar de JAVA 3D dans le r&eacute;pertoire temporaire en utilisant jar:
+<br />
+    <br />
+    <span style="font-family: courier new,courier,monospace;">C:\PROGRA~1\Java\jdk1.5.0&gt;<b>jar xvf
+c:\&lt;temp&gt;\java3d-1_3_2-build4-windows-i586\j3d-132-build4-win.jar</b></span><br />
+    <br />
+O&ugrave; <span style="font-family: courier new,courier,monospace;">&lt;temp&gt;</span>
+est le r&eacute;pertoire temporaire contenant les fichiers extraits du fichier zip de java 3D.<br />
+    <br />
+  </li>
+  <li>Installation de la librairie Java Advanced Imaging API<br />
+    <br />
+- En utilisant l&#039;explorateur Windows, localisez le fichier zip de Java Advanced Imaging (<span
+ style="font-weight: bold; font-family: courier new,courier,monospace;">jai-1_1_2-windows-i586-jar.zip</span>)
+et ouvrez le.<br />
+    - Extraction du fichier jar
+vers un r&eacute;pertoire temporaire.<br />
+- Placez vous dans le r&eacute;pertoire temporaire et d&eacute;pressez le fichier jar:<br />
+    <br />
+    <span style="font-family: courier new,courier,monospace;">C:\&gt;</span><span
+ style="font-weight: bold; font-family: courier new,courier,monospace;">cd
+\temp</span><br />
+    <span style="font-family: courier new,courier,monospace;">C:\temp&gt;</span><span
+ style="font-weight: bold; font-family: courier new,courier,monospace;">jar
+xvf jai_windows-i586.jar</span><br />
+    <br />
+- Maintenant, on peut d&eacute;marrer l&#039;installation de JAI:<br />
+    <br />
+    <span style="font-family: courier new,courier,monospace;">C:\temp&gt;</span><span
+ style="font-weight: bold; font-family: courier new,courier,monospace;">jai-1_1_2-lib-windows-i586-jre.exe</span><br />
+    <br />
+    <b>IMPORTANT:</b> Durant l&#039;installation
+, <b>n&#039;acceptez pas le r&eacute;pertoire par d&eacute;faut</b> (e.g., C:\Program
+Files\Java\j2re1.4.2_03), mais plut&ocirc;t le suivant:<br />
+    <br />
+    <span
+ style="font-family: courier new,courier,monospace; font-weight: bold;">C:\Program
+Files\Java\jdk1.5.0\jre</span><br />
+    <br />
+    <b>NOTE:</b> Si vous avez le message d&#039;erreur
+contenant le message suivant :<br />
+    <br />
+    <blockquote><span
+ style="font-family: courier new,courier,monospace;">Can&#039;t run 16-bit
+Windows program</span><br />
+    <span style="font-family: courier new,courier,monospace;">Cannot
+find file c:\temp\pft12~tmp\SETUP.EXE (or one of its components). Check
+to ensure the path and filename</span><br />
+    <span style="font-family: courier new,courier,monospace;"> are
+correct and that all required libraries are available.</span><br />
+    </blockquote>
+    <br />
+Red&eacute;marrez votre machine et relancez l&#039;installation.<br />
+    <br />
+  </li>
+  <li>Quelques variables d&#039;environnement vont devoir &ecirc;tre d&eacute;finies.<br />
+    <br />
+    <span
+ style="font-family: courier new,courier,monospace; font-weight: bold;">JAVA_HOME=c:\progra~1\java\jdk1.5.0<br />
+PATH=%JAVA_HOME%\bin;%PATH%</span><br />
+    <br />
+Vous pouvez les d&eacute;finir de fa&ccedil;on permanente, dans les propri&eacute;t&eacute;s syst&egrave;me:
+<br />
+    <br />
+- S&eacute;lectionnez <span style="font-family: courier new,courier,monospace;">D&eacute;marrer-&gt;Panneau de configuration</span><br />
+- S&eacute;lectionnez <span style="font-family: courier new,courier,monospace;">Syst&egrave;me</span><br />
+- S&eacute;lectionnez l&#039;onglet <span style="font-family: courier new,courier,monospace;">[Avanc&eacute;]
+    </span>et le bouton <span
+ style="font-family: courier new,courier,monospace;">[Variables d&#039;environnement]</span><br />
+- Dans <span style="font-family: courier new,courier,monospace;">les variables syst&egrave;me</span>, cr&eacute;ez une 
+nouvelle variable <span
+ style="font-weight: bold; font-family: courier new,courier,monospace;">JAVA_HOME</span>
+:<br />
+    <br />
+&nbsp; - S&eacute;lectionnez <span
+ style="font-family: courier new,courier,monospace;">[Nouveau]</span> et
+entrez les param&egrave;tres suivants:<br />
+    <br />
+    <span style="font-family: courier new,courier,monospace;">&nbsp;
+Nom de la variable: </span><span
+ style="font-weight: bold; font-family: courier new,courier,monospace;">JAVA_HOME</span><br />
+    <span style="font-family: courier new,courier,monospace;">&nbsp;
+Valeur de la variable: </span><span
+ style="font-weight: bold; font-family: courier new,courier,monospace;">c:\progra~1\java\jdk1.5.0</span><br />
+    <br />
+&nbsp; - S&eacute;lectionnez <span
+ style="font-family: courier new,courier,monospace;">[OK]</span><br />
+    <br />
+- Mettez &agrave; jour la variable PATH:<br />
+    <br />
+&nbsp; - S&eacute;lectionnez la variable<span
+ style="font-family: courier new,courier,monospace;">Path</span> et cliquez
+ <span style="font-family: courier new,courier,monospace;">[Modifier]</span><br />
+&nbsp; - Ajoutez le chemin suivant:<br />
+    <br />
+&nbsp;&nbsp;&nbsp; <span
+ style="font-weight: bold; font-family: courier new,courier,monospace;">%JAVA_HOME%\bin;</span><br />
+    <br />
+&nbsp; - S&eacute;lectionnez <span
+ style="font-family: courier new,courier,monospace;">[OK]</span><br />
+    <br />
+- S&eacute;lectionnez<span style="font-family: courier new,courier,monospace;">
+[OK]</span> le bouton pour buttons pour validez les actions [OK] <span
+ style="font-family: courier new,courier,monospace;">Environment
+Variables</span> et fermez la fen&ecirc;tre des <span
+ style="font-family: courier new,courier,monospace;">prori&eacute;t&eacute;s syst&egrave;me</span>
+.<br />
+  </li>
+</ol>
+
+<h3><a name="Installing_the_Project_Looking_Glass"></a>4. Installer la version de 
+d&eacute;veloppement de Looking Glass</h3>
+<h4>Register at the java.net web site</h4>
+<p>
+Si vous ne vous &ecirc;tes pas inscrit pr&eacute;c&eacute;demment, vous pouvez le faire 
+maintenant sur
+<a href="http://www.java.net">java.net</a>, mais ce n&#039;est pas obligatoire :-)
+</p>
+<ol>
+  <li>Allez sur <a href="http://www.java.net">http://www.java.net</a>
+et cliquez sur le lien <b>"Register"</b>
+en haut de la page. </li>
+  <li>Laissez vous guider par le formulaire.<br />
+  </li>
+</ol>
+<h4>T&eacute;l&eacute;chargez les fichiers du projet Looking Glass</h4>
+<ol>
+  <li>Allez sur <a href="https://lg3d-core.dev.java.net">https://lg3d-core.dev.java.net</a>
+et cliquez sur <b>"Documents &amp; files"</b>
+dans <b>"Project tools"</b> situ&eacute; dans la barre d&#039;outil.</li>
+  <li>Allez sur <b>"lg3d-core"</b>/<b>"stable_builds"</b> dans la barre d&#039;exploration.
+  Vous verrez une table contenant une liste de versions stables.
+  </li>
+  <li>Faites un clic droit sur le lien <b>"release_x.y"</b>
+(o&ugrave; x.y est la version du fichier, par exemple 0.6.1) et t&eacute;l&eacute;chargez le 
+en direction d&#039;un r&eacute;pertoire temporaire tel que c:\temp pour enregistrer le 
+fichier.<br />
+  </li>
+  <li>Pour installer le logiciel vous aurez besoin de le d&eacute;compresser.</li>
+  <li>
+    <b>Note:</b> Si vous d&eacute;compressez 
+les fichiers &agrave; la racine de votre disque C:, Looking Glass
+sera install&eacute; dans C:\lg3d.<br />
+    </li>
+</ol>
+<h3><a name="Running_Project_Looking_Glass"></a>5. D&eacute;marrer Looking Glass</h3>
+<p>Sur Windows, Looking Glass peut seulement fonctionner dans une fen&ecirc;tre native,
+et non en pleine-&eacute;cran.<br />
+</p>
+<p>
+Les applications Windows ne peuvent pas fonctionner pour l'instant dans Looking Glass,
+et vous devrez vous contenter des applications de d&eacute;monstration.
+<br />
+</p>
+<ol>
+  <li>Pour d&eacute;marrer Looking Glass, ouvrez une fen&ecirc;tre DOS (D&eacute;marrer-&gt;Accessoires-&gt;Ligne de commande) et entrez 
+la commande suivante :<br />
+    <br />
+    <span style="font-family: courier new,courier,monospace;"> C:\&gt;<b>\lg3d\bin\lg3d-dev</b></span></li>
+</ol>
+<p>
+Si Looking Glass fonctionne correctement, vous devriez parcourir les applications 
+de d&eacute;monstration :
+</p>
+<a href="images/lg_snapshot.png"> <img
+ alt="Project Looking Glass Screenshot" style="float: right;"
+ src="https://lg3d-core.dev.java.net/images/lg_snapshot-s.png"
+ width="200" /> </a>
+<p>En cliquant sur l&#039;ic&ocirc;ne du CD sur la barre des t&acirc;ches, vous pourrez
+avoir une d&eacute;monstration des fonctionnalit&eacute;s 3D de Looking Glass. 
+Bougez la sourie par dessus la pile de CV et cliquez sur
+l&#039;image du CD pour voir l&#039;application en action. Pour 
+d&#039;autres fonctionnalit&eacute;s, cliquez sur l&#039;ic&ocirc;ne &agrave; la gauche du 
+visualisateur de CD dans la barre des t&acirc;ches. Cela ouvrira une barre
+qui affiche les op&eacute;rations en cours. Remarquez que l&#039;&icirc;cone la plus &agrave; gauche,
+un ordinateur, a besoin d&#039;un environnement X11 pour &ecirc;tre activ&eacute;e, donc cela
+ne fonctionnera pas.
+</p>
+<p>
+Si cela ne fonctionne pas, consultez le fichier de log "lgserver.log", situ&eacute; &acirc; la racine 
+du r&eacute;pertoire d&#039;ex&eacute;cution (ici c:\lgserver.log) .
+</p>
+
+<h3><a
+ name="Resizing_the_Project_Looking_Glass"></a>6. Redimensionner la fen&ecirc;tre d&#039;ex&eacute;cution
+de Looking Glass</h3>
+<p>
+Par d&eacute;faut, Looking Glass prend en compte que vous avez une r&eacute;solution
+d&#039;&eacute;cran de 800x600 et un &eacute;cran de taille 36cm x 28.8cm. Ce n&#039;est probablement 
+pas ce que vous avez chez vous ! Pour ex&eacute;cuter Looking Glass en rapport avec votre
+propre configuration, vous devez changez ces propri&eacute;t&eacute;s.
+Suivez ces instructions pour y parvenir :</p>
+<ol>
+  <li>Localisez le fichier <span
+ style="font-family: courier new,courier,monospace;">j3d1x1</span>
+qui devrait se situer &agrave; cet endroit:<br />
+    <br />
+    <span
+ style="font-family: courier new,courier,monospace; font-weight: bold;">\lg3d\etc\lg3d\displayconfig</span><br />
+    <br />
+  </li>
+  <li>Fa&icirc;tes une copie du fichier <span
+ style="font-family: courier new,courier,monospace;">j3d1x1</span> :<br />
+    <br />
+    <span style="font-family: courier new,courier,monospace;">c:\&gt;<b>cd \lg3d\etc\lg3d\displayconfig</b></span><br />
+    <span style="font-family: courier new,courier,monospace;">c:\lg3d\etc\lg3d\displayconfig&gt;<b>copy j3d1x1 j3d1x1.orig</b></span><br />
+    <br />
+  </li>
+  <li>Modifiez le fichier <span
+ style="font-family: courier new,courier,monospace;">j3d1x1</span> et 
+changez les propri&eacute;t&eacute;s :
+<br />
+    <br />
+Sp&eacute;cifiez la largeur et la hauteur en m&egrave;tres (multipliez les pouces par 0.0254
+pour avoir la taille en m&egrave;tre pour avoir la taille en m&egrave;tre, ainsi 11" = 0.2794m). La
+valeur par defaut est de 14.2" (0.360m) de largeur, par 11.3" (0.288) de hauteur:<br />
+    <br />
+    <span style="font-family: courier new,courier,monospace;">(ScreenAttribute
+center PhysicalScreenWidth&nbsp; </span><span
+ style="font-weight: bold; font-family: courier new,courier,monospace;">0.360</span><span
+ style="font-family: courier new,courier,monospace;">)</span><br />
+    <span style="font-family: courier new,courier,monospace;">(ScreenAttribute
+center PhysicalScreenHeight </span><span
+ style="font-weight: bold; font-family: courier new,courier,monospace;">0.288</span><span
+ style="font-family: courier new,courier,monospace;">)</span><br />
+    <br />
+Maintenant changez l&#039;attribut WindowSize qui d&eacute;finie l&#039;affichage.
+Par d&eacute;faut, la r&eacute;solution est de 800x600:<br />
+    <br />
+    <span style="font-family: courier new,courier,monospace;">(ScreenAttribute
+center
+WindowSize&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; (</span><span
+ style="font-weight: bold; font-family: courier new,courier,monospace;">800
+600</span><span style="font-family: courier new,courier,monospace;">))</span><br />
+    <br />
+Pour finir, afin de d&eacute;marrer Looking Glass en plein &eacute;cran, sans bordure autour de la fen&ecirc;tre,
+supprimez <span
+ style="font-weight: bold; font-family: courier new,courier,monospace;">//</span>
+comment characters from the start of the following line:<br />
+    <br />
+    <span style="font-family: courier new,courier,monospace;"><b>//</b>(ScreenAttribute
+center&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+WindowSize&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+NoBorderFullScreen)</span><br />
+    <br />
+  </li>
+  <li>Maintenant, quand vous d&eacute;marrez Looking Glass, il devrait utilisez la totalit&eacute; de 
+  l&#039;&eacute;cran:<br />
+    <br />
+    <span style="font-family: courier new,courier,monospace;">C:\&gt;<b>\lg3d\bin\lg3d-dev</b></span><br />
+  </li>
+</ol>
+<p>
+Explorez le projet Looking Glass et faites nous partagez vos id&eacute;es
+afin d&#039;am&eacute;liorer encore sa qualit&eacute;. Quand vous serez prets &agrave; d&eacute;velopper,
+passez &agrave; la page <a
+ href="lg3d-developers-guide.html">"Guide du d&eacute;velopeur Looking Glass</a> 
+ pour plus d&#039;information.
+</p>
+<hr />
+<small>$Revision: 1.1 $ $Date: 2006-05-09 17:46:27 $</small>
+</div>
+</body>
+</html>

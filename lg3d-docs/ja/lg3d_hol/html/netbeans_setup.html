@@ -1,0 +1,169 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html>
+  <head>
+    <meta http-equiv="content-type" content="text/html; charset=utf-8" />
+    <title>NetBeansのセットアップ</title>
+  </head>
+
+  <body bgcolor="white">
+    <h1>JavaOne Tokyo Hands on Lab : <br>
+	Project Looking Glass (LG3D) Basic Programming</h1>
+
+    <h2>NetBeansのセットアップ</h2>
+    <p>NetBeans のインストールが終了したら、
+       次に LG3D でプログラミングを行うための準備を行います。
+       準備の内容は「<font color="red"><b>LG3D用のコンパイラ環境の登録</b></font>」と
+      「<font color="red"><b>LG3D APIの登録</b></font>」です。
+    <h3>NetBeansの起動</h3>
+    <p>NetBeansの起動を行います。<br>
+       端末エミュレータ上で次のコマンドを実行します。
+       <br><br>
+<table border><tr><td><pre>
+# <font color="red"><b>/opt/netbeans-5.5/bin/netbeans</b></font>
+</pre></td></tr></table>
+    <br><br>
+    コマンドを実行すると NetBeans 5.5 の起動画面が表示されます。
+    しばらく待つとIDEが起動します。<br><br>
+
+    <img src="pictures/netbeans_01.png">
+    
+    <hr>
+
+    <h3>Platform Manager</h3>
+
+    <p> Platform Manager はJDK環境を管理しています。<br>
+       ここでは、システム標準の JDK とは別に
+       あらかじめインストールしておいたLG3D専用のJDK(Java3D)環境を登録します。<br>
+       登録手順は次のようになります。<br>
+
+<ol>
+<li>NetBeansのメニューから
+ 「<font color="red"><b>ツール</b></font>」 →
+ 「<font color="red"><b>Java プラットフォームマネージャ</b></font>」を選択します。
+<br><br><br>
+<img src="pictures/netbeans_02.png">
+<br><br><br>
+
+<li>Javaプラットフォームマネージャダイアログが表示されるので、
+「<font color="red"><b>プラットフォームを追加</b></font>」をクリックします。<br>
+<br><br><br>
+<img src="pictures/netbeans_03.png">
+<br><br><br>
+
+<li>ファイラが表示されるのでJDKのフォルダ(ディレクトリ)を選択します。<br>
+ここでは<font color="red"><b>/home/duke/lg3d/usr/share/lg3d-jdk</b></font>となります。<br>
+Windowsの場合、<font color="red"><b>C:\Program Files\Java\jdk1.6.0</b></font>を指定します。<br>
+JDKのディレクトリを選択後「<font color="red"><b>次へ</b></font>」をクリックします。
+<br><br><br>
+<img src="pictures/netbeans_04.png">
+<br><br><br>
+
+<li>プラットフォーム名の確認が出ますので適宜変更します。<br>
+ここでは「<font color="red"><b> JDK 1.6.0 with Java3D </b></font>」とします。<br>
+プラットフォーム名を入力後「<font color="red"><b>完了</b></font>」を押します。<br>
+<br><br><br>
+<img src="pictures/netbeans_05.png">
+<br><br><br>
+
+<li>Javaプラットフォームマネージャに追加されていることを確認し、ウィンドウを閉じます。<br>
+<br><br>
+<img src="pictures/netbeans_06.png">
+<br><br><br>
+
+</ol>
+
+    <hr>
+    <h3>Library Manager</h3>
+
+    <p>Library Manager は外部のAPI(ライブラリ)の管理を行うためのツールです。<br>
+       ここでは、LG3Dプログラミングを行うために lg3d-core.jar(lg3d-coreのAPI群)
+       を登録します。<br>
+       登録手順は次の通りです。<br>
+
+<ol>
+<li> NetBeansのメニューから
+「<font color="red"><b>ツール</b></font>」 →
+「<font color="red"><b>ライブラリマネージャ</b></font>」を選択します。<br>
+
+<br><br><br>
+<img src="pictures/netbeans_07.png">
+<br><br><br>
+
+<li>ライブラリマネージャダイアログが表示されますので、
+「<font color="red"><b>新規ライブラリ</b></font>」を選択します。<br>
+
+<br><br><br>
+<img src="pictures/netbeans_08.png">
+<br><br><br>
+
+<li>新規ライブラリダイアログが表示されるのでライブラリ名を入力します。
+ここでは<font color="red"><b>lg3d-core</b></font>にします。<br>
+また、ライブラリの種類を「<font color="red"><b>クラスライブラリ</b></font>」にします。<br>
+入力後「<font color="red"><b>了解</b></font>」をクリックします。<br>
+
+<br><br><br>
+<img src="pictures/netbeans_09.png">
+<br><br><br>
+
+<li>ライブラリマネージャダイアログに「lg3d-core」があることを確認し、
+それを選択します。<br>
+右側が「<font color="red"><b>クラスライブラリ</b></font>」となっていることを確認し、
+「<font color="red"><b>JAR/フォルダの追加</b></font>」を選択します。<br>
+
+<br><br><br>
+<img src="pictures/netbeans_10.png">
+<br><br><br>
+
+<li>ファイラが表示されるので、LG3Dをインストールしたディレクトリ(<font color="red"><b>/home/duke/lg3d/usr/share/lg3d/lib/</b></font>)に移動します。<br>
+<font color="red"><b>lg3d-core.jar</b></font>を選択し、
+「<font color="red"><b>JAR/フォルダの追加</b></font>」をクリックします。<br>
+
+<br><br><br>
+<img src="pictures/netbeans_11.png">
+<br><br><br>
+
+<li>ライブラリマネージャにJARファイルが追加されたことを確認します。<br>
+確認後、「<font color="red"><b>Javadoc</b></font>」を選択して、
+クラスパスの表示からJavadocの表示に切替えます。<br>
+<br><br><br>
+<img src="pictures/netbeans_12.png">
+<br><br><br>
+
+<li>「<font color="red"><b>ZIP/フォルダを追加する</b></font>」をクリックします。<br>
+
+<br><br><br>
+<img src="pictures/netbeans_13.png">
+<br><br><br>
+
+
+<li>LG3DのAPIドキュメント(<font color="red"><b>/home/duke/java-docs/api</b></font>)
+を選択し、
+「<font color="red"><b>ZIP/フォルダを追加</b></font>」をクリックします。<br>
+Javadocの場所については<b>「LG3Dのインストール ( Solaris 10 x86編 )」</b>の後半にある「<a href="solinstall.html#javadoc">Javadoc のインストール</a>」 を参考してください。
+
+<br><br><br>
+<img src="pictures/netbeans_14.png">
+<br><br><br>
+
+<li>Javadocにフォルダ(ディレクトリ)が登録されたことを確認します。
+確認後、「<font color="red"><b>了解</b></font>」をクリックします。<br>
+<blockquote>
+<font color="red"><b>補足</b></font>:<br>
+<font color="red"><b>/home/duke/java-docs/scenemanager-api</b></font> に含まれる内容は
+LG3Dのシステムレベルの開発
+(シーンマネジャの開発)で用います。<br>
+<u><b>通常のLG3Dアプリケーションの開発では使わないので
+<font color="red">登録する必要はありません</font></b></u>。
+</blockquote>
+<br><br>
+<img src="pictures/netbeans_15.png">
+<br><br><br>
+
+</ol>
+    <hr>
+     <ur>
+    <li><a href="index.html">メニューに戻る</a>
+    </ul>
+
+  </body>
+</html>

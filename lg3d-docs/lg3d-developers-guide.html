@@ -1,0 +1,792 @@
+<!DOCTYPE html PUBLIC "-//Tigris//DTD XHTML 1.0 Transitional//EN" "http://style.tigris.org/tigris_transitional.dtd">
+<html>
+<head>
+  <title>Project Looking Glass Developer's Guide</title>
+</head>
+<body>
+<div id="projectdocumentview" class="app">
+
+<h3>Project Looking Glass Developer's Guide</h3>
+<br />
+
+<p>
+This document provides an introduction to the Project Looking Glass
+Developer's
+Release, Sun's 3D Desktop open source project on java.net. It explains
+how to set up a development environment and how to build Project
+Looking Glass and 3D applications.<br />
+</p>
+<a href="#Getting_Started">1. Getting Started</a> <br />
+<a href="#Setting_up_your_development">2. Setting Up Your Development
+Environment</a> <br />
+<a href="#Download_the_Project_Looking_Glass">3. Download the Project
+Looking Glass Developer's Release</a> <br />
+<a href="#Building_Project_Looking_Glass">4. Building Project Looking
+Glass</a> <br />
+<a href="#Running_Project_Looking_Glass">5. Running Project Looking
+Glass</a> <br />
+<a href="#Troubleshooting">6. Troubleshooting</a> <br />
+<a href="#Getting_the_latest_Project_Looking">7. Getting the latest
+Project Looking Glass source code</a> <br />
+<a href="#A_quick_tour_of_the_Project_Looking">8. A Quick Tour of the
+Project Looking Glass Source</a> <br />
+<a href="#Contributing_to_Project_Looking_Glass">9. Contributing to
+Project Looking Glass</a><br />
+<a href="#Learning_how_to_write_3D_applications">10. Learning how to
+write 3D applications for Project Looking Glass</a> <br />
+
+<h3><a name="Getting_Started"></a>1. Getting Started</h3>
+<p>
+If you haven't yet tried running LG3D, please refer
+to <a href="lg3d-getting-started.html">Getting started with the
+Project
+Looking Glass Developer's Release</a>. 
+Verify that your system
+meets the minimum requirements for running Project Looking Glass. 
+</p>
+
+
+<h3><a name="Setting_up_your_development"></a>
+2. Setting Up Your Development Environment</h3>
+
+<h4>Download the components LG3D depends on</h4>
+
+<ol>
+  <li><b>Java 6 Mustang Pre-Release</b>
+    <br><br>
+    This JDK may be downloaded from <a href="http://download.java.net/jdk6/binaries/">http://download.java.net/jdk6/binaries</a>
+    <br /><br />
+    <b>*** IMPORTANT ***</b><br>
+    <b>The Project Looking Glass release packages no longer work on Java 5. But you
+can still create your own build with Java 5 from the CVS sources. Refer to the developer's guide for more information.</b><br>
+    <br>
+For Linux x86, the instructions below assume the use of the rpm file: <br>
+jdk-6-beta2-bin-b84-linux-i586-11_may_2006-rpm.bin.
+<br><br>
+For Solaris x86, the instructions below assume the use of the self-extracting
+shell file:<br>
+jdk-6-beta2-bin-b84-solaris-i586-11_may_2006.sh
+<br><br>    
+  </li>
+  <li><b>Java 3D SDK 1.5 build 2</b><br />
+    <br />
+    This can be downloaded from:
+    <a href="http://java3d.dev.java.net/binary-builds-pre.html">http://java3d.dev.java.net/binary-builds-pre.html</a>
+    <br /><br />
+    <b>Linux x86:</b> Download
+    <span style="font-family: courier new,courier,monospace;">java3d-1_5_0-build3-linux-i586.zip</span>.
+    <br /><br />
+    <b>Solaris x86:</b> Download
+    <span style="font-family: courier new,courier,monospace;">java3d-1_5_0-build3-solaris-x86.zip</span>.
+    <br />
+    <br />
+    For Solaris on AMD64, don't forget to download and install the Solaris AMD64 jdk after the Solaris x86 jdk.
+    <br />
+    <br />
+  </li>
+  <li><b>C Compiler</b>
+    <br><br>
+    The Project Looking Glass source contains a small amount of C code. You will need a C compiler 
+    in order to build it. On Linux you will need gcc 4.0.3 or greater. On Solaris you will need Sun C 5.5 or greater.
+  </li>
+</ol>
+
+<h4>Install the components</h4>
+
+<p>
+After downloading all of the components, install them by following the
+instructions below. 
+</p>
+
+<ol>
+  <li>Install Java 6.0:<br />
+    <br />
+    <b>Linux x86:</b><br>
+    <span style="font-family: courier new,courier,monospace;">
+(First, become root)<br>
+# cd /tmp<br />
+# ./jdk-6-beta2-bin-b84-linux-i586-11_may_2006-rpm.bin<br />
+# rm jdk-6-beta2-bin-b84-linux-i586-11_may_2006-rpm<br />
+# rm jdk-6-beta2-bin-b84-linux-i586-11_may_2006-rpm.bin</span><br />
+    <br />
+    <b>Solaris x86:</b><br>
+    <span style="font-family: courier new,courier,monospace;">
+% cd /tmp<br>
+% ./jdk-6-beta2-bin-b84-solaris-i586-11_may_2006.sh
+</span><br />
+<br>
+  </li>
+  <li>Install the Java 3D SDK:<br />
+    <br />
+    <b>Linux x86:</b><br>
+<br>
+    <span style="font-family: courier new,courier,monospace;">
+# cd /tmp<br />
+# unzip java3d-1_5_0-build3-linux-i586.zip
+<br />
+<br>
+</span>
+Then follow the instructions in the file <span style="font-family: courier new,courier,monospace;">/tmp/java3d-1_5_0-build3-linux-i586.zip/HOW-TO-INSTALL.TXT</span>. (Answer 'y' to any questions that are asked).
+    <br>
+    <br>
+    <b>Solaris x86:</b><br>
+<br>
+    <span style="font-family: courier new,courier,monospace;">
+# cd /tmp<br />
+# unzip java3d-1_5_0-build3-solaris-x86.zip<br />
+</span><br />
+Then follow the instructions in the file <span style="font-family: courier new,courier,monospace;">/tmp/java3d-1_5_0-build3-solaris-x86.zip/HOW-TO-INSTALL.TXT</span>. (Answer 'y' to any questions that are asked).
+<br>
+  </li>
+<br>
+  <li>Several environment variables now need to be set in your shell
+profile. Here are examples appropriate for bash(1):<br />
+    <span style="font-family: courier new,courier,monospace;"><br />
+Linux x86 only: <br>
+JAVA_HOME=/usr/java<br>
+<br>
+Solaris x86 only: <br>
+JAVA_HOME=/tmp/jdk1.6.0<br>
+<br>
+Both: <br>
+PATH=$JAVA_HOME/bin:$PATH</span><br />
+  </li>
+</ol>
+
+
+<h4>Download and install the development tools</h4>
+<p>
+Project Looking Glass uses the Apache ANT build tool (version 1.6.5 or later)
+to manage the build process. If you don't already have ANT installed, download
+the binary distribution from the apache.org web site:
+</p>
+<a href="http://ant.apache.org/">http://ant.apache.org/</a> <br />
+<br />
+<b>Note:</b> The instructions below
+assume that you download the ANT binary distribution into <span
+ style="font-family: courier new,courier,monospace;">/tmp</span>.<br />
+<br />
+After downloading ANT, install it as follows:<br />
+<ol>
+  <li>First become root:<br />
+    <br />
+    <span style="font-family: courier new,courier,monospace;"> % su root</span><br />
+    <span style="font-family: courier new,courier,monospace;"> Password:</span>
+    <b>enter root password</b><br />
+    <span style="font-family: courier new,courier,monospace;">#</span><br />
+    <br />
+  </li>
+  <li>Install Apache ANT: <span
+ style="font-family: courier new,courier,monospace;"><br />
+    <br />
+# cd /usr/local<br />
+    </span><span style="font-family: courier new,courier,monospace;">#
+tar -xzf
+/tmp/apache-ant-1.6.5-bin.tar.gz<br />
+    <br />
+    </span></li>
+  <li>Exit from the root shell:<br />
+    <br />
+    <span style="font-family: courier new,courier,monospace;"> # exit<br />
+%<br />
+    <br />
+    </span></li>
+  <li>Several environment variables now need to be set. Here's the
+syntax for bash(1):<span
+ style="font-family: courier new,courier,monospace;"><br />
+    <br />
+ANT_HOME=/usr/local/apache-ant-1.6.5<br />
+    </span><span style="font-family: courier new,courier,monospace;">PATH=$ANT_HOME/bin:$PATH</span><br />
+    <br />
+  </li>
+  <li>
+    If you had an older version of ANT installed on your system as an RPM
+    then you will also need to edit the files <i>/etc/ant.conf</i> (for system
+    wide changes) or  <i>~/.ant/ant.conf</i> or
+     <i>~/.antrc</i> to add/change the following lines: <br />
+    <br />
+
+    <span style="font-family: courier new,courier,monospace;">
+    ANT_HOME=/usr/local/apache-ant-1.6.5<br />
+    rpm_mode=false<br />
+    </span>
+    <br />
+    A better approach would to be remove the old version of ANT and install
+    a new ANT rpm from the <a href="http://www.jpackage.org">JPackage project</a>.
+
+  </li>
+</ol>
+
+<p>You will also need a CVS client. Windows users can download WinCVS from <a href="http://www.wincvs.org/">the WinCVS web site</a>. Most versions of Linux include a CVS package (in Ubuntu it can be installed through Synaptic). Solaris users will need to download CVS, however. It is available from <a href="http://www.blastwave.org/">Blastwave</a> and <a href="http://www.sunfreeware.com/">Sunfreeware.com</a>.</p>
+
+<h3><a name="Download_the_Project_Looking_Glass"></a>3. Download the
+Project Looking Glass Developer's Release</h3>
+<p>
+The Project Looking Glass Developer's Release source code is available
+in the <a href="https://lg3d.dev.java.net">LG3D</a> open source
+project on <a href="http://www.java.net">java.net</a>.<br />
+</p>
+<h4>Register at the java.net web site</h4>
+<p>If you haven't previously registered
+at <a href="http://www.java.net/">java.net</a> then you'll need to
+create an account before you can download the source code:<br />
+</p>
+<ol>
+  <li>Navigate to <a href="http://www.java.net/">http://www.java.net</a>
+and click on the <b>Register</b> link
+at
+the top of the page. </li>
+  <li>Enter your preferred user name and e-mail address and then press
+the <b>[Register]</b> button.<br />
+  </li>
+  <li>You'll receive an e-mail message with instructions on how to set
+a password for your account. Once you've entered your password and
+accepted
+the java.net website terms of participation you'll be logged in.</li>
+  <li>Now navigate to the <a href="https://lg3d.dev.java.net/">LG3D
+project web site</a>.</li>
+</ol>
+To browse the Project Looking Glass core source code, click on <b>lg3d-core
+</b>in the <b>Subprojects</b> section of the <a
+ href="https://lg3d.dev.java.net">LG3D project web site</a>
+Then click on <b>Version control</b> in
+the <b>Project&nbsp; tools</b>
+section of the side bar. On the right side you'll see the source tree
+represented as links. You can click on these links to browse the source
+tree and download individual files for viewing.<br />
+<h4>Download the Project Looking Glass Core Source</h4>
+<p>
+The next step is to download the Project Looking
+Glass Core Source to the development system that you configured.<br />
+</p>
+<ol>
+  <li>First create a directory for the Project Looking Glass project,
+for
+example: <br />
+    <br />
+    <span style="font-family: courier new,courier,monospace;"> % mkdir
+-p
+~/projects/lg3d<br />
+% cd ~/projects/lg3d</span><br />
+    <br />
+<b>App mode note:</b> if you plan on using this build to run app mode (lg3d-app),
+be sure to download into a LOCAL disk partition. Do not use a mounted network 
+partition.
+<br /><br />
+  </li>
+  <li> Next, log into the cvs.dev.java.net CVS server:<br />
+    <br />
+    <span style="font-family: courier new,courier,monospace;"> % cvs -d
+:pserver:<b>username</b>@cvs.dev.java.net:/cvs login <br />
+CVS password:</span> <b>password</b><br />
+    <br />
+Substitute <b>username</b> and <b>password</b> with your java.net
+account
+information.<br />
+    <br />
+  </li>
+  <li>Check out the <b>lg3d-core</b>
+source files:<br />
+    <br />
+    <span style="font-family: courier new,courier,monospace;"> % cvs -d
+:pserver:<b>username</b>@cvs.dev.java.net:/cvs
+checkout lg3d-core<br />
+    <br />
+    </span></li>
+  <li>The <b>lg3d-incubator</b> and <b>lg3d-demo-apps</b>
+projects contain several 3D applications, including the CD Viewer
+application and some tutorials. The Project Looking Glass desktop
+requires these files, so check them out:<br />
+    <br />
+    <span style="font-family: courier new,courier,monospace;"> % cvs -d
+:pserver:<b>username</b>@cvs.dev.java.net:/cvs
+checkout lg3d-incubator</span><br />
+
+    <span style="font-family: courier new,courier,monospace;"> % cvs -d
+:pserver:<b>username</b>@cvs.dev.java.net:/cvs
+checkout lg3d-demo-apps</span><br />
+  </li>
+</ol>
+
+<p>Finally, you can <a href="http://ximbiot.com/cvs/manual/">get more information</a> on using CVS.</p>
+
+<p>
+Note for Windows users: You can check out the source files using 
+a CVS client for Windows platform.  However, you will need to pay 
+a good attention to the case-insensitiveness of Windows files
+when checking in any file.
+</p>
+
+<h4>Download the Project Looking Glass X11 Source (Optional)</h4>
+<p>
+It is not necessary to download the Project Looking Glass X11 source in order
+to build and run Project Looking Glass. If you choose not to download the X11 
+source, you will be able to run in "dev mode" (using the script lg3d-dev). In this mode, 
+you can run 3D applications but not native X11 applications. 
+</p>
+<p>
+"App mode" (lg3d-app) allows you to run 
+both 3D applications and native X11 applications, but these scripts will only
+work if you download and build with the X11 source.
+</p>
+<p>
+To download the Project Looking Glass X11 source, check out a copy of the
+lg3d-x11 cvs tree and make it a sibling directory of the lg3d-core you just downloaded.
+</p>
+<p>
+For example, do the following to check out lg3d-x11:
+</p>
+<blockquote><span
+ style="font-family: courier new,courier,monospace;">
+% cd /opt/mylg
+<br />
+    <span style="font-family: courier new,courier,monospace;"> % cvs -d
+:pserver:<b>username</b>@cvs.dev.java.net:/cvs
+checkout lg3d-x11
+    <br />
+    </span>
+</span></blockquote>
+
+<h4>What's Next?</h4>
+<p>
+Congratulations!
+You've finished setting up your build environment
+and you can now build Project Looking Glass. 
+</p>
+
+<h3>
+<a name="Building_Project_Looking_Glass"></a>4. Building Project
+Looking Glass</h3>
+<p>
+Building Project Looking Glass from source is handled by an ANT
+build file (build.xml) which is located in your lg3d-core
+directory.&nbsp;Navigate to this directory and run the
+ant command to build Project Looking Glass: </p>
+<blockquote> <span style="font-family: courier new,courier,monospace;">%
+cd
+~/projects/lg3d/lg3d-core<br />
+% ant</span><br />
+</blockquote>
+You should see output similar to the following:
+<blockquote> <small><span
+ style="font-family: courier new,courier,monospace;">Buildfile:
+build.xml<br />
+&nbsp;<br />
+init:<br />
+&nbsp;&nbsp;&nbsp; [mkdir] Created dir:
+/home/username/projects/lg3d/lg3d-core/build/classes<br />
+&nbsp;<br />
+unpack-x:<br />
+&nbsp;&nbsp;&nbsp; [untar] Expanding:
+/home/username/projects/lg3d/lg3d-core/ext/lg3d-x11.tar.gz into
+/home/username/projects/lg3d/lg3d-core/ext<br />
+&nbsp;<br />
+compile:<br />
+&nbsp;&nbsp;&nbsp; [javac] Compiling 1 source file to
+/home/username/projects/lg3d/lg3d-core/build-tools<br />
+&nbsp;&nbsp;&nbsp; [javac] Compiling 626 source files to
+/home/username/projects/lg3d/lg3d-core/build/classes<br />
+&nbsp;<br />
+compile-x11:<br />
+&nbsp;<br />
+check-escher:<br />
+&nbsp;&nbsp;&nbsp; [javac] Compiling 25 source files to
+/home/username/projects/lg3d/lg3d-core/build/classes<br />
+&nbsp;<br />
+init:<br />
+&nbsp;<br />
+unpack-x:<br />
+  <br />
+native-x11:<br />
+&nbsp;&nbsp;&nbsp;&nbsp; [exec]
+.:/home/username/projects/lg3d/lg3d-core/src/../build/classes<br />
+&nbsp;<br />
+junit-tests:<br />
+&nbsp;<br />
+no-junit-tests:<br />
+&nbsp;&nbsp;&nbsp;&nbsp; [echo] Skipping junit tests because junit.jar
+is not installed in ext-unbundeled<br />
+&nbsp;<br />
+compile-demo-apps:<br />
+&nbsp;&nbsp;&nbsp; [javac] Compiling 5 source files to
+/home/username/projects/lg3d/lg3d-core/build/classes<br />
+&nbsp;&nbsp;&nbsp;&nbsp; [copy] Copying 4 files to
+/home/username/projects/lg3d/lg3d-core/build/classes/org/jdesktop/lg3d/apps/cdviewer/resources<br />
+&nbsp;&nbsp;&nbsp;&nbsp; [copy] Copying 1 file to
+/home/username/projects/lg3d/lg3d-core/build/classes/org/jdesktop/lg3d/apps/tutorial/resources<br />
+&nbsp;&nbsp;&nbsp;&nbsp; [copy] Copying 1 file to
+/home/username/projects/lg3d/lg3d-core/build/classes/org/jdesktop/lg3d/apps/help/resources<br />
+&nbsp;<br />
+jar:<br />
+&nbsp;&nbsp;&nbsp; [mkdir] Created dir:
+/home/username/projects/lg3d/lg3d-core/build/lib<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; [jar] Building jar:
+/home/username/projects/lg3d/lg3d-core/build/lib/lg3d-core.jar<br />
+&nbsp;<br />
+all:<br />
+&nbsp;<br />
+BUILD SUCCESSFUL<br />
+Total time: 32 seconds</span><br />
+  </small></blockquote>
+  
+
+<br><br>
+In addition, if you plan to run app mode you need to enable TCP connections when you run your primary X server.
+<a href="lg3d-getting-started.html#Running_Project_Looking_Glass_App_Mode">Here</a> are instructions on how to do this.<br />
+
+<h3>
+<a name="Running_Project_Looking_Glass"></a>5. Running Project Looking
+Glass</h3>
+<p>
+There are two ways to run Project Looking Glass: app mode
+and dev mode. These modes are described in the <b>Running
+Project Looking Glass</b> section of the <a
+ href="lg3d-getting-started.html#Running_Project_Looking_Glass">Getting
+started with the
+Project Looking Glass Developer's Release</a> document.
+<br /><br />
+The only difference as a developer is that instead of the start-up scripts
+residing in 
+<span style="font-family: courier new,courier,monospace;">
+~/projects/lg3d/lg3d-core/bin
+</span>
+, the scripts you will need to use
+reside in 
+<span style="font-family: courier new,courier,monospace;">
+~/projects/lg3d/lg3d-core/src/devscripts.
+</span>
+</p>
+<p>
+If you are having problems running Project Looking Glass, refer to the <b>Troubleshooting</b>
+section in <a href="lg3d-getting-started.html#Troubleshooting">Getting
+started with
+the
+Project Looking Glass Developer's Release</a>.
+</p>
+
+<h3><a name="Troubleshooting"></a>
+6. Troubleshooting</h3>
+
+<h4>Class org.apache.tools.ant.taskdefs.ConditionTask doesn't support the "else" attribute</h4>
+
+<p>Seems that you are using an old ant.  Upgrade your ant to 1.6.5 or later.</p>
+
+<h4>Could not create task or type of type: javah</h4>
+
+<p>Some Linux distro like Gentoo has an additional package called <tt>ant-tasks</tt> containing additional Ant Tasks. In that case, you need to install it to enable the <tt>javah</tt> task. Use <tt>ant -diagnostics</tt> to check and see which Ant Tasks are currently installed.</p>
+
+<h3><a name="Getting_the_latest_Project_Looking"></a>7. Getting the
+latest Project Looking Glass source code<br />
+</h3>
+<p>
+To stay up-to-date with the latest developments in Project Looking
+Glass, periodically log into the java.net cvs server and update your
+cvs workspace:
+</p>
+<ol>
+  <li> Change directory to your ~/projects/lg/lg3d-core directory:<br />
+    <span style="font-family: courier new,courier,monospace;"><br />
+% cd ~/projects/lg/lg3d-core<br />
+    </span> <br />
+  </li>
+  <li>Remove the built files for the current version of the source:<br />
+    <br />
+    <span style="font-family: courier new,courier,monospace;"> % ant
+clean </span><br />
+    <br />
+  </li>
+  <li>Change directory to your ~/projects/lg directory:<br />
+    <br />
+    <span style="font-family: courier new,courier,monospace;"> % cd
+~/projects/lg</span><span
+ style="font-family: courier new,courier,monospace;"><br />
+    </span><br />
+  </li>
+  <li>Now update your workspace with the latest Project Looking
+Glass source code:<br />
+    <br />
+    <span style="font-family: courier new,courier,monospace;"> %
+cvs -d :pserver<b>:username</b></span><span
+ style="font-family: courier new,courier,monospace;">@cvs.dev.java.net:/cvs
+update
+-Pd lg3d-core<br />
+    </span><br />
+and update the demo applications:<br />
+    <br />
+    <span style="font-family: courier new,courier,monospace;"> % cvs -d
+:pserver<b>:username</b></span><span
+ style="font-family: courier new,courier,monospace;">@cvs.dev.java.net:/cvs
+update
+-Pd lg3d-incubator</span><br />
+
+    <span style="font-family: courier new,courier,monospace;"> % cvs -d
+:pserver<b>:username</b></span><span
+ style="font-family: courier new,courier,monospace;">@cvs.dev.java.net:/cvs
+update -Pd lg3d-demo-apps</span>
+    <br /><br />
+Substitute <b>username</b> with your
+java.net username.<br />
+  </li>
+</ol>
+<p>
+Now that you've successfully built Project Looking Glass, why not read
+on and take a quick tour of the <span
+ style="font-family: courier new,courier,monospace;">lg3d-core/</span>
+directory to
+familiarize
+yourself with the source code?<br />
+</p>
+
+<h3><a name="A_quick_tour_of_the_Project_Looking"></a>
+8. A Quick Tour of the Project Looking Glass Source</h3>
+<p>
+The Project Looking Glass source code is located in the <span
+ style="font-family: courier new,courier,monospace;">lg3d-core/src</span>.
+Here is an overview of the various files in the lg3d-core source CVS
+repository.</p>
+<table style="text-align: left; width: 100%;" border="1" cellpadding="2"
+ cellspacing="2">
+  <tbody>
+    <tr>
+      <td bgcolor="#cccccc">Directory</td>
+      <td bgcolor="#cccccc">Description</td>
+    </tr>
+    <tr>
+      <td
+ style="text-align: left; vertical-align: top; white-space: nowrap;"><span
+ style="font-family: courier new,courier,monospace;">build/</span></td>
+      <td style="text-align: left; vertical-align: top;">The built
+files are stored in this directory.<br />
+      </td>
+    </tr>
+    <tr>
+      <td
+ style="text-align: left; vertical-align: top; white-space: nowrap;"><span
+ style="font-family: courier new,courier,monospace;">build-tools/</span>
+      </td>
+      <td style="text-align: left; vertical-align: top;">Tools for
+building Project Looking Glass.<br />
+      </td>
+    </tr>
+    <tr>
+      <td
+ style="text-align: left; vertical-align: top; white-space: nowrap;"><span
+ style="font-family: courier new,courier,monospace;">build.xml</span></td>
+      <td style="text-align: left; vertical-align: top;">The Ant build
+control file.<br />
+      </td>
+    </tr>
+    <tr>
+      <td
+ style="text-align: left; vertical-align: top; white-space: nowrap;"><span
+ style="font-family: courier new,courier,monospace;">ext/</span></td>
+      <td style="text-align: left; vertical-align: top;">Various
+components released with Project Looking Glass, namely escher (Java
+bindings to X11) and a stable build of lg3d-x11.<br />
+      </td>
+    </tr>
+    <tr>
+      <td
+ style="text-align: left; vertical-align: top; white-space: nowrap;"><span
+ style="font-family: courier new,courier,monospace;">&nbsp;&nbsp;&nbsp;app/</span></td>
+      <td style="text-align: left; vertical-align: top;">A directory in
+which you can put applications to be deployed on the taskbar. LG3D automatically search for jar files in this directory and adds them to the taskbar (if they are configured correctly).<br />
+      </td>
+    </tr>
+    <tr>
+      <td
+ style="text-align: left; vertical-align: top; white-space: nowrap;"><span
+ style="font-family: courier new,courier,monospace;">ext-unbundled/</span></td>
+      <td style="text-align: left; vertical-align: top;">A directory in
+which you can put components not licensed for distribution with Project
+Looking Glass (e.g. junit, Java3D loaders, etc.) You can also install
+your own build of lg3d-x11 into here instead of using $LGX11HOME.<br />
+      </td>
+    </tr>
+    <tr>
+      <td
+ style="text-align: left; vertical-align: top; white-space: nowrap;"><span
+ style="font-family: courier new,courier,monospace;">src/</span></td>
+      <td style="text-align: left; vertical-align: top;">The root of
+the lg3d-core source tree.<br />
+      </td>
+    </tr>
+    <tr>
+      <td
+ style="text-align: left; vertical-align: top; white-space: nowrap;"><span
+ style="font-family: courier new,courier,monospace;">&nbsp;&nbsp;&nbsp;
+classes/</span></td>
+      <td style="text-align: left; vertical-align: top;">All of the
+.java files are here.<br />
+Refer to the javadocs in the binary bundle in <span
+ style="font-family: courier new,courier,monospace;">docs/javadoc/api</span>
+for
+more information.</td>
+    </tr>
+    <tr>
+      <td
+ style="text-align: left; vertical-align: top; white-space: nowrap;"><span
+ style="font-family: courier new,courier,monospace;">&nbsp;&nbsp;&nbsp;
+devscripts/</span></td>
+      <td style="text-align: left; vertical-align: top;">The source for
+various Project Looking Glass development scripts. These utilize
+classes in the <span
+ style="font-family: courier new,courier,monospace;">build/</span>
+directory.</td>
+    </tr>
+    <tr>
+    </tr>
+    <tr>
+      <td
+ style="text-align: left; vertical-align: top; white-space: nowrap;"><span
+ style="font-family: courier new,courier,monospace;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+README</span></td>
+      <td style="text-align: left; vertical-align: top;">Documentation
+for some of the scripts in this directory.<br />
+      </td>
+    </tr>
+    <tr>
+    </tr>
+    <tr>
+      <td
+ style="text-align: left; vertical-align: top; white-space: nowrap;"><span
+ style="font-family: courier new,courier,monospace;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+lg3d-dev</span></td>
+      <td style="text-align: left; vertical-align: top;">Runs a Project
+Looking Glass session in a window in an existing X11 desktop (e.g. Gnome, KDE), without X11 app support.
+(This is "developer" or "No X" mode).<br />
+      </td>
+    </tr>
+    <tr>
+      <td
+ style="text-align: left; vertical-align: top; white-space: nowrap;"><span
+ style="font-family: courier new,courier,monospace;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+lg3d-session<br />
+      </span></td>
+      <td style="text-align: left; vertical-align: top;">Runs a Project
+Looking Glass session in full screen mode, with X11 app support.<br />
+      </td>
+    </tr>
+    <tr>
+      <td
+ style="text-align: left; vertical-align: top; white-space: nowrap;"><span
+ style="font-family: courier new,courier,monospace;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+lg3d-app<br />
+      </span></td>
+      <td style="text-align: left; vertical-align: top;">Runs Project
+Looking Glass as a window in an existing X11 desktop (e.g. Gnome, KDE), with X11 app support.<br />
+      </td>
+    </tr>
+    <tr>
+      <td
+ style="text-align: left; vertical-align: top; white-space: nowrap;"><span
+ style="font-family: courier new,courier,monospace;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+setup</span></td>
+      <td style="text-align: left; vertical-align: top;">A helper
+script used by the other scripts.<br />
+      </td>
+    </tr>
+    <tr>
+      <td
+ style="text-align: left; vertical-align: top; white-space: nowrap;"><span
+ style="font-family: courier new,courier,monospace;">&nbsp;&nbsp;&nbsp;
+resources/images/</span></td>
+      <td style="text-align: left; vertical-align: top;">Assorted
+images used by Project Looking Glass.<br />
+      </td>
+    </tr>
+    <tr>
+      <td
+ style="text-align: left; vertical-align: top; white-space: nowrap;"><span
+ style="font-family: courier new,courier,monospace;">tests/</span></td>
+      <td style="text-align: left; vertical-align: top;">Eventually
+will hold the test suite for Project Looking Glass.<br />
+      </td>
+    </tr>
+    <tr>
+      <td
+ style="text-align: left; vertical-align: top; white-space: nowrap;"><span
+ style="font-family: courier new,courier,monospace;">www/</span></td>
+      <td style="text-align: left; vertical-align: top;">java.net site
+pages and various documentation.<br />
+      </td>
+    </tr>
+  </tbody>
+</table>
+<br />
+
+<h3><a name="Contributing_to_Project_Looking_Glass"></a>9. Contributing
+to Project Looking Glass</h3>
+<h4>Learn what it means to contribute<span style="font-weight: bold;"><span
+ style="font-weight: bold;"></span></span></h4>
+<span style="font-weight: normal;">Please
+read the <a href="contribute.html">Contributing
+to Project Looking Glass</a> document for further information on what
+it means to contribute, then if you're interested, request access to
+the LG3D project.</span><br />
+<h4>Request access to the LG3D project</h4>
+<p>
+To request access to the LG3D project:
+</p>
+<ol>
+  <li>If you are not logged into <a href="http://www.java.net/">java.net</a>,
+navigate to <a href="http://www.java.net/">http://www.java.net</a> and
+login by entering your username and password in the
+fields at the top of the page and pressing the [Login] button.</li>
+  <li>Navigate to <a href="https://lg3d.dev.java.net/">https://lg3d.dev.java.net</a>
+and bookmark it for future reference. You'll be coming back often!</li>
+  <li>Click on the <b>Request project membership/role</b> link.</li>
+  <li>Select the appropriate role.<br />
+In order to directly contribute source code, 
+you need to have a <b>Developer</b> role in appropriate 
+<a href="https://lg3d.dev.java.net/#subprojects">LG3D Subprojects</a>
+of your interests. 
+However, before signing up for it, please consider becoming 
+a project <b>Observer</b>, downloading the source and familiarizing 
+yourself with API internals.
+See the <a href="contribute.html">Contributing
+to Project Looking Glass</a> document for more details about
+possible ways of contribution.<br />
+  </li>
+  <li>After submitting your request, you will receive an e-mail that
+contains instructions on how to
+access the project.<br />
+  </li>
+</ol>
+From now on, when you go to the <a href="https://lg3d.dev.java.net/">LG3D
+project web site</a> you will need to login to access the project
+documents.<br />
+<span style="font-weight: bold;"><span style="font-weight: bold;"><span
+ style="font-weight: bold;"><span style="font-weight: bold;"></span></span></span></span>
+
+<h3><a name="Learning_how_to_write_3D_applications"></a>10. Learning how
+to write 3D applications for Project Looking Glass</h3>
+<p>Project Looking Glass includes some example 3D applications that you
+can
+use to learn how to write applications that exploit the 3D nature of
+the Project Looking Glass 3D desktop environment. You can find these
+examples in the <a href="http://lg3d-demo-apps.dev.java.net">lg3d-demo-apps</a>
+project.
+</p>
+<p>
+<b>See also:</b>
+</p>
+<p>
+<a href="netbeans/NetBeansLookingGlass.html">
+Building and Running Project Looking Glass with NetBeans</a>
+<br />
+<a href="lg3d-getting-started.html">Getting started with the Project
+Looking Glass</a>
+<br />
+<a href="release-notes.html">Project Looking Glass Developer's Release
+Notes</a>
+<br />
+<span style="font-weight: normal;"></span><a
+ href="https://lg3d.dev.java.net/contribute.html">Contributing
+to Project Looking Glass</a> <br />
+</p>
+<hr />
+<small>$Revision: 1.11 $ $Date: 2006-09-19 16:31:53 $</small>
+</div>
+</body>
+</html>

@@ -1,0 +1,127 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html>
+  <head>
+    <meta http-equiv="content-type" content="text/html; charset=utf-8" />
+    <title>グラフィックス環境のセットアップ(Linux&NVIDIA編)</title>
+  </head>
+
+  <body bgcolor="white">
+    <h1>JavaOne Tokyo Hands on Lab : <br>
+	Project Looking Glass (LG3D) Basic Programming</h1>
+
+    <h2>グラフィックス環境のセットアップ(Linux & NVIDIA編)</h2>
+
+    <p> LG3D を動かすためには 24bit color, OpenGL 1.3以上をサポートした環境が必要です。<br>
+        Linux上でこの環境を構築するには以下のグラフィックスチップを搭載したPCが必要です
+        (NVIDIA社製グラフィックスチップを搭載した環境の場合)。
+     <ul>
+      <li> NVIDIA GeForce FX シリーズ
+      <li> NVIDIA Quadro シリーズ
+     </ul>
+
+
+    <hr>
+    <h3>グラフィックスドライバのインストール</h3>
+
+    NVIDIAのサイト(<a href="http://www.nvidia.com/object/unix.html">http://www.nvidia.com/object/unix.html</a>)
+    からNVIDIA社製のグラフィックスドライバをダウンロードします。<br>
+    ドキュメント記述時(2007/3)の最新版のドライバは 1.0-9746 (NVIDIA-Linux-x86-1.0-9746-pkg1.run)です。
+    <br>
+    ここではファイルを /tmp にダウンロードしたと仮定します。
+    <br><br>
+
+    グラフィックスドライバはインストールはルートユーザで行います。<br>
+    インストール方法は次の通りです。
+   (ユーザーの入力したコマンドは<font color="red"><b>赤(太字)</b></font>で示します)
+<br><br>
+
+<ol>
+  <li> ルートユーザになりコンソールモードに変更する。
+    コンソールモードに変わったら再度ログインし、
+    インストーラを起動します。<br>
+    対話式のインストーラが表示されるので、指示に従いインストールします。
+    
+<br><br><br>
+    <table border width="70%"><tr><td>
+     <pre>
+> <font color="red"><b>su - </b></font>
+Password: <font color="red"><b>←パスワードを入力</b></font>
+# <font color="red"><b>init 3</b></font>
+
+
+console login: <font color="red"><b>root</b></font>
+Password: <font color="red"><b>←パスワードを入力</b></font>
+...
+# <font color="red"><b>sh NVIDIA-Linux-x86-1.0-9746-pkg1.run</b></font> </pre>
+    </td></tr></table>
+<br><br>
+
+
+<blockquote>
+<font color="red">補足:</font><br>
+Fedora 7/ Fedora Core 6 等を利用している場合、<br>
+「<b>Fedora Core 6で3D GUI環境Compizを使うには（NVIDIA編）</b>」<br>
+（<a href="http://www.atmarkit.co.jp/flinux/rensai/linuxtips/960compiznvidia.html">http://www.atmarkit.co.jp/flinux/rensai/linuxtips/960compiznvidia.html</a>）<br>
+を参照し、ドライバーをインストールしてください。<br>
+</blockquote>
+
+
+<br><br>
+     <li>ドライバのインストールが終了したら X-Window環境の設定を行います。
+     以下のように /etc/X11/xorg.conf を編集します。<br>
+<br><br>
+     <font color="red"><b>赤(太字)</b></font>は変更部分に関するコメントです。これを参考に変更してください。
+<br><br><br>
+    <table border width="70%"><tr><td>
+     <pre>
+...(略)...
+Section "Module"                              <font color="red"><b>[モジュールの設定]</b></font>
+    Load        "glx"                         <font color="red"><b>[ない場合は追加する]</b></font>
+#    Load        "dri"                        <font color="red"><b>[ある場合はコメントアウト(文の先頭に # )]</b></font>
+#    Load        "GLcore"                     <font color="red"><b>[ある場合はコメントアウト(文の先頭に # )]</b></font>
+EndSection
+...(略)...
+Section "InputDevice"                         <font color="red"><b>[キーボード設定]</b></font>
+    Identifier  "Keyboard1"
+    Driver      "kbd"                         <font color="red"><b>["keyboard"の場合、kbdに変更]</b></font>
+    Option "AutoRepeat" "500 30"
+    Option "XkbRules"   "xfree86"
+    Option "XkbModel"   "jp106"
+    Option "XkbLayout"  "jp"
+EndSection
+...(略)...
+Section "Device"                              <font color="red"><b>[グラフィックスドライバの設定]</b></font>
+    Identifier  "NVIDIA"
+    Driver      "nvidia"                      <font color="red"><b>["nv" から変更]</b></font>
+EndSection
+...(略)...
+Section "Screen"                              <font color="red"><b>[スクリーン設定]</b></font>
+    Identifier  "Screen0"
+    Device      "NVIDIA"
+    Monitor     "Monitor0"
+    DefaultDepth 24                           <font color="red"><b>[無い場合は追加、24以外の場合は24に変更]</b></font>
+    Subsection "Display"
+        Depth       24
+        Modes       "1280x1024"
+        ViewPort    0 0  # initial origin if mode is smaller than desktop
+    EndSubsection
+EndSection </pre>
+    </td></tr></table><br>
+
+    <li> Xを再起動します。
+<br><br><br>
+
+    <table border width="70%"><tr><td>
+     <pre>
+# <font color="red"><b>init 5</b></font> </pre>
+     </td></tr></table>
+</ol>
+
+<br><br>
+    <hr>
+    <ul>
+    <li><a href="index.html">メニューに戻る</a>
+    </ul>
+
+</body>
+</html>

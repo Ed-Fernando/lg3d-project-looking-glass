@@ -1,0 +1,250 @@
+<!DOCTYPE html PUBLIC "-//Tigris//DTD XHTML 1.0 Transitional//EN"
+"http://style.tigris.org/tigris_transitional.dtd">
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<meta name="Translator" content="Kazuhiro Kazama" />
+  <title>
+  Project Looking Glass開発者リリースノート
+  リリース0.6.1
+  </title>
+  <style type="text/css"> /* <![CDATA[ */
+@import "preview.css";
+/* ]]> */</style>
+</head>
+  <body>
+   
+<h2>Project Looking Glass開発者リリースノート<br />
+リリース0.6.1</h2>
+このリリースノートは、Project Looking Glass 3Dデスクトップ開発者リリース バージョン0.6.1についての重要な情報を含んでいます。
+前のリリース(0.5.1)からの主な変更の概要に加えて、既知の制限とバグ、テクニカルノート、およびその他の情報を述べています。
+Project Looking Glass 3Dデスクトップ開発者リリース バージョン0.6.1を使い始める前に、このドキュメントを読んでください。
+<br />
+  <br />
+  <a href="#Overview_of_the_changes">1. 変更の概要</a>
+  <ol>
+  <a href="#App_quality_improvements">1.1 X11アプリケーションの質の向上</a><br />
+  <a href="#X11_perf_improvements">1.2 X11の性能向上</a><br />
+  <a href="#Window_resizing">1.3 ウィンドウのリサイズのサポート</a><br />
+  <a href="#Client_api_cleanup">1.4 3DクライアントAPIのクリーンアップ</a><br />
+  </ol>
+  <a href="#Limitations">2. このリリースの制限</a>
+  <ol>
+  <a href="#Perf_sluggish">2.1 性能が悪い</a><br />
+  <a href="#Stability_probs">2.2 安定性の問題</a><br />
+  <a href="#ATI_probs">2.3 ATIデバイスのレンダリングの問題</a><br />
+  <a href="#No_3D_keyboard_events">2.4 LG3D対応アプリケーションでキーボードイベントが未サポート</a><br />
+  <a href="#No_XINPUT">2.5 XINPUT拡張の使用が未サポート</a><br />
+  <a href="#No_open_office_presenter_full_screen">2.6 OpenOffice Presenterのフルスクリーンモードが未サポート</a><br />
+  <a href="#No_multiscreen">2.7 マルチスクリーンのサポートなし</a><br />
+  <a href="#Terminal_windows_root">2.8 lg3d-sessionのターミナルウィンドウはrootユーザ</a><br />
+  </ol>
+  <a href="#Known_Bugs">3. 既知のバグ</a><br /><br />
+  <a href="#Fixed_issues">4. 解決された課題</a><br />
+   
+<h3><a name="Overview_of_the_changes"></a>1. 変更の概要</h3>
+
+この節では、Project Looking Glassに対しておこなわれた前のリリース(バージョン0.5.1)からの主な変更の概要について述べます。
+
+<h4><a name="App_quality_improvements"></a>1.1 X11アプリケーションの質の向上</h4>
+多くのバグが修正されました。
+現在では大部分のX11アプリケーションが適切に動作します。
+ただし、いくつかのアプリケーションは軽微な問題を抱えています。
+Mozilla、Evolution、およびOpenOfficeのような主要なアプリケーションは正しく動作します。
+修正されたバグのリストについては、下記の"解決された問題"を参照してください。
+<br />
+<h4><a name="X11_perf_improvements"></a>1.2 X11の性能向上</h4>
+Xアプリケーションは大幅にスピードアップしましたが、まだこれに関してやらなければならないことが沢山あります(下記参照)。
+<br />
+<h4><a name="Window_resizing"></a>1.3 ウィンドウのリサイズのサポート</h4>
+現在は、X11アプリケーションのウィンドウをリサイズできます。
+ビジュアルフィードバックは少しおかしいですが、少なくとも動作しています。
+<br />
+<h4><a name="Client_api_cleanup"></a>1.4 3DクライアントAPIのクリーンアップ</h4>
+3DクライアントAPIは全体的にクリーンアップされつつあります。
+この変更は、JavaDocに反映されています。
+これに関して行われた作業の一部のリストを次に示します．
+<br /><br />
+<li>KeyEventサポートの追加。</li>
+<li>ジェスチャフレームワークの第一段階の追加。</li>
+<li>設定フレームワークの追加。</li>
+<li>コアプラットフォームへのincubatorプロジェクトの統合。</li>
+<li>イベントシステムの非同期化。</li>
+<li>Component3D変換スタックの再設計。</li>
+<br />
+<h3><a name="Limitations"></a>2. このリリースの制限</h3>
+LG3Dはまだ開発中なので、まだ進行中の作業が沢山あることを覚えておいてください。
+だから、システムには次のような制限があることを知っておく必要があります。
+将来のリリースで扱う予定のすべての領域が挙げられています。
+
+<h4><a name="Perf_sluggish"></a>2.1 性能が悪い</h4>
+性能はまだ非常によくありません。
+カーソルはしばしば一時停止します。
+複数の大きなウィンドウが表示されている時に、動作が特に遅くなります。
+動作を高速化する一つの方法は、大きなウインドウを小さくリサイズするか、使っていないウィンドウをアイコン化することです。
+<br />
+
+<h4><a name="Stability_probs"></a>2.2 安定性の問題</h4>
+ディスプレイサーバは、まだ時々不定期にクラッシュする問題を抱えていますが、その頻度は大幅に減りました。
+これらのクラッシュの大部分の原因は、/var/tmp/lgserver.logの中に次のようなメッセージとして現れます。
+<br /><br />
+WARNING: MessageFactory error in thread Escher-DinReader-For-DevicePoller
+<br />
+WARNING: MessageFactory.build_extension_event: Unsupported extension event: 118
+<br /><br />
+(または111および116の未サポートの拡張イベントコードを見るかもしれません。)
+<br /><br />
+または、X11アプリケーションは時々次のようなメッセージを出力するでしょう。
+<br /><br />
+Xlib: unexpected async reply (sequence 0x413b2)!
+<br /><br />
+これらの症状が起これば、通常はlg3d-sessionを再起動する必要があります。
+<br /><br />
+もし上記のメッセージのどれかに出会ったならば、<a href="https://lg3d-core.dev.java.net/issues/show_bug.cgi?id=157">課題157</a>にコメントを追加してください。
+あなたが見たメッセージとそのメッセージが表示された時にあなたが何をしていたか(すなわち、どのアプリケーションを実行して、どんな操作をしていたか)と一緒に、あなたが使用しているプラットフォームの説明(ハードウェアとLinuxの種類)を含めてください。
+これは我々がその問題をデバッグするために役に立つでしょう。
+<br />
+
+<h4><a name="ATI_probs"></a>2.3 ATIデバイスのレンダリングの問題</h4>
+lg3d-sessionを実行した時のATIデバイスのレンダリングの問題が報告されています。
+より詳しくは、<a href="https://lg3d-core.dev.java.net/issues/show_bug.cgi?id=100">課題100</a>を参照してください。
+<br />
+
+<h4><a name="No_3D_keyboard_events"></a>2.4 LG3D対応アプリケーションでキーボードイベントが未サポート</h4>
+キーボードイベントを受け取るアプリケーションを、LG3DクライアントAPIを使用して書くことはできません。
+<br />
+
+<h4><a name="No_XINPUT"></a>2.5 XINPUT拡張の使用が未サポート</h4>
+XINPUT拡張を使用するX11アプリケーションは、正しく機能しないかもしれません。
+<br />
+
+<h4><a name="No_open_office_presenter_full_screen"></a>2.6 OpenOfficeプレゼンテーションのフルスクリーンモードが未サポート</h4>
+ほぼフルスクリーンになるようにウィンドウをリサイズすることで、この問題をいくらか回避することができます。
+<br />
+
+<h4><a name="No_multiscreen"></a>2.7 マルチスクリーンのサポートなし</h4>
+このリリースは、コンピュータ1台に対してlg3d-sessionを一つだけしか実行できません。
+つまり、単一スクリーンしかサポートしていません。
+二つ以上のスクリーンの設定は、別々または同時(例、Xineramaモード)のどちらも、まだサポートされていません。
+<br />
+
+<h4><a name="Terminal_windows_root"></a>2.8 lg3d-sessionのターミナルウィンドウはrootユーザ</h4>
+ターミナルアイコンをクリックした時に立ち上がるシェルはrootユーザです。
+だから、これらのシェルにコマンドを入力する時には注意するようにしてください。
+<br />
+
+<h3><a name="Known_Bugs"></a>3. 既知のバグ</h3>
+現在の既知のバグのリストは、
+<a href="https://lg3d-core.dev.java.net/issues/buglist.cgi?Submit+query=Submit+query&amp;component=lg3d-core&amp;issue_status=NEW&amp;issue_status=STARTED&amp;issue_status=REOPENED">ここをクリック</a>すれば入手することができます。
+
+<h3><a name="Fixed_issues"></a>4. 解決された課題</h3>
+以下は、リリース0.6.1ですでに修正された課題のリストです。
+<br /><br />
+94  P1 	MouseWheel causes exception
+<br />
+132 P1 	Restoring application after minized doesn't work
+<br />
+133 P1 	NativePopup3D doesn't handle input only windows
+<br />
+162 P1 	xterm resize: window contents do not resize properly
+<br />
+174 P1 	Stability: Xlib sequence lost error
+<br />
+175 P1 	Stability: Mystery hang
+<br />
+176 P1 	Stability: reply out of order
+<br />
+181 P1 	moving mouse quickly over gcalculator case X crash
+<br />
+209 P1 	Some windows don't receive initial input focus
+<br />
+217 P1 	Mouse gestures start suddendly and never stop
+<br />
+225 P1 	Problems with demo apps images
+<br /><br />
+45  P2 	realplayer doesn't run
+<br />
+92  P2 	Improper keyboard focus management with xterm + jedit
+<br />
+102 P2 	Stability: Mozilla scroll bars hang system on some web pages
+<br />
+123 P2 	xterm scroller is not rendered when resizing it
+<br />
+124 P2 	Minimized view does not disappear on kill
+<br />
+138 P2 	menu and popup window doesn't work now
+<br />
+139 P2 	Moving or resizing a window creates white "WID holes"
+<br />
+140 P2 	Mozilla edit window comes up in the wrong place and garbaged
+<br />
+146 P2 	Component3D's size change doesn't update container's layout
+<br />
+148 P2 	Mozilla menu garbaged when the first menu brought up
+<br />
+156 P2 	Dragging the scrollbars of various applications doesn't work
+<br />
+159 P2 	mozilla navigator: trying to bring up Preferences fails
+<br />
+160 P2 	heihlighting text inside a native window doesn't work
+<br />
+163 P2 	Visiting a certain internal Sun web site causes mozilla to c
+<br />
+165 P2 	staroffice presenter: Can't draw figures
+<br />
+166 P2 	staroffice word: causes a NullPointer exception when it star
+<br />
+171 P2 	mozilla mail: cannot click on Delete button multiple times t
+<br />
+177 P2 	LookupDeviceIntRec id=0x0 not found
+<br />
+178 P2 	gnome-about:cannot destroy associated mozilla navigator
+<br />
+179 P2 	Poor support for moving Component3D between Container3Ds
+<br />
+188 P2 	X window appears at the center after first creation and unic
+<br />
+191 P2 	garbage images when scrolling in some applications
+<br />
+193 P2 	Popups sometimes come up in the wrong location
+<br />
+202 P2 	Race condition in native window resizing
+<br />
+208 P2 	resizing a window sometimes leaves garbage in portions of th
+<br />
+213 P2 	emacs: using menus frequently causes emacs to segv
+<br />
+219 P2 	lgcapture has stopped working.
+<br />
+226 P2 	Mozilla mail: clicking middle mouse button causes exception
+<br /><br />
+143 P3 	Psuedo3DShortcut should have a fixed size
+<br />
+164 P3 	Stuck popup help windows
+<br />
+196 P3 	IllegalArgumentException raised when using the GlassyCubeMen
+<br />
+199 P3 	Some of SceneManager API resides in an implementation packag
+<br />
+203 P3 	If you shrink a window as small as it will go you can crash
+<br />
+206 P3 	xterm resize: sometimes has an off-by-a-few-pixels error
+<br /><br />
+
+<h3><a name="Acks"></a>5. 謝辞</h3>
+このプロジェクトはLG3Dコミュニティに積極的に参加している人達に感謝します。
+あなたのコードへの貢献や、アイデア、ドキュメントのレビュー、およびテストは、このプロジェクトを進行するために非常に役に立ちました。
+特に、Amir Bukhariに感謝します。
+彼は、Xアプリケーションをデバッグして修正するために非常に多くの時間を費やしてくれました。
+彼の貢献は、このリリースのゴールを達成するために非常に役立ちました。
+さらに、スプラッシュスクリーンに貢献してくれたPhil DowellとLG3D Webページを保守してくれているDavid WeizadesとKirk Turnerに特に感謝します。
+<br /><br />
+
+  <b>参考:</b><br />
+  <br />
+  <a href="lg3d-getting-started.html">さぁ、はじめよう Project Looking Glass 開発者リリース</a><br />
+  <a
+ href="lg3d-developers-guide.html">Project
+ Looking Glass 3D Desktop Developer's Guide</a><br />
+</body>
+</html>

@@ -1,0 +1,416 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html>
+  <head>
+    <meta http-equiv="content-type" content="text/html; charset=utf-8" />
+    <title>テクスチャを使う</title>
+  </head>
+
+  <body bgcolor="white">
+    <h1>JavaOne Tokyo Hands on Lab : <br>
+        Project Looking Glass (LG3D) Basic Programming</h1>
+    <h2>4.4 テクスチャを使う</h2>
+
+   <b>この章で行うこと : </b><br>
+   ここまでで作成したボックスを拡張します。<br>
+   以下のようなボックスを作成してみます。
+    <ul>
+      <li> 同じ画像をすべての面に貼り付けたボックス
+      <li> すべての面に異なるの画像を貼り付けたボックス
+    </ul>
+
+    <h3>テクスチャとは？</h3>
+    
+    <p> 3Dコンピュータグラフィックスにおいて、
+    3Dオブジェクトの表面に貼り付ける画像のことをテクスチャと呼びます。<br>
+    テクスチャを利用することにより3Dオブジェクトの質感などを簡単に表現することができます。<br>
+    下図は前章で作成したボックスにテクスチャを貼ったした例です。<br>
+    左から順に、テクスチャ無し、木のテクスチャ、ピンクの大理石のテクスチャ、氷のテクスチャです。
+    <br><br><br>
+    <img src="pictures/c3_0.jpg">
+    <br><br><br>
+
+	<hr>
+    <h3>画像ファイルをプロジェクトに取り込む</h3>
+
+    <p>テクスチャを利用するためには、まず画像を用意します。<br>
+       ここではあらかじめ用意された画像(photo01.jpg - photo06.jpg)を利用します。<br>
+       画像は作成するJARアプリケーションとは別に用意しても構いませんが、
+       簡単化のために作成するJARアプリケーション内部に取り込むことにします。<br>
+
+
+    <p> 
+	<ol>	
+	　　<li><b>「4.3 Jarベースのアプリケーションの作成と実行」</b> にある <a href="c3.html#iconfile">「アイコンファイルのプロジェクトへの取り込み」</a> を参考にして、<br>
+		画像(photo01.jpg - photo06.jpg)をプロジェクトのソースフォルダに取り込みます。<br>
+		(シフトキーを押しながらマウスで選択すると、複数選択が行えます)<br><br>
+
+      <li> 画像ファイルの取り込みが終わりましたら、下図のように画像ファイルが追加されたことを確認します。<br>
+           これでプロジェクトへのファイルの追加は完成です。<br>
+           プロジェクトを構築する際に、これらのファイルが自動的にJARアプリケーションに追加されます。<br>
+      <br><br><br>
+      <img src="pictures/c4_01.png">
+      <br><br><br>
+    </ol>
+	
+	
+	
+	
+	
+	
+    <hr>
+    <h3>テクスチャを使う(その1)</h3>
+
+<p> 前章で作成したボックスにテクスチャを貼ってみます。<br>
+まずは 1つの画像をすべての面に表示させてみます。<br>
+<br>
+テクスチャを用いるためにプログラムに以下の変更を行います。
+<ul>
+  <li> アピアランスの生成部分について<br>
+       前章では3Dオブジェクトの表面の情報を指定するために
+       アピアランスを使用することを学びました。
+       テクスチャは3Dオブジェクトの表面に貼り付ける画像ですので、
+       その指定にも同じアピアランスを用います。<br>
+       具体的には、
+       org.jdesktop.lg3d.utils.shape.SimpleAppearance クラスの引数の
+      「R,G,B,アルファ(透過度)」の部分を
+      「<font color="red"><b>テクスチャとして利用する画像ファイルのURL</b></font>」
+       に変更します。
+       ( JPEG, GIF, PNG の 3つ画像ファイル形式に対応しています。 )<br><br>	
+  <li> 画像ファイルのURLについて<br>
+  		画像ファイルのURLは以下の形式で指定します。　
+		
+		<ul>
+			<li> * World Wide Web 上のファイルの場合: <br>
+				<b>&quot;http://www.foo.com/image.jpg&quot;</b><br>
+			<li> ローカルディスク上のファイルの場合: <br>
+				<b>&quot;file:///jarFileFullPath/imageFileName.jpg&quot;</b><br>
+			<li> Jarファイルに取り込んだ画像を利用する場合： <br>
+				<b>&quot;jar:http:jarFileFullPath/jarFileName.jar!/image.jpg&quot;</b> （Web上にあるJar ファイル）<br> 
+				<b>&quot;jar:file:jarFileFullPath/jarFileName.jar!/image.jpg&quot;</b> （ローカルにある Jar ファイル）<br>
+		</ul>
+		今回の場合、画像ファイルはすべてJarファイル内にありますので、<br>
+		URLは <b>jar:file:/home/duke/lg3d/usr/share/lg3d/ext/app/TextureBox.jar!/image.jpg</b> のようになります。<br>
+		しかし、上記のように<font color="red">フルパスをプログラム内に記述すると開発者と異なる環境では正しく動作しません</font>。<br>
+		その問題を解決するために、ここでは <b>ClassLoader</b> を利用し、URLを取得します。<br>
+		以下のように <b>ClassLoader</b> を使って、Jar ファイルにある画像ファイル、image.jpg の URL を取得します。<br>
+		    <table border><tr><td>
+<pre><b><font color="red">ClassLoader loader = this.getClass().getClassLoader();
+url = loader.getResource("image.jpg");</font></b></pre>
+    		</td></tr></table><br>
+		
+  <li> 例外処理について<br>
+       アピアランス生成時に指定された画像ファイルの
+       読み込みに失敗した場合に IOException を発生します。<br>
+       そのため、例外処理を加える必要があります。<br><br>
+	   
+  <li> org.jdesktop.lg3d.utils.shape.Box オブジェクトの生成部分について<br>
+        ボックスにテクスチャを貼るためには Box.GENERATE_TEXTURE_COORDS
+        というフラグを立てる必要があります。<br>
+        このフラグは Boxオブジェクトがテクスチャを貼り付けるときに
+        必要となるテクスチャ座標の生成を行うというものです。
+</ul>
+<br><br>
+    <ol>
+      <li> TexureBox.javaを以下のように変更します。<br>
+           変更箇所は <font color="red"><b>赤(太字)</b></font> で示します。
+      <br><br>
+      <table border>
+      <tr><td><pre>
+/*
+ * TextureBox.java
+ *
+ * Created on 2005/09/29, 15:42
+ *
+ * To change this template, choose Tools | Options and locate the template under
+ * the Source Creation and Management node. Right-click the template and choose
+ * Open. You can then make changes to the template in the Source Editor.
+ */
+
+package texturebox;
+
+/**
+ *
+ * @author duke
+ */
+
+<font color="red"><b>import java.io.IOException;
+import java.net.URL;
+import java.lang.ClassLoader;</b></font>
+import javax.vecmath.Vector3f;
+import org.jdesktop.lg3d.sg.Appearance;
+import org.jdesktop.lg3d.utils.shape.Box;
+import org.jdesktop.lg3d.utils.shape.SimpleAppearance;
+import org.jdesktop.lg3d.wg.Component3D;
+import org.jdesktop.lg3d.wg.Frame3D;
+
+
+public class TextureBox {
+    
+    /** Creates a new instance of TextureBox */
+    
+    public TextureBox(){
+        
+        // フレームの生成
+        Frame3D frame = new Frame3D();
+
+        // シェイプの生成および設定
+        // 画像を指定した Appearance の設定
+        <font color="red"><b>Appearance appearance = null;
+       URL url = null;
+       ClassLoader loader = this.getClass().getClassLoader();</b></font>
+	   
+        // 読み込みに失敗した場合 IOException
+        // を発生させますので、それに対応するためにException処理を追加
+        <font color="red"><b>try {</b></font>
+            <font color="red"><b> url = loader.getResource("photo01.jpg");
+            appearance = new SimpleAppearance( url );
+       } catch (IOException ex) {
+            System.err.println("画像ファイルの読み込みに失敗しました。");
+            ex.printStackTrace();
+       }</b></font>
+
+        // Box の生成 
+        // 引数は、幅(x)、高さ(y)、奥行き(z)、フラグ、アピアランス
+        // Box.GENERATE_TEXTURE_COORDS は
+        // Boxオブジェクトでテクスチャを利用するために必要なフラグです
+        <font color="red"><b>Box box = new Box(0.10f, 0.08f, 0.06f, Box.GENERATE_TEXTURE_COORDS, appearance); </b></font>
+
+        // コンポーネントの生成
+        Component3D component = new Component3D();
+
+        // シェイプをコンポーネントに追加
+        component.addChild(box);
+
+        // コンポーネントをコンテナに追加
+        // ここではコンテナを使用していないので、
+        // 直接フレームに追加
+        frame.addChild(component);
+
+        // フレームの表示
+        // フレームの大きさを設定
+        frame.setPreferredSize(new Vector3f(0.1f, 0.08f, 0.06f));
+
+        // フレームの表示
+        frame.changeEnabled(true);
+        frame.changeVisible(true);
+
+    }
+    
+    /**
+     * @param args the command line arguments
+     */
+    public static void main(String[] args) {
+        // TODO code application logic here
+            new TextureBox();
+    }
+    
+}
+      </pre></td></tr></table>
+      <br><br><br>
+
+	  
+      <li><b>「4.3 Jarベースのアプリケーションの作成と実行」</b> にある <a href="c3.html#jar">「JARベースのアプリケーションの作成」 の ステップ８</a>　を参照し、プロジェクトを構築します。<br>
+	  同ページにある <a href="c3.html#run">「JARベースのアプリケーションの実行」</a> を参照し、アプリケーションの実行を行います。<br><br>
+	  実行画面は下図のようになります。
+      <br><br><br>
+      <img src="pictures/c4_02.jpg">
+      <br><br><br>
+      <li>Javaロゴをドラッグしてボックスを回転させてみて下さい。
+      全ての面に同じ画像が表示されていることがわかります。<br>
+      確認後、右下のドクロマークで LG3Dを終了します。
+      <br><br><br>
+      <img src="pictures/c4_03.jpg">
+      <br><br><br>
+     </ol>
+
+
+
+
+
+
+
+
+
+
+
+     <hr>
+     <h3>テクスチャを使う(その2)</h3>
+
+     上記では 1つの画像をすべての面に表示させる処理を行いましたが、
+     次は 6面すべてに違う画像を表示するようにプログラムを変更します。<br>
+     
+     変更点は次の通りです。<br>
+     
+     <ul>
+       <li> org.jdesktop.lg3d.utils.shape.Box オブジェクトの生成部分
+       <ul>
+         <li> アピアランスを null にする。<br>
+         各面に異なるテクスチャを貼るために、ここではアピアランスは指定しないi。
+       </ul>
+       <li> ボックスの各面に異なる画像を貼り付ける
+       <ul>
+         <li> Boxオブジェクトから各面のシェイプ(org.jdesktop.lg3d.sg.Shape3D オブジェクト) を取得。
+         <li> Shape3D.setAppearance() メソッドを利用し、ボックスの各面にアピアランスを設定する。<br>
+              各面のアピアランスは SimpleAppearance クラスを利用し、
+              別々のテクスチャを使ったアピアランスを生成する。
+        </ul>
+     </ul>
+     <br>
+    <ol>
+      <li> TextureBox.java を次のように書き換えます。<br>
+      変更部分は<font color="red"><b>赤(太字)</b></font>の部分です。
+      <br><br><br>
+      <table border>
+      <tr><td><pre>
+/*
+ * TextureBox.java
+ *
+ * Created on 2005/09/29, 15:42
+ *
+ * To change this template, choose Tools | Options and locate the template under
+ * the Source Creation and Management node. Right-click the template and choose
+ * Open. You can then make changes to the template in the Source Editor.
+ */
+
+package texturebox;
+
+/**
+ *
+ * @author duke
+ */
+
+import java.io.IOException;
+import java.net.URL;
+import java.lang.ClassLoader;
+import javax.vecmath.Vector3f;
+import org.jdesktop.lg3d.sg.Appearance;
+<font color="red"><b>import org.jdesktop.lg3d.sg.Shape3D;</b></font>
+import org.jdesktop.lg3d.utils.shape.Box;
+import org.jdesktop.lg3d.utils.shape.SimpleAppearance;
+import org.jdesktop.lg3d.wg.Component3D;
+import org.jdesktop.lg3d.wg.Frame3D;
+
+
+public class TextureBox {
+    
+    /** Creates a new instance of TextureBox */
+    public TextureBox() { 
+        
+        // フレームの生成
+        Frame3D frame = new Frame3D();
+		
+		
+        // シェイプの生成および設定
+        // ボックス６面の画像を指定した Appearance の設定
+<font color="red"><b>       Appearance appearanceFront = null;
+       Appearance appearanceRight = null;
+       Appearance appearanceLeft = null;
+       Appearance appearanceTop = null;
+       Appearance appearanceBottom = null;
+       Appearance appearanceBack = null;</b></font>
+        URL url = null;
+        ClassLoader loader = this.getClass().getClassLoader();</b></font>
+
+        
+        // SimpleAppearance オブジェクトを作成する際に、
+        // テクスチャファイルの読み込みに失敗した場合 IOException
+        // を発生させますので、それに対応するためにException処理を追加
+        try {
+            <font color="red"><b>url = loader.getResource("photo01.jpg");
+           appearanceFront = new SimpleAppearance( url );
+           url = loader.getResource("photo02.jpg");
+           appearanceRight = new SimpleAppearance( url );
+           url = loader.getResource("photo03.jpg");
+           appearanceLeft = new SimpleAppearance( url );
+           url = loader.getResource("photo04.jpg");
+           appearanceTop = new SimpleAppearance( url );
+           url = loader.getResource("photo05.jpg");
+           appearanceBottom = new SimpleAppearance( url );
+           url = loader.getResource("photo06.jpg");
+           appearanceBack = new SimpleAppearance( url );</b></font>
+        } catch (IOException ex) {
+            System.err.println("画像ファイルの読み込みに失敗しました。");
+            ex.printStackTrace();
+        }
+        // Box の生成
+        // 引数は、幅(x)、高さ(y)、奥行き(z)、フラグ、アピアランス
+        // Box.GENERATE_TEXTURE_COORDS は
+        // Boxオブジェクトで テクスチャを利用するために必要なフラグです
+        // 6面の Appearance を貼り付けるため、とりあえず Box の Appearance を null にします。
+<font color="red"><b>       Box box = new Box(0.10f, 0.08f, 0.06f, Box.GENERATE_TEXTURE_COORDS, null);
+        
+       // 正面
+       Shape3D shape = box.getShape(Box.FRONT);
+       shape.setAppearance(appearanceFront);
+
+       // 右側
+       shape = box.getShape(Box.RIGHT);
+       shape.setAppearance(appearanceRight);
+
+       // 左側
+       shape = box.getShape(Box.LEFT);
+       shape.setAppearance(appearanceLeft);
+
+       // 上
+       shape = box.getShape(Box.TOP);
+       shape.setAppearance(appearanceTop);
+
+       // 下(底面)
+       shape = box.getShape(Box.BOTTOM);
+       shape.setAppearance(appearanceBottom);
+
+       // 後
+       shape = box.getShape(Box.BACK);
+       shape.setAppearance(appearanceBack);
+</b></font>
+        // コンポーネントの生成
+        Component3D component = new Component3D();
+
+        // シェイプをコンポーネントに追加
+        component.addChild(box);
+
+        // コンポーネントをコンテナに追加
+        // ここではコンテナを使用していないので、
+        // 直接フレームに追加
+        frame.addChild(component);
+
+        // フレームの表示
+        // フレームの大きさを設定
+        frame.setPreferredSize(new Vector3f(0.1f, 0.08f, 0.06f));
+
+        // フレームの表示
+        frame.changeEnabled(true);
+        frame.changeVisible(true);
+
+    }
+    
+    /**
+     * @param args the command line arguments
+     */
+    public static void main(String[] args) {
+        // TODO code application logic here
+        new TextureBox();
+
+    }
+    
+}
+      </pre></td></tr></table>
+      <br><br><br>
+      <li><b>「4.3 Jarベースのアプリケーションの作成と実行」</b> にある <a href="c3.html#jar">「JARベースのアプリケーションの作成」 の ステップ８</a>　を参考して、プロジェクトを構築します。<br>
+	  同ページにある <a href="c3.html#run">「JARベースのアプリケーションの実行」</a> を参考して、アプリケーションの実行を行います。<br><br>
+      LG3Dの実行ウィンドウが表示されますので、Javaロゴをドラッグし、
+      各面に違う画像が表示されているか確認します。
+      <br><br><br>
+      <img src="pictures/c4_04.jpg">
+      <br><br><br>
+     </ol>
+
+    <hr>
+    <ul>
+    <li><a href="c5.html">「4.5 サムネイルの作成」</a> に進む
+    <br><br>
+    <li><a href="index.html">メニューに戻る</a>
+    </ul>
+
+  </body>
+</html>

@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<java version="1.5.0" class="java.beans.XMLDecoder">
+ <object class="org.jdesktop.lg3d.scenemanager.config.ApplicationDescription">
+  <void property="exec">
+   <string>java Tutorial1</string>
+  </void>
+  <void property="iconFilename">
+   <string>tutorial1.png</string>
+  </void>
+  <void property="name">
+   <string>Tutorial 1</string>
+  </void>
+  <void property="classpathJars">
+   <string>Tutorial1.jar</string>
+  </void>
+ </object>
+</java>

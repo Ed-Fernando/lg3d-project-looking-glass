@@ -1,0 +1,877 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<title>Software Design 2005.10 Project Looking Glass 徹底攻略 第 2 章</title>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<link href="../../preview.css" rel="stylesheet" type="text/css" />
+<meta name="Author" content="Hideya KAWAHARA, Yuichi SAKURABA" />
+</head>
+<body bgcolor="#FFFFFF"> 
+<div id="projectdocumentview" class="app" style="width: 550px;"> 
+  <p>次世代 Java ベースデスクトップ/3D アプリ開発環境 Project Looking Glass 徹底攻略</p> 
+  <h1>LG3D プログラミングのはじめ方</h1> 
+  <h2>API 概説と基礎解説</h2> 
+  <p>&nbsp;</p> 
+  <p>川原 英哉 KAWAHARA Hideya</p>
+  <p>櫻庭 祐一 SAKURABA Yuichi <a href="http://www.javainthebox.net/">http://www.javainthebox.net/</a></p>
+  <p>初出: <a href="http://www.gihyo.co.jp/magazines/SD/archive/200510">Software Desing 2005 年 10 月号</a></p> 
+  <hr /> 
+  <p>本章では，LG3D アプリの開発について，その第一歩をサンプルを交えて説明します．</p> 
+  <h2 style="padding: 5px; background-color: #BDD633; font-size: x-large; font-weight: bold; text-align: center">API 概要</h2> 
+  <div style="float:right"> 
+    <p>川原 英哉 KAWAHARA Hideya</p> 
+  </div> 
+  <p style="clear: both;">まず，LG3D アプリの開発で使われる API を概観します．3D を前提にした API なのですが，それをあまり意識することなく，AWT，Swing 経験者であれば 3D アプリを作成したことのない開発者にも比較的わかりやすいように設計されています．</p> 
+  <h3>3D 環境を提供する LG3D のデスクトップ</h3> 
+  <div style="float: right; padding: 10px; width: 352px;"> 
+    <table> 
+      <tr> 
+        <td nowrap="nowrap"><span style="padding: 1px; padding-right: 5px; padding-left: 5px; background: #333333; color:#FFFFFF; font-weight: bold;">図 1</span></td> 
+        <td style="font-weight: bold; background: #FFFFFF; color: #2682C5; padding-left: 10px;">3D 空間内に配置される LG3D の構成要素</td> 
+      </tr> 
+    </table> 
+    <a href="sec2-fig/f1.gif"><img src="sec2-fig/f1_t.gif" alt="3D 空間内に配置される LG3D の構成要素" width="352" height="198" border="0" /></a></div> 
+  <p>実際に動かしてみてわかるように，LG3D のデスクトップは 3D 環境を提供しています．デスクトップには 3D 空間が広がっており，タスクバーやバッ<br /> 
+    クグラウンドといったデスクトップを構成するコンポーネントは，すべて 3D 空間内に配置されます．つまり，LG3D アプリも，3D 空間内に存在する 3D <br /> 
+    オブジェクトなのです (図 1)．</p> 
+  <h3>LG3D アプリ API とは? </h3> 
+  <div style="float: right; padding: 10px; width: 352px;"> 
+    <table> 
+      <tr> 
+        <td nowrap="nowrap"><span style="padding: 1px; padding-right: 5px; padding-left: 5px; background: #333333; color:#FFFFFF; font-weight: bold;">図 2</span></td> 
+        <td style="font-weight: bold; background: #FFFFFF; color: #2682C5; padding-left: 10px;">LG3D アプリ API の概要</td> 
+      </tr> 
+    </table> 
+    <a href="sec2-fig/f2.gif"><img src="sec2-fig/f2_t.gif" alt="LG3D アプリ API の概要" width="352" height="198" border="0" /></a></div> 
+  <p>LG3D では，3D の外観を持つアプリ構築用の API が規定されており，これを「LG3D アプリ API」と呼びます．図 2 に LG3D アプリ API の概要を示します．</p> 
+  <p>API は J2SE 5.0 上に構成され，おおむね 2 つの部分に大別できます．1 つ目は，「LG3D シーングラフクラス」と呼ばれるクラスで，もう 1 つは「LG3D 固有クラス」と呼ばれるクラスです．</p> 
+  <p>&nbsp;</p> 
+  <h4>LG3D シーングラフクラス</h4> 
+  <p>「LG3D シーングラフクラス」は Java 3D のクラスをベースにしており，機能的にはそのサブセットになっています．これは，具体的には Geometry クラス，Shape3D クラス，Appearance クラスといった，3D オブジェクトの形状や見栄えを指定する際に利用するクラス群で構成されています．</p> 
+  <p>&nbsp;</p> 
+  <h4>LG3D 固有クラス</h4> 
+  <p>これに対し，「LG3D 固有クラス」は LG3D で新規に導入されたクラスで，LG3D のコンポーネントモデルを構成するための基本クラス群です．コンポーネント，コンテナの関係を実装する Component3D クラスと Container3D クラスや，すべてのアプリの大元のコンテナ (ルートコンテナ) となる Frame3D クラスが含まれます．</p> 
+  <p>また，マウスなどのイベント処理に利用する EventAdapter インタフェースや Action インタフェース，アニメーションを定義する際に使う Animation クラスなども含まれます．</p> 
+  <hr /> 
+  <p>これら基本的なクラスに加え，各種ユーティリティ的なクラスが提供されており，それらを利用してアプリを作っていきます．</p> 
+  <p>&nbsp;</p> 
+  <h3>LG3D アプリ API の使用例 ～ イメージビューアを例に</h3> 
+  <div style="float: right; padding: 10px; width: 317px;"> 
+    <table> 
+      <tr> 
+        <td nowrap="nowrap"><span style="padding: 1px; padding-right: 5px; padding-left: 5px; background: #333333; color:#FFFFFF; font-weight: bold;">図 3</span></td> 
+        <td style="font-weight: bold; background: #FFFFFF; color: #2682C5; padding-left: 10px;">Zoetrope に見る LG3D アプリ API の使用例</td> 
+      </tr> 
+    </table> 
+    <a href="sec2-fig/f3.gif"><img src="sec2-fig/f3_t.gif" alt="Zoetrope に見る LG3D アプリ API の使用例" width="317" height="157" border="0" /></a></div> 
+  <p>LG3D アプリ API の利用方法を知る 1 つの手段は，実際のアプリがどのようなクラスを使っているかを見ることでしょう．</p> 
+  <p>図 3 は，1 章でも出てきたイメージビューア「Zoetrope」が，どのような LG3D アプリ API を利用しているかを大雑把に示したものです．ここではクラスの細かい説明は抜きにして，全体の雰囲気を掴むことを目的に見ていきましょう．</p> 
+  <p>&nbsp;</p> 
+  <h4>アプリ全体 / 画像表示部</h4> 
+  <p>アプリの大元となるルートコンテナは Frame3D クラスです．AWT でいう Frame クラスに相当します．本体のガラスっぽい部分は，ユーティリティクラスの 1 つである GlassyPanel クラスが使われています．また，イメージの描画には FuzzyEdgePanel クラスが利用されています．</p> 
+  <p>このように，LG3D アプリ API には，GlassyPanel や FuzzyEdgePanel といった，便利なユーティリティクラスが提供されています．</p> 
+  <p>&nbsp;</p> 
+  <h4>サムネイル部</h4> 
+  <p>本体左のサムネイルの各画像は，LG3D コンポーネントの最小単位である Component3D クラスで構成されています．これに，マウスがクリックされたときの動作 (選択されたイメージを前面に動かす) を実装するために，MouseClickedEventAdapter クラスが使われています．また，その前面に動かす際のアニメーションをスムーズにするため，NaturalMotionAnimation クラスが利用されています． </p> 
+  <p>左側のサムネイルの集合は，マウスホイールで操作できるのですが，この Component3D クラスのインスタンス群をまとめているのが Container3D クラスです．このContainer3D に対し，マウスホイールの回転に連動した動作を実装するために MouseWheelEventAdapter クラスが，また，サムネイル群をリング状に配置するために LayoutManager3D インタフェースが利用されています．</p> 
+  <p>&nbsp;</p> 
+  <h3>終わりに</h3> 
+  <p>以上，LG3D アプリ API を概観しました．だいたいの雰囲気は掴めたでしょうか．それでは，実際にサンプルを作っていくことで，具体的に API の使い方を見ていきましょう．</p> 
+  <p>&nbsp;</p> 
+  <h2 style="padding: 5px; background-color: #BDD633; font-size: x-large; font-weight: bold; text-align: center">Project Looking Glass プログラミング基礎編</h2> 
+  <div style="float:right"> 
+    <p>櫻庭 祐一 SAKURABA Yuichi</p> 
+  </div> 
+  <p>&nbsp;</p> 
+  <h3>はじめに</h3> 
+  <h4>ソースコードのダウンロードについて</h4> 
+  <p>ここまで基本的な API について説明しましたので，実際にこれらの API を使用して 3D のアプリケーションを作ってみましょう．</p> 
+  <p> なお，スペースの制約もあり，すべてのソースコードを示すことはできません．ソースコードを技術評論社の本誌 Web ページ (<a href="http://www.gihyo.co.jp/magazines/SD/support/200510/">http://www.gihyo.co.jp/magazines/SD/support/200510/</a>) からダウンロードできます．</p> 
+  <p>&nbsp;</p> 
+  <p>注 LG3D のプロジェクトサイトからでもダウンロードできるようになっています。ダウンロードは <a href="basicsample.zip">ここ</a> からお願いします。 </p> 
+  <p>&nbsp;</p> 
+  <h4>アプリケーション作成の定石</h4> 
+  <p>AWT でも Swing でもアプリケーションを作るには定石がありますね．LG3D でも同じように定石があります．定石に沿っていくことで，3D のアプリケーションでもあまり 3D であることを意識することなく作成することができます．このため，Swing や AWT を使用してアプリケーションを作成されたことがある方であれば，すぐにでもアプリケーションを作成することができます．</p> 
+  <p> もちろん，3D の特性を活かしてアプリケーションを作成することもできるのですが，今回は基本的なところからということで定石に沿って進めていきたいと思います．</p> 
+  <p>&nbsp;</p> 
+  <h4>基本的な流れ</h4> 
+  <div style="float: right; padding: 10px; width: 163px;"> 
+    <table> 
+      <tr> 
+        <td nowrap="nowrap"><span style="padding: 1px; padding-right: 5px; padding-left: 5px; background: #333333; color:#FFFFFF; font-weight: bold;">図 4</span></td> 
+        <td style="font-weight: bold; background: #FFFFFF; color: #2682C5; padding-left: 10px;">アプリケーションの基本的な構造</td> 
+      </tr> 
+    </table> 
+    <a href="sec2-fig/f4.gif"><img src="sec2-fig/f4_t.gif" alt="アプリケーションの基本的な構造" width="163" height="422" border="0" /></a></div> 
+  <p>アプリケーションを作成するときの流れを UML のアクティビティ図で表したのが図 4 です．大別すると，(1)，(2) がアプリケーションの土台づくり，(3)～(8) が表示するコンテンツの作成，(9)，(10) が後処理となります．</p> 
+  <h5>アプリケーションの土台づくり</h5> 
+  <p> はじめに，(1) で示しているすべてのコンポーネントのコンテナとなるフレームを生成します．このフレームがすべてのベースになります．</p> 
+  <p> 次に，(2) のフレームに追加するコンテナを生成します．そして，コンテナにはコンポーネントを追加していきます．フレームもコンテナなので，直接コンポーネントを追加することも可能です．ちょうど，AWT の Frame オブジェクトにコンテナである Panel オブジェクトを追加し，そこにコンポーネントである Button オブジェクトなどを追加するようなイメージですね．</p> 
+  <p> ただし，AWT/Swing と LG3D では描画の対象が異なります．AWT/Swing では描画の対象は Component クラスもしくは JComponent クラスを派<br /> 
+    生させたクラス，たとえば Button クラスなどになります．一方の LG3D では描画の対象は派生クラスではなく，「シェイプ」と呼ばれるクラス群になります．コンポーネントはシェイプに対して描画処理を委譲します．シェイプには標準でボックスや球などがあり，新たに作ることも可能です．</p> 
+  <h5> 表示するコンテンツの作成</h5> 
+  <p> (3) でシェイプを生成し，(4) でシェイプを追加するコンポーネントを生成します．(5) でシェイプをコンポーネントに追加しますが，1 つのコンポーネントに複数のシェイプを追加することも可能です．</p> 
+  <p> シェイプをコンポーネントに追加したら，AWT/Swing と同様にコンポーネントに (6) のイベント処理を追加します．</p> 
+  <p> ここまでできたら，コンポーネントをコンテナに追加します (7)．AWT/Swing でもコンテナにコンテナを追加できるのと同じように<sup><a href="#n1">注1</a></sup>，LG3D でもコンテナを階層化することができます．階層化した場合，(8) の子コンテナを親コンテナに追加します．</p> 
+  <h5> 後処理</h5> 
+  <p> (9) でコンテナをフレームに追加します．最後に，(10) のフレームを表示させてできあがりです．</p> 
+  <p>この流れに沿って，簡単なサンプルから作ってみましょう．</p>
+  <p>&nbsp;</p> 
+  <p><a name="n1" id="n1"></a>注 1 1 たとえば Panel オブジェクトに Panel オブジェクトを追加するなどです．</p> 
+  <p>&nbsp;</p> 
+  <h3>ボックスを作ってみよう</h3> 
+  <p>まずはじめに最もシンプルな，フレームに直接コンポーネントを 1 つ追加するサンプルを作ってみましょう．実際に描画するシェイプはボックスにしてみました．</p> 
+  <p> サンプルのクラス名は <a href="sec2-src/SimpleBox.java">SimpleBox</a> クラスで，ソースはリスト 1 に示しました．リストのコメントにある番号が図 4 で示した番号に相当しています．</p> 
+  <p>&nbsp;</p> 
+  <h4>フレームの生成 (1) </h4> 
+  <p>定石どおりに，はじめにフレームを作成します．前章で説明したようにフレームには Frame3D クラスを使用します．Frame3D クラスはデフォルトコンストラクタを使用してオブジェクトを生成します．</p> 
+  <p>定石に沿うと，次はコンテナを生成するのですが，フレームもコンテナなのでここでは省略します．</p> 
+  <p>&nbsp;</p> 
+  <h4>シェイプの生成/設定 (2)</h4> 
+  <p>次に行うのはシェイプの生成/設定です．自分でシェイプを作ることもできるのですが，ここでは標準で用意されているシェイプを使用しましょう．</p> 
+  <h5>シェイプの種類</h5> 
+  <p> 標準で用意されているシェイプは大別すると 2 種類あります．一方が球や円柱など 3D のモデルを作るための基本となるようなシェイプで，プリミテ<br /> 
+    ィブと呼びます．もう一方が，ネイティブアプリケーションなどを表示するときに使われるシェイプで，パネルと呼びます．どちらも org.jdesktop.lg3d.utils.shape パッケージで定義されています．おもなシェイプを表 1 に示しました．</p> 
+  <p> ここではボックス (直方体) を表示したいので，プリミティブの中の1つである Box クラスを使用します．</p> 
+  <p>&nbsp;</p> 
+  <div style="width: 300px; margin: auto; padding-left: 20px; padding-right: 20px;"> 
+    <table> 
+      <tr> 
+        <td nowrap="nowrap"><span style="padding: 1px; padding-right: 5px; padding-left: 5px; background: #333333; color:#FFFFFF; font-weight: bold;">表 1</span></td> 
+        <td style="font-weight: bold; background: #FFFFFF; color: #2682C5; padding-left: 10px;">主なシェイプ</td> 
+      </tr> 
+    </table> 
+    <table style="border: 1 solid #FFFFFF;"> 
+      <tr> 
+        <th style="background-color:#666666; color:#FFFFFF; margin: 2px; padding: 5px;">&nbsp;</th> 
+        <th style="background-color:#666666; color:#FFFFFF; margin: 2px; padding: 5px;">クラス名</th> 
+        <th style="background-color:#666666; color:#FFFFFF; margin: 2px; padding: 5px;">説明</th> 
+      </tr> 
+      <tr> 
+        <td rowspan="4" style="background-color: #D0E072; margin: 2px; padding: 5px;">プリミティブ</td> 
+        <td style="background-color: #D0E072; margin: 2px; padding: 5px;">Box</td> 
+        <td style="background-color: #D0E072; margin: 2px; padding: 5px;">直方体</td> 
+      </tr> 
+      <tr> 
+        <td style="background-color: #D0E072; margin: 2px; padding: 5px;">Cylinder</td> 
+        <td style="background-color: #D0E072; margin: 2px; padding: 5px;">円柱</td> 
+      </tr> 
+      <tr> 
+        <td style="background-color: #D0E072; margin: 2px; padding: 5px;">Disc</td> 
+        <td style="background-color: #D0E072; margin: 2px; padding: 5px;">円盤</td> 
+      </tr> 
+      <tr> 
+        <td style="background-color: #D0E072; margin: 2px; padding: 5px;">Sphere</td> 
+        <td style="background-color: #D0E072; margin: 2px; padding: 5px;">球</td> 
+      </tr> 
+      <tr> 
+        <td rowspan="3" style="background-color: #D0E072; margin: 2px; padding: 5px;">パネル</td> 
+        <td style="background-color: #D0E072; margin: 2px; padding: 5px;">FuzzyEdgePnel</td> 
+        <td style="background-color: #D0E072; margin: 2px; padding: 5px;">周りをぼかしたパネル</td> 
+      </tr> 
+      <tr> 
+        <td style="background-color: #D0E072; margin: 2px; padding: 5px;">GlassyPanel</td> 
+        <td style="background-color: #D0E072; margin: 2px; padding: 5px;">ガラス状のパネル</td> 
+      </tr> 
+      <tr> 
+        <td style="background-color: #D0E072; margin: 2px; padding: 5px;">ImagePanel</td> 
+        <td style="background-color: #D0E072; margin: 2px; padding: 5px;">イメージ用のパネル</td> 
+      </tr> 
+    </table> 
+  </div> 
+  <h5>アピアランス</h5> 
+  <p> すぐにでも，Box オブジェクトを作りたいところですが，その前にやらなくてはいけないことがあります．それはアピアランスを設定することです．</p> 
+  <p> 3D の CG では表示される物体の形だけでなく，色や光の反射率などの表面の状態が重要になります．たとえば，金属のように見せるとか，プラス<br /> 
+    チックのように見せるためには色だけではなく，反射率も設定する必要があります．これらの物体の表面の状態を表すものを，3D CG の言葉でアピア<br /> 
+    ランスと呼びます．</p> 
+  <p> LG3D ではアピアランスを org.jdesktop.lg3d.sg.Appearance クラスで表します．また，アピアランスを簡単に扱うための org.jdesktop.lg3d.utils.shape.SimpleAppearance クラスも用意されています．</p> 
+  <p> ここでは，SimpleAppearance クラスを使用して色を付けてみます．SimpleAppearance クラスのコンストラクタはいろいろあるのですが，ここでは色を表す R，G，B，アルファを引数に取るものを使用しました．それぞれ，0 から 1 までの float の値を取ります．アルファは 0 のときが透明で，1 のときに完全に不透明となります．</p> 
+  <p> リスト 1 では R = 0.6，G = 0.6，B = 1.0，アルファ = 1.0 なので，不透明な薄い青を表しています．</p> 
+  <p>&nbsp;</p> 
+  <h4>Box オブジェクトを生成</h4> 
+  <p>次に Box オブジェクトを生成します．アピアランス以外のコンストラクタの引数はボックスのサイズです．</p> 
+  <p> LG3D で使用されるサイズはすべてメートルです．コードでは「0.1，0.08，0.06」と記述されているので，10cm，8cm，6cm を意味しています．ディスプレイでもだいたいこの大きさで表示されているはずです．</p> 
+  <p>&nbsp;</p> 
+  <h4>コンポーネントを生成 (4) </h4> 
+  <p>ボックスができたらコンポーネントの生成です．コンポーネントは Component3D クラスです．Component3D クラスもデフォルトコンストラクタを使用して，オブジェクトを生成します．</p> 
+  <p>&nbsp;</p> 
+  <h4>シェイプをコンポーネントに追加 (5)</h4> 
+  <p> そして，ボックスをコンポーネントに追加します．追加するためのメソッドは addChild です．</p> 
+  <p>&nbsp;</p> 
+  <h4>コンポーネントをコンテナに追加 (7) </h4> 
+  <p> まだイベント処理 (6) はないので，次に (7) のコンポーネントをフレーム (コンテナ) に追加です．このときに使用するメソッドも addChild です．</p> 
+  <p> また，このサンプルではコンテナはフレームだけなので，(8) と (9) は省略します．</p> 
+  <p>&nbsp;</p> 
+  <h4>フレームの表示 (10)</h4> 
+  <p>最後に，(10) のフレームの表示です．表示する前にフレームのサイズを設定しておきます．ここで設定するサイズは，シーンマネージャ (LG3D のウィンドウマネージャのことです) がアプリケーションをレイアウトするときに使用されます．サイズの設定には Swing と同じように Component3D#setPreferredSize メソッドを使用します．</p> 
+  <p>setPreferredSize メソッドの引数は，Java3D で 3 次元のベクトルを表すために用いられる Vector3f クラスです．3 が 3 次元，最後の f が float であることを示しています．</p> 
+  <p> 最後に Frame3D#changeEnabled メソッドを用いてコンポーネントのツリーを表示可能な状態にし，Component3D#changeVisible メソッドで表示します．</p> 
+  <p> これで完成です．ほとんど，3D であることを意識しないですんだのではないでしょうか<sup><a href="#n2">注2</a></sup>．しかし，これでも立派な 3D のアプリケーションなのです．</p> 
+  <p>&nbsp;</p> 
+  <p><a name="n2" id="n2"></a>注 2 あえて挙げるとしたらシェイプとアピアランスだけですね．</p> 
+  <p>&nbsp;</p> 
+  <div style="display:table; padding-left: 20px; padding-right: 20px;"> 
+    <p><strong>リスト 1 SimpleBox クラス</strong></p> 
+    <div style="background-color:#D1DCFF; color:#2682c5; padding: 10px;"> 
+      <pre>import javax.vecmath.Vector3f;
+import org.jdesktop.lg3d.sg.Appearance;
+import org.jdesktop.lg3d.utils.shape.Box;
+import org.jdesktop.lg3d.utils.shape.SimpleAppearance;
+import org.jdesktop.lg3d.wg.Component3D;
+import org.jdesktop.lg3d.wg.Frame3D;
+ 
+public class SimpleBox {
+    public SimpleBox() {
+        // 1. フレームの生成
+        Frame3D frame = new Frame3D();
+  
+        // 3. シェイプの生成および設定
+        // 色を指定した Appearance の設定
+        Appearance appearance 
+            = new SimpleAppearance(0.6f, 0.6f, 1.0f, 1.0f);
+  
+        // Box の生成
+        Box box = new Box(0.10f, 0.08f, 0.06f, appearance);
+  
+        // 4. コンポーネントの生成
+        Component3D component = new Component3D();
+  
+       // 5. シェイプをコンポーネントに追加
+        component.addChild(box);
+  
+        // 7. コンポーネントをコンテナに追加
+        // ここではコンテナを使用していないので、
+        // 直接フレームに追加
+        frame.addChild(component);
+  
+        // 10. フレームの表示
+        // フレームの大きさを設定
+        frame.setPreferredSize(new Vector3f(0.1f, 0.08f, 0.06f));
+  
+        // フレームの表示
+        frame.changeEnabled(true);
+        frame.changeVisible(true);        
+    }
+  
+    public static void main(String[] args) {
+        new SimpleBox();
+    }
+}</pre> 
+    </div> 
+  </div> 
+  <p>&nbsp;</p> 
+  <h4>コンパイルと実行</h4> 
+  <h5>コンパイル</h5> 
+  <p>それでは，完成したソースをコンパイルしてましょう．コンパイルには LG3D の JAR ファイル lg3d-core.jar が必要です．</p> 
+  <pre>$ javac -cp /opt/lg3d/lib/ext/lg3d-core.jar SimpleBox.java</pre> 
+  <p>ここでは，1 章で説明したように /opt/lg3d に LG3D がインストールされているとします．この場合，lg3d-core.jar は /opt/lg3d/lib/etc ディレクトリに<br /> 
+    配置されているので，クラスパスに指定します．</p> 
+  <div style="float: right; padding: 10px; width: 256px;"> 
+    <table> 
+      <tr> 
+        <td nowrap="nowrap"><span style="padding: 1px; padding-right: 5px; padding-left: 5px; background: #333333; color:#FFFFFF; font-weight: bold;">図 5a</span></td> 
+        <td style="font-weight: bold; background: #FFFFFF; color: #2682C5; padding-left: 10px;">SimpleBox の実行例</td> 
+      </tr> 
+    </table> 
+    <img src="sec2-fig/f5a.gif" alt="SimpleBox の実行例" width="256" height="192" border="0" /><br /> 
+    <table> 
+      <tr> 
+        <td nowrap="nowrap"><span style="padding: 1px; padding-right: 5px; padding-left: 5px; background: #333333; color:#FFFFFF; font-weight: bold;">図 5b </span></td> 
+        <td style="font-weight: bold; background: #FFFFFF; color: #2682C5; padding-left: 10px;">SimpleBox を回転させたところ</td> 
+      </tr> 
+    </table> 
+    <img src="sec2-fig/f5b.gif" alt="SimpleBox を回転させたところ" width="256" height="192" border="0" /></div> 
+  <h5>実行</h5> 
+  <p>コンパイルできたら，実行してみましょう．本来ならデプロイメントが必要なのですが，そんなことはせずにすぐ動かしてみたいですよね．</p> 
+  <p>そこで，起動用のシェルスクリプト <a href="sec2-src/runsample">runsample</a> を用意してみました (リスト 2)．これを使用して実行してみましょう．</p> 
+  <pre>$ ./runsample SimpleBox</pre> 
+  <p>なお，LG3D を /opt/lg3d ディレクトリ以外にインストールされた場合は，2 行目の LG3DHOME 変数をインストールしたディレクトリに変更してく<br /> 
+    ださい．</p> 
+  <p>Windows 版のバッチファイル<a href="sec2-src/runsample.bat"> runsample.bat</a> はスペースの関係上掲載することができませんが，先ほど紹介した編集部の Web ページからダウンロー<br /> 
+    ドすることができます．</p> 
+  <h5>動作画面</h5> 
+  <p>実行した状態では，ただの四角にしか見えません．そこで，右上の Java のマークのところでマウスをドラッグしてみてください．ドラッグに応じて回転するので，ボックスだということがおわかりになると思います (図 5)．</p> 
+  <p>&nbsp;</p> 
+  <div style="clear: both; display:table; padding-left: 20px; padding-right: 20px;"> 
+    <p><strong>リスト 2 runsample シェルスクリプト</strong></p> 
+    <div style="background-color:#D1DCFF; color:#2682c5; padding: 10px;"> 
+      <pre>#!/bin/bash
+LG3DHOME=/opt/lg3d
+ 
+LG_SETTINGS="${LG_SETTINGS} -Dlg.etcdir=${LG3DHOME}/etc/"
+ 
+if [ "$LGX11HOME" == "" ]
+then
+  LGX11HOME=${LG3DHOME}/ext/lg3d-x11
+fi
+ 
+if [ "$LGCORESRC" == "" ]
+then
+  LGCORESRC=${LG3DHOME}/src
+fi
+ 
+CLASSPATH="${LG3DHOME}/lib/ext/lg3d-core.jar:${LG3DHOME}/"
+for arg in `ls ${LG3DHOME}/ext/*.jar`
+do
+  CLASSPATH="$CLASSPATH:$arg"
+done
+LD_LIBRARY_PATH="${LG3DHOME}/lib/i386:${LD_LIBRARY_PATH}"
+ 
+DISPLAY=":0.0"
+ 
+CONFIG="lgconfig_1p_nox.xml"
+LGCONFIG="file://${LG3DHOME}/etc/lg3d/${CONFIG}"
+ 
+DISP_CONFIG="-Dlg.displayconfigurl=file://${LG3DHOME}/etc/lg3d/displayconfig/j3d1x1"
+  
+echo ${CLASSPATH}
+CLASSPATH=".:$CLASSPATH"
+ 
+java -Xmx512m -cp ${CLASSPATH} ${LG_SETTINGS} -Dlg.configurl=${LGCONFIG} ${DISP_CONFIG} $1</pre> 
+    </div> 
+  </div> 
+  <p>&nbsp;</p> 
+  <p>&nbsp;</p> 
+  <h3>イメージを表示する</h3> 
+  <p>青いボックスを表示するだけでは味気ないので，表面にイメージを貼ってみましょう．3D CG では，このように物体の表面に貼るイメージのことをテクスチャと呼びます．</p> 
+  <p>テクスチャを貼ったボックスなので，このサンプルは <a href="sec2-src/TextureBox.java">TextureBox</a> クラスとしてみました．リスト 3 に TextureBox クラスのテクスチャに関する部分を示しました．</p> 
+  <p>&nbsp;</p> 
+  <h4>アピアランスを生成</h4> 
+  <p>テクスチャも物体の表面に関する情報なので，アピアランスを使ってテクスチャを指定します．先ほどの SimpleBox クラスでは色を引数にとる SimpleAppearance クラスのコンストラクタを使用しましたが，ここではイメージファイルを引数に取るものを使用します．使用できるイメージファイルの形式は JPEG，GIF，PNG です．また，リスト 3 には示しませんでしたが，このコンストラクタは FileNotFoundException 例外と IOException 例外を投げるので，例外処理が必要です．</p> 
+  <p>&nbsp;</p> 
+  <h4>引数を 1 つ追加</h4> 
+  <p>ここで生成した Appearance オブジェクトを Box クラスのコンストラクタの引数にすれば良いように思いますが，ちょっとだけ変更が必要です．と<br /> 
+    は言っても難しいことではなく，Box クラスのコンストラクタの引数を 1 つ追加するだけです．追加された Box.GENERATE_TEXTURE_COORDS という<br /> 
+    定数は，Box クラスの親クラスである org.jdesktop.lg3d.utils.shape.Primitive クラスで定義された定数で，テクスチャの座標を生成するということを意<br /> 
+    味しています．とりあえずはあまり気にする必要はなく，こういうお約束だと思っておいて大丈夫です．</p> 
+  <p>パネルでテクスチャを貼るときにはプリミティブの場合と異なり，このような指定をする必要はありません．というのも，パネルはテクスチャが貼られることが多いので，はじめからテクスチャが使えるようになっているからです．</p> 
+  <p>&nbsp;</p> 
+  <h4>実行</h4> 
+  <p>実行するときには，実行するディレクトリに texture.jpg ファイルを配置しておいてください．実行した結果を図 6 に示しました．こちらも実行してすぐは 1 面にしかテクスチャが貼られていないようですが，回転させてみると各面にテクスチャが貼られていることがわかります．</p> 
+  <p>&nbsp;</p> 
+  <div style="width: 552px; margin: auto;"> 
+    <div style="float: left; padding: 10px; width: 256px;"> 
+      <table> 
+        <tr> 
+          <td nowrap="nowrap"><span style="padding: 1px; padding-right: 5px; padding-left: 5px; background: #333333; color:#FFFFFF; font-weight: bold;">図 6a</span></td> 
+          <td style="font-weight: bold; background: #FFFFFF; color: #2682C5; padding-left: 10px;">TextureBox の実行例</td> 
+        </tr> 
+      </table> 
+      <img src="sec2-fig/f6a.gif" alt="TextureBox の実行例" width="256" height="192" border="0" /></div> 
+    <div style="float: left; padding: 10px; width: 256px;"> 
+      <table> 
+        <tr> 
+          <td nowrap="nowrap"><span style="padding: 1px; padding-right: 5px; padding-left: 5px; background: #333333; color:#FFFFFF; font-weight: bold;">図 6b</span></td> 
+          <td style="font-weight: bold; background: #FFFFFF; color: #2682C5; padding-left: 10px;">TextureBox を回転させたところ</td> 
+        </tr> 
+      </table> 
+      <img src="sec2-fig/f6b.gif" alt="TextureBox を回転させたところ" width="256" height="192" border="0" /></div> 
+  </div> 
+  <p style="clear: both;">&nbsp;</p> 
+  <div style="display:table; padding-left: 20px; padding-right: 20px;"> 
+    <p><strong>リスト 3 TextureBox クラス (抜粋)</strong></p> 
+    <div style="background-color:#D1DCFF; color:#2682c5; padding: 10px;"> 
+      <pre>        // Texture を指定した Appearance の生成
+        Appearance appearance = new SimpleAppearance("texture.jpg");
+ 
+        // Box の生成
+        Box box = new Box(0.10f, 0.08f, 0.06f,
+                          Box.GENERATE_TEXTURE_COORDS, appearance);</pre> 
+    </div> 
+  </div> 
+  <p>&nbsp;</p> 
+  <p>&nbsp;</p> 
+  <h3>各面に異なるテクスチャを貼る</h3> 
+  <div style="float: right; padding: 10px; width: 256px;"> 
+    <table> 
+      <tr> 
+        <td nowrap="nowrap"><span style="padding: 1px; padding-right: 5px; padding-left: 5px; background: #333333; color:#FFFFFF; font-weight: bold;">図 7</span></td> 
+        <td style="font-weight: bold; background: #FFFFFF; color: #2682C5; padding-left: 10px;">TexturesBox の実行結果 (回転させたところ) 　 </td> 
+      </tr> 
+    </table> 
+    <img src="sec2-fig/f7.gif" alt="TexturesBox の実行結果" width="256" height="192" border="0" /></div> 
+  <p>続いて，ボックスの各面に異なるテクスチャを貼ってみましょう．</p> 
+  <p>ここまで，Box オブジェクトは 1 つのボックスを表すものとして扱ってきました．しかし，実際にはボックスは 6 つの面から構成されています．</p> 
+  <p>Box クラスには各面を取り出すための getShape メソッドがあるので，これを使って各面にテクスチャを貼ってみましょう．</p> 
+  <p>サンプルのクラス名は TexturesBox です．各面を取り出して，テクスチャを貼る部分をリスト 4 に示しました．</p> 
+  <p>&nbsp;</p> 
+  <h4>getShape, setAppearance メソッド</h4> 
+  <p>Box#getShape メソッドの引数は int ですが，各面を表す定数が定義してあるので，それを使います．戻り値は Shape3D クラスです．</p> 
+  <p>それぞれの面を取り出したら，Shape3D#setAppearance メソッドを使用してアピアランスを設定します．テクスチャがそれぞれ違うので，各面とも異なるアピアランスを使用します．</p> 
+  <p>&nbsp;</p> 
+  <h4>実行</h4> 
+  <p>実行してみると，各面に異なるテクスチャが貼られていることがわかると思います (図 7)．</p> 
+  <p>&nbsp;</p> 
+  <div style="display:table; padding-left: 20px; padding-right: 20px;"> 
+    <p><strong>リスト 4 TextureBox クラス (抜粋)</strong></p> 
+    <div style="background-color:#D1DCFF; color:#2682c5; padding: 10px;"> 
+      <pre>        // 各面にテクスチャを貼る
+        Shape3D shape = box.getShape(Box.FRONT);
+        shape.setAppearance(new SimpleAppearance("texture0.jpg"));
+ 
+        shape = box.getShape(Box.RIGHT);
+        shape.setAppearance(new SimpleAppearance("texture1.jpg"));
+ 
+        shape = box.getShape(Box.LEFT);
+        shape.setAppearance(new SimpleAppearance("texture2.jpg"));
+ 
+        shape = box.getShape(Box.TOP);
+        shape.setAppearance(new SimpleAppearance("texture3.jpg"));
+ 
+        shape = box.getShape(Box.BOTTOM);
+        shape.setAppearance(new SimpleAppearance("texture4.jpg"));
+ 
+        shape = box.getShape(Box.BACK);
+        shape.setAppearance(new SimpleAppearance("texture5.jpg"));</pre> 
+    </div> 
+  </div> 
+  <p>&nbsp;</p> 
+  <p>&nbsp;</p> 
+  <h3>サムネイルを付ける</h3> 
+  <p>LG3D では実行しているアプリケーションのサムネイルがタスクバーの中央部に表示されます．</p> 
+  <p>今までのサンプルもサムネイルが表示されていたのにお気付きでしょうか．表示しているのはボックスでしたが，サムネイルは半透明の板状のものでした．このサムネイルがデフォルトで表示されるのですが，やはりアプリケーションに応じたサムネイルにしたいですね．</p> 
+  <p>ということで，サムネイルを付けたボックス <a href="sec2-src/ThumbnailBox.java">ThumbnailBox</a> クラスが次のサンプルです．リスト 5 にサムネイルを設定している部分を示しました．</p> 
+  <p>&nbsp;</p> 
+  <h4>Thumbnail クラスを利用</h4> 
+  <p>サムネイルを表すクラスは org.jdesktop.lg3d.wg.Thumbnail クラスです． このクラスは Component3D クラスの派生クラスですが，コンテナとして扱うことができます．つまり，コンテナにコンポーネントを追加できるように，Thumbnail オブジェクトにもコンポーネントが追加できます．</p> 
+  <p>コンポーネントもサムネイルに使うからといって特別なものではなく，通常の Component3D クラスが使用できます．ThumbnailBox クラスでは，メインに表示するボックスと同じものをサムネイルにも表示させています．</p> 
+  <p>&nbsp;</p> 
+  <h4>手順</h4> 
+  <div style="float: right; padding: 10px; width: 256px;"> 
+    <table> 
+      <tr> 
+        <td nowrap="nowrap"><span style="padding: 1px; padding-right: 5px; padding-left: 5px; background: #333333; color:#FFFFFF; font-weight: bold;">図 8</span></td> 
+        <td style="font-weight: bold; background: #FFFFFF; color: #2682C5; padding-left: 10px;">ThumbnailBox の実行結果</td> 
+      </tr> 
+    </table> 
+    <img src="sec2-fig/f8.gif" alt="ThumbnailBox の実行結果" width="256" height="192" border="0" /></div> 
+  <p>まずボックスを生成し，テクスチャを設定します．setTextures メソッドはリスト 4 と同じ処理を行うメソッドです．</p> 
+  <p>次に，できあがったボックスをコンポーネントに追加します．Thumbnail クラスはデフォルトコンストラクタで生成し，addChild メソッドを使用してコンポーネントを追加します．</p> 
+  <p>また，Frame3D クラスと同様に setPreferredSize メソッドを使用してサイズを設定します．このサイズですが，「あれっ？」と思った方もおられるのではないでしょうか．ここで指定しているサイズは Frame3D に指定していたものと同じです．</p> 
+  <p>それじゃ，サムネイルが大きすぎると思うかもしれませんが，サムネイルは縮小表示されるのでこれで大丈夫なのです．</p> 
+  <p>最後にFrame3D#setThumbnail メソッドを使用して，フレームにサムネイルを追加します．</p> 
+  <p>&nbsp;</p> 
+  <h4>実行</h4> 
+  <p>コンパイルして実行すると，タスクバーにちゃんとボックスが配置されます．図 8 に実行結果を示しました．なかなかかわいいと思いませんか？</p> 
+  <p>&nbsp;</p> 
+  <div style="display:table; padding-left: 20px; padding-right: 20px;"> 
+    <p><strong>リスト 5 ThumbnailBox クラス (抜粋)</strong></p> 
+    <div style="background-color:#D1DCFF; color:#2682c5; padding: 10px;"> 
+      <pre>        // サムネイル用の Box の生成
+        Box thumbBox = new Box(0.10f, 0.08f, 0.06f,
+                               Box.GENERATE_TEXTURE_COORDS, null);
+        setTextures(thumbBox);
+ 
+        // サムネイル用のコンポーネントの生成
+        Component3D thumbComponent = new Component3D();
+        thumbComponent.addChild(thumbBox);
+ 
+        // サムネイルの生成
+        Thumbnail thumbnail = new Thumbnail();
+        thumbnail.addChild(thumbComponent);
+        thumbnail.setPreferredSize(new Vector3f(0.10f, 0.08f, 0.06f));
+ 
+        // サムネイルの追加
+        frame.setThumbnail(thumbnail);</pre> 
+    </div> 
+  </div> 
+  <p>&nbsp;</p> 
+  <p>&nbsp;</p> 
+  <h3>イベント処理</h3>
+  <h4>イベント処理の概要</h4>
+  <p>AWT/Swing のイベントはリスナとイベントクラスで処理します．たとえば，MouseListener インタフェースと MouseEvent クラスなどです．</p>
+  <p>一方，LG3D は違います．イベントクラスはほとんど表には出てきません．また，リスナに相当するのは，イベントアダプタとアクションになります．</p>
+  <p>この後，まずイベントアダプタとアクションについて説明を行い，その後イベント処理の方法について説明したいと思います．</p>
+  <h5>イベントアダプタ</h5>
+  <p>イベントアダプタはイベントが発生したときにコールされるクラスです．そして，イベントから情報を取り出し，アクションをコールします．</p>
+  <p>イベントアダプタはorg.jdesktop.lg3d.utils.eventadapter パッケージで定義されており，EventAdapter インタフェースを実装しています．</p>
+  <p>Release 0.7.0 で提供されているイベントアダプタを表 2 に示しました．大別するとコンポーネント関連，マウス関連，キー入力関連のイベントアダプタが提供されています．今後，バージョンが進むにつれて扱えるイベントは増える予定です．</p>
+  <p>表 2 を見ればわかるとおり，AWT/Swing のリスナの粒度よりイベントアダプタの粒度は細かくなっています．たとえば，マウスのプレスとクリックは別になっています．こうすることで，イベントから抽出する情報を限定することができ，イベントの種類によらずにアクションを呼び出すことが可能になります．</p>
+  <p>&nbsp;</p> 
+  <div style="width: 450px; margin: auto; padding-left: 20px; padding-right: 20px;"> 
+    <table> 
+      <tr> 
+        <td nowrap="nowrap"><span style="padding: 1px; padding-right: 5px; padding-left: 5px; background: #333333; color:#FFFFFF; font-weight: bold;">表 2</span></td> 
+        <td style="font-weight: bold; background: #FFFFFF; color: #2682C5; padding-left: 10px;">おもなイベントアダプタ</td> 
+      </tr> 
+    </table> 
+    <table style="border: 1 solid #FFFFFF;"> 
+      <tr> 
+        <th style="background-color:#666666; color:#FFFFFF; margin: 2px; padding: 5px;">クラス名</th> 
+        <th style="background-color:#666666; color:#FFFFFF; margin: 2px; padding: 5px;">イベント</th> 
+      </tr> 
+      <tr>
+        <td style="background-color: #D0E072; margin: 2px; padding: 5px;">Component3DHighlightEventAdapter</td>
+        <td style="background-color: #D0E072; margin: 2px; padding: 5px;">コンポーネントのハイライト表示</td>
+      </tr>
+      <tr>
+        <td style="background-color: #D0E072; margin: 2px; padding: 5px;">Component3DManualMoveEventAdapter</td>
+        <td style="background-color: #D0E072; margin: 2px; padding: 5px;">ユーザによるコンポーネントの移動</td>
+      </tr>
+      <tr>
+        <td style="background-color: #D0E072; margin: 2px; padding: 5px;">Component3DManualResizeEventAdapter</td>
+        <td style="background-color: #D0E072; margin: 2px; padding: 5px;">ユーザによるコンポーネントのリサイズ</td>
+      </tr>
+      <tr>
+        <td style="background-color: #D0E072; margin: 2px; padding: 5px;">KeyPressedEventAdapter</td>
+        <td style="background-color: #D0E072; margin: 2px; padding: 5px;">キーの押下</td>
+      </tr>
+      <tr>
+        <td style="background-color: #D0E072; margin: 2px; padding: 5px;">KeyTypedEventAdapter</td>
+        <td style="background-color: #D0E072; margin: 2px; padding: 5px;">キーのタイプ</td>
+      </tr>
+      <tr>
+        <td style="background-color: #D0E072; margin: 2px; padding: 5px;">MousePressedEventAdapter</td>
+        <td style="background-color: #D0E072; margin: 2px; padding: 5px;">マウスボタンの押下</td>
+      </tr>
+      <tr>
+        <td style="background-color: #D0E072; margin: 2px; padding: 5px;">MouseClickedEventAdapter</td>
+        <td style="background-color: #D0E072; margin: 2px; padding: 5px;">マウスボタンのクリック</td>
+      </tr>
+      <tr>
+        <td style="background-color: #D0E072; margin: 2px; padding: 5px;">MouseDraggedEventAdater</td>
+        <td style="background-color: #D0E072; margin: 2px; padding: 5px;">マウスのドラッグ (マウスの位置) </td>
+      </tr>
+      <tr>
+        <td style="background-color: #D0E072; margin: 2px; padding: 5px;">MouseDragDistanceEventAdapter</td>
+        <td style="background-color: #D0E072; margin: 2px; padding: 5px;">マウスのドラッグ (マウスの移動量) </td>
+      </tr>
+      <tr>
+        <td style="background-color: #D0E072; margin: 2px; padding: 5px;">MouseEnteredEventAdapter</td>
+        <td style="background-color: #D0E072; margin: 2px; padding: 5px;">コンポーネントへのマウスの進入</td>
+      </tr>
+      <tr>
+        <td style="background-color: #D0E072; margin: 2px; padding: 5px;">MouseMotionEventAdapter</td>
+        <td style="background-color: #D0E072; margin: 2px; padding: 5px;">マウスの移動</td>
+      </tr>
+      <tr>
+        <td style="background-color: #D0E072; margin: 2px; padding: 5px;">MouseMovedEventAdapter</td>
+        <td style="background-color: #D0E072; margin: 2px; padding: 5px;">マウスの移動</td>
+      </tr>
+      <tr>
+        <td style="background-color: #D0E072; margin: 2px; padding: 5px;">MouseWheelEventAdapter</td>
+        <td style="background-color: #D0E072; margin: 2px; padding: 5px;">マウスホイールの回転</td>
+      </tr> 
+    </table> 
+  </div> 
+  <h5>アクション</h5>
+  <p>アクションはイベントに応じた処理を行うためのクラスです．ベースとなるのは org.jdesktop.lg3d.utils.action.Action インタフェースですが，イベントの種類に依存しないように，イベントの情報に応じた派生インタフェース群が定義されています．これを表 3 に示します．</p>
+  <p>これらのインタフェースの違いは，イベントアダプタからコールされる performAction メソッドの引数に対応しています．実際にイベント処理をするアクションクラスを作成するにはこれらのインタフェースのいずれかを実装する必要があります．</p>
+  <p>&nbsp;</p>
+  <div style="width: 600px; margin: auto; padding-left: 20px; padding-right: 20px;"> 
+    <table> 
+      <tr> 
+        <td nowrap="nowrap"><span style="padding: 1px; padding-right: 5px; padding-left: 5px; background: #333333; color:#FFFFFF; font-weight: bold;">表 3</span></td> 
+        <td style="font-weight: bold; background: #FFFFFF; color: #2682C5; padding-left: 10px;">Action の派生インタフェース</td> 
+      </tr> 
+    </table> 
+    <table style="border: 1 solid #FFFFFF;"> 
+      <tr> 
+        <th style="background-color:#666666; color:#FFFFFF; margin: 2px; padding: 5px;">インタフェース名</th> 
+        <th style="background-color:#666666; color:#FFFFFF; margin: 2px; padding: 5px;">performAction メソッド</th> 
+      </tr> 
+      <tr>
+        <td style="background-color: #D0E072; margin: 2px; padding: 5px;">ActionNoArg</td>
+        <td style="background-color: #D0E072; margin: 2px; padding: 5px;">performAction(LgEventSource source)</td>
+      </tr>
+      <tr>
+        <td style="background-color: #D0E072; margin: 2px; padding: 5px;">ActionBoolean</td>
+        <td style="background-color: #D0E072; margin: 2px; padding: 5px;">performAction(LgEventSource source, boolean state)</td>
+      </tr>
+      <tr>
+        <td style="background-color: #D0E072; margin: 2px; padding: 5px;">ActionChar</td>
+        <td style="background-color: #D0E072; margin: 2px; padding: 5px;">performAction(LgEventSource source, char value)</td>
+      </tr>
+      <tr>
+        <td style="background-color: #D0E072; margin: 2px; padding: 5px;">ActionInt</td>
+        <td style="background-color: #D0E072; margin: 2px; padding: 5px;">performAction(LgEventSource source, int value)</td>
+      </tr>
+      <tr>
+        <td style="background-color: #D0E072; margin: 2px; padding: 5px;">ActionFloat</td>
+        <td style="background-color: #D0E072; margin: 2px; padding: 5px;">performAction(LgEventSource source, float value)</td>
+      </tr>
+      <tr>
+        <td style="background-color: #D0E072; margin: 2px; padding: 5px;">ActionFloat2</td>
+        <td style="background-color: #D0E072; margin: 2px; padding: 5px;">performAction(LgEventSource source, float x, float y) </td>
+      </tr>
+      <tr>
+        <td style="background-color: #D0E072; margin: 2px; padding: 5px;">ActionFloat3</td>
+        <td style="background-color: #D0E072; margin: 2px; padding: 5px;">performAction(LgEventSource source, float x, float y, float z) </td>
+      </tr>
+      <tr>
+        <td style="background-color: #D0E072; margin: 2px; padding: 5px;">ActionBooleanInt</td>
+        <td style="background-color: #D0E072; margin: 2px; padding: 5px;">performAction(LgEventSource source, boolean state, int value) </td>
+      </tr>
+      <tr>
+        <td style="background-color: #D0E072; margin: 2px; padding: 5px;">ActionBooleanFloat</td>
+        <td style="background-color: #D0E072; margin: 2px; padding: 5px;">performAction(LgEventSource source, boolean state, float x) </td>
+      </tr>
+      <tr>
+        <td style="background-color: #D0E072; margin: 2px; padding: 5px;">ActionBooleanFloat2</td>
+        <td style="background-color: #D0E072; margin: 2px; padding: 5px;">performAction(LgEventSource source, boolean state, float x, float y) </td>
+      </tr>
+      <tr>
+        <td style="background-color: #D0E072; margin: 2px; padding: 5px;">ActionBooleanFloat3</td>
+        <td style="background-color: #D0E072; margin: 2px; padding: 5px;">performAction(LgEventSource source, boolean state, float x, float y, float z) </td>
+      </tr>
+    </table> 
+  </div>
+  <h5>用意されているアクションクラス</h5>
+  <p>LG3D ではよく使用されるアクションが標準で提供されています．おもなアクションクラスを表 4 に示しました．</p>
+  <p>アクションクラスの中でクラス名にBoolean や
+    Float と付いているものは，それに対応するインタフェースを表しています．</p>
+  <p>たとえば，RotateActionBoolean クラスは
+    ActionBoolean インタフェースを実装しており，performAction メソッドの引数が true のときに回転する角度をコンストラクタで指定します．一方の RotateActionFloatはActionFloat インタフェースを実装しており，performAction メソッドの引数 value
+    がそのまま回転角度になります．</p>
+  <p>&nbsp;</p>
+  <div style="width: 400px; margin: auto; padding-left: 20px; padding-right: 20px;"> 
+    <table> 
+      <tr> 
+        <td nowrap="nowrap"><span style="padding: 1px; padding-right: 5px; padding-left: 5px; background: #333333; color:#FFFFFF; font-weight: bold;">表 4</span></td> 
+        <td style="font-weight: bold; background: #FFFFFF; color: #2682C5; padding-left: 10px;">おもなアクションクラス</td> 
+      </tr> 
+    </table> 
+    <table style="border: 1 solid #FFFFFF;"> 
+      <tr> 
+        <th style="background-color:#666666; color:#FFFFFF; margin: 2px; padding: 5px;">クラス名</th> 
+        <th style="background-color:#666666; color:#FFFFFF; margin: 2px; padding: 5px;">説明</th> 
+      </tr> 
+      <tr>
+        <td style="background-color: #D0E072; margin: 2px; padding: 5px;">AppearanceChangeAction</td>
+        <td style="background-color: #D0E072; margin: 2px; padding: 5px;">アピアランスの変更</td>
+      </tr>
+      <tr>
+        <td style="background-color: #D0E072; margin: 2px; padding: 5px;">RotateActionBoolean</td>
+        <td style="background-color: #D0E072; margin: 2px; padding: 5px;">指定された角度に回転</td>
+      </tr>
+      <tr>
+        <td style="background-color: #D0E072; margin: 2px; padding: 5px;">RotateActionFloat</td>
+        <td style="background-color: #D0E072; margin: 2px; padding: 5px;">引数に応じた角度に回転</td>
+      </tr>
+      <tr>
+        <td style="background-color: #D0E072; margin: 2px; padding: 5px;">ScaleActionBoolean</td>
+        <td style="background-color: #D0E072; margin: 2px; padding: 5px;">指定されたサイズにリサイズ</td>
+      </tr>
+      <tr>
+        <td style="background-color: #D0E072; margin: 2px; padding: 5px;">ScaleActionFloat</td>
+        <td style="background-color: #D0E072; margin: 2px; padding: 5px;">引数に応じたサイズにリサイズ</td>
+      </tr>
+      <tr>
+        <td style="background-color: #D0E072; margin: 2px; padding: 5px;">TranslateActionBoolean</td>
+        <td style="background-color: #D0E072; margin: 2px; padding: 5px;">指定された位置に移動</td>
+      </tr>
+      <tr>
+        <td style="background-color: #D0E072; margin: 2px; padding: 5px;">TranslateActionFloat</td>
+        <td style="background-color: #D0E072; margin: 2px; padding: 5px;">引数に応じた位置に移動</td>
+      </tr>
+      <tr>
+        <td style="background-color: #D0E072; margin: 2px; padding: 5px;">TransparencyActionBoolean</td>
+        <td style="background-color: #D0E072; margin: 2px; padding: 5px;">指定されたアルファに変更</td>
+      </tr>
+      <tr>
+        <td style="background-color: #D0E072; margin: 2px; padding: 5px;">TransparencyActionFloat</td>
+        <td style="background-color: #D0E072; margin: 2px; padding: 5px;">引数に応じたアルファに変更</td>
+      </tr>
+      <tr>
+        <td style="background-color: #D0E072; margin: 2px; padding: 5px;">TransparencyActionNoArg</td>
+        <td style="background-color: #D0E072; margin: 2px; padding: 5px;">指定されたアルファに変更</td>
+      </tr>
+    </table> 
+  </div>
+  <h5>アクションアダプタ</h5>
+  <p>また，特殊なアクションクラスとしてアクションアダプタがあります．</p>
+  <p>イベントアダプタはクラスによりコールできるアクションは決まっています． たとえば，MouseWheelEventAdapter クラスは ActionInt インタフェースしかコールすることができません．</p>
+  <p>しかし，使いたいアクションが他のインタフェースを実装していた場合はどうすれば良いのでしょうか．</p>
+  <p>このようなときに使用するのがアクションアダプタです．アクションアダプタはイベントアダプタとアクションの間に入り，次のような処理を行います．</p>
+  <ul>
+    <li>アクションの切り替え，複数のアクションを呼び出し</li>
+    <li>アクションのインタフェースを変更</li>
+    <li>イベントアダプタから引き渡される情報を加工</li>
+  </ul>
+  <p>標準で提供されているアクションアダプタは org.jdesktop.lg3d.utils.actionadapter パッケージで定義されています．おもなアクションアダプタクラスを表 5 に示しました．たとえば，ToggleAdapter クラスは ActionNoArg インタフェースから ActionBoolean
+    インタフェースへの変換を行います．</p>
+  <p>ToggleAdapter クラスは内部に boolean の状態を持っており，イベントアダプタからコールされるとこの状態を交互に変更します．この状態を引数にして，ActionBoolean インタフェースを実装したアクションをコールします．</p>
+  <p>これまで出てきたイベントに関連するクラスを図 9 にまとめてみました．</p>
+  <p>&nbsp;</p>
+  <div style="width: 400px; margin: auto; padding-left: 20px; padding-right: 20px;"> 
+    <table> 
+      <tr> 
+        <td nowrap="nowrap"><span style="padding: 1px; padding-right: 5px; padding-left: 5px; background: #333333; color:#FFFFFF; font-weight: bold;">表 5</span></td> 
+        <td style="font-weight: bold; background: #FFFFFF; color: #2682C5; padding-left: 10px;">おもなアクションアダプタ</td> 
+      </tr> 
+    </table> 
+    <table style="border: 1 solid #FFFFFF;"> 
+      <tr> 
+        <th style="background-color:#666666; color:#FFFFFF; margin: 2px; padding: 5px;">クラス名</th> 
+        <th style="background-color:#666666; color:#FFFFFF; margin: 2px; padding: 5px;">説明</th> 
+      </tr> 
+      <tr>
+        <td style="background-color: #D0E072; margin: 2px; padding: 5px;">ActionMulticaster</td>
+        <td style="background-color: #D0E072; margin: 2px; padding: 5px;">複数のアクションをコール</td>
+      </tr>
+      <tr>
+        <td style="background-color: #D0E072; margin: 2px; padding: 5px;">BooleanToNoArgConverter</td>
+        <td style="background-color: #D0E072; margin: 2px; padding: 5px;">ActionBoolean から ActionNoArg への変換</td>
+      </tr>
+      <tr>
+        <td style="background-color: #D0E072; margin: 2px; padding: 5px;">Float2Adder</td>
+        <td style="background-color: #D0E072; margin: 2px; padding: 5px;">ActionFloat2 から ActionFloat への変換<br />
+    x と y を足した値を performAction の引数にする </td>
+      </tr>
+      <tr>
+        <td style="background-color: #D0E072; margin: 2px; padding: 5px;">Float2Differ</td>
+        <td style="background-color: #D0E072; margin: 2px; padding: 5px;">ActionFloat2 から ActionFloat への変換<br />
+    x から y を引いた値を performAction の引数にする </td>
+      </tr>
+      <tr>
+        <td style="background-color: #D0E072; margin: 2px; padding: 5px;">ToggleAdapter</td>
+        <td style="background-color: #D0E072; margin: 2px; padding: 5px;">ActionNoArg から ActionBoolean への変換</td>
+      </tr>
+      <tr>
+        <td style="background-color: #D0E072; margin: 2px; padding: 5px;">ZOmitter</td>
+        <td style="background-color: #D0E072; margin: 2px; padding: 5px;">ActionFloat3 から ActionFloat 2 への変換<br />
+    z を使用しないようにする</td>
+      </tr>
+      <tr>
+        <td style="background-color: #D0E072; margin: 2px; padding: 5px;">FloatScaler</td>
+        <td style="background-color: #D0E072; margin: 2px; padding: 5px;">value に定数を乗ずる</td>
+      </tr>
+      <tr>
+        <td style="background-color: #D0E072; margin: 2px; padding: 5px;">Float2Scaler</td>
+        <td style="background-color: #D0E072; margin: 2px; padding: 5px;">x と y に別々に定数を乗ずる</td>
+      </tr>
+    </table> 
+  </div>
+  <p>&nbsp;</p>
+  <div style="margin: auto; padding: 10px; width: 397px;"> 
+    <table> 
+      <tr> 
+        <td nowrap="nowrap"><span style="padding: 1px; padding-right: 5px; padding-left: 5px; background: #333333; color:#FFFFFF; font-weight: bold;">図 9</span></td> 
+        <td style="font-weight: bold; background: #FFFFFF; color: #2682C5; padding-left: 10px;">イベントに関連したクラス図 　 </td> 
+      </tr> 
+    </table> 
+    <a href="sec2-fig/f9.gif"><img src="sec2-fig/f9_t.gif" alt="イベントに関連したクラス図" width="397" height="140" border="0" /></a></div> 
+  <h4>イベント処理を行う</h4>
+  <p>これらのクラスは，実際にはどのように使用すれば良いのでしょうか．サンプルを使ってどのようにイベント処理の登録を行うか見てみましょう．</p>
+  <p><a href="sec2-src/RotateBox.java">RotateBox</a> クラスはボックスをクリックしている間，指定された角度まで回転するというサンプルです．イベント処理の部分をリスト 6 に示しました．</p>
+  <h5>イベント処理の登録</h5>
+  <p>はじめのComponent3D#setAnimation メソッドは，コンポーネントをアニメーションさせるときに，どのような動きにするかを設定するためのメソッドです．お約束だと思っておいてかまいません．</p>
+  <p>次が，肝心のイベント処理の登録の部分です．</p>
+  <p>まずはイベントアダプタを生成します．今回はマウスボタンが押されたときにイベント処理を行うように，MousePressedEventAdapter クラスを使用しました．</p>
+  <p>アクションはイベントアダプタのコンストラクタで指定します．MousePressedEventAdapter クラスが使用できるアクションは，ActionBoolean，ActionBooleanFloat2，ActionBooleanFloat3 の各インタフェースです．ここではコンポーネントを回転させるために，ActionBoolean インタフェースを<br />
+    実装した RotateActionBoolean クラスを使用します．</p>
+  <p>RotateActionBooleanクラスのコンストラクタは，第 1 引数が回転させるコンポーネント，第 2 引数が回転角度 (単位はラジアン)，第 3 引数が回転に要する時間 (単位はミリ秒) です．コードでは 4 π
+    (=720 度) を 10 秒間かけて回転させるように記述してあります．</p>
+  <h5>コンポーネントにイベントアダプタを登録</h5>
+  <p>これでイベントアダプタとアクションが生成できました．これをコンポーネントに登録します．AWT/Swing ではコンポーネントに対して「addXXListener (たとえば addMouseListener)」を行いますが，LG3D でも同じように addListener メソッドを使用してイベントアダプタを登録します．</p>
+  <p>&nbsp;</p>
+  <div style="display:table; padding-left: 20px; padding-right: 20px;"> 
+    <p><strong>リスト 6 RotateBox クラス (抜粋)</strong></p> 
+    <div style="background-color:#D1DCFF; color:#2682c5; padding: 10px;"> 
+      <pre>        // 滑らかに動かすためのお約束
+        component.setAnimation(new NaturalMotionAnimation(1000));
+ 
+        // マウスボタンが押されたときのイベント処理
+        MousePressedEventAdapter adapter = new MousePressedEventAdapter(
+                new RotateActionBoolean(component, (float)(Math.PI * 4.0), 10000));
+ 
+        // コンポーネントにイベントアダプタを登録
+        component.addListener(adapter);</pre> 
+    </div> 
+  </div> 
+  <p>&nbsp;</p>
+  <div style="float: right; padding: 10px; width: 256px;"> 
+    <table> 
+      <tr> 
+        <td nowrap="nowrap"><span style="padding: 1px; padding-right: 5px; padding-left: 5px; background: #333333; color:#FFFFFF; font-weight: bold;">図</span></td> 
+        <td style="font-weight: bold; background: #FFFFFF; color: #2682C5; padding-left: 10px;">RotateBox の実行結果</td> 
+      </tr> 
+    </table> 
+    <img src="sec2-fig/f11.gif" alt="RotateBox の実行結果" width="256" height="192" border="0" /></div> 
+  <p>&nbsp;</p>
+  <h5>実行</h5>
+  <p>これでおしまいです<sup><a href="#n3">注3</a></sup>．今までの話が長い割には，コードは簡単だと思いませんか．</p>
+  <p>ぜひコンパイルして，実行してみてください．マウスボタンを押している間ゆっくりと回転し，離すと元の角度に戻ります．</p>
+  <p>&nbsp;</p>
+  <p><a name="n3" id="n3"></a>注 3 なお，回転させるためには回転軸を指定する必要があります．回転軸の指定には Component3D#setRotationAxis メソッドを使用します．デフォルトは「(0, 1, 0)」，つまり y 軸を中心に回転します．</p>
+  <p>&nbsp;</p>
+  <h4>イベント処理の流れ</h4>
+  <p>RotateBox クラスでイベントの登録方法はわかりましたが，これまでの解説では，実際にイベントがどのように伝わっていくかはよくわかりません．狐につままれたような感じですね．</p>
+  <p>イベント処理がどのように行われているのかを知るためには，アクションクラスを自分で作るのがお勧めです．</p>
+  <p>次のサンプル <a href="sec2-src/SpinBox.java">SpinBox</a> クラスでは，コンポーネントを指定した角度だけ回転させるという <a href="sec2-src/SpinAction.java">SpinAction</a> クラスを作成して，使用しています．</p>
+  <h5>ソースコードを追ってみる</h5>
+  <p>リスト 7 に SpinAction クラスを示します．スペースの関係上，import 文を省略してあります．</p>
+  <p>SpinAction クラスは ActionNoArg インタフェースを実装したクラスです．まずはコンストラクタで，回転させるコンポーネント，回転角，回転に要する時間を設定しています．</p>
+  <p>重要なのは次の performAction メソッドです．このメソッドがイベントアダプタからコールされます．</p>
+  <p>ActionNoArg インタフェースを実装しているので，performAction メソッドの引数は LgEventSource オブジェクトだけです．LgEventSource インタフェースは，イベントが発生したコンポーネントなどを表すためのインタフェースです．</p>
+  <p>performAction メソッドの中では，まず回転させる角度を更新して，Component3D#changeRotateAngle メソッドを使用してコンポーネントを回転させます．</p>
+  <p>コードは簡単ですね．target をマウスでクリックすると，diff が示す値ずつ回転します．</p>
+  <p>&nbsp;</p>
+  <div style="display:table; padding-left: 20px; padding-right: 20px;"> 
+    <p><strong>リスト 7 SpinAction クラス</strong></p> 
+    <div style="background-color:#D1DCFF; color:#2682c5; padding: 10px;"> 
+      <pre>public class SpinAction implements ActionNoArg {
+    private Component3D target;
+    private float diff;
+    private int duration;
+    private float angle;
+ 
+    // コンストラクタ
+    // diff     回転させる角度 (ラジアン)
+    // duration 回転に要する時間 (ミリ秒)
+    public SpinAction(Component3D target, float diff, int duration) {
+        if (target == null) {
+            throw new IllegalArgumentException("target cannot be null");
+        }
+ 
+        this.target = target;
+        this.diff = diff;
+        this.duration = duration;
+        
+        this.angle = target.getRotationAngle();
+    }
+ 
+    // イベント処理をおこなうためのメソッド
+    public void performAction(LgEventSource source) {
+        angle += diff;
+        target.changeRotationAngle(angle, duration);
+    }
+}</pre> 
+    </div> 
+  </div> 
+  <p>&nbsp;</p>
+  <p>&nbsp;</p>
+  <div style="float: right; padding: 10px; width: 256px;"> 
+    <table> 
+      <tr> 
+        <td nowrap="nowrap"><span style="padding: 1px; padding-right: 5px; padding-left: 5px; background: #333333; color:#FFFFFF; font-weight: bold;">図 10</span></td> 
+        <td style="font-weight: bold; background: #FFFFFF; color: #2682C5; padding-left: 10px;">イベント処理の流れ</td> 
+      </tr> 
+    </table> 
+    <a href="sec2-fig/f10.gif"><img src="sec2-fig/f10_t.gif" alt="イベント処理の流れ" width="242" height="151" border="0" /></a></div> 
+  <h5>シーケンス図を見てみる</h5>
+  <p>さて，この performAction メソッドがコールされるまでの流れをシーケンス図で表したものが図 10 です．</p>
+  <p>イベントが発生すると，EventAdapter インタフェースの processEvent メソッドがコールされます．processEvent メソッドの引数は LgEvent オブジェクトです．</p>
+  <p>今までまったく出てこなかったイベントクラスがここで登場しました．イベントアダプタはこの LgEvent オブジェクトから情報を抽出します．そして， その情報を引数にしてアクションの performAction をコールするのです．イベントアダプタが情報抽出をしてしまうので，アクションではイベントクラスに依存せずにイベント処理を記述することができるのです．</p>
+  <p>このようにして作成した SpinAction クラスは普通のアクションと同じように使うことができます．</p>
+  <h5>作成した SpinAction クラスを使用してみる</h5>
+  <p>リスト 8 に SpinBox クラスで SpinAction クラスを使用している部分を抜粋しました．SpinBox クラスはボックスがクリックされたら回転させるので，MouseClickedEventAdapter クラスを使用し，そのコンストラクタの引数に SpinAction クラスを使用しています．</p>
+  <p>&nbsp;</p>
+  <div style="display:table; padding-left: 20px; padding-right: 20px;"> 
+    <p><strong>リスト 8 SpinBox クラス (抜粋) </strong></p> 
+    <div style="background-color:#D1DCFF; color:#2682c5; padding: 10px;"> 
+      <pre>        MouseClickedEventAdapter adapter = new MouseClickedEventAdapter(
+                new SpinAction(component, (float)(Math.PI / 2.0), 1000));
+        component.addListener(adapter);</pre> 
+    </div> 
+  </div> 
+  <p>&nbsp;</p>
+  <h3>基礎編のまとめ</h3>
+  <p>ここまで定石に沿って，LG3D のアプリケーションの作成方法について説明してきました．意外に簡単だったのではないでしょうか．ちょっと癖があるのがイベント周りですが，慣れてしまえば難しいことはありません．</p>
+  <p>応用編ではここまで説明したことをベースに，簡単な 3D のアプリケーションを作っていきたいと思います．</p>
+  <p>&nbsp;</p>
+  <hr /> 
+  <p style="font-size: small;">$Revision: 1.1 $ $Date: 2006-05-09 18:16:29 $</p> 
+</div> 
+</body>
+</html>

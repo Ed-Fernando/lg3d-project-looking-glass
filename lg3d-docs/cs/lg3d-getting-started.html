@@ -1,0 +1,963 @@
+<!DOCTYPE html PUBLIC "-//Tigris//DTD XHTML 1.0 Transitional//EN"
+"http://style.tigris.org/tigris_transitional.dtd">
+<html>
+<head>
+  <title>Začínáme s&nbsp;Vývojářskou verzí Projektu Looking Glass</title>
+  <meta name="Translator" content="Petr Hejl" />
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  <style type="text/css"> /* <![CDATA[ */
+@import "preview.css";
+/* ]]> */</style>  
+</head>
+<body>
+<div id="projectdocumentview" class="app">
+
+<hr />
+<h2>Začínáme s&nbsp;Vývojářskou verzí Projektu Looking Glass </h2>
+
+<p><b>Vítejte v&nbsp;Projektu Looking Glass!</b></p>
+
+<p> Tento dokument je určen k&nbsp;rychlému zprovoznění a seznámení se
+s&nbsp;Vývojářskou verzí Projektu Looking Glass. </p>
+<p> Aby jste mohli začít, nejprve je třeba natavit prostředí vašeho systému.
+Poté co ověříte, že vaše systémové prostředí je správně nastaveno, můžete
+stáhnout a nainstalovat Projekt Looking Glass. </p>
+
+<p>
+<a href="#Platform_Requirements">1. Požadavky na platformu</a> <small>Hardwarové
+a softwarové požadavky</small><br />
+<a href="#Setting_up_your_Project_Looking_Glass">2. Nastavení prostředí pro
+Projekt Looking Glass</a> <small>Stažení a nainstalování potřebných
+komponent</small><br />
+<a href="#Installing_the_Project_Looking_Glass">3. Nainstalování Vývojářské
+verze Projektu Looking Glass</a><br />
+<a href="#Running_Project_Looking_Glass">4. Spouštění Projektu Looking
+Glass</a> <small>Jak spustit desktop Projektu Looking Glass</small><br />
+<a href="#Troubleshooting">5. Řešení problémů</a><br />
+<a href="#Staying_connected_with_Project">6. Zůstaňte informováni
+o&nbsp;Projektu Looking Glass</a> <small>Jak zůstat v&nbsp;kontaktu! </small><br />
+<a href="#Some_final_words">7. Několik slov na závěr</a><br />
+</p>
+
+<h3><a name="Platform_Requirements"></a>1. Požadavky na platformu</h3>
+<p>
+Před tím než začnete nastavovat vývojové prostředí pro Projekt Looking Glass,
+zkontrolujte prosím nejprve, zda váš systém splňuje následující minimální
+požadavky:
+</p>
+<table border="1" cellpadding="2" cellspacing="2" width="100%">
+  <tbody>
+    <tr>
+      <td valign="top"><b>Komponenta</b></td>
+      <td valign="top"><b>Platforma Linux</b></td>
+    </tr>
+    <tr>
+      <td valign="top">Operační systém</td>
+      <td valign="top">Většina moderních linuxových distribucí by měla fungovat,
+      avšak setkali jsme se s&nbsp;určitými problémy při běhu na instalacích javy
+      založených na portage. Předpokládáme následování této příručky pro nainstalování
+      všech komponent ručně namísto použití portage.</td>
+    </tr>
+    <tr>
+      <td valign="top">CPU</td>
+      <td valign="top">2&nbsp;GHz nebo rychlejší doporučeno</td>
+    </tr>
+    <tr>
+      <td valign="top">RAM</td>
+      <td valign="top">512MB</td>
+    </tr>
+    <tr>
+      <td valign="top">Grafická karta<b>*</b><br />
+      </td>
+      <td valign="top">3D akcelerovaná grafická karta s&nbsp;ovladačem podporujícím
+      OpenGL verze&nbsp;1.2 nebo vyšší.<br />
+      <b>DŮLEŽITÉ! Je vyžadována 24&nbsp;bitová hloubka barev!</b>
+Podívejte na instrukce uvedené níže, které uvádějí jak provést tuto konfiguraci.<br />
+      <br />
+      <b>Testované karty:</b> <br />
+      <ul>
+        <li>NVIDIA GeForce 2 nebo ekvivalentní karta používající verzi NVIDIA
+	ovladačů <a
+ href="http://www.nvidia.com/object/linux_display_ia32_1.0-5336.html">1.0-5336</a>
+a <a
+ href="http://www.nvidia.com/object/linux_display_ia32_1.0-6629.html">1.0-6629</a>
+.<br />
+Prosím, přečtěte si <a href="../nvidia-driver-install-tips.html">Tipy pro instalaci ovladačů NVIDIA</a>. 
+<br /><br />
+<b>POZNÁMKA: Je obzvlášť důležité projít tyto instrukce jestliže jste nově
+aktualizovali ovladač na 1.0-6629, neboť LG3D vyžaduje dodatečné konfigurační
+kroky pro verzi 1.0-6629.</b>
+<br /><br />
+</li>
+<!--       <li>ATI Radeon 7500 s&nbsp;DRI ovldači. Prosím, přečtěte si <a
+ href="dri-driver-install-ati-radeon.html">Instalace DRI
+	ovladače pro ATI&nbsp;Radeon</a>.<br />
+        </li> -->
+      </ul>
+Instrukce pro konfiguraci ovladačů specifických karet najdete v&nbsp;dokumentu: 
+<a href="../graphics-driver-index.html">Instalace a konfigurace ovladačů pro
+3D Desktop Projekt Looking Glass</a><br />
+      <p>
+        Pokud jste byli úspěšní při zprovoznění Projektu Looking Glass na
+	jiných grafických kartách nebo chcete nahlásit problémy se specifickou
+	kartou, dejte nám prosím vědět prostřednictvím
+        <a href="http://www.javadesktop.org/forums/forum.jspa?forumID=56">
+        diskusního fóra</a>
+      </p>
+      </td>
+    </tr>
+    <tr>
+      <td valign="top">Místo na disku</td>
+      <td valign="top">350MB</td>
+    </tr>
+  </tbody>
+</table>
+
+<h3><a name="Setting_up_your_Project_Looking_Glass"></a>2. Nastavení prostředí
+pro Projekt Looking Glass</h3>
+<p>
+Ještě než budete moci spustit Projekt Looking Glass, musíte nainstalovat několik
+Java komponent. Nejjednodušší cestou je stáhnout všechny komponenty a poté
+je nainstalovat v&nbsp;níže uvedeném pořadí.
+</p>
+
+<h4>Stáhněte komponenty</h4>
+
+<p>
+<b>Poznámka:</b> Instalační instrukce předpokládají, že všechny komponenty
+stáhnete do adresáře <span
+ style="font-family: courier new,courier,monospace;">/tmp</span>.
+</p>
+
+<ol>
+  <li><b>Java 2 SDK, Standard Edition
+1.5.0 nebo pozdější.</b><br />
+    <a href="http://java.sun.com/j2se/1.5.0/download.jsp">http://java.sun.com/j2se/1.5.0/download.jsp</a><br />
+    <br />
+    <b>Poznámka:</b> Níže uvedené instrukce pro instalaci předpokládají
+    stažení RPM verze JDK.<br />
+    <br />
+  </li>
+  <li><b>Java 3D SDK 1.3.2 nebo pozdější</b><br />
+    <a href="https://j3d-core.dev.java.net/servlets/ProjectDocumentList"><u>https://j3d-core.dev.java.net/servlets/ProjectDocumentList<br />
+    <br />
+    </u></a><b>Poznámka:</b> Přejděte do podadresáře 
+<b>j3d-core</b>/<b>Release_Builds</b>/<b>1.3.2</b> a stáhněte
+    <b>java3d-1_3_2-linux-i586.zip</b>.<br />
+    <br />
+<br /><br />
+  </li>
+  <li><b>Java Advanced Imaging API (JAI) 1.1.2 JDK </b><br />
+    <a
+ href="http://java.sun.com/products/java-media/jai/downloads/download-1_1_2.html">http://java.sun.com/products/java-media/jai/downloads/download-1_1_2.html</a><br />
+    <br />
+    <b>Poznámka:</b> Zvolte <b>JDK(TM)
+Install: Bundle for installation in a JDK</b> <b>Download</b>. Po
+přečtení a odsouhlasení Software License Agreement (licence) vyberte položku <b>Linux
+JDK Install</b> (<span style="font-family: courier new,courier,monospace;">jai-1_1_2-lib-linux-i586-jdk.bin</span>).<br />
+  </li>
+</ol>
+
+<h4>Nainstalujte komponenty</h4>
+
+<p>
+Poté co jste stáhli všechny komponenty, nainstalujte je podle následujících
+instrukcí.
+</p>
+
+<ol>
+  <li>Nejprve se přepněte na uživatele root:<br />
+    <br />
+    <span style="font-family: courier new,courier,monospace;">
+ % su root<br />
+ Password:</span> <b>vložte heslo uživatele root</b><br />
+<span style="font-family: courier new,courier,monospace;">#</span><br />
+    <br />
+  </li>
+  <li>Nainstalujte Java 2 SDK:<br />
+    <br />
+    <span style="font-family: courier new,courier,monospace;">
+# cd /tmp<br />
+# /bin/bash jdk-1_5_0_02-linux-i586-rpm.bin<br />
+# rm jdk-1_5_0_02-linux-i586.rpm<br />
+# rm jdk-1_5_0_02-linux-i586-rpm.bin</span><br />
+    <br />
+  </li>
+  <li>Nainstalujte Java 3D SDK:<br />
+    <br />
+    <span style="font-family: courier new,courier,monospace;">
+# cd /tmp<br />
+# unzip java3d-1_3_2-linux-i586.zip<br />
+# cd /usr/java/jdk1.5.0/jre<br />
+# unzip /tmp/java3d-1_3_2-linux-i586/j3d-132-linux-x86.zip<br />
+# cd /tmp<br />
+# rm -r java3d-1_3_2-linux-i586/</span><br />
+    <br />
+  </li>
+  <li>Nainstalujte Java Advanced Imaging API:<br />
+    <br />
+    <span style="font-family: courier new,courier,monospace;">
+# cd /usr/java/jdk1.5.0<br />
+# /bin/bash /tmp/jai-1_1_2-lib-linux-i586-jdk.bin</span><br />
+    <br />
+  </li>
+  <li>Opusťte root shell:<br />
+    <br />
+    <span style="font-family: courier new,courier,monospace;">
+# exit<br />
+%</span><br />
+    <br />
+  </li>
+  <li>Nyní je třeba nastavit několik proměnných prostředí v profilu vašeho
+shellu. Zde je příklad pro bash(1):<br />
+    <span style="font-family: courier new,courier,monospace;"><br />
+JAVA_HOME=/usr/java/jdk1.5.0<br />
+PATH=$JAVA_HOME/bin:$PATH</span><br />
+  </li>
+</ol>
+
+<h3><a name="Installing_the_Project_Looking_Glass"></a> 3. Nainstalování Vývojářské
+verze Projektu Looking Glass</h3>
+
+<h4>Zaregistrujte se na webu java.net</h4>
+
+<p>
+Pokud již nejste zaregistrováni na <a href="http://www.java.net">java.net</a>,
+pak si budete muset založit účet:
+</p>
+<ol>
+  <li>Přejděte na <a href="http://www.java.net">http://www.java.net</a>
+a klikněte na odkaz <b>Register</b> v&nbsp;horní části stránky. </li>
+  <li>Zadejte zvolené uživatelské jméno a emailovou adresu a stiskněte tlačítko
+   <b>[Register]</b>.<br />
+  </li>
+  <li>Přijde vám email s&nbsp;instrukcemi pro nastavení hesla vašeho účtu. Poté co
+  vložíte heslo a odsouhlasíte podmínky registrace na webu java.net, budete
+  přihlášeni.<br />
+  </li>
+</ol>
+
+<h4>Stáhněte instalační balíček Projektu Looking Glass</h4>
+
+<ol>
+  <li>Jděte na stránky <a href="https://lg3d-core.dev.java.net">https://lg3d-core.dev.java.net</a>
+a klikněte na <b>Documents &amp; files</b>
+v&nbsp;sekci <b>Project tools</b> na postranní liště.</li>
+  <li>Přejděte do <b>lg3d-core</b>/<b>stable_builds</b> ve stromu v&nbsp;pravé části
+panelu. Zobrazí se vám tabulka se seznamem stabilních buildů.</li>
+  <li>Klikněte na odkaz pojmenovaný <b>Release_x.y.z</b>
+(kde x.y.z je verze buildu, například 0.6.1) a zvolte adresář,
+kam bude soubor stáhnut, jako třeba /tmp</li>
+  <li>Změňte aktuální adresář na adresář kam budete chtít Projekt Looking Glass
+  nainstalovat a rozbalte soubory:<br />
+    <br />
+    <span style="font-family: courier new,courier,monospace;">
+% cd /home/username<br />
+% tar -zxf /tmp/lg3d-<b>x.y.z</b>.tar.gz</span><br />
+    <br />
+    <b>Poznámka:</b> Nahraďte <span
+ style="font-family: courier new,courier,monospace;"><b>x.y.z</b></span>
+verzí buildu, který jste stáhli (např. <span
+ style="font-family: courier new,courier,monospace;"><b>0.6.1</b>).<br />
+    </span><br />
+Soubory budou rozbaleny do adresáře <span
+ style="font-family: courier new,courier,monospace;">lg3d</span> umístěného
+v&nbsp;aktuálním adresáři.</li>
+</ol>
+Aktuální verze LG3D je verze 0.6.1. Než začnete tuto verzi používat,
+přečtěte si i&nbsp;<a href="../release-notes.html">Poznámky k verzi</a>.
+
+<h4><a name="Configure_the_color_depth_of_your"></a>Nastavte barevnou hloubku
+vašeho displeje</h4>
+
+<p>
+Vývojářská verze Projektu Looking Glass vyžaduje nejméně 24&nbsp;bitovou barevnou
+hloubku. Mnoho systémů je však nakonfigurováno se 16-ti bitovou barevnou
+hloubkou a Vývojářská verze Projektu Looking Glass nebude v&nbsp;této
+barevné hloubce pracovat správně.
+Aktuální nastavení barev vašeho displeje můžete zjistit spuštěním
+následujícího příkazu:
+</p>
+
+<blockquote><span
+ style="font-family: courier new,courier,monospace;">
+% xdpyinfo | grep "depth of root"<br />
+depth of root window:&nbsp;&nbsp; 24 planes<br />
+</span></blockquote>
+<p>
+Pokud se zobrazí hodnota menší než 24, musíte změnit nastavení barevné hloubky.
+Proces změny nastavení hloubky barev se liší pro různé platformy.
+Podívejte se proto na konfigurační instrukce pro vaši platformu, uvedené níže:
+</p>
+
+<h4>Java Desktop System&nbsp;1 a 2, a SUSE8.1:</h4>
+
+<ol>
+  <li>Z&nbsp;desktopu spusťte příkaz sax2:<br />
+    <br />
+    <span style="font-family: courier new,courier,monospace;">
+% /usr/X11R6/bin/sax2<br />
+SaX: root Password:</span> <b>vložte heslo uživatele root</b><br />
+    <br />
+  </li>
+  <li>V&nbsp;aplikaci SaX2 klikněte na <b>Color and Resolution</b> a poté na
+  tlačítko <b>[Properties...]</b> pro aktuálně použitý desktop.</li>
+  <li>V&nbsp;panelu <b>Color selection...</b>
+klikněte do menu a vyberte <b>16.7 Mio. [24 Bit]</b>. <br />
+  </li>
+  <li>Na záložce <b>Resolution(s) for 16.7
+Mio. [24 Bit] colors</b> vyberte preferované rozlišení vašeho desktopu a
+stiskněte <b>[Ok]</b>.<br />
+  </li>
+  <li>Klikněte na tlačítko <b>[Finish]</b>
+a poté na <b>[Finalize&gt;&gt;]</b>.<br />
+  </li>
+  <li>Otevře se dialog <b>SaX2 final steps...</b>.
+  Stiskněte tlačítko <b>[Test...]</b>
+a otestujte tak nové rozlišení. <br />
+  </li>
+  <li>Měla by se objevit modrá testovací obrazovka. Klikněte na tlačítko <b>[Save]</b>,
+jestliže se nastavení displeje jeví stabilní. Po návratu do okna SaX2 klikněte na
+<b>[Ok]</b> a poté na <b>[Yes]</b> pro ukončení SaX2.
+  </li>
+  <li>Pokud se test nezobrazí správně, dojde po třiceti
+sekundách k&nbsp;jeho ukončení a obnoví se předchozí nastavení desktopu.
+Měli by jste zkusit alternativní rozlišení při barevné hloubce 24&nbsp;bitů
+a najít takové které na vašem systému bude pracovat správně.<br />
+  </li>
+  <li>Jste-li s nastavením spokojeni, odhlašte se a znovu se přihlašte do
+desktopu. Pomocí uvedeného příkazu
+<span style="font-family: courier new,courier,monospace;">xdpyinfo</span>
+pak zkontrolujte, že barevná hloubka je skutečně 24&nbsp;bitů nebo více.
+</li>
+</ol>
+
+<h4>RedHat Fedora 2:</h4>
+
+<ol>
+  <li>Nejprve se přepněte na uživatele root:<br />
+    <br />
+    <span style="font-family: courier new,courier,monospace;">
+% su root<br />
+Password:</span> <b>vložte heslo uživatele root</b> <br />
+<span style="font-family: courier new,courier,monospace;">#</span><br />
+    <br />
+  </li>
+  <li>Otevřete v&nbsp;editoru soubor: <span style="font-family: courier new,courier,monospace;">/etc/X11/xorg.conf</span></li>
+  <li>Najděte část souboru začínající textem: <span
+ style="font-family: courier new,courier,monospace;">Section "Screen"</span><span
+ style="font-family: courier new,courier,monospace;"><br />
+    </span></li>
+  <li>V&nbsp;této části najděte položku: <span
+ style="font-family: courier new,courier,monospace;">Identifier "Screen0"<br />
+    </span>Změňte vlastnosti <span style="font-family: courier new,courier,monospace;">DefaultDepth</span>
+a <span style="font-family: courier new,courier,monospace;">DefaultFbBpp </span>
+na:<br />
+    <br />
+    <span style="font-family: courier new,courier,monospace;">DefaultDepth 24<br />
+DefaultFbBpp 32<br />
+    <br />
+    </span></li>
+  <li>Uložte soubor, odhlašte se a znovu se přihlašte do desktopu a
+pomocí uvedeného příkazu <span style="font-family: courier new,courier,monospace;">xdpyinfo</span>
+zkontrolujte, že nyní je barevná hloubka 24&nbsp;bitů nebo více.<br />
+  </li>
+</ol>
+
+<h4>RedHat 8, RedHat 9 a ostatní linuxové platformy:</h4>
+
+<p>
+Mnoho linuxových platforem používá pro nastavení vlastností displeje soubor
+<span style="font-family: courier new,courier,monospace;">XF86Config</span>.
+Změna barevné hloubky se v&nbsp;takovém případě provede následovně:
+</p>
+
+<ol>
+  <li>Nejprve se přepněte na uživatele root:<br />
+    <br />
+    <span style="font-family: courier new,courier,monospace;">
+% su root<br />
+Password:</span> <b>vložte heslo uživatele root</b> <br />
+<span style="font-family: courier new,courier,monospace;">#</span><br />
+    <br />
+  </li>
+  <li>Otevřete v&nbsp;editoru soubor: <span style="font-family: courier new,courier,monospace;">/etc/X11/XF86Config</span></li>
+  <li>Najděte část souboru začínající textem <span
+ style="font-family: courier new,courier,monospace;">Section "Screen"</span> a
+změňte vlastnost <span style="font-family: courier new,courier,monospace;">DefaultDepth</span>
+na 24:<br />
+    <br />
+    <span style="font-family: courier new,courier,monospace;">DefaultDepth&nbsp;&nbsp;&nbsp;&nbsp;
+24<br />
+    <br />
+    </span></li>
+  <li>Uvnitř této části najděte podčást označenou <span
+ style="font-family: courier new,courier,monospace;">
+"Display":<br />
+    <br />
+    </span><span style="font-family: courier new,courier,monospace;">SubSection
+"Display"<br />
+    <br />
+    </span>a změňte vlastnost <span style="font-family: courier new,courier,monospace;">Depth</span>
+na:<br />
+    <br />
+    <span style="font-family: courier new,courier,monospace;">Depth&nbsp;&nbsp;&nbsp;&nbsp;
+24<br />
+    <br />
+    </span></li>
+  <li>Uložte soubor, odhlašte se a znovu se přihlašte do desktopu a
+pomocí uvedeného příkazu <span style="font-family: courier new,courier,monospace;">xdpyinfo</span>
+zkontrolujte, že nyní je barevná hloubka 24&nbsp;bitů nebo více.</li>
+</ol>
+
+<h3><a name="Running_Project_Looking_Glass"></a>4. Spouštění Projektu Looking
+Glass</h3>
+
+<p>
+Existují dva způsoby jak spouštět Projekt Looking Glass; uvnitř okna
+existujícího desktopového prostředí a nebo jako celoobrazovkový desktop.
+Pouze celoobrazovkový režim podporuje klíčovou vlastnost Projektu Looking
+Glass a to integraci nativních nemodifikovaných X11 aplikací.
+Nejjednodušší způsob jak ověřit, že instalace Projektu Looking Glass
+je provedena správně, je spustit demo v&nbsp;existujícím desktopu.
+Ve chvíli kdy si ověříte správnou funkci, můžete nakonfigurovat
+váš systém pro spouštění Projektu Looking Glass v&nbsp;celoobrazovkovém režimu.
+Upozorněme, že spouštění Projektu Looking Glass v&nbsp;okně desktopu je
+výhodné při vývoji a testování 3D&nbsp;aplikací a rozšířování manažeru oken
+(Window Manager, Scene Manager).
+</p>
+
+<h4>Spouštění Projektu Looking Glass v&nbsp;existujím desktopovém prostředí</h4>
+
+<p>
+V&nbsp;tomto módu běží Projekt Looking Glass v&nbsp;okně vašeho desktopu.
+Jde o&nbsp;nejjednodušší způsob spouštění Projektu Looking Glass, ale umožňuje
+používat pouze 3D&nbsp;aplikace Projektu Looking Glass, jako
+je například databáze CD. X11&nbsp;aplikace, jako je například xterm
+se objeví v&nbsp;X session ze které byl Projekt Looking Glass spuštěn.
+</p>
+
+<ol>
+  <li>Přihlašte se pod svým účtem a změňte adresář na ten, kam jste nainstalovali
+Projekt Looking Glass:<br />
+    <br />
+    <span style="font-family: courier new,courier,monospace;">
+% cd /home/username/lg3d/bin</span><br />
+    <br />
+  </li>
+  <li>Spusťte session Projektu Looking Glass:<br />
+    <br />
+    <span style="font-family: courier new,courier,monospace;"> % ./lg3d-dev</span><br />
+  </li>
+</ol>
+<p>
+Pokud jste úspěšně nainstalovali Projekt Looking Glass, měli by ste
+v&nbsp;okně na vaší pracovní ploše vidět známý desktop Projektu:
+</p>
+<a href="../images/lg_snapshot.png"> <img
+ alt="Project Looking Glass Screenshot" style="float: right;"
+ src="/branding/images/lg_snapshot-s.png"
+ width="200" /> </a>
+<p>
+Kliknutí na ikonu CD v&nbsp;panelu otevře katalog CD, 3D&nbsp;demo aplikaci.
+Abyste viděli aplikaci v&nbsp;akci, pohněte myší nad balíček CD a klikejte na
+jejich obrázky. Pro další informace o&nbsp;operacích klikněte na ikonu nalevo
+od Prohlížeče CD na liště úloh. Tím zobrazíte panel, který shrnuje informace
+o&nbsp;operacích podporovaných demo aplikací. Všimněte si i&nbsp;ikony počítače
+úplně vlevo, jež spouští xterm. Takto je demonstrována integrace X11 aplikací
+a je podporavána pouze v&nbsp;celoobrazovkovém režimu. Nastavení tohoto režimu
+uvádí následující sekce.
+</p>
+
+<h4>Spouštění Projektu Looking Glass v&nbsp;celoobrazovkovém režimu</h4>
+
+<p>
+Tento mód umožňuje provozovat Projekt Looking Glass na celou obrazovku
+a spouštět jakoukoliv aplikaci, včetně nativních X11 alikací.
+Před spuštěním Projektu Looking Glass musíte nejprve ukončit X session.
+Tento režim lze použít pouze na linuxových systémech. Časem bude tento mód
+primární pro použití LG3D a bude podporován jak na Linuxu tak na Solarisu
+</p>
+
+<p>
+<b>Poznámka: Na tomto režimu použití se stále ještě intenzivně pracuje.
+V&nbsp;současnosti takto funguje bezchybně jen několik X11 aplikací. Ještě
+stále zbývá spousta ladicí práce. Důležité aplikace, jako například mozilla,
+staroffice, evolution, realplayer a vetšina GNOME aplikací, mají ještě
+významné problémy. Těmito věcmi se aktivně zabýváme. Prosíme, reportujte každý
+problém, který najdete.</b>
+</p>
+<p>
+Instrukce se liší dle platformy, proto postupujte dle instrukcí určených
+pro vámi používaný systém. Jestliže vaše platforma není uvedena, je
+pravděpodobné, že postup bude velmi podobný a proto můžete instrukce použít
+jako vodítko a následně nám dát vědět o&nbsp;nalezených rozdílech!
+</p>
+
+<h4>Sun Java Desktop System/SuSE 8.1:</h4>
+
+<p>
+JDS/SuSE 8.1 používá X Display Manager (xdm) pro správu uživatelských session.
+Před spuštěním Projektu Looking Glass tedy nejprve musíte ukončit xdm.
+Protože je tento proces automaticky obnovován, musíte službu vypnout
+provedením příkazu
+<span style="font-family: courier new,courier,monospace;">chkconfig</span>:
+</p>
+
+<ol>
+  <li>Nejprve se přepněte na uživatele root:<br />
+    <br />
+    <span style="font-family: courier new,courier,monospace;">
+% su root<br />
+Password:</span> <b>vložte heslo uživatele root</b> <br />
+<span style="font-family: courier new,courier,monospace;">#</span><br />
+    <br />
+  </li>
+  <li>Vypněte xdm službu:<br />
+    <br />
+    <span style="font-family: courier new,courier,monospace;">
+# /sbin/chkconfig -d xdm<br />
+xdm&nbsp; 0:off&nbsp;&nbsp; 1:off&nbsp;&nbsp; 2:off&nbsp;&nbsp;
+3:off&nbsp;&nbsp; 4:off&nbsp;&nbsp; 5:off&nbsp;&nbsp; 6:off<br />
+    <br />
+    </span></li>
+  <li>Nyní zavřete všechny desktop aplikace a uložte otevřené soubory. Poté
+  ukončete display manager:<br />
+    <br />
+    <span style="font-family: courier new,courier,monospace;"> # pkill gdm-binary<br />
+    <br />
+    </span></li>
+  <li>Přejděte do sekce <a href="#Starting_the_Project_Looking_Glass">
+  Spouštění desktop session Projektu Looking Glass</a>.</li>
+</ol>
+<p>
+<b>Poznámka:</b> Pro obnovení X Display Manageru,
+zadejte jako root následující příkaz a poté restartujte systém:
+</p>
+<blockquote><span
+ style="font-family: courier new,courier,monospace;"># /sbin/chkconfig -a xdm</span><br />
+</blockquote>
+
+<h4>RedHat 9:</h4>
+<p>
+RedHat používá ke správě uživatelských session GNOME Display Manager (gdm).
+Není nutné vypínat gdm, stačí systém přepnout do nižšího runlevelu, ve kterém
+gdm není aktivní:
+</p>
+
+<ol>
+  <li>Nejprve se přepněte na uživatele root:<br />
+    <br />
+    <span style="font-family: courier new,courier,monospace;">
+% su root<br />
+Password:</span> <b>vložte heslo uživatele root</b><br />
+<span style="font-family: courier new,courier,monospace;">#</span><br />
+    <br />
+    </li>
+  <li>Zavřete všechny desktop aplikace a uložte otevřené soubory.
+Poté přepněte do runlevelu&nbsp;4:<br />
+    <br />
+    <span style="font-family: courier new,courier,monospace;"> # /sbin/init 4<br />
+    <br />
+    </span>Vaše X session by měla být ukončena a sytém by se měl vrátit do
+příkazové řádky.<br />
+    <br />
+  </li>
+  <li>Nyní přejděte do sekce
+  <a href="#Starting_the_Project_Looking_Glass">
+  Spouštění desktop session Projektu Looking Glass</a>.</li>
+</ol>
+<p>
+<b>Poznámka:</b> Pro restartování GNOME
+Display Manageru, zadejte z&nbsp;konzole uživatele root následující příkaz:
+</p>
+<blockquote><span
+ style="font-family: courier new,courier,monospace;"># /sbin/init 5</span><br />
+</blockquote>
+
+<h4>Fedora Core 3 64-bit:</h4>
+
+<p>
+Pro běh Projektu Looking Glass na celé obrazce v&nbsp;64-bitové verzi
+Fedora Core 3 je třeba provést několik specifických úprav. Upozorněme, že
+k&nbsp;jejich provedení budete potřebovat přístup k&nbsp;32-bitovému linuxovému
+systému nebo 32-bitovým X11 modulům pro Linux.
+</p>
+
+<ol>
+  <li>Pro provoz LG3D je nutné zkopírovat obsah aresáře <span
+ style="font-family: courier new,courier,monospace;">/usr/X11R6/lib/modules</span>
+ze 32-bitového linuxového systému do stejného adresáře vašeho 64-bitového
+systému. Před touto akcí zazálohujte obsah adresáře <span
+ style="font-family: courier new,courier,monospace;">/usr/X11R6/lib/modules</span>
+ve vašem 64-bitovém systému:<br />
+    <br />
+    <span style="font-family: courier new,courier,monospace;">
+# cd /usr/X11R6/lib<br />
+# cp -r modules modules.orig<br />
+    </span><br />
+Nyní použijte příkaz scp pro bezpečené zkopírování souborů z&nbsp;32-bitového
+systému na váš 64-bitový systém:<br />
+    <br />
+    <span style="font-family: courier new,courier,monospace;">
+# scp -r root@<span style="font-style: italic;">32bithost</span>:/usr/X11R6/lib/modules
+/usr/X11R6/lib/modules<br />
+    </span><br />
+kde <span
+ style="font-style: italic; font-family: courier new,courier,monospace;">32bithost</span><span
+ style="font-family: courier new,courier,monospace;"> </span>je jméno
+32-bitového linuxového systému.<br />
+    <br />
+  </li>
+  <li>Ujistěte se, že v&nbsp;souboru <span
+ style="font-family: courier new,courier,monospace;">xorg.conf</span>
+je správně nastavena barevná hloubka na 24, tak jak je tučně vyznačeno níže:<br />
+    <br />
+    <span style="font-family: courier new,courier,monospace;">
+Section "Screen"<br />
+Identifier "Screen0"<br />
+Device "Videocard0"<br />
+Monitor "Monitor0"<br />
+<b>DefaultDepth 24</b><br />
+SubSection "Display"<br />
+Viewport 0 0<br />
+<b>Depth 24</b><br />
+Modes "1680x1050" "1280x800" "1024x768" "800x600" "640x480"<br />
+EndSubSection<br />
+EndSection<br />
+    <br />
+</span>
+  </li>
+  <li>Pokračujte následující sekcí pro start celoobrazovkové session.<br />
+    <br />
+[Instrukce v&nbsp;této sekci uvedeny se svolením <a
+ href="http://www.javadesktop.org/forums/profile.jspa?userID=1354">qgonjona</a>
+a <a
+ href="http://www.javadesktop.org/forums/profile.jspa?userID=1522">marva</a>.
+Podívejte se také na <a
+ href="http://www.javadesktop.org/forums/thread.jspa?forumID=56&amp;threadID=3465&amp;messageID=17942#17942">tento
+diskuzní thread</a>.]<br />
+  </li>
+</ol>
+
+<h4><a name="Starting_the_Project_Looking_Glass"></a>
+Spouštění desktop session Projektu Looking Glass</h4>
+
+<p>
+Pro start desktop session Projektu Looking Glass z&nbsp;konzole
+(nikoli z&nbsp;X-session):
+</p>
+
+<ol>
+  <li>Přepněte se na uživatele root a přejděte do adresáře, kde máte
+nainstalován Projekt Looking Glass:<br />
+    <br />
+    <span style="font-family: courier new,courier,monospace;"> # cd
+/home/username/lg3d/bin</span><br />
+    <br />
+  </li>
+  <li>Spusťte desktop session Projektu Looking Glass:<br />
+<span style="font-family: courier new,courier,monospace;">
+    <br />
+# ./lg3d-session<br />
+    <br />
+    </span>Po několika vteřinách byste měli vidět desktop Projektu Looking
+Glass. Gratulujeme! Pokud máte problémy se spuštěním desktop session,
+podporu vám poskytne sekce <a href="#Troubleshooting">Řešení problémů</a>.
+</li>
+</ol>
+<p>
+Prozkoumejte desktop Projektu Looking Glass a začněte snít o&nbsp;nových
+způsobech použití dektopu v&nbsp;rámci 3D! Chcete-li se účastnit
+vývoje, přečtěte si <a href="../lg3d-developers-guide.html">Příručku
+vývojáře Projektu Looking Glass</a>, kde naleznete potřebné informace.
+</p>
+
+<h3><a name="Troubleshooting"></a>5. Řešení problémů </h3>
+
+<blockquote>
+<h4>no core pointer</h4>
+<p>
+Toto nastává na RedHat Fedora Core&nbsp;2 a zřejmě se může týkat i&nbsp;dalších
+konfigurací. Problém je možné obejít (postup od sgiunchiho) provedením
+následujícího (jako uživatel root):
+</p>
+<blockquote><span
+ style="font-family: courier new,courier,monospace;"># ln -s
+/etc/X11/xorg.conf /etc/X11/XF86Config-4</span><br />
+</blockquote>
+<p>
+Korektním řešením je upgradovat verzi X11, která je součástí lg3d-core.
+V&nbsp;současnosti jde o&nbsp;Xorg&nbsp;6.7 pre-release a je třeba ji
+upgradovat na poslední stabilní verzi Xorg.
+</p>
+<h4>Exception
+in thread "main"
+java.lang.UnsatisfiedLinkError:
+/usr/java/jdk1.5.0/jre/lib/i386/libj3dcore-ogl.so:<br />
+/usr/java/jdk1.5.0/jre/lib/i386/libj3dcore-ogl.so:
+symbol glMultiDrawArraysEXT, version LIBGL not defined in file
+libGL.so.1 with link time reference</h4>
+<p>
+Tato chyba nastává s&nbsp;ovladači ATI, které postrádají rozšíření
+glMultiDrawArraysEXT. Řešením je nahradit Radeon ovladače ovladači z&nbsp;projektu
+<a href="http://dri.sourceforge.net/cgi-bin/moin.cgi/FrontPage">Direct
+Rendering Open Source</a> (DRI). Instrukce pro instalaci ovladačů DRI
+obsahuje dokument <a href="../dri-driver-install-ati-radeon.html">
+Instalace ovladačů DRI pro ATI Radeon</a>.
+</p>
+<p>
+Upozorněme, že upgrade libGL.so na poslední verzi knihovny Mesa tento problém
+nevyřeší.
+</p>
+  <h4>pkill: 27863 - Operation not permitted<br />
+java.rmi.server.ExportException: Port already in use: 1099; nested
+exception
+is: <br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; java.net.BindException: Address already
+in
+use...<br />
+  </h4>
+
+<p>Tato chyba indikuje, že proces <span
+ style="font-family: courier new,courier,monospace;">rmiregistry </span> již beží
+a <span style="font-family: courier new,courier,monospace;">lg3d-dev</span>
+nemohl spustit novou instanci. Typicky nastává pokud byl <span
+ style="font-family: courier new,courier,monospace;">rmiregistry</span> proces
+spuštěn uživatelem root a <span style="font-family: courier new,courier,monospace;">lg3d-dev</span>
+je spouštěn pod jiným uživatelem. Řešením je ukončit instanci
+<span style="font-family: courier new,courier,monospace;">rmiregistry</span>
+uživatele root. Přepněte na uživatele root a ukončete proces:
+</p>
+<blockquote>
+<span
+ style="font-family: courier new,courier,monospace;">
+ % su root<br />
+ Password: <b>vložte heslo uživatele root</b> <br />
+ # pkill rmiregistry<br />
+ # exit</span><br />
+</blockquote>
+<p>
+Pro spuštění Projektu Looking Glass nyní znovu proveďte příkaz
+<span style="font-family: courier new,courier,monospace;">lg3d-dev</span>
+jako běžný uživatel.
+</p>
+  <h4>Fatal Server error: Cannot establish any listening sockets</h4>
+<p>Při startu Projektu Looking Glass pomocí lg3d-session se zobrazí
+následující chybová zpráva:
+</p>
+<blockquote><span
+ style="font-family: courier new,courier,monospace;">
+_XSERVTransSocketUNIXCreateListener: ...SocketCreateListener() failed<br />
+_XSERVTransMakeAllCOTSServerListeners: server already running<br /><br />
+Fatal server error:<br />
+Cannot establish any listening sockets - Make sure an X server<br />isn't already running</span></blockquote>
+<p>
+Nejprve se ujistěte, že na displeji na kterém spouštíte <span
+ style="font-family: courier new,courier,monospace;">lg3d-session</span>
+neběží žádná X11 session.
+Poté zkontrolujte zda z&nbsp;předchozí session nezůstal soubor
+<span style="font-family: courier new,courier,monospace;">/tmp/.X11-unix/X0</span>.
+Aby byl problém vyřešen, je třeba jej případně smazat a restartovat
+<span style="font-family: courier new,courier,monospace;">lg3d-session</span>.
+</p>
+
+  <h4>Překreslování obrazovky je velmi pomalé</h4>
+<p>Jde obvykle o&nbsp;důsledek nesprávně nastavené akcelerace. Nejprve
+zkontrolujte následující:</p>
+<ul>
+  <li>Spusťte příkaz <span style="font-family: courier new,courier,monospace;">glxinfo</span>
+z&nbsp;X11 session a zkontrolujte, že položka <b>direct rendering</b> je nastavena
+na <b>Yes</b>. Podívejte se rovněž na odkazy na <b>OpenGL</b>, abyste
+se ujistili, že vaše grafická karta podporuje OpenGL.<br />
+- Pro karty NVIDIA spusťte <span style="font-family: courier new,courier,monospace;">xdpyinfo</span>
+a zkontrolujte, existenci položek GLX či NVIDIA-GLX.<br />
+    <br />
+Jestliže tyto položky nevidíte, pravděpodobně nemáte nainstalován správný
+ovladače nebo není zapnutá podpora 3D. Informace o&nbsp;instalaci a konfiguraci
+ovladače s&nbsp;podporou 3D/OpenGL byste měli vyhledat na webu výrobce
+vašeho zařízení.<br />
+    <br />
+  </li>
+  <li>Zkontrolujte, zda log soubor X serveru <span
+ style="font-family: courier new,courier,monospace;">/var/log/XFree86.0.log</span>
+neobsahuje chybová hlášení a prověřte jaké ovladače jsou používány.<br />
+  </li>
+</ul>
+
+  <h4>libGL error: failed to open DRM: operation not permitted</h4>
+<p>
+(Tato chyba se může objevit při běhu lg3d-dev).
+</p>
+<p>
+V případě, že Projekt Looking Glass běží velmi pomalu a to i přesto,
+že 3D akcelerace je zapnuta, zkontrolujte, zda se v konzoli nezobrazuje
+následující zpráva:
+</p>
+<blockquote><span
+ style="font-family: courier new,courier,monospace;">
+libGL error: failed to open DRM: Operation not permitted<br />
+libGL error: reverting to (slow) indirect rendering</span></blockquote>
+
+  <p>Toto znamená, že váš uživatelský účet nemá oprávnění k&nbsp;použití DRI
+(Direct Rendering Infrastructure). V&nbsp;některých případech je root jediným
+uživatelem s&nbsp;přístupem k Direct Rendering. Zdá se, že se jedná pouze
+o&nbsp;problém systému RedHat a nikoli systémů JDS/SuSE. Pokud se u&nbsp;vašeho
+nastavení tato chyba projevuje, musíte změnit DRI práva ve vašem souboru
+XFree86Config či XF86Config takto:</p>
+
+<blockquote> <span
+ style="font-family: courier new,courier,monospace;">Section "DRI"<br />
+Group "video"<br />
+Mode 0666<br />
+EndSection</span><br />
+</blockquote>
+
+  <p>Rovněž musíte změnit práva profilu <span
+ style="font-family: courier new,courier,monospace;">&lt;dri&gt;</span> v souboru <span
+ style="font-family: courier new,courier,monospace;"> /etc/security/console.perms</span>
+z&nbsp;0600 na&nbsp;0666:<br />
+  </p>
+  <blockquote><span
+ style="font-family: courier new,courier,monospace;">&lt;xconsole&gt; 0600
+&lt;dri&gt; 0666 root</span></blockquote>
+  <p>a pokud používáte kartu NVIDIA, změňte práva zařízení <span
+ style="font-family: courier new,courier,monospace;">/dev/nvidia*</span> na&nbsp;0666:<br />
+  </p>
+  <blockquote><span
+ style="font-family: courier new,courier,monospace;"># chmod a+rw /dev/nvidia*</span></blockquote>
+  <h4>An unexpected exception has been detected in native code outside
+the VM</h4>
+<p>
+Projekt Looking Glass skončí následující výjimkou i&nbsp;v&nbsp;případě,
+kdy jste se ujistili, že 3D akcelerace je zapnuta:
+</p>
+<blockquote><span
+ style="font-family: courier new,courier,monospace;">An unexpected exception has
+been detected
+in native code outside the VM.<br />
+Unexpected Signal : 11 occurred at PC=0x0<br />
+Function=[Unknown.]<br />
+Library=(N/A)</span><br />
+</blockquote>
+  <p>Zkontrolujte, zda se v&nbsp;chybové zprávě výjimky nacházejí následující dva
+záznamy:
+  </p>
+<blockquote>
+<span
+ style="font-family: courier new,courier,monospace;">&lt;addr-range&gt; r-xp
+00000000 03:05
+61763 /usr/lib/GL/libGL.so.1.3.mesasoft<br />
+&lt;addr-range&gt; rw-p 001b4000 03:05 61763
+/usr/lib/GL/libGL.so.1.3.mesasoft</span>
+</blockquote>
+
+  <p>Pokud ano, máte nainstalovány OpenGL knihovny MESA. Použijte balíčkovací
+nástroj vaší distribuce (např. rpm) k&nbsp;jejich odstranění. Poté přejděte do
+<span style="font-family: courier new,courier,monospace;">/usr/lib</span>
+jako root a zkontrolujte, že následující symbolické linky existují a
+ukazují na správné OpenGL knihovny. Linky by měly vypadat podobně jako
+následující (kde x a y jsou čísla):<br />
+  </p>
+  <blockquote><span
+ style="font-family: courier new,courier,monospace;">
+libGLcore.so.1 -&gt; libGLcore.so.1.x<br />
+libGL.so -&gt; libGL.so.x<br />
+libGLU.so -&gt; libGLU.so.x.y.z<br /></span></blockquote>
+<p>
+Pokud tyto linky nejsou správné, přepněte se na uživatele root a vytvořte je.
+Například pokud máte soubor <span
+ style="font-family: courier new,courier,monospace;">libGLU.so.1</span>,
+ale neexistuje link <span
+ style="font-family: courier new,courier,monospace;">libGLU.so</span>, pak
+jej vytvořte:
+</p>
+  <blockquote><span
+ style="font-family: courier new,courier,monospace;"># ln -s /usr/lib/libGLU.so.1 /usr/lib/libGLU.so</span><br /></blockquote>
+
+<p>
+Toto zopakujte pro každý chybějící link.
+</p>
+
+  <h4>Nejde nahrát ovladač NVIDIA</h4>
+  <p>Existuje několik možných důvodů nesprávné inicializace ovladače:<br />
+  </p>
+  <ul>
+    <li>Ovladač NVIDIA je zkompilován pro linux.*bigmem. Pokud má váš
+systém dva obrazy (image), bigmem a linux*up, použijte první z&nbsp;nich.
+V&nbsp;opačném případě nahrání ovladače selže.<br />
+      <br />
+    </li>
+    <li>Ovladač NVIDIA musí najít IRQ přiřazené grafické kartě. To by měl
+nastavit BIOS před bootováním operačního systému, avšak tuto funkci lze
+u&nbsp;některých počítačů vypnut. Zkuste tedy toto nastavení přepnout zpět
+a zjistit jestli se tím problém vyřešil.<br />
+      <br />
+    </li>
+    <li>Projděte instalační instrukce k&nbsp;ovladači NVIDIA a poznámky
+k&nbsp;vydané verzi pro zjištění dalších detailů.</li>
+  </ul>
+</blockquote>
+<p>
+<b>Podívejte se také na:</b>
+</p>
+<p>
+<a href="../release-notes.html">Poznámky k&nbsp;vydání Vývojářské verze
+Projektu Looking Glass</a>
+</p>
+<p>
+Další informace o&nbsp;aktuálních problémech a chybách lze nalézt pod
+lg3d-core<b> Project Tools </b>&gt; <b>Issue tracker</b>. Můžete zde
+vyhledávat problémy a defekty nebo najít konkrétní chybu.
+</p>
+
+<h3><a name="Staying_connected_with_Project"></a>6. Zůstaňte informováni
+o&nbsp;Projektu Looking Glass</h3>
+
+<p>Projekt Looking Glass je neustále vyvíjen. Nejlepší způsob, jak zůstat
+informován, je zapsat se do mailing listů projektu. Klikněte na
+položku <b>Mailing lists</b> v&nbsp;sekci <b>Project tools</b> postranní lišty
+na <a href="https://lg3d.dev.java.net/">https://lg3d.dev.java.net/</a>.
+Zde si můžete, podle úrovně vašeho zájmu, vybrat z&nbsp;několika mailing listů.
+</p>
+<ul>
+  <li>Pokud vás zajímají <span style="color: red;">novinky</span>,
+zapište se do <a href="mailto:announce@lg3d.dev.java.net">announce@lg3d.dev.java.net</a>.<br />
+  </li>
+</ul>
+<ul>
+  <li>Jste-li vývojář a <span style="color: red;">chcete diskutovat
+vývoj a chyby Projektu Looking Glass</span>, zapište se do <a
+ href="mailto:interest@lg3d.dev.java.net">interest@lg3d.dev.java.net</a>.
+  </li>
+</ul>
+<ul>
+  <li>Jestliže vás zajímá <span style="color: red;">téma licencování</span>,
+pak zvolte <a href="mailto:lg3d_license@dev.java.net">lg3d_license@dev.java.net</a>.<br />
+  </li>
+</ul>
+
+<h3><a name="Some_final_words"></a>7. Několik slov na závěr</h3>
+<p>
+Děkujeme za váš zájem o&nbsp;Projekt Looking Glass! Opravdu se těšíme
+na vaše příspěvky v rámci nových vzrušíjích zážitků na desktopu! 
+</p>
+<p>
+Vývojový tým Projektu Looking Glass
+</p>
+<p>
+<b>Podívejte se také na:</b>
+</p>
+<p>
+<a href="../release-notes.html">Poznámky k&nbsp;vydání Vývojářské verze
+Projektu Looking Glass</a><br />
+<a href="../lg3d-developers-guide.html">Příručka vývojáře Projektu
+Looking Glass</a><br />
+<a href="../graphics-driver-index.html">Instalace a konfigurace ovladačů pro
+3D Desktop Projekt Looking Glass</a><br />
+</p>
+<hr /> 
+<small> $Revision: 1.1 $ $Date: 2006-05-09 17:44:59 $ (English Version Revision: 1.26)</small>
+</div>
+</body>
+</html>

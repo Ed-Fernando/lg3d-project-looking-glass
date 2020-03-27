@@ -1,0 +1,412 @@
+<!-- saved from url=(0022)http://internet.e-mail -->
+<!DOCTYPE html PUBLIC "-//Tigris//DTD XHTML 1.0 Transitional//EN" "http://style.tigris.org/tigris_transitional.dtd">
+<html>
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  <title>在Microsoft Windows下运行Project Looking Glass开发版</title>
+</head>
+<body>
+<div id="projectdocumentview" class="app">
+<hr />
+<h2>在Microsoft Windows下运行Project Looking Glass开发版</h2>
+<p><b>Project Looking Glass可以在Windows下运行！</b></p>
+<p>Project
+Looking Glass是采用独立于平台的Java技术编写的，这意味着它可以在
+很多种操作系统上运行。本文档即提供了特别的指导，告诉您怎样在
+Windows操作系统下运行Project Looking Glass开发版。
+</p>
+<p>首先，需要配置您的运行环境。运行环境正确配置之后，您就可以下载、
+安装Project Looking Glass了。</p>
+<p>
+<a href="#Platform_Requirements">1. 平台要求</a> <small>硬件和软件方面的要求</small><br />
+<a href="#Known_Issues_with_Project_Looking_Glass_">2. 已知Windows上运行
+Project Looking Glass时可能遇到的问题</a><br />
+<a href="#Setting_up_your_Project_Looking_Glass">3. 配置Project Looking Glass
+运行环境</a> <small>下载、安装所需组件</small><br />
+<a href="#Installing_the_Project_Looking_Glass">4. 安装Project Looking Glass
+开发版</a><br />
+<a href="#Running_Project_Looking_Glass">5. 运行Project Looking
+Glass</a> <small>怎样启动Project Looking Glass桌面会话<br />
+</small><a href="#Resizing_the_Project_Looking_Glass">6. 调整Project Looking Glass
+桌面的尺寸</a>
+</p>
+<h3><a name="Platform_Requirements"></a>1. 平台要求</h3>
+<p>
+在您开始配置Project Looking Glass开发环境之前，请先确定您的系统满足下列
+最低要求：
+</p>
+<table border="1" cellpadding="2" cellspacing="2" width="100%">
+  <tbody>
+    <tr>
+      <td width="16%" valign="top"><b>部件                </b></td>
+      <td width="84%" valign="top"><b>要求</b></td>
+    </tr>
+    <tr>
+      <td valign="top">操作系统</td>
+      <td valign="top">Windows
+2000 和 Windows XP，Project Looking Glass已经在这两种操作系统上通过测试。</td>
+    </tr>
+    <tr>
+      <td valign="top">CPU</td>
+      <td valign="top">1.4 GHz，建议更快</td>
+    </tr>
+    <tr>
+      <td valign="top">RAM</td>
+      <td valign="top">推荐512Mb</td>
+    </tr>
+    <tr>
+      <td valign="top">显卡</td>
+      <td valign="top">3D 图形加速卡，最低16Mb显存，支持1.2或更高版本的OpenGL。<br />
+      支持16位或32位色彩深度。<br />
+      <br />
+      <b>已通过测试的显卡：</b> <br />
+      <ul>
+        <li>ATI MOBILITY RADEON</li>
+        <li>NVIDIA GeForce4</li>
+      </ul>
+如果您在其它显卡上运行Project Looking Glass也获得了成功，
+请发邮件告诉我们：<a
+ href="mailto:interest@lg3d.dev.java.net"><u>interest@lg3d.dev.java.net</u></a><br />
+      <br />
+如果您在某种显卡上运行Project Looking Glass时遇到了问题，也请发邮件告诉我们：<a
+ href="mailto:issues@lg3d-core.dev.java.net"><u>issues@lg3d-core.dev.java.net</u></a>
+      </td>
+    </tr>
+    <tr>
+      <td valign="top">硬盘剩余空间</td>
+      <td valign="top">250MB</td>
+    </tr>
+  </tbody>
+</table>
+<br />
+<h3><a name="Known_Issues_with_Project_Looking_Glass_"></a>2. 已知Windows上运行
+Project Looking Glass时可能遇到的问题</h3>
+<h4>X11 支持情况</h4>
+<p>
+尽管Project Looking Glass支持X11程序，但Windows不支持X11程序，因此
+在Windows下的Project Looking Glass上无法运行X11程序。在Project Looking Glass下
+运行Windows本地程序的功能目前也尚未实现。然而，您可以开发、运行Project 
+Looking Glass 3D程序，比如那个CD浏览器，以及其它的3D Java程序。
+</p>
+<h4>全屏模式</h4>
+<p>
+Project Looking Glass桌面无法完全取代Windows桌面，不过您可以通过设置来
+让Project Looking Glass窗口占据整个屏幕。详情参见第6部分， "<a
+ href="#Resizing_the_Project_Looking_Glass">调整Project Looking Glass桌面
+ 的尺寸</a>"。
+</p>
+<h3><a name="Setting_up_your_Project_Looking_Glass"></a>3. 配置
+Project Looking Glass运行环境</h3>
+<p>
+必须先安装几个Java组件，然后才能够运行Project Looking Glass。最简单的
+办法是按下列清单所列的顺序下载并逐个安装各个组件。
+</p>
+<h4>下载组件</h4>
+<ol>
+  <li><b>Java 2 SDK, 标准版
+1.5.0 Beta 2 或更高的版本</b><br />
+    <a href="http://java.sun.com/j2se/1.5.0/download.jsp">http://java.sun.com/j2se/1.5.0/download.jsp</a><br />
+    <br />
+    <b>注：</b> 请选择 
+ <b>JDK</b>下载，而不是 <b>JRE</b><br />
+    <br />
+  </li>
+  <li><b>Java 3D SDK 1.3.2-build4</b><br />
+    <a href="https://j3d-core.dev.java.net/servlets/ProjectDocumentList"><u>https://j3d-core.dev.java.net/servlets/ProjectDocumentList<br />
+    <br />
+    </u></a><b>注：</b> 浏览
+    <b>j3d-core</b>/<b>Experimental_Builds</b>/<b>1.3.2-build4</b> 子目录，下载
+    <b>
+java3d-1_3_2-build4-windows-i586.zip</b><br />
+    <br />
+  </li>
+  <li><b>Java Advanced Imaging API (JAI)
+1.1.2 JDK </b><br />
+    <a
+ href="http://java.sun.com/products/java-media/jai/downloads/download-1_1_2.html">http://java.sun.com/products/java-media/jai/downloads/download-1_1_2.html</a><br />
+    <br />
+    <b>注：</b> 选中 <b>JDK(TM) Install: Bundle for installation in a JDK</b>，下载。 选中<b> Windows</b>下的<b>第一</b> <b>项</b>，jar文件下载。(<span
+ style="font-weight: bold; font-family: courier new,courier,monospace;"
+ class="nonu">jai-1_1_2-windows-i586-jar.zip</span>). <b>不要选
+JDK/JRE 下载</b>, 这些文件不能在JDK 1.5.0.下安装。<br />
+  </li>
+</ol>
+<h4>安装组件</h4>
+<p>
+组件下载完毕之后，按下列指导进行安装：</p>
+<ol>
+  <li>用拥有“计算机管理员”权限的用户身份登录。<br />
+    <br />
+  </li>
+  <li>安装Java 2 SDK:<br />
+    <br />
+- 用Windows资源管理器找到Java 2 JDK安装程序
+(<span
+ style="font-family: courier new,courier,monospace; font-weight: bold;">jdk-1_5_0-beta2-windows-i586.exe</span>)
+，运行这个程序。<br />
+- 按安装程序的提示安装JDK。<br />
+- JDK将安装在<span
+ style="font-family: courier new,courier,monospace; font-weight: bold;">C:\Program
+Files\Java\jdk1.5.0</span> 目录下（DOS 8.3路径为：<span
+ style="font-family: courier new,courier,monospace; font-weight: bold;">c:\progra~1\java\jdk1.5.0</span>).<br />
+- 把JDK路径加到PATH参数当中：<br />
+    <br />
+    <span style="font-family: courier new,courier,monospace;">C:\&gt;</span><span
+ style="font-weight: bold; font-family: courier new,courier,monospace;">set
+PATH="C:\Program Files\Java\jdk1.5.0\bin";%PATH%</span><br />
+    <br />
+    </li>
+  <li>安装Java 3D SDK:<br />
+    <br />
+- 用Windows资源管理器找到Java 3D ZIP文件
+(<span
+ style="font-weight: bold; font-family: courier new,courier,monospace;">java3d-1_3_2-build4-windows-i586.zip</span>)
+，打开这个文件。<br />
+- 将压缩文件的内容释放到临时目录当中。<br />
+- 打开一个DOS命令行窗口，转到下列路径下：<span
+ style="font-weight: bold; font-family: courier new,courier,monospace;">C:\Program
+Files\Java\jdk1.5.0\jre</span>:<br />
+    <br />
+    <span style="font-family: courier new,courier,monospace;">C:\&gt;<b>cd \progra~1\java\jdk1.5.0\jre</b></span><br />
+    <br />
+运行jar，释放临时目录里的Java 3D jar文件：<br />
+    <br />
+    <span style="font-family: courier new,courier,monospace;">C:\PROGRA~1\Java\jdk1.5.0&gt;<b>jar xvf
+c:\&lt;temp&gt;\java3d-1_3_2-build4-windows-i586\j3d-132-build4-win.jar</b></span><br />
+    <br />
+其中<span style="font-family: courier new,courier,monospace;">&lt;temp&gt;</span>
+为保存Java 3D ZIP释放出来的文件的临时目录。<br />
+    <br />
+  </li>
+  <li>安装Java高级图像API:<br />
+    <br />
+- 用Windows资源管理器找到Java高级图像API压缩文件(<span
+ style="font-weight: bold; font-family: courier new,courier,monospace;">jai-1_1_2-windows-i586-jar.zip</span>)
+，打开这个文件。<br />
+    - 将其中内容释放到一个临时目录当中。<br />
+- 转到该目录下，运行jar，释放jar文件：<br />
+    <br />
+    <span style="font-family: courier new,courier,monospace;">C:\&gt;</span><span
+ style="font-weight: bold; font-family: courier new,courier,monospace;">cd
+\temp</span><br />
+    <span style="font-family: courier new,courier,monospace;">C:\temp&gt;</span><span
+ style="font-weight: bold; font-family: courier new,courier,monospace;">jar
+xvf jai_windows-i586.jar</span><br />
+    <br />
+- 现在运行JAI安装程序：<br />
+    <br />
+    <span style="font-family: courier new,courier,monospace;">C:\temp&gt;</span><span
+ style="font-weight: bold; font-family: courier new,courier,monospace;">jai-1_1_2-lib-windows-i586-jre.exe</span><br />
+    <br />
+    <b>注意：</b> 安装过程中，<b>不要接受默认的JRE路径</b> (例如： C:\Program
+Files\Java\j2re1.4.2_03)，而应该选择下列路径：<br />
+    <br />
+    <span
+ style="font-family: courier new,courier,monospace; font-weight: bold;">C:\Program
+Files\Java\jdk1.5.0\jre</span><br />
+    <br />
+    <b>注：</b>如果遇到下列错误信息弹出：<br />
+    <br />
+    <blockquote><span
+ style="font-family: courier new,courier,monospace;">不能运行16位
+Windows程序</span><br />
+    <span style="font-family: courier new,courier,monospace;">无法找到文件
+c:\temp\pft12~tmp\SETUP.EXE (或它的一个组件)。请确定文件名和路径</span><br />
+    <span style="font-family: courier new,courier,monospace;"> 正确，而且所需的
+链接库都已提供。</span><br />
+    </blockquote>
+    <br />
+则重启计算机，重新安装程序。<br />
+    <br />
+  </li>
+  <li>现在需要设置几个环境变量。<br />
+    <br />
+    <span
+ style="font-family: courier new,courier,monospace; font-weight: bold;">JAVA_HOME=c:\progra~1\java\jdk1.5.0<br />
+PATH=%JAVA_HOME%\bin;%PATH%</span><br />
+    <br />
+通过系统属性对话框，可永久设置这些变量：<br />
+    <br />
+- 选择<span style="font-family: courier new,courier,monospace;">开始-&gt;控制面板</span><br />
+- 选择<span style="font-family: courier new,courier,monospace;">性能与维护</span><br />
+- 选择<span style="font-family: courier new,courier,monospace;">系统</span><br />
+- 选择<span style="font-family: courier new,courier,monospace;">[高级]
+    </span>标签页 <span
+ style="font-family: courier new,courier,monospace;">[环境变量]</span><br />
+- 在<span style="font-family: courier new,courier,monospace;">系统变量</span>下新建一个<span
+ style="font-weight: bold; font-family: courier new,courier,monospace;">JAVA_HOME</span>
+变量：<br />
+    <br />
+&nbsp; - 点<span
+ style="font-family: courier new,courier,monospace;">[新建]</span>按钮，输入下列参数：
+ <br />
+    <br />
+    <span style="font-family: courier new,courier,monospace;">&nbsp;
+变量名：</span><span
+ style="font-weight: bold; font-family: courier new,courier,monospace;">JAVA_HOME</span><br />
+    <span style="font-family: courier new,courier,monospace;">&nbsp;
+变量值：</span><span
+ style="font-weight: bold; font-family: courier new,courier,monospace;">c:\progra~1\java\jdk1.5.0</span><br />
+    <br />
+&nbsp; - 点<span
+ style="font-family: courier new,courier,monospace;">[确定]</span><br />
+    <br />
+- 更新路径变量:<br />
+    <br />
+&nbsp; - 选中<span
+ style="font-family: courier new,courier,monospace;">Path</span> 一行，点
+<span style="font-family: courier new,courier,monospace;">[编辑]</span><br />
+&nbsp; - 加入下列路径：<br />
+    <br />
+&nbsp;&nbsp;&nbsp; <span
+ style="font-weight: bold; font-family: courier new,courier,monospace;">%JAVA_HOME%\bin;</span><br />
+    <br />
+&nbsp; - 点<span
+ style="font-family: courier new,courier,monospace;">[确定]</span><br />
+    <br />
+- 点<span style="font-family: courier new,courier,monospace;">
+[确定]</span>按钮保存<span
+ style="font-family: courier new,courier,monospace;">环境变量</span>和<span
+ style="font-family: courier new,courier,monospace;">系统属性</span>
+对话框。<br />
+  </li>
+</ol>
+
+<h3><a name="Installing_the_Project_Looking_Glass"></a>4. 安装
+Project Looking Glass开发版</h3>
+<h4>到java.net网站上注册</h4>
+<p>
+如果您以前未曾在<a href="http://www.java.net">java.net</a> 网站上注册，那么
+您需要注册，创建一个帐号：
+</p>
+<ol>
+  <li>浏览<a href="http://www.java.net">http://www.java.net</a>
+网页，在上方点<b>注册</b>链接。</li>
+  <li>输入您想要的用户名和您的EMail地址，点<b>[注册]</b>按钮。<br />
+  </li>
+  <li>您将会收到一封EMail，告诉您如何为自己的帐号设置密码。
+设置密码并接受java.net网站条款之后，您就可以登录了。<br />
+  </li>
+</ol>
+<h4>下载Project Looking Glass安装包</h4>
+<ol>
+  <li>访问<a href="https://lg3d-core.dev.java.net">https://lg3d-core.dev.java.net</a>
+网页，在侧面导航条<b>项目 工具</b>部分点击<b>项目文档</b>。</li>
+  <li>在右侧树形目录上选中<b>lg3d-core</b>/<b>stable_builds</b>目录，会有稳定版本的清单显示出来。</li>
+  <li>在形如<b>release_x.y</b>的链接上单击鼠标右键
+（其中x.y是编译的版本号，例如：0.5），选择
+"另存为.."。选定一个临时目录，把文件保存起来。<br />
+  </li>
+  <li>您需要一个解压缩软件，比如<a href="http://www.winzip.com">WinZip</a>，
+才能将gzip压缩的tar文件解压缩，再安装程序。</li>
+  <li>先用解压缩软件把下载的文件解压缩，再把tar文档的内容释放出来。WinZip可以
+自动完成这两步。<br />
+    <b>注：</b>如果您把文件释放到系统盘根目录(C:\)，那么Project Looking Glass
+将安装到C:\lg3d路径下。<br />
+    </li>
+</ol>
+<h3><a name="Running_Project_Looking_Glass"></a>5. 运行Project Looking Glass</h3>
+<p>在Windows下，Project Looking Glass只能在一个本地窗口里运行，不能以全屏桌面的
+方式运行。<br />
+</p>
+<p>
+在这种模式下，Project Looking Glass会话是运行在Windows桌面的一个窗口里。
+这样您只能运行Project Looking Glass 3D应用程序，比如那个CD浏览器。在
+这种Project Looking Glass里无法运行X11程序和Windows程序。<br />
+</p>
+<ol>
+  <li>运行Project Looking Glass时，可打开一个DOS命令行窗口（开始-&gt;
+附件-&gt;命令提示符），输入下列指令：<br />
+    <br />
+    <span style="font-family: courier new,courier,monospace;"> C:\&gt;<b>\lg3d\bin\lg3d-dev</b></span></li>
+</ol>
+<p>
+如果您已成功安装了Project Looking Glass，这是您就会看到Project Looking Glass
+桌面出现在一个Windows窗口里了。
+</p>
+<a href="../images/lg_snapshot.png"> <img
+ alt="Project Looking Glass屏幕抓图" style="float: right;"
+ src="https://lg3d-core.dev.java.net/images/lg_snapshot-s.png"
+ width="200" /> </a>
+<p>点击任务条上的CD图标可以打开CD浏览器，这是一个3D演示程序。
+您可以把鼠标指到CD架上，点击CD图像，看看这个程序是怎么运行的。
+如果您想了解更多操作信息，可在任务条上点击CD浏览器图标左边的图标，
+这样就可以打开一个面板，面板上对演示程序所支持的操作进行了介绍。需要
+指出，最左边的计算机图标需要X11环境支持，无法在Windows下运行。
+</p>
+
+<h3><a
+ name="Resizing_the_Project_Looking_Glass"></a>6. 调整Project 
+ Looking Glass桌面尺寸</h3>
+<p>
+Project Looking Glass默认屏幕分辨率为800×600，屏幕尺寸为36cm×28.8cm。
+这个设置可能与您的桌面不符。要想满屏运行Project Looking Glass，您需要
+设置这些参数，这样Project Looking Glass才能利用整个的屏幕空间。
+可按下列步骤进行设置。
+</p>
+<ol>
+  <li>找到文件<span
+ style="font-family: courier new,courier,monospace;">j3d1x1</span>
+，该文件在下列目录下：<br />
+    <br />
+    <span
+ style="font-family: courier new,courier,monospace; font-weight: bold;">\lg3d\etc\lg3d\displayconfig</span><br />
+    <br />
+  </li>
+  <li>备份 <span
+ style="font-family: courier new,courier,monospace;">j3d1x1</span>文件：<br />
+    <br />
+    <span style="font-family: courier new,courier,monospace;">c:\&gt;<b>cd \lg3d\etc\lg3d\displayconfig</b></span><br />
+    <span style="font-family: courier new,courier,monospace;">c:\lg3d\etc\lg3d\displayconfig&gt;<b>copy j3d1x1 j3d1x1.orig</b></span><br />
+    <br />
+  </li>
+  <li>编辑<span
+ style="font-family: courier new,courier,monospace;">j3d1x1</span>文件，根据
+您屏幕的具体情况修改下列参数：<br />
+    <br />
+首先，将屏幕的宽和高换算成米（英尺乘以0.0254即为米的数值，如：11"＝0.2794m）。
+默认屏幕大小为14.2"（0.360m）宽，11.3"（0.288m）高：<br />
+    <br />
+    <span style="font-family: courier new,courier,monospace;">(ScreenAttribute
+center PhysicalScreenWidth&nbsp; </span><span
+ style="font-weight: bold; font-family: courier new,courier,monospace;">0.360</span><span
+ style="font-family: courier new,courier,monospace;">)</span><br />
+    <span style="font-family: courier new,courier,monospace;">(ScreenAttribute
+center PhysicalScreenHeight </span><span
+ style="font-weight: bold; font-family: courier new,courier,monospace;">0.288</span><span
+ style="font-family: courier new,courier,monospace;">)</span><br />
+    <br />
+现在修改WindowSize属性，该属性设定分辨率，默认为800x600:<br />
+    <br />
+    <span style="font-family: courier new,courier,monospace;">(ScreenAttribute
+center
+WindowSize&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; (</span><span
+ style="font-weight: bold; font-family: courier new,courier,monospace;">800
+600</span><span style="font-family: courier new,courier,monospace;">))</span><br />
+    <br />
+最后，要想让Project Looking Glass满屏运行不带Windows边框，可把下面这行开头的<span
+ style="font-weight: bold; font-family: courier new,courier,monospace;">//</span>
+注释标记删掉：<br />
+    <br />
+    <span style="font-family: courier new,courier,monospace;"><b>//</b>(ScreenAttribute
+center&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+WindowSize&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+NoBorderFullScreen)</span><br />
+    <br />
+  </li>
+  <li>现在您再运行Project Looking Glass，就应该是全屏的了。<br />
+    <br />
+    <span style="font-family: courier new,courier,monospace;">C:\&gt;<b>\lg3d\bin\lg3d-dev</b></span><br />
+  </li>
+</ol>
+<p>
+终于可以享受Project Looking Glass桌面了，您可以尽情发挥您的想象，构想全新
+的3D用户体验！如果已经准备好进行开发工作，您可以跳到<a
+ href="lg3d-developers-guide.html">Project Looking Glass开发指南</a>，
+了解Project Looking Glass开发方面的信息。
+</p>
+<hr />
+<small>$Revision: 1.1 $ $Date: 2006-05-09 17:46:44 $</small>
+</div>
+</body>
+</html>

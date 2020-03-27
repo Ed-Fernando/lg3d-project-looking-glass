@@ -1,0 +1,150 @@
+<!DOCTYPE html PUBLIC "-//Tigris//DTD XHTML 1.0 Transitional//EN"
+"http://style.tigris.org/tigris_transitional.dtd">
+<html>
+<head>
+  <title>Installazione driver DRI per ATI Radeon</title>
+  <meta name="Translator" content="Giordano Fracasso" />
+</head>
+<body>
+<div id="projectdocumentview" class="app">
+
+<hr />
+<h2>Installazione driver DRI per ATI Radeon</h2>
+
+<br />
+
+<p>
+Queste istruzioni spiegano come installare il driver Direct Rendering
+Infrastructure (DRI) per schede grafiche ATI Radeon per abilitare l' estensione per il 
+rendering diretto richiesta da Project Looking Glass.</p>
+
+<h3>Istruzioni per l'installazione</h3>
+<p>
+Questa è la procedura per l'aggiornamento della libreria OpenGL (LibGL.so) e implicitamente
+del driver per Radeon 7500 su RedHat 9.
+</p>
+
+<ol>
+  <li>Da root:<br />
+    <br />
+    <span style="font-family: monospace;">% su root</span><br />
+    <span style="font-family: monospace;"> Password: </span><b>inserire la password di root</b><br />
+    <span style="font-family: monospace;"> #</span><br />
+    <br />
+  </li>
+  <li>Installare i sorgenti del kernel dalla distribuzione RedHat 9:<br />
+    <br />
+    <span style="font-family: monospace;"># rpm -ivh
+kernel-source-2.4.20-8.i386.rpm</span><span
+ style="font-family: monospace;"><br />
+    <br />
+    </span><b>Nota:</b>se hai montato il cdrom #2, puoi trovare il pacchetto
+    <span style="font-family: monospace;">kernel-source</span> in:<br />
+    <br />
+    <span style="font-family: monospace;">/mnt/cdrom/RedHat/RPMS/kernel-source-2.4.20-8.i386.rpm</span><span
+ style="font-family: monospace;"><br />
+    <br />
+    </span></li>
+  <li>Aggiornare la configurazione del kernel e delle dipendenze:<br />
+    <br />
+    <span style="font-family: monospace;"># cd /usr/src/linux-2.4</span><br />
+    <span style="font-family: monospace;"># cp /boot/config-2.4.20-8.config</span><br />
+    <span style="font-family: monospace;"># make oldconfig</span><br />
+    <span style="font-family: monospace;"># make dep</span><br />
+    <br />
+    <b>Nota:</b> Non è necessario ricompilare il kernel.<br />
+    <br />
+  </li>
+  <li>Scaricare l' ultimo snapshot dei drivers per ATI Radeon dal <a
+ href="http://dri.sourceforge.net/cgi-bin/moin.cgi/FrontPage">sito web del progetto DRI</a>: <br />
+    <br />
+Seguire le instruzioni nella sezione <b>Snapshot</b> nella pagina del 
+ <b>Download:</b> <a
+ href="http://dri.sourceforge.net/cgi-bin/moin.cgi/Download">http://dri.sourceforge.net/cgi-bin/moin.cgi/Download<br />
+    <br />
+    </a>
+    Avrete bisogno di effetuare il download del common snapshot (denominato: <span
+ style="font-family: monospace;">common-</span><span
+ style="font-style: italic; font-family: monospace;">YYYYMMDD</span><span
+ style="font-family: monospace;">-linux.i386.tar.bz2</span>) e del
+Radeon snapshot (<span style="font-family: monospace;">radeon-</span><span
+ style="font-style: italic; font-family: monospace;">YYYYMMDD</span><span
+ style="font-family: monospace;">-linux.i386.tar.bz2</span>).<br />
+    <br />
+  </li>
+  <li>Estrarre il pacchetto common e installarlo:<br />
+    <br />
+    <span style="font-family: monospace;"># tar jxf common-*</span><br />
+    <span style="font-family: monospace;"># cd dripkg</span><br />
+    <span style="font-family: monospace;"># ./install.sh</span><br />
+    <span style="font-family: monospace;"># cd ..</span><br />
+    <span style="font-family: monospace;"># rm -rf dripkg</span><br />
+    <br />
+  </li>
+  <li>Estrarre il pacchetto Radeon e installarlo:<br />
+    <br />
+    <span style="font-family: monospace;"># tar jxf radeon-*</span><br />
+    <span style="font-family: monospace;"># cd dripkg</span><br />
+    <span style="font-family: monospace;"># ./install.sh</span><br />
+    <span style="font-family: monospace;"># cd ..</span><br />
+    <span style="font-family: monospace;"># rm -rf dripkg</span><br />
+    <br />
+  </li>
+  <li>Su RedHat 9 avrai bosogno di scaricare e installare i binari di XFree86.<br />
+    <br />
+Seguire le instruzioni nella sezione <b>Snapshot</b> nella pagina del 
+ <b>Download:</b>
+<a href="http://dri.sourceforge.net/cgi-bin/moin.cgi/Download">http://dri.sourceforge.net/cgi-bin/moin.cgi/Download<br />
+    <br />
+    </a></li>
+  <li>Aggiungere la seguente riga in <span style="font-family: monospace;">/etc/modules.conf</span>:<br />
+    <br />
+    <span style="font-family: monospace;">pre-install radeon
+/sbin/modprobe -k agpgart</span><br />
+    <br />
+Questo assicura che il modulo agpgart venga caricato prima del modulo radeon.<br />
+    <br />
+  </li>
+  <li>Per abilitare il DRI bisogna aggiornare il file<span
+ style="font-family: monospace;">/etc/X11/XF86Config</span>:<br />
+    <br />
+Aggiungere le seguenti righe nella sezione <b>Module</b>
+se non sono già presenti:<br />
+    <br />
+    <blockquote>
+    <span style="font-family: monospace;">Load "glx"</span><br />
+    <span style="font-family: monospace;">Load "dri"</span><br />
+    <br />
+    </blockquote>
+e aggiungere una sezione <b>DRI</b>, se necessario, che contiene:<br />
+    <br />
+    <blockquote><span
+ style="font-family: monospace;">Section "DRI"</span><br />
+    <span style="font-family: monospace;">&nbsp;&nbsp;&nbsp; Mode 0666</span><br />
+    <span style="font-family: monospace;">EndSection</span><br />
+    <br />
+    </blockquote>
+  </li>
+  <li>Ora riavviate il vostro sistema.<br /><br /></li>
+  <li>Verificate infine che il rendering diretto sia abilitato, attraverso il comando:
+<span style="font-family: monospace;">glxinfo</span><br />
+    <br />
+    <span style="font-family: monospace;">% glxinfo | grep "direct
+rendering"</span><br />
+    <br />
+Deve comparire:<br />
+    <br />
+    <span style="font-family: monospace;">direct rendering: Yes</span><br />
+  </li>
+</ol>
+<h3>Ringraziamenti</h3>
+<p>
+Il team di Project Looking Glass ringrazia Lucian Cionca <a
+ href="mailto:lucian.cionca@gmail.com"><u>lucian.cionca@gmail.com</u></a>
+per aver fornito queste istruzioni!</p>
+<br />
+<hr />
+<small> $Revision: 1.1 $ $Date: 2006-05-09 17:46:29 $ (English Version Revision: 1.8)</small>
+</div>
+</body>
+</html>

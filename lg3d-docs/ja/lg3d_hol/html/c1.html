@@ -1,0 +1,137 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html>
+  <head>
+    <meta http-equiv="content-type" content="text/html; charset=utf-8" />
+    <title>プロジェクトの作成</title>
+  </head>
+
+  <body bgcolor="white">
+    <h1>JavaOne Tokyo Hands on Lab : <br>
+	Project Looking Glass (LG3D) Basic Programming</h1>
+
+    <h2>4.1 プロジェクトの作成</h2>
+
+    
+    <b>この章で行うこと : </b><br>
+    NetBeans を用いて LG3D アプリケーションを作成するために
+    以下のことを行います。
+    <ul>
+      <li> LG3D アプリケーションを作成するためのプロジェクトの作成
+      <li> プログラミング環境のセットアップ
+        <ul>
+          <li> Javaプラットフォームの設定
+          <li> ライブラリの設定
+        </ul>
+    </ul>
+
+    <br>
+    <h3>プロジェクトの作成</h3>
+
+     <ol>
+      <li> NetBeans 5.5のメニューから、
+      「<font color="red"><b>ファイル</b></font>」→「<font color="red"><b>新規プロジェクト</b></font>」を選択します。
+      <br><br><br>
+      <img src="pictures/c1_01.png">
+      <br><br><br>
+      <li> プロジェクト作成用のダイアログが表示されますので、<br>
+         <ul>
+           <li>カテゴリ : <font color="red"><b>一般</b></font>
+           <li>プロジェクト : <font color="red"><b>Javaアプリケーション</b></font>
+         </ul>を選択します。
+           確認後、「<font color="red"><b>次へ</b></font>」ボタンを押します。
+      <br><br><br>
+      <img src="pictures/c1_02.png">
+      <br><br><br>
+      <li> プロジェクトの情報を入力を求められますので、<br>
+           <ul>
+            <li> プロジェクト名 : <font color="red"><b>TextureBox</b></font>
+            <li> 主クラスを作成 : <font color="red"><b>texturebox.TextureBox</b></font>
+           </ul>
+           に変更します。<br>
+           パッケージ名はデフォルトの texturebox をそのまま利用します。<br>
+           入力が終わったら、「<font color="red"><b>完了</b></font>」を押します。
+      <br><br><br>
+      <img src="pictures/c1_03.png">
+      <br><br><br>
+      <li> クラスなどを含むプロジェクトが作成され、下図のようになります。
+      <br><br><br>
+      <img src="pictures/c1_04.png">
+      <br><br><br>
+
+     </ol>
+
+    <br>
+    <h3>プログラミング環境、実行環境の設定</h3>
+
+    <ol>
+      <li> IDE の左上部にプロジェクトの情報が表示されていることを確認し
+          「<font color="red"><b>TextureBox</b></font>」を選択します。<br>
+           選択後、右クリックを押すことでメニューが表示されますので
+          「<font color="red"><b>プロパティ</b></font>」を選択します。
+      <br><br><br>
+      <img src="pictures/c1_05.png">
+      <br><br><br>
+      <li> プロジェクトプロパティの設定用ウィンドウが表示されますので、
+        <ul>
+        <li>カテゴリ : <font color="red"><b>ライブラリ</b></font>
+        </ul>を選択します。
+      <br><br><br>
+      <img src="pictures/c1_06.png">
+      <br><br><br>
+      <li> ウィンドウの右側の「<font color="red"><b>コンパイル</b></font>」が選択されていることを確認し、
+       「<font color="red"><b>ライブラリの追加</b></font>」をクリックします。
+      <br><br><br>
+      <img src="pictures/c1_07.png">
+      <br><br><br>
+      <li> 「ライブラリの追加」という新しいウィンドウが表示されますので、
+      「<font color="red"><b>lg3d-core</b></font>」というライブラリを選択し、
+      「<font color="red"><b>ライブラリの追加</b></font>」をクリックします。
+      <br><br><br>
+     　<img src="pictures/c1_08.png">
+      <br><br><br>
+      <li> プロジェクトプロパティの設定用ウィンドウの
+      「コンパイル時ライブラリ」のリストに「<font color="red"><b>lg3d-core</b></font>」が追加されていることを確認します。<br>
+      確認後、上部の 「Javaプラットフォーム」の項目を
+       <ul>
+       <li>Javaプラットフォーム : <font color="red"><b>JDK 1.6.0 with Java3D</b></font>
+       </ul>に変更します。<br>
+	   そして、下側にある「<font color="red"><b>了解</b></font>」をクリックします。
+        <br>これで設定は終了です。<br>
+      <br><br><br>
+      <img src="pictures/c1_09.png">
+      <br><br><br>
+	  <!--  
+      <li> 左側のパネルの「カテゴリ」のリストから「<font color="red"><b>実行</b></font>」を選択します。
+      <br><br><br>
+      <img src="pictures/c1_10.jpg">
+      <br><br><br>
+      <li> 右側のパネルの項目を次のようにします。
+       <ul>
+       <li>作業用ディレクトリ : <font color="red"><b>/home/duke/lg3d</b></font> (LG3D本体がインストールされているディレクトリ)
+       <li>VMオプション : <br><font color="red"><b> 
+                         -XX:PermSize=16m -XX:MaxPermSize=24m -XX:NewSize=128m -XX:MaxNewSize=128m
+                         -Xms256m -Xmx256m -XX:+UseConcMarkSweepGC -XX:+DisableExplicitGC -Dlg.etcdir=/home/duke/lg3d/etc/
+                         -Dlg.configurl=file:///home/duke/lg3d/etc/lg3d/lgconfig_1p_nox.xml
+                         -Dlg.displayconfigurl=file:///home/duke/lg3d/etc/lg3d/displayconfig/j3d1x1</b></font>
+        </ul><br>
+        入力後、下側にある「<font color="red"><b>了解</b></font>」をクリックします。
+        <br>これで、設定は終了です。<br>
+         <blockquote>
+           補足：
+          「VMオプション」の項目には、LG3Dを実行する際に利用するヒープメモリに関する設定と、
+           LG3Dの実行に必要なコンフィギュレーションファイルの情報を入力しています。
+         </blockquote>
+      <br><br><br>
+      <img src="pictures/c1_11.jpg">
+      <br><br><br>
+	  -->
+    </ol>
+
+    <hr>
+    <ul>
+    <li><a href="c2.html">「4.2 シンプルな3Dオブジェクトの作成」 </a>に進む
+    <br><br>
+    <li><a href="index.html">メニューに戻る</a>
+    </ul>
+  </body>
+</html>

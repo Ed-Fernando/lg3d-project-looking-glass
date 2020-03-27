@@ -1,0 +1,70 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html>
+  <head>
+    <meta http-equiv="content-type" content="text/html; charset=utf-8" />
+    <title>応用問題</title>
+  </head>
+
+  <body bgcolor="white">
+    <h1>JavaOne Tokyo Hands on Lab : <br>
+        Project Looking Glass (LG3D) Basic Programming</h1>
+    <h2>応用問題</h2>
+
+    <p> <font color="red">/home/duke/Documents/extra</font>
+        以下には今回のスライド用アプリケーションで使用した画像があります。
+        <br>
+        それらを利用して、以下の改良に挑戦してください。
+
+    <ul>
+     <li> サムネイル上で中クリックで最小化
+       <blockquote>
+         Thumbnailオブジェクトにイベント処理を追加します。
+         Frame3D.changeVisible(boolean) メソッドを利用することにより
+         最小化を行うことができます。
+       </blockquote>
+     <li> 最小化、終了ボタンの作成
+       <blockquote>
+         Frame3D.changeEnabled(boolean) メソッドを利用することにより
+         アプリケーションを終了することができます。<br>
+         また、lg3d-core.jarには
+         <ul>
+          <li> resources/images/button/window-close.png
+          <li> resources/images/button/window-minimize.png
+         </ul>
+         が含まれていますので、
+         最小化、終了ボタン作成にこれらを利用するのも良いでしょう。
+       </blockquote>
+     <li> 4枚以上の画像に対応する(表示画像を切り替えていく)<br>
+          「4.3 テクスチャを使う」ではボックスの全ての面に違う画像を表示させましたが、ここではボックスの上下の面は画像の表示対象からはずします。
+       <blockquote>
+          一番お手軽なのは、画像ごとにSimpleAppearanceオブジェクトを生成し、
+          Shape3D.setAppearance(Appearance)メソッドを利用する方法です。
+       </blockquote>
+     <li> ボックス以外のシェイプを使う
+       <blockquote>
+       Box以外のシェイプとして 
+       <ul>
+        <li>org.jdesktop.lg3d.utils.shape.ImagePanel
+        <li>org.jdesktop.lg3d.utils.shape.FuzzyEdgePanel
+       </ul>
+       などがあります。
+       ImagePanelとFuzzyEdgePanelはテクスチャを貼るために用意されている
+       シェイプなので、BoxのようにGENERATE_TEXTURE_COORDSを指定をする
+       必要はありません。
+       </blockquote>
+     <li> ページ番号の表示を行う
+       <blockquote>
+       org.jdesktop.lg3d.utils.shape.Text2Dクラスを使う方法が簡単です。
+       Text2D は簡単な文字列を扱うためのシェイプです。
+       Text2D.setString(String)で文字列の変更が行えます。
+       文字が大きすぎる場合は Component3D オブジェクトに格納後 
+       Component3D.setScale(float)で拡大・縮小が行えます。
+       </blockquote>
+    </ul>
+
+    <hr>
+    <ul>
+    <li><a href="index.html">メニューに戻る</a>
+    </ul>
+  </body>
+</html>

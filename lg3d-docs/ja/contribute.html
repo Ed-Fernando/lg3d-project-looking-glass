@@ -1,0 +1,163 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html>
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  <meta name="Translator" content="Kazuhiro Kazama" />
+  <title>Project Looking Glassへの貢献</title>
+</head>
+<body style="color: rgb(0, 0, 0); background-color: rgb(255, 255, 255);">
+<h2>Project Looking Glassへの貢献</h2>
+<p>Project Looking Glassのソースコードは、ライセンス契約条件に従って、誰でも利用することができます。
+このプロジェクトの開発は公の場でおこなわれていて、個人や企業に対してオープンです。
+修正や拡張機能が実装されるよいプロジェクトによって、すべての人が利益を得ることができます。
+Project　Looking GlassのようなJavaDesktopコミュニティプロジェクトに参加する一般的なガイドラインは<a
+ href="https://javadesktop.dev.java.net/govern.html">JavaDesktop
+Community Governance Guidelines</a>を参照してください。
+</p>
+<h3><a name="JCA"></a>共同著作権契約書</h3>
+<p>ソースコード、オブジェクトコード、ドキュメント、または他の素材のすべての貢献者は、貢献がこのプロジェクトに採用される前に、共同著作権契約書フォームのすべての項目に記入しなければいけません。
+印刷し、すべての項目に記入し、署名してから、<a target="_blank"
+ href="../lg3d-jca.pdf">共同著作権契約書フォーム</a>を下記にメールまたはFAXしてください。</p>
+<blockquote>
+  <p>
+Project Looking Glass JCA<br />
+Sun Microsystems, Inc.<br />
+Attn: Dennis Peng<br />
+7777 Gateway Blvd. #12<br />
+MS: UNWK12-209<br />
+Newark, CA 94560, USA
+  </p>
+  <p>
+Fax: +1 510-574-7146
+  </p>
+</blockquote>
+<p>または、スキャンしたものを<a
+ href="mailto:lg3d-jca-submit@sun.com">lg3d-jca-submit@sun.com</a>にメールで送ってください。
+</p>
+<p>共同著作権契約書に署名して、提出した個人および企業は、<a href="../jca-approved.html">ここ</a>に列挙されています。</p>
+<h3>貢献方法</h3>
+<p>以下は、Project Looking Glassに貢献する方法のいくつかです。</p>
+<ul>
+  <li>
+    <p><b>バイナリリリースの試用</b><br>
+あなたは、Project Looking Glassのバイナリリリースをlg3d-coreプロジェクトの<a
+ href="https://lg3d-core.dev.java.net/servlets/ProjectDocumentList">ドキュメント</a>セクションからダウンロードすることができます。</p>
+  </li>
+  <li>
+    <p><b>フォーラムおよびメーリングリストへの参加</b><br>
+<a target="_blank" href="http://www.javadesktop.org/forums/forum.jspa?forumID=56">Project
+Looking Glassフォーラム</a>とメーリングリストは、このソフトウェアを使う人たちにお互いの専門知識の恩恵を受けるための手段を提供します。
+本当に便利にするために、これらのリストは<i>あなたの</i>入力を必要としています!
+どうか怖がらないで、投稿してください。
+たとえば、可能ならば他の人を助けたり、質問、コメントおよびあなたが良いと思うアイデアを投稿してみてください。
+詳しくは、lg3d-coreページの<a
+ href="https://lg3d-core.dev.java.net/ja/#Staying_Connected">乗り遅れないために</a>のセクションを参照してください。</p>
+  </li>
+  <li>
+    <p><b>バグレポートの登録</b><br>
+開発者にとって、バグレポートは非常に役に立つので、プロジェクトに貢献するための素晴らしい方法です!
+バグ(欠陥)を登録するために、lg3d-coreプロジェクトの<a
+ href="https://lg3d-core.dev.java.net/servlets/ProjectIssues">課題追跡</a>を使ってください。
+
+<a
+ href="https://lg3d-core.dev.java.net/ja/#Reporting_Issues">バグレポートを記入する</a>時には、少し時間が掛かることを覚えておいてください。
+その問題を再現できることを確認して、その問題についての説明を非常に明白に述べてください。</p>
+  </li>
+  <li>
+    <p><b>拡張要求の登録</b><br>
+もしプロジェクトにあってほしいものやいらないもの、または改良できると思われるものがあるのならば、拡張要求を記入して私たちに知らせてください。
+<a
+ href="https://lg3d-core.dev.java.net/servlets/ProjectIssues">課題追跡</a>を使って、"Defect"ではなく"Enhancement"で登録してください。</p>
+  </li>
+  <li>
+    <p><b>lg3d-coreへのコードの貢献</b><br>
+すでに述べたように、ソースコードのすべてが利用できます。
+もし欲しい機能や修正して欲しいバグがあるのならば、あなたはそれを実現することができます。
+直接ソースコードに貢献するためには、このプロジェクトの<b>Developer</b>ロールを持っている必要があります。
+しかし、それをおこなう前に、まずプロジェクトの<b>Observer</b>になって、ソースコードをダウンロードして、APIの内部に習熟してください。
+一番最初に貢献する前に、<a href="#JCA">共同著作権契約書を提出</a>することを忘れてはいけません。</p>
+    <p>
+私たちがおこなっている典型的なコード更新手続きは、次の通りです。
+    </p>
+    <ol>
+      <li>
+        <a href="https://lg3d-core.dev.java.net/servlets/ProjectIssues">
+        課題追跡</a>を使って、バグや拡張要求を登録してください。
+      </li>
+      <li>
+        その課題のページの"追加コメント"セクションを使って、修正について議論してください。
+        課題ページにパッチを貼り付けるのは、いい考えです。
+	もしその課題について、より多くの人たちと議論したいのなら、
+        <a href="http://www.javadesktop.org/forums/forum.jspa?forumID=56">
+        Project Looking Glassフォーラム</a>を使ってください。
+      </li>
+      <li>
+	いったん私たち(少なくとも、プロジェクトのオーナーの一人)がその変更に同意すると、現在の開発用ブランチ(注: それはHEADではありません)にそれをコミットしてください。
+      </li>
+    </ol>
+    <p>
+私たちも時々これらのステップを忠実におこなわないのですが、コードベースとその変更に慣れるまでは、これらに従うことを勧めます。
+どのように物事が進んでいるのかを見るために、<a href="https://lg3d-core.dev.java.net/servlets/ProjectMailingListList">
+このページ</a>から<b>cvs@lg3d-core.dev.java.net</b>と<b>issues@lg3d-core.dev.java.net</b>エイリアスに登録することもできます。
+    </p>
+  </li>
+    <li>
+    <p><b>IncubatorにおけるLG3Dアプリケーションの貢献</b><br />
+<a href="https://lg3d-incubator.dev.java.net/">
+Lg3d-incubator</a>は、あなたのクールなLG3Dアプリケーションを共有するための場所です!
+あなたが望むのならば、それをコミュニティと一緒に育てることができます。
+あなたが新しいLG3Dアプリケーション開発を開始したいのならば、励みになるようにあなたのアイデアを<a href="http://www.javadesktop.org/forums/forum.jspa?forumID=56">
+Project Looking Glassフォーラム</a>に投稿してみてください。
+あなたは、多くの有益なフィードバックが得られるでしょう。
+あなたのコードをアップロードして、コミュニティと共有するためには、共同著作権契約書をまだ提出していなければ、<a href="#JCA">共同著作権契約書を提出</a>する必要があります。
+その後、Incubatorプロジェクトにおける<b>Developer</b>ロールが認められるでしょう。
+    </p>
+    <p>
+注: あなたのコードを登録する時には、あなたのアプリケーションが次のリリースに問題なく取り込めるように、(HEADブランチに対してではなく)現在の開発ブランチに対しておこなってください。
+    </p>
+  </li>
+  
+  <li>
+    <p><b>Webコンテンツの貢献</b><br>
+私たちは、Webコンテンツを充実させるための助けを探しています。
+コンテンツに直接貢献するためには、このプロジェクトの<b>Content Developer</b> (または Developer)ロールを持っている必要があります。
+ロールを申し込む前に、<a href="#JCA">共同著作権契約書</a>を提出するのを忘れないでください。
+    </p>
+  </li>
+  
+  <li>
+    <p><b>翻訳</b><br>
+あなたは、ドキュメント作成と同様に、これらのページの翻訳を支援することで手伝うこともできます。
+これらのページを<a href="https://lg3d-core.dev.java.net/">lg3d-coreフロントページ</a>上で見ることができるいくつかの言語への翻訳作業は、すでにおこなわれています。
+私たちは、世界的なLG3Dコミュニティを育てることができるように翻訳を他の言語に対しても広げたいと思っています。
+これをおこなうためには、<b>Content Developer</b> (またはDeveloper)ロールが必要です。
+この手続きは、他のコードの貢献のための署名と同じです。</p>
+    <ul>
+      <li>
+	もしあなたが
+	<a href="https://lg3d-core.dev.java.net/ja/index.html#Sub-projects">
+          進行中として列挙されているサブプロジェクト
+        </a>以外の言語に対して新しい翻訳プロジェクトを開始したいのならば、
+	まず最初に
+        <a href="http://www.javadesktop.org/forums/forum.jspa?forumID=56">
+        Project Looking Glassフォーラム</a>で関心があることを表明してください。
+      </li>
+      <li>
+	もしあなたが進行中の作業に加わることに興味があるのならば、
+        <a href="https://lg3d-core.dev.java.net/ja/index.html#Sub-projects">
+          ここのリスト
+        </a>をチェックして、そこのリーダにコンタクトするか、フォーラムで関心があることを表明してください。
+      </li>
+    </ul>
+    <p>
+ファイルフォーマットや翻訳作業を楽にするための他の良いアイデアなどの詳しいガイドラインについては<a href="https://lg3d-core.dev.java.net/ja/trans-support/lg3d-translation-filestyle.html">翻訳ファイルスタイルガイド</a>を参照してください。
+    </p>
+    <p>
+注: Webコンテンツを反映する時には、あなたのおこなった更新がすぐ反映されるように、(現在開発中のブランチではなく)HEADに対しておこなってください。
+    </p>
+  </li>
+</ul>
+  <hr />
+  <small>$Revision: 1.4 $ $Date: 2005-12-08 01:29:52 $ (英語版 Revision: 1.12)</small>
+</body>
+</html>

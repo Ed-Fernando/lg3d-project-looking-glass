@@ -1,0 +1,216 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+
+<style type="text/css">
+<!--
+A IMG {
+border:none;
+}
+#leftBarDiv {
+	position:absolute;
+	left:20px;
+	top:30px;
+	width:19px;
+	height:23px;
+	background-image : url(https://lg3d-core.dev.java.net/images/icon/taskbar/BarLeft.png) ;
+}
+#centerBarDiv {
+	position:absolute;
+	left:39px;
+	top:30px;
+	height:23px;
+	background-image : url(https://lg3d-core.dev.java.net/images/icon/taskbar/BarCentre.png) ;
+	background-repeat : repeat;
+}
+#rightBarDiv {
+	position:absolute;
+	top:30px;
+	width:18px;
+	height:23px;
+	background-image : url(https://lg3d-core.dev.java.net/images/icon/taskbar/BarRight.png) ;
+}
+.icons {
+	position:absolute;
+	top:12px;
+}
+#iconsText {
+	position:absolute;
+	left:0px;
+	top:60px;
+	font-size:xx-small;
+	font-family: Verdana, Helvetica, Arial, sans-serif;
+	font-weight:bold;
+}
+#langsText {
+	font-color:green;
+}
+-->
+</style>
+
+<script language="JavaScript" type="text/javascript">
+<!--
+function positionateElements() {
+	window.onresize = positionateElements;
+	//1 GET HEIGHT AND WIDTH OF BROWSER WINDOW
+	var myWidth = 0, myHeight = 0;
+	if( typeof( window.innerWidth ) == 'number' ) 	{
+		//Non-IE
+		myWidth = window.innerWidth;
+		myHeight = window.innerHeight;
+	} else {
+		if( document.documentElement && ( document.documentElement.clientWidth || document.documentElement.clientHeight ) )  {
+			//IE 6+ in 'standards compliant mode'
+			myWidth = document.documentElement.clientWidth;
+			myHeight = document.documentElement.clientHeight;
+		} else  {
+			if( document.body && ( document.body.clientWidth || document.body.clientHeight ) ) 	{
+				//IE 4 compatible
+				myWidth = document.body.clientWidth;
+				myHeight = document.body.clientHeight;
+			}
+		}
+	}
+	center_bar_div = document.getElementById('centerBarDiv');
+	center_bar_div.style.width = '' + (myWidth-77) + 'px';
+
+	right_bar_div = document.getElementById('rightBarDiv');
+	right_bar_div.style.left = '' + (myWidth-38) + 'px';
+
+	//gwidth = (myWidth-30) / 10;
+	gwidth = (myWidth-30) / 9;
+
+	//for (x=1;x<=9;x++) {
+	for (x=1;x<=8;x++) {
+		idiv = document.getElementById('icon' + x);
+		idiv.style.left = '' + gwidth*x  + 'px';
+	}
+
+	//itdiv = document.getElementById('iconText');
+	//itstr = itdiv.style.width;
+	//itint = titstr.substring(0, itstr.length - 2);
+	//itdiv.style.left = '' + (myWidth - (itint/2)) +'px'
+
+	tdiv = document.getElementById('iconsText');
+	tdiv.style.width = '' + myWidth + 'px';
+}
+
+function moveTop(what,text) {
+	div = document.getElementById(what);
+	div.style.top ="7px";
+
+ 	document.getElementById('iconsText').innerHTML = text ;
+	document.getElementById('iconsText').style.textAlign= "center";
+}
+
+function moveDown(what) {
+	div = document.getElementById(what);
+	div.style.top ="12px";
+
+	document.getElementById('iconsText').innerHTML = "";
+}
+
+function toggleVisibility() {
+    var tb = document.getElementById('langtoolbar');
+    if ( tb ) {
+	if ( tb.style.display == 'none' ) {
+	tb.style.display = 'block';
+	} else {
+	tb.style.display = 'none';
+	}
+    }
+}
+
+function langHover(text) {
+	document.getElementById('langsText').innerHTML = text ;
+	document.getElementById('langsText').style.textAlign= "center";
+}
+
+function langOut() {
+	document.getElementById('langsText').innerHTML = "" ;
+}
+
+-->
+</script>
+
+<title>LG3D Glassy TaskBar Tester</title>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8;" />
+</head>
+
+<body onload="positionateElements();">
+
+<div id="leftBarDiv"></div>
+<div id="centerBarDiv"></div>
+<div id="rightBarDiv"></div>
+
+<div id="icon1" class="icons">
+	<a href="https://lg3d-webstart.dev.java.net/" target="_top"><img alt="Webstart" src="https://lg3d-core.dev.java.net/images/icon/taskbar/gear.gif" onmouseover="moveTop('icon1','WebStart - LG3Dを今すぐ入手するためには、このサービスを使います!');" onmouseout="moveDown('icon1');" ></img></a>
+</div>
+
+<div id="icon2" class="icons">
+	<a href="https://lg3d-core.dev.java.net/ja/#Resources" target="_top"><img alt="Docs" src="https://lg3d-core.dev.java.net/images/icon/taskbar/contents.gif" onmouseover="moveTop('icon2','知りたいですか? - LG3Dのドキュメントを閲覧します');" onmouseout="moveDown('icon2');" ></img></a>
+</div>
+
+<div id="icon3" class="icons">
+	<a href="https://lg3d-core.dev.java.net/ja/lg3d-getting-started.html" target="_top"><img alt="Start" src="https://lg3d-core.dev.java.net/images/icon/taskbar/warn.gif" onmouseover="moveTop('icon3','はじめに - LG3D環境とソフトウェアガイドはここから始まります');" onmouseout="moveDown('icon3');" ></img></a>
+</div>
+
+<div id="icon4" class="icons">
+	<a href="https://lg3d-core.dev.java.net/ja/lg3d-developers-guide.html" target="_top"><img alt="Help/Faq" src="https://lg3d-core.dev.java.net/images/icon/taskbar/quest.gif" onmouseover="moveTop('icon4','さらなる一歩 - LG3D開発者リリース版の上級ガイドです');" onmouseout="moveDown('icon4');" ></img></a>
+</div>
+
+<div id="icon5" class="icons">
+	<a href="http://wiki.java.net/bin/view/Javadesktop/ProjectLookingGlass" target="_top"><img alt="Wiki" src="https://lg3d-core.dev.java.net/images/icon/taskbar/list.gif" onmouseover="moveTop('icon5','書こう。読もう。編集しよう。 - LG3DのWikiエリアです');" onmouseout="moveDown('icon5');" ></img></a>
+</div>
+
+<div id="icon6" class="icons">
+	<a href="http://www.javadesktop.org/forums/forum.jspa?forumID=56" target="_top"><img  alt="Forum" src="https://lg3d-core.dev.java.net/images/icon/taskbar/forum.gif" onmouseover="moveTop('icon6','意見は? - LG3Dの議論フォーラムをチェックしよう');" onmouseout="moveDown('icon6');" ></img></a>
+</div>
+
+<div id="icon7" class="icons">
+	<a href="https://lg3d-incubator.dev.java.net/" target="_top"><img alt="Incubator" src="https://lg3d-core.dev.java.net/images/icon/taskbar/kbdtools.gif" onmouseover="moveTop('icon7','クールな貢献! - メンバーの開発者からのLG3DのIncubatorプロジェクトです');" onmouseout="moveDown('icon7');" ></img></a>
+</div>
+
+<div id="icon8" class="icons">
+	<a href="https://lg3d-art.dev.java.net/" target="_top"><img alt="Art" src="https://lg3d-core.dev.java.net/images/icon/taskbar/art.gif" onmouseover="moveTop('icon8','ギャラリー - LG3Dのアートプロジェクトのページを見よう');" onmouseout="moveDown('icon8');" ></img></a>
+</div>
+
+<!--
+<div id="icon9" class="icons">
+	<a target="_top"><img alt="Language" src="world.gif" onmouseover="moveTop('icon9','Worldwide - Click Here For Links To View LG3D\'s Translated Pages');" onmouseout="moveDown('icon9');" onclick="toggleVisibility();"/>
+</div>
+-->
+
+<div id="iconsText">
+</div>
+
+</body>
+
+<!--
+<br />
+<br />
+<br />
+<br />
+<br />
+
+<span style="display: none" id="langtoolbar">
+
+<center>
+<a href="#"><img onmouseover="langHover('Click here to see the spanish version of the looking glass webpage');" onmouseout="langOut();" src="https://lg3d-core.dev.java.net/images/icon/lang-spanish.png" style="border: 1px solid ; width: 48px;" ></a>&nbsp;&nbsp;&nbsp;&nbsp;
+<a href="#"><img onmouseover="langHover('Click here to see the czech version of the looking glass webpage');" onmouseout="langOut();" src="https://lg3d-core.dev.java.net/images/icon/lang-czech.png" style="border: 1px solid ; width: 48px;" ></a>&nbsp;&nbsp;&nbsp;&nbsp;
+<a href="#"><img onmouseover="langHover('Click here to see the italian version of the looking glass webpage');" onmouseout="langOut();" src="https://lg3d-core.dev.java.net/images/icon/lang-italian.png" style="border: 1px solid ; width: 48px;" ></a>&nbsp;&nbsp;&nbsp;&nbsp;
+<a href="#"><img onmouseover="langHover('Click here to see the chinese version of the looking glass webpage');" onmouseout="langOut();" src="https://lg3d-core.dev.java.net/images/icon/lang-chinese-simp.png" style="border: 1px solid ; width: 48px;" ></a>&nbsp;&nbsp;&nbsp;&nbsp;
+<a href="#"><img onmouseover="langHover('Click here to see the japanese version of the looking glass webpage');" onmouseout="langOut();" src="https://lg3d-core.dev.java.net/images/icon/lang-japanese.png" style="border: 1px solid ; width: 48px;" ></a>&nbsp;&nbsp;&nbsp;&nbsp;
+<a href="#"><img onmouseover="langHover('Click here to see the german version of the looking glass webpage');" onmouseout="langOut();" src="https://lg3d-core.dev.java.net/images/icon/lang-german.png" style="border: 1px solid ; width: 48px;" ></a>&nbsp;&nbsp;&nbsp;&nbsp;
+<a href="#"><img onmouseover="langHover('Clickez ici pour voir la version franï¿œaise de la page web de Looking Glass');" onmouseout="langOut();" src="https://lg3d-core.dev.java.net/images/icon/lang-french.png" style="border: 1px solid ; width: 48px;" ></a>
+</center>
+
+<br />
+
+<div id="langsText">
+</div>
+
+</span>
+-->
+
+</html>

@@ -1,0 +1,1207 @@
+<!DOCTYPE html PUBLIC "-//Tigris//DTD XHTML 1.0 Transitional//EN"
+"http://style.tigris.org/tigris_transitional.dtd">
+<html>
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  <title>Getting started with the Project Looking Glass Developer's Release</title>
+  <style type="text/css">
+  <!--
+    table, th, td {
+	border-style: none;
+    }
+    table {background-color:#eee}
+    th {font-family:lucida,arial,sans-serif; color:#fff; background-color:#8b8}
+    td {font-family:lucida,arial,sans-serif; color:#333; background-color:#fff}
+  -->
+  </style>
+</head>
+<body>
+<div id="projectdocumentview" class="app">
+
+<h3>Getting started with the Project Looking Glass Developer's Release</h3>
+
+<p>
+  <b>Welcome to Project Looking Glass!</b>
+</p>
+
+<p>
+  This document is intended to get you up and running quickly with the Project
+  Looking Glass (LG3D) Developer's Release on a Linux or Solaris x86 machine.
+  In order to simplify the installation process significantly, 
+  the LG3D Mega-bundle is provided. This document describes how to install 
+  and run LG3D using the Mega-bundle.
+</p>
+<p>
+  To get started you'll first need to set up your environment. 
+  Although the graphics driver configuration could be very tricky,
+  the actual installation of LG3D itself is very straight forward. To
+  setup, install and run LG3D please go through the following steps :
+</p>
+
+<img src="images/misc/lg3d-pic-300x300.jpg" width="150" border="0" style="float: right;"/>
+
+<blockquote><small>
+<ol>
+  <li><a href="#Requirements">Platform Requirements</a></li>
+  <li><a href="#Installation">Downloading & Installing LG3D</a></li>
+  <li><a href="#Running">Running LG3D</a></li>
+  <li><a href="#Resources">Useful Links</a></li>
+  <li><a href="#FinalWords">Some Final Words...</a></li>
+</ol>
+<ul>
+  <li><a href="#ColorDepth">APPENDIX A: Color Depth Configuration</a></li>
+  <li><a href="#BringingDownX">APPENDIX B: Bringing Down X Session</a></li>
+  <li><a href="#Troubleshooting">APPENDIX C: Troubleshooting</a></li>
+</ul>
+</small></blockquote>
+
+
+<h3><a name="Requirements"></a>1. Platform Requirements</h3> 
+
+<p> 
+  First check to make sure your system meets the following minimal requirements: 
+</p> 
+
+<center><small>
+  <table border="1" cellpadding="2" cellspacing="2" width="90%"> 
+      <tr> 
+        <th valign="top">Component</th> 
+        
+        <th valign="top">Requirements</th> 
+      </tr> 
+      <tr> 
+        <th valign="top">Operating System</th> 
+        <td valign="top">
+          <p>
+            <b>Linux x86:</b> Most modern linux distributions should work.
+          </p>
+          <p>
+            <b>Solaris x86:</b> Supported on Solaris x86 S10_b74 (or later). 
+          </p>
+        </td> 
+      </tr> 
+      <tr> 
+        <th valign="top">CPU</th> 
+        <td valign="top">1.4 GHz or faster recommended</td> 
+      </tr> 
+      <tr> 
+        <th valign="top">RAM</th> 
+        <td valign="top">512MB recommended</td> 
+      </tr> 
+      <tr>
+        <a name="RequirementsGraphicsCard"></a>
+        <th valign="top">Graphics Card</th> 
+        <td valign="top">
+          <p>
+            3D accelerated graphics card, with at least 32MB VRAM 
+            and driver support for OpenGL, version 1.3 or greater
+            (LG3D may run with OpenGL 1.2, but 1.3 is highly recommended).
+            24bit display depth is required in order for the X11 integration
+            work correctly.
+          </p>
+          <p>
+            <b>Linux x86:</b> 
+            For Nvidia devices you must use at least the following driver version: 
+            <a href="http://www.nvidia.com/object/linux_display_archive.html">1.0-8756 (or later)</a>. 
+            Refer to <a href="nvidia-driver-install-tips.html">this</a> 
+            for important information on how to configure Nvidia cards for LG3D.
+            Some graphics cards require special configuration in order to run LG3D.
+            For device driver configuration instructions for specific cards refer to: 
+            <a href="graphics-driver-index.html">Installing and Configuring Device
+            Drivers for 3D Desktop Project Looking Glass</a>
+          </p>
+          <p>
+            <b>Solaris x86:</b> 
+            At the time of this writing, the only type of graphics cards with OpenGL
+            support on Solaris x86 are certain Nvidia cards (see below). 
+            You must use at least the following driver version: 
+            <a href="http://www.nvidia.com/object/solaris_display_archive.html">1.0-8756 (or later)</a>. 
+            Refer to <a href="nvidia-driver-install-tips-solx86.html">this</a> 
+            for more information.  Currently only the following Nvidia graphics 
+            devices are supported by the Solaris x86 driver:
+            <ul>
+              <li>Quadro FX 4000</li>
+              <li>Quadro FX 3000</li>
+              <li>Quadro FX 1100</li>
+              <li>Quadro FX 500</li>
+              <li>NVS 280</li>
+            </ul>
+          </p>
+          <p>
+            If you are successful in getting LG3D to run 
+            on other cards, or want to report problems with specific cards, 
+            please let us know using
+            <a href="http://forums.java.net/jive/forum.jspa?forumID=80">
+            the discussion forum</a>
+          </p>
+        </td> 
+      </tr> 
+      <tr> 
+        <th valign="top">Disk Space</th> 
+        <td valign="top">350MB</td> 
+      </tr> 
+  </table>
+</small></center>
+<br />
+
+<h3><a name="Installation"></a>2. Downloading & Installing LG3D</h3> 
+
+<p>
+  Project Looking Glass releases are available in a number of formats,
+  including Debian .deb packages, binary mega bundles and Solaris
+  packages. The binary mega-bundles and debian packages contain everything
+  required to run lg3d (JRE, Java3D and LG3D) on an OS which has OpenGL installed.
+</p>
+  On Debian-based Linux distros (like Ubuntu) it is recommended that you use the 
+  debian (.deb) packages to install LG3D. On all other Linux distros and Solaris x86
+  the preferred way of downloading and installing LG3D is to use the mega bundles.
+  The LG3D Mega-bundle installs everything you need to run LG3D,
+  including the JRE and Java 3D.  Although it is pretty big, it simplifies
+  your installation process (so please bear with the download time!).
+</p>
+<p>
+  Other LG3D builds can be found in the Stable build section on 
+  <a href="https://lg3d-core.dev.java.net/binary-builds.html">
+    the binary build page
+  </a>.
+  For release details, 
+  please take a look at the <a href="release-notes.html">Release Notes</a></b>.
+</p>
+
+<h4><a name="Megabundle"></a>2.1 Installing LG3D using the Megabundle</h4> 
+ <p>
+  The LG3D Mega-bundle Installer installs LG3D and all the necessary
+  components including JRE and Java 3D.
+
+  Note that the installer puts JRE and Java 3D in an LG3D specific
+  directory (<tt>/usr/share</tt>).  So the installation does not alter
+  the existing Java environment you might already have.
+</p>
+
+<ol type="a">
+  <li>
+    Download the appropriate Mega bundle using one of the following links :
+    <blockquote>
+      <ul>
+        <li>
+          <a href="https://lg3d-core.dev.java.net/files/documents/1834/46210/lg3d--1-0-0-linux-i686-0612190943.bin">
+            LG3D Release 1.0 Linux x86 Mega Bundle (19 December 2006) 
+          </a>
+        </li>
+        <br />
+        <li>
+          <a href="https://lg3d-core.dev.java.net/files/documents/1834/46219/lg3d--1-0-0-solaris-i86pc-0612190950.bin">
+            LG3D Release 1.0 Solaris x86 Mega Bundle (19 December 2006) 
+          </a>
+        </li>
+      </ul>
+    </blockquote>
+  </li>
+  <li>
+    Locate the downloaded Mega-bundle bin file, e.g. 
+    <span style="font-family: courier new,courier,monospace;">/tmp/lg3d-...-.bin</span>
+  </li>
+  <br />
+  <li>
+    Change the current directory to the directory in which you want to install LG3D.
+    <p>    
+    <b>Linux Note: It is recommended that you install LG3D into <tt>/usr/share</tt> on the target machine
+    You can choose to install it somewhere else but then LG3D will not be added a gdm session type.</b>
+  </li>
+  <br />
+  <li>
+    Execute the Mega-bundle bin file, e.g.:
+    <span style="font-family: courier new,courier,monospace;">
+      sh /tmp/lg3d-...-.bin
+    </span> <br><br>
+    <b>Linux Note: If you have chosen to install LG3D into <tt>/usr/share</tt> you will need to execte
+    this command as the root user.</b>
+    <br />
+    <p>
+    This command will create a subdirectory of the current directory named "<tt>lg3d</tt>" under the
+    current directory, and unpack everything needed to run LG3D (including
+    JRE and Java 3D) under the subdirectory.
+  </li>
+  <br />
+  <li>
+    The installer shows License Agreement.
+    Read through it by pressing the space bar and scrolling, 
+    and answer the last question by typing "yes" or "no".
+  </li>
+  <br />
+  <li>
+    If you type "yes", the installer starts unpacking the contents under the
+    "<tt>lg3d</tt>" subdirectory.
+    It prints "<tt>Done.</tt>" when all the files have been unpacked.
+  </li>
+  <br />
+  <li>
+    Adding LG3D as a gdm session type (<b>Linux Only</b>):
+  </li>
+    <p>
+    On Linux machines you can arrange for LG3D to be executed directly from
+    the gdm desktop session chooser. In this mode LG3D takes over the entire
+    screen and runs as the sole window manager. 
+    <p>
+    To configure this, become root and invoke the
+    following commands:
+    <p>
+    <tt># cd /usr/share/lg3d/bin
+    <br>	
+    # ./postinstall</tt>
+    <p>
+    Note: you can only perform this step if LG3D has been installed into 
+    <tt>/usr/share</tt>.
+  <br />
+  <li>
+  At this point, the Mega-bundle installation is complete.
+  </li>
+</ol>
+
+</p>
+
+<h4><a name="Debian"></a>2.2 Installing Debian .deb packages</h4> 
+<p>
+The debian packages have been built and tested on Ubuntu Dapper systems,
+however they should work on other Debian based distros.
+</p>
+You can download and install the debian packages in one of two ways :
+<ol type="a">
+  <li>
+    Download the three .deb files from the
+    <a href="https://lg3d-core.dev.java.net/binary-builds.html">
+      the binary build page</a> and then install using the following command:
+    <br><br>
+    <tt>% sudo dpkg -i lg3d_jdk*.deb lg3d_java3d*.deb lg3d-core*.deb</tt>
+    </p>
+    <p>
+    Note: the installation of the <tt>lg3d-core*.deb</tt> package automatically adds LG3D as a session type in the gdm desktop 
+    session chooser. There is no need to manually run a postinstall script.
+  </li>
+  <p> OR </p>
+  <a name="Synaptic_Install">
+  <li>
+    Install using <i>apt</i> or the <i>Synaptic Package Manager</i> (on Ubuntu) by
+    doing the following (you will need <i>root</i> permissions to do this, so
+    <tt>sudo bash</tt> first) :
+    <ul>
+      <li>
+	There are 3 LG3D repositories. The <i>stable</i> repository has
+	the latest stable releases (0.8.1, 1.0 etc.). The <i>testing</i>
+	repository has the pre-release builds (alpha, beta etc.) for
+	the latest version and the <i>unstable</i> repsoitory has the nightly builds.
+        To access these repositories, add the following lines to
+	<tt>/etc/apt/sources.list</tt> and then comment/uncomment the appropriate
+	line(s).
+
+        <pre>
+  	## LG3D repsoitories
+  	deb http://javadesktop.org/lg3d/debian stable contrib
+  	# deb http://javadesktop.org/lg3d/debian testing contrib
+  	# deb http://javadesktop.org/lg3d/debian unstable contrib
+        </pre>
+      </li>
+      <li>
+        Then you can
+        <pre>
+          % apt-get update
+  	  % apt-get install lg3d-core
+        </pre>
+        OR, on Ubuntu systems, <br>
+        <ul>
+          <li>
+      	    run the <i>Synaptic Package Manager</i> from the <i>System/Administration</i> menu,
+      	  </li>
+      	  <li>
+      	    click on the <i>Reload</i> button and then
+      	  </li>
+      	  <li>
+      	    <i>Search</i> for <tt>lg3d</tt> and mark the <tt>lg3d-core</tt> package for installation.
+      	  </li>
+      	  <li>
+      	    click on the <i>Apply</i> button to download and install
+      	  </li>
+	</ul>
+      </li>
+    </ul>
+    <br/>
+    Choosing <tt>lg3d-core</tt> for installation should automatically choose/mark
+    <tt>lg3d-jdk</tt> and <tt>lg3d-java3d</tt> for installation. You will need
+    to accept the 3 licenses for lg3d, jdk and java3d to complete the installation.
+  </li>
+</ol>
+
+<h3><a name="Running"></a>3. Running LG3D</h3> 
+<img src="images/lg_snapshot-s.png" width="200" vspace="8" hspace="8" style="float: right;"/>
+
+<p>
+  There are the following modes to run LG3D:
+</p>
+<ol>
+  <li><a name="RunningDevMode"><b>Developer mode (lg3d-dev)</b> :
+    This mode is also known as "<i>dev mode</i>".
+    In this mode, LG3D runs in a window on your desktop. 
+    This is the simplest way to run LG3D but this mode only allows you 
+    to run Project Looking Glass 3D applications, such as the CD viewer. 
+    Native X11 applications, such as xterm will appear outside the LG screen; 
+    they will appear in the X session from which you launched LG3D. <br />
+    To run LG3D in the <i>dev mode</i> :
+    <p/>
+    <ol type=a>
+      <li>
+        Check to see if OpenGL 1.3 or later is supported:<br />
+        <br />
+        <span style="font-family: courier new,courier,monospace;">
+          % glxinfo | grep "GLX version"<br />
+          GLX version: 1.3<br />
+        </span>
+      <br />
+        If you see a value lower than 1.3, update your graphics driver by
+        following the descriptions in 
+        <a href="#RequirementsGraphicsCard">the Graphics Card section of the Requirements</a>.
+        LG3D may run with OpenGL 1.2, but 1.3 is highly recommended.
+      </li>
+      <br />
+      <li>
+          Change the directory to the LG3D installation directory.
+      </li>
+      <br />
+      <li>
+        Run the <i>dev mode</i> by typing:<br />
+	<br />
+	<span style="font-family: courier new,courier,monospace;">
+	  % bin/lg3d-dev<br />
+	</span>
+      </li>
+    </ol>
+    <p>
+      If the LG3D installation was successful, you should see a splash
+      screen and then the LG3D desktop in a window on your desktop.
+      Clicking the CD icon on the taskbar will open the CD viewer, a 3D
+      demo application. Mouse over the stack of CDs and click on the CD
+      images to see the application in action.
+
+      For addtional operational information, please check out 
+      <a href="http://wiki.java.net/bin/view/Javadesktop/FirstRun"> 
+	<b>the LG3D First Run document</b>
+      </a>
+      (please note that "X Apps Specific Features" are not available in the <i>dev mode</i>).
+      If you encounter any issues, please refer to the 
+      <a href="#Troubleshooting">Troubleshooting</a> section.
+    </p>
+  </li>
+  <br />
+
+  <li><a name="RunningAppMode"><b>Application Mode (lg3d-app)</b> :
+    This mode is also known as "<i>app mode</i>."
+    In this mode also LG3D runs in a window on your desktop but now allows
+    for native X11 applications to be run in the same window alongside LG3D
+    applications. <br />
+    To run LG3D in the <i>app mode</i> :
+    <p/>
+    <ol type=a>
+      <li>
+        Check to see if OpenGL 1.3 or later is supported:<br />
+        <br />
+        <span style="font-family: courier new,courier,monospace;">
+          % glxinfo | grep "GLX version"<br />
+          GLX version: 1.3<br />
+        </span>
+        <br />
+        If you see a value lower than 1.3, update your graphics driver by
+        following the descriptions in 
+        <a href="#RequirementsGraphicsCard">the Graphics Card section of the Requirements</a>.
+          LG3D may run with OpenGL 1.2, but 1.3 is highly recommended.
+      </li>
+      <br />
+      <li>
+        Change the directory to the LG3D installation directory.
+      </li>
+      <br />
+      <li>
+        Run the <i>app mode</i> by typing:<br />
+        <br />
+        <span style="font-family: courier new,courier,monospace;">
+          % bin/lg3d-app<br />
+        </span>
+      </li>
+    </ol>
+
+    <p>
+      In addition to the <i>dev mode</i> features, you should now be
+      able to run X applications inside the LG3D window.  Try running
+      <tt>xterm</tt> by clicking the terminal icon on the taskbar.
+      You should see an <tt>xterm</tt> floating inside the 3D space.
+
+      If you encounter any issues, please refer to the 
+      <a href="#Troubleshooting">Troubleshooting</a> section.
+    </p>
+
+    <p>
+      If you want, you can make the LG3D window start in fullscreen 
+      by using the "<tt>-f</tt>" option:
+      <blockquote>
+      <span style="font-family: courier new,courier,monospace;">
+	% bin/lg3d-app -f
+      </span>
+      </blockquote>
+      <p>
+      In this mode lg3d-app is still running under the GNOME window manager,
+      so you still have access to the GNOME taskbar and the applications it
+      contains, but the LG3D window
+      will always occupy the entire screen. You will not be able to resize it.
+      <p>
+      If you'd like to configure the LG3D window further, check out 
+      <a href="lg3d-window-resizing.html">
+	the Resizing and Configuring LG3D Window document
+      </a>.  
+    </p>
+
+    <p>
+    <b>Linux Note</b>: if you have installed LG3D in <tt>/usr/share/lg3d</tt> and you
+    ran <tt>postinstall</tt> during the installation process, there is another 
+    way to run app mode. In this configuration LG3D has been added as another
+    desktop session type in the gdm desktop session chooser. When the system boots and
+    the session chooser appears, click on "Session" and then click on the menu
+    item "Looking Glass". In this mode GNOME does not run and LG3D runs as the
+    sole window manager.
+    </p>
+
+  </li>
+</ol>
+
+<p>
+  Explore the Project Looking Glass desktop and start dreaming of new
+  ways to enhance the desktop user experience with 3D! When you're ready
+  to do development, skip over to the <a href="lg3d-developers-guide.html">Project
+  Looking Glass Developer's Guide</a> for information about developing
+  with Project Looking Glass.
+</p>
+
+<h3><a name="Resources"></a>4. Useful Links</h3> 
+
+<p>
+  Here is a list of resources that you might be interested in...
+</p>
+<ul>
+  <li>
+    <a href="http://wiki.java.net/bin/view/Javadesktop/FirstRun"> 
+      LG3D's First Run
+    </a>
+  </li>
+  <li>
+    <a href="http://forums.java.net/jive/forum.jspa?forumID=80">
+      LG3D Discussion Forum
+    </a>
+  </li>
+  <a href="release-notes.html">
+    Project Looking Glass Developer's Release Notes
+  </a>
+  <li>
+    <a href="index.html#Reporting_Issues">
+      Reporting Issues
+    </a>
+  </li>
+  <li>
+    <a href="index.html#Staying_Connected">
+      Staying Connected
+    </a>
+  </li>
+  <li>
+    <a href="index.html#How_to_Contribute">
+      How to Contribute
+    </a>
+  </li>
+  <li>
+    <a href="index.html#Sub-projects">
+      On Going Sub-projects
+    </a>
+  </li>
+  <li>
+    <a href="lg3d-on-windows.html">
+      Running the Project Looking Glass Developer's Release on Microsoft Windows
+    </a>
+  </li>
+  <li>
+    <a href="lg3d-developers-guide.html">
+      Project Looking Glass Developer's Guide
+    </a>
+  </li>
+  <li>
+    <a href="tutorial/index.html">
+      Project Looking Glass Tutorials
+    </a>
+  </li>
+  <li>
+    <a href="https://lg3d-core.dev.java.net/files/documents/1834/30923/LG3D-Overview.pdf">
+      Project Looking Glass - A Comprehensive Overview of the Technology (PDF 1.6MB)
+    </a>
+  </li>
+  <li>
+    <a href="index.html#Resources">
+      Other Resources
+    </a>
+  </li>
+</ul>
+
+<h3><a name="FinalWords"></a>5. Some Final Words...</h3>
+<p>
+  Thanks for getting involved with the Project Looking Glass project!
+  We're really looking forward to your contributions in this exciting new
+  desktop experience!
+</p>
+<br />
+
+
+<br />
+<hr /><!-- --------------------------------------------------------- -->
+<br />
+
+<h3><a name="ColorDepth"></a>APPENDIX A: Color Depth Configuration</h3>
+
+<blockquote>
+<h4>Java Desktop System 1 and 2, and SUSE8.1:</h4>
+
+<ol>
+  <li>From within a desktop session, run the sax2 command:<br />
+    <br />
+    <span style="font-family: courier new,courier,monospace;">
+% /usr/X11R6/bin/sax2<br />
+SaX: root Password:</span> <b>enter root password</b><br />
+    <br />
+  </li>
+  <li>In the SaX2 application, click on <b>Color and Resolution</b> then click the <b>[Properties...]</b> button for the
+currently configured desktop.</li>
+  <li>In the <b>Color selection...</b>
+panel, click on the the menu and choose <b>16.7 Mio. [24 Bit]</b>. <br />
+  </li>
+  <li>On the <b>Resolution(s) for 16.7
+Mio. [24 Bit] colors</b> tab, select the preferred resolution for
+your desktop and press <b>[Ok]</b>.<br />
+  </li>
+  <li>Click the <b>[Finish]</b>
+button, then <b>[Finalize&gt;&gt;]</b>.<br />
+  </li>
+  <li>The <b>SaX2 final steps...</b>
+dialog will open. Click the <b>[Test...]</b>
+button to test the new resolution. <br />
+  </li>
+  <li>A blue test screen should appear, click the <b>[Save]</b> button if the display appears
+to be stable, and then <b>[Ok]</b>
+when you return to the SaX2 window, followed by <b>[Yes]</b> to exit from SaX2.</li>
+  <li>If the test screen did not appear correctly, the test will exit
+after 30 seconds and your previous desktop session will be restored.
+You should then try alternate resolutions at the 24 bit color depth to
+find a resolution that works for your system.<br />
+  </li>
+  <li>When you are satisfied with the settings, log out and re-login to
+your desktop session and verify that the color depth is now 24 bit or
+higher using the <span style="font-family: courier new,courier,monospace;">xdpyinfo</span>
+command above.</li>
+</ol>
+
+<h4>RedHat Fedora 2:</h4>
+
+<ol>
+  <li>First become root:<br />
+    <br />
+    <span style="font-family: courier new,courier,monospace;">
+% su root<br />
+Password:</span> <b>enter root password</b> <br />
+<span style="font-family: courier new,courier,monospace;">#</span><br />
+    <br />
+  </li>
+  <li>Edit the file: <span style="font-family: courier new,courier,monospace;">/etc/X11/xorg.conf</span></li>
+  <li>Locate the section of the file labeled: <span
+ style="font-family: courier new,courier,monospace;">Section "Screen"</span><span
+ style="font-family: courier new,courier,monospace;"><br />
+    </span></li>
+  <li>Within this section, locate the entry: <span
+ style="font-family: courier new,courier,monospace;">Identifier "Screen0"<br />
+    </span>Change the <span style="font-family: courier new,courier,monospace;">DefaultDepth</span>
+and <span style="font-family: courier new,courier,monospace;">DefaultFbBpp </span>properties
+to:<br />
+    <br />
+    <span style="font-family: courier new,courier,monospace;">DefaultDepth 24<br />
+DefaultFbBpp 32<br />
+    <br />
+    </span></li>
+  <li>Save the file and then logout and re-login to your desktop
+session and verify that the color depth is now 24 bit or higher using
+the <span style="font-family: courier new,courier,monospace;">xdpyinfo</span>
+command above.<br />
+  </li>
+</ol>
+
+<h4>RedHat 8, RedHat 9 and other Linux distributions:</h4>
+
+<p>
+Many Linux platforms use the <span
+ style="font-family: courier new,courier,monospace;">XF86Config</span> file to
+configure the display properties. To change the color depth on these
+systems:
+</p>
+
+<ol>
+  <li>First become root:<br />
+    <br />
+    <span style="font-family: courier new,courier,monospace;">
+% su root<br />
+Password:</span> <b>enter root password</b> <br />
+<span style="font-family: courier new,courier,monospace;">#</span><br />
+    <br />
+  </li>
+  <li>Edit the file: <span style="font-family: courier new,courier,monospace;">/etc/X11/XF86Config</span></li>
+  <li>Locate the section of the file labeled: <span
+ style="font-family: courier new,courier,monospace;">Section "Screen"</span> and
+change the <span style="font-family: courier new,courier,monospace;">DefaultDepth</span>
+property to
+24:<br />
+    <br />
+    <span style="font-family: courier new,courier,monospace;">DefaultDepth&nbsp;&nbsp;&nbsp;&nbsp;
+24<br />
+    <br />
+    </span></li>
+  <li>Within this section, locate the sub-section labeled <span
+ style="font-family: courier new,courier,monospace;">"Display":<br />
+    <br />
+    </span><span style="font-family: courier new,courier,monospace;">SubSection
+"Display"<br />
+    <br />
+    </span>and change the <span style="font-family: courier new,courier,monospace;">Depth</span>
+property to:<br />
+    <br />
+    <span style="font-family: courier new,courier,monospace;">Depth&nbsp;&nbsp;&nbsp;&nbsp;
+24<br />
+    <br />
+    </span></li>
+  <li>Save the file and then logout and re-login to your desktop
+session and verify that the color depth is now 24 bit or higher using
+the <span style="font-family: courier new,courier,monospace;">xdpyinfo</span>
+command above.</li>
+</ol>
+
+<h4>Solaris x86 :</h4>
+
+<p>
+Solaris x86 uses the <span
+ style="font-family: courier new,courier,monospace;">xorg.conf</span> file to
+configure the display properties for the Xorg server which is used by Project Looking Glass. To change the color depth on Solaris x86:
+</p>
+
+<ol>
+  <li>First become root:<br />
+    <br />
+    <span style="font-family: courier new,courier,monospace;">
+% su root<br />
+Password:</span> <b>enter root password</b> <br />
+<span style="font-family: courier new,courier,monospace;">#</span><br />
+    <br />
+  </li>
+  <li>Edit the file: <span style="font-family: courier new,courier,monospace;">/etc/X11/xorg.conf</span></li>
+  <li>Locate the section of the file labeled: <span
+ style="font-family: courier new,courier,monospace;">Section "Screen"</span> and
+change the <span style="font-family: courier new,courier,monospace;">DefaultDepth</span>
+property to
+24:<br />
+    <br />
+    <span style="font-family: courier new,courier,monospace;">DefaultDepth&nbsp;&nbsp;&nbsp;&nbsp;
+24<br />
+    <br />
+    </span></li>
+  <li>Save the file and then logout and re-login to your desktop
+session and verify that the color depth is now 24 bit or higher using
+the <span style="font-family: courier new,courier,monospace;">xdpyinfo</span>
+command above.</li>
+</ol>
+</blockquote>
+
+<br />
+<hr /><!-- --------------------------------------------------------- -->
+<br />
+
+<h3><a name="BringingDownX"></a>APPENDIX B: Bringing Down X Session</h3>
+
+<p>
+  The instructions for shutting down your X session vary by platform, 
+  so follow the instructions that apply to your platform. 
+  If your platform isn't listed, chances are the process will be very similar.
+  So, use these instructions as a guide and let us know what's different!
+</p>
+
+<blockquote>
+<h4>Sun Java Desktop System/SuSE 8.1:</h4>
+
+<p>
+JDS/SuSE 8.1 uses the X Display Manager (xdm) to manage user sessions.
+To run Project Looking Glass you must first shut down xdm. Since this
+process is respawned automatically you must disable this service using
+the <span style="font-family: courier new,courier,monospace;">chkconfig</span>
+command:
+</p>
+
+<ol>
+  <li>First become root:<br />
+    <br />
+    <span style="font-family: courier new,courier,monospace;">
+% su root<br />
+Password:</span> <b>enter root password</b> <br />
+<span style="font-family: courier new,courier,monospace;">#</span><br />
+    <br />
+  </li>
+  <li>Disable the xdm service:<br />
+    <br />
+    <span style="font-family: courier new,courier,monospace;">
+# /sbin/chkconfig -d xdm<br />
+xdm&nbsp; 0:off&nbsp;&nbsp; 1:off&nbsp;&nbsp; 2:off&nbsp;&nbsp;
+3:off&nbsp;&nbsp; 4:off&nbsp;&nbsp; 5:off&nbsp;&nbsp; 6:off<br />
+    <br />
+    </span></li>
+  <li>Now close any desktop applications and save any open files. Then
+shutdown the display manager:<br />
+    <br />
+    <span style="font-family: courier new,courier,monospace;"> # pkill gdm-binary<br />
+    <br />
+    </span></li>
+  <li>Now skip to the <a href="#Starting_the_Project_Looking_Glass">Starting
+the Project Looking Glass desktop session</a> section.</li>
+</ol>
+<p>
+<b>Note:</b> To re-activate the X
+Display manager, enter the following command as root, and then reboot
+your system:
+</p>
+<blockquote><span
+ style="font-family: courier new,courier,monospace;"># /sbin/chkconfig -a xdm</span><br />
+</blockquote>
+
+<h4>RedHat 9:</h4>
+<p>
+RedHat uses the GNOME Display Manager (gdm) to manage user sessions.
+It's not necessary to disable gdm, you can simply switch to a lower run
+level where gdm is not active:
+</p>
+
+<ol>
+  <li>First become root:<br />
+    <br />
+    <span style="font-family: courier new,courier,monospace;">
+% su root<br />
+Password:</span> <b>enter root password</b><br />
+<span style="font-family: courier new,courier,monospace;">#</span><br />
+    <br />
+    </li>
+  <li>Close any desktop applications and save any open files. Then
+switch to run level 4:<br />
+    <br />
+    <span style="font-family: courier new,courier,monospace;"> # /sbin/init 4<br />
+    <br />
+    </span>Your X session should terminate and your should return to
+the console prompt.<br />
+    <br />
+  </li>
+  <li>Now skip to the <a href="#Starting_the_Project_Looking_Glass">Starting
+the Project Looking Glass desktop session</a> section.</li>
+</ol>
+<p>
+<b>Note:</b> To restart the GNOME
+Display Manager, enter the following command as root from the console:
+</p>
+<blockquote><span
+ style="font-family: courier new,courier,monospace;"># /sbin/init 5</span><br />
+</blockquote>
+
+<h4>Fedora Core 3 64-bit:</h4>
+
+<p>
+To run Project Looking Glass full screen on the 64-bit version of
+Fedora Core 3 requires a few unique changes. Note that you will need
+access to a 32-bit Linux system or the 32-bit X11 modules for Linux to
+complete this procedure.
+</p>
+
+<ol>
+  <li>You will need to copy the contents of the <span
+ style="font-family: courier new,courier,monospace;">/usr/X11R6/lib/modules</span>
+directory from a 32-bit Linux system to the same directory on your
+64-bit system. Before performing this action, make a backup of the <span
+ style="font-family: courier new,courier,monospace;">/usr/X11R6/lib/modules</span>
+directory on your 64-bit system:<br />
+    <br />
+    <span style="font-family: courier new,courier,monospace;">
+# cd /usr/X11R6/lib<br />
+# cp -r modules modules.orig<br />
+    </span><br />
+Next, use the scp command to securely copy the files from the 32-bit
+system to your 64-bit system:<br />
+    <br />
+    <span style="font-family: courier new,courier,monospace;">
+# scp -r root@<span style="font-style: italic;">32bithost</span>:/usr/X11R6/lib/modules
+/usr/X11R6/lib/modules<br />
+    </span><br />
+where <span
+ style="font-style: italic; font-family: courier new,courier,monospace;">32bithost</span><span
+ style="font-family: courier new,courier,monospace;"> </span>is the
+host name of the 32-bit Linux system.<br />
+    <br />
+  </li>
+  <li>Make sure that your <span
+ style="font-family: courier new,courier,monospace;">xorg.conf</span>
+file is set for depth of 24 as
+shown in bold below:<br />
+    <br />
+    <span style="font-family: courier new,courier,monospace;">
+Section "Screen"<br />
+Identifier "Screen0"<br />
+Device "Videocard0"<br />
+Monitor "Monitor0"<br />
+<b>DefaultDepth 24</b><br />
+SubSection "Display"<br />
+Viewport 0 0<br />
+<b>Depth 24</b><br />
+Modes "1680x1050" "1280x800" "1024x768" "800x600" "640x480"<br />
+EndSubSection<br />
+EndSection<br />
+    <br />
+</span>
+  </li>
+  <li>Proceed to the next section to start the full screen session.<br />
+    <br />
+[Instructions in this section courtesy of <a
+ href="http://www.javadesktop.org/forums/profile.jspa?userID=1354">qgonjon</a>
+and <a
+ href="http://www.javadesktop.org/forums/profile.jspa?userID=1522">marve</a>.
+See <a
+ href="http://www.javadesktop.org/forums/thread.jspa?forumID=56&amp;threadID=3465&amp;messageID=17942#17942">this
+support thread</a>.]<br />
+  </li>
+</ol>
+
+<h4>Solaris x86:</h4>
+<p>
+In order to run Project Looking Glass in session mode on Solaris x86, you
+must first shut down CDE and disable its subsequent boot-time start up.
+To do this, become root and type:
+<br><br>
+<span style="font-family: courier new,courier,monospace;">
+# /usr/dt/bin/dtconfig -d
+</span>
+<br><br>
+then reboot your computer.
+</p>
+</blockquote>
+
+<br />
+<hr /><!-- --------------------------------------------------------- -->
+<br />
+
+<h3><a name="Troubleshooting"></a>APPENDIX C: Troubleshooting</h3>
+
+<blockquote>
+
+  <h4> Screen updates are very slow</h4>
+  
+<p>This usually means that graphics
+acceleration is not correctly configured, or the graphics card is
+not capable enough to run LG3D. 
+Here are some things to check first:</p>
+<ul>
+  <li>Run the <span style="font-family: courier new,courier,monospace;">glxinfo</span>
+command from within an X11 session and check that the 
+<b>direct rendering</b> property is set to 
+<b>Yes</b>. Also look for references to 
+<b>OpenGL</b> to ensure that your graphics
+accelerator device driver supports OpenGL.<br />
+- For NVIDIA cards, run <span style="font-family: courier new,courier,monospace;">xdpyinfo</span>
+and verify that you see GLX or NVIDIA-GLX.<br />
+    <br />
+If you don't see these properties then you probably don't have the
+appropriate device driver installed or 3D enabled. Refer to your
+vendor's web site for information on installing and configuring a
+device driver with 3D/OpenGL support.<br />
+    <br />
+  </li>
+  <li>Check the X server log file at <span
+ style="font-family: courier new,courier,monospace;">/var/log/Xorg.0.log</span>
+for error messages and to check which drivers are being loaded.<br />
+  </li>
+</ul>
+Even if it turned out that the graphics card is less capable, you
+may be able to run LG3D with 16bit color.  
+Please refere to the
+<a href="#ColorDepth">Color Depth Configuration instructions</a>.
+Note that <i>the session mode</i> in 16bit color is not fully supported,
+and you may encounter rendering and other issues.
+
+  <h4>Fatal Server error: Cannot establish any listening sockets</h4>
+  
+<p>The following error message is
+displayed when
+you start Project Looking Glass using lg3d-session:
+</p>
+<blockquote><span
+ style="font-family: courier new,courier,monospace;">
+_XSERVTransSocketUNIXCreateListener: ...SocketCreateListener() failed<br />
+_XSERVTransMakeAllCOTSServerListeners: server already running<br /><br />
+Fatal server error:<br />
+Cannot establish any listening sockets - Make sure an X server<br />isn't already running</span></blockquote>
+<p>
+First, make sure that you do not have an X11 session 
+(or an lg3d-app window) running on the display on which you're starting <span
+ style="font-family: courier new,courier,monospace;">lg3d-session</span>. Then check
+to see if you have <span style="font-family: courier new,courier,monospace;">/tmp/.X11-unix/X0
+(or <span style="font-family: courier new,courier,monospace;">X1</span> 
+for lg3d-app)</span> left behind from a previous session. To fix this problem, delete
+this file and restart <span style="font-family: courier new,courier,monospace;">lg3d-session</span>
+(or <span style="font-family: courier new,courier,monospace;">lg3d-app</span>).
+</p>
+
+  <h4>SEVERE: Unable to listen on Socket 44816. Make sure to terminate all the other LG3D processes.</h4>
+
+<p>
+  You can get this even if you are sure there is no other LG3D process running.
+  It typically happens when the previous LG3D session was terminated in an
+  abnormal manner.  Do the following and kill all the Java processes.  
+  Be careful to close the other running Java apps like NetBeans and Eclipse 
+  before performing this:
+</p>
+<blockquote>
+  <span style="font-family: courier new,courier,monospace;">% pkill -9 java</span> 
+</blockquote>
+
+  <h4>An unexpected exception has been detected in native code outside the VM</h4>
+
+<p>
+Project Looking Glass exits with the
+following exception, even though you've verified that you have 3D
+acceleration enabled:
+</p>
+<blockquote><span
+ style="font-family: courier new,courier,monospace;">An unexpected exception has
+been detected
+in native code outside the VM.<br />
+Unexpected Signal : 11 occurred at PC=0x0<br />
+Function=[Unknown.]<br />
+Library=(N/A)</span><br />
+</blockquote>
+  <p>Check to see if the following entries appear in the exception
+message:
+  </p>
+<blockquote>
+<span
+ style="font-family: courier new,courier,monospace;">&lt;addr-range&gt; r-xp
+00000000 03:05
+61763 /usr/lib/GL/libGL.so.1.3.mesasoft<br />
+&lt;addr-range&gt; rw-p 001b4000 03:05 61763
+/usr/lib/GL/libGL.so.1.3.mesasoft</span>
+</blockquote>
+
+  <p> If so, you have the MESA software OpenGL libraries installed. Use
+the package tool for your distribution (e.g., rpm) to remove these
+libraries, and then go into <span
+ style="font-family: courier new,courier,monospace;">/usr/lib</span> as root and
+check that the following symbolic links exist and point to the correct
+OpenGL libraries. You should have links that look something like this
+(where x and y are numbers):<br />
+  </p>
+  <blockquote><span
+ style="font-family: courier new,courier,monospace;">
+libGLcore.so.1 -&gt; libGLcore.so.1.x<br />
+libGL.so -&gt; libGL.so.x<br />
+libGLU.so -&gt; libGLU.so.x.y.z<br /></span></blockquote>
+<p>
+If these links are not correct, become root and create them. For
+example, if you have a<span style="font-family: courier new,courier,monospace;">
+libGLU.so.1</span> file but no <span
+ style="font-family: courier new,courier,monospace;">libGLU.so</span> link, then
+create the link:
+</p>
+  <blockquote><span
+ style="font-family: courier new,courier,monospace;"># ln -s /usr/lib/libGLU.so.1 /usr/lib/libGLU.so</span><br /></blockquote>
+
+<p>
+Repeat this for each of the links that are missing.
+</p>
+
+  <h4>Fatal server error: could not open default font 'fixed'</h4>
+  
+<p>
+  In some Linux distro, the <tt>/usr/X11R6/lib/X11/fonts</tt> direcotry
+  doesn't exist, or it doesn't include font files that LG3D's X server 
+  expects.  Do the followings and see if it fixes the issue:
+</p>
+<blockquote><span style="font-family: courier new,courier,monospace;">
+% sudo mv /usr/X11R6/lib/X11/fonts /usr/X11R6/lib/X11/fonts.orig<br />
+% sudo ln -s /usr/share/X11/fonts /usr/X11R6/lib/X11/fonts
+</span></blockquote>
+
+  <h4>libGL error: failed to open DRM: operation not permitted</h4>
+  
+<p>
+(This error may be encountered when running lg3d-dev).
+</p>
+<p>
+If Project Looking Glass runs very slowly, even though 3D
+acceleration is enabled, check to see if the following message appears
+in the console:
+</p>
+<blockquote><span style="font-family: courier new,courier,monospace;">
+libGL error: failed to open DRM: Operation not permitted<br />
+libGL error: reverting to (slow) indirect rendering
+</span></blockquote>
+
+  <p> This means that your user account doesn't have permission to use
+the DRI (Direct Rendering Infrastructure). In some cases root is the
+only user with access to Direct Rendering. This problem seems to only
+affect RedHat users, and not JDS/SuSE users. If you have this problem,
+you should change the DRI permissions in your xorg.conf or
+XF86Config file to:</p>
+
+<blockquote> <span
+ style="font-family: courier new,courier,monospace;">Section "DRI"<br />
+Group "video"<br />
+Mode 0666<br />
+EndSection</span><br />
+</blockquote>
+
+  <p> You will also need to change the permissions of the <span
+ style="font-family: courier new,courier,monospace;">&lt;dri&gt;</span> profile in<span
+ style="font-family: courier new,courier,monospace;"> /etc/security/console.perms</span>
+from 0600 to 0666:<br />
+  </p>
+  <blockquote><span
+ style="font-family: courier new,courier,monospace;">&lt;xconsole&gt; 0600
+&lt;dri&gt; 0666 root</span></blockquote>
+  <p>and if you're using an NVIDIA card, change the permissions on <span
+ style="font-family: courier new,courier,monospace;">/dev/nvidia*</span> to 0666:<br />
+  </p>
+  <blockquote><span
+ style="font-family: courier new,courier,monospace;"># chmod a+rw /dev/nvidia*</span></blockquote>
+
+  <h4> Failed to load the NVIDIA driver</h4>
+
+  <p>There are several possible reasons for the driver failing to
+initialize correctly:<br />
+  </p>
+  <ul>
+    <li>The NVIDIA driver is compiled for linux.*bigmem. If your Linux
+system has two images, bigmem and linux*up, use the former one.
+Otherwise the driver will fail to load.<br />
+      <br />
+    </li>
+    <li>The NVIDIA driver needs to find the IRQ that is assigned to the
+video card. This should be set by the BIOS before the OS boots, but it
+can be switched off in some BIOS. Try switching it back on again to see
+if it helps.<br />
+      <br />
+    </li>
+    <li>Refer to the NVIDIA driver installation instructions and
+release notes for further details.</li>
+  </ul>
+  
+  <h4>no core pointer</h4>
+  
+<p>
+This happens on RedHat Fedora Core 2,
+and
+may happen on other configurations as well. One known workaround (from
+sgiunchi) is to do the following (as root
+user):
+</p>
+<blockquote><span
+ style="font-family: courier new,courier,monospace;"># ln -s
+/etc/X11/xorg.conf /etc/X11/XF86Config-4</span><br />
+</blockquote>
+<p>
+The correct long term fix is to upgrade the X11 release which is
+included
+in lg3d-core. It is currently an Xorg 6.7 pre-release and it needs to
+be
+upgraded to the latest Xorg stable release. 
+</p>
+
+<h4>Exception in thread "main" java.lang.UnsatisfiedLinkError:
+/usr/java/jdk1.5.0/jre/lib/i386/libj3dcore-ogl.so:<br />
+/usr/java/jdk1.5.0/jre/lib/i386/libj3dcore-ogl.so:
+symbol glMultiDrawArraysEXT, version LIBGL not defined in file
+libGL.so.1 with link time reference</h4>
+<p>
+This error occurs with ATI device
+drivers
+that are missing the glMultiDrawArraysEXT extension. The solution to
+this
+problem is to replace the Radeon device drivers with drivers from the <a
+ href="http://dri.sourceforge.net/cgi-bin/moin.cgi/FrontPage">Direct
+Rendering
+Open Source</a> (DRI) project. For instructions on installing direct
+rendering
+drivers refer to <a href="dri-driver-install-ati-radeon.html">DRI
+driver
+installation for ATI Radeon</a>.
+</p>
+<p>
+Note that upgrading libGL.so to the latest Mesa libraries does not
+solve
+this problem.
+</p>
+
+  <h4>pkill: 27863 - Operation not permitted<br />
+  
+java.rmi.server.ExportException: Port already in use: 1099; nested
+exception
+is: <br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; java.net.BindException: Address already
+in
+use...<br />
+  </h4>
+
+<p>This message indicates that an <span
+ style="font-family: courier new,courier,monospace;">rmiregistry </span>process is
+already
+running and <span style="font-family: courier new,courier,monospace;">lg3d-dev</span>
+was
+unable to start a new instance. Typically this occurs when the <span
+ style="font-family: courier new,courier,monospace;">rmiregistry</span> process was
+started
+by root and <span style="font-family: courier new,courier,monospace;">lg3d-dev</span>
+is
+run as a non-root user. The solution to this problem is to stop the
+root
+instance of <span style="font-family: courier new,courier,monospace;">rmiregistry</span>.
+Become root and stop the
+process:
+</p>
+<blockquote>
+<span
+ style="font-family: courier new,courier,monospace;">
+ % su root<br />
+ Password: <b>enter root password</b> <br />
+ # pkill rmiregistry<br />
+ # exit</span><br />
+</blockquote>
+<p>
+Now re-run the <span style="font-family: courier new,courier,monospace;">lg3d-dev</span>
+command as a non-root user to start Project Looking Glass.
+</p>
+</blockquote>
+
+<p>
+  <b>See also:</b>
+  <a href="release-notes.html">Project Looking Glass Developer's
+    Release Notes
+  </a>
+</p>
+<p>
+  Additional information on current problems and issues can be found
+  under lg3d-core<b> Project Tools </b>-&gt; <b>Issue tracker</b>. 
+  You can search for issues and defects or find a specific issue.
+</p>
+
+<br />
+<hr /><!-- --------------------------------------------------------- -->
+<br /> 
+
+<small> $Revision: 1.33 $ $Date: 2006-12-20 18:36:01 $ </small>
+</div>
+</body>
+</html>

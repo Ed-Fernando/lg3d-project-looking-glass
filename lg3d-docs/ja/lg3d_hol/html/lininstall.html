@@ -1,0 +1,142 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html>
+  <head>
+    <meta http-equiv="content-type" content="text/html; charset=utf-8" />
+    <title>LG3Dのインストール(Linux編)</title>
+  </head>
+
+  <body bgcolor="white">
+    <h1>JavaOne Tokyo Hands on Lab : <br>
+	Project Looking Glass (LG3D) Basic Programming</h1>
+
+    <h2>LG3Dのインストール (Linux編)</h2>
+    
+    <h3>準備</h3>
+	Linux で LG3D 1.0 を実行するためのすべてのコンポーネントは Linux 専用のインストーラーにまとめられています。(LG3D Javadoc は除く)<br>
+	<font color="red"><b>LG3Dのウェブページからインストーラをダウンロードし、実行するだけでインストールを行えます</b></font>。<br>
+	インストーラはできるだけ最新のものをダウンロードしてください。ダウンロードしたファイルは /tmp ディレクトリにあるとします。<br>
+	<b>LG3D Javadoc</b> のインストールについては「<a href="solinstall.html#javadoc">LG3D Javadocのインストール</a>」 を参照してください。<br>
+	<ul>
+	　<li>ウェブページURL　<font color="red"><b>https://lg3d-core.dev.java.net/binary-builds.html</b></font></li>
+	  <li>インストーラ名　<font color="red"><b>Linux x86 Mega Bundle </b></font></li>
+	  <li>ウェブページのスクリーンショット<font color="red"><b>↓</b></font></li>
+          <img src="pictures/10linux_dl.png">
+    </ul>
+
+    <hr>
+
+    <h3>LG3D Release 1.0 のインストール</h3>
+
+    <p>「<b>準備</b>」の項目でダウンロードしたファイルは /tmp にあるものと仮定します。<br>
+
+	<li> LG3D Release 1.0 をインストールします。
+	<br><br>
+    <table border width="70%"><tr><td>
+     <pre>
+~ $ <font color="red"><b>cd </b></font>
+~ $ <font color="red"><b>chmod u+x /tmp/lg3d--1-0-0-linux-i686-0612190943.bin</b></font>
+~ $ <font color="red"><b>sh /tmp/lg3d--1-0-0-linux-i686-0612190943.bin</b></font>
+
+This software consists of 3 components, each component with a distinct
+license represented below. By selecting the "accept" button, you are
+accepting the terms of all the licenses for the software.
+
+1) JRE License
+2) Java 3D License
+3) Project Looking Glass License
+
+Pre-Release Software Evaluation Agreement
+
+SUN MICROSYSTEMS, INC. ("SUN") IS WILLING TO LICENSE
+THE JAVA SE DEVELOPMENT KIT (JDK), VERSION 6
+PRE-RELEASE SOFTWARE TO LICENSEE ONLY UPON THE
+CONDITION THAT LICENSEE ACCEPTS ALL OF THE TERMS
+CONTAINED IN THIS LICENSE AGREEMENT ("AGREEMENT").
+PLEASE READ THE TERMS AND CONDITIONS OF THIS AGREEMENT
+CAREFULLY. BY DOWNLOADING OR INSTALLING THIS SOFTWARE,
+LICENSEE ACCEPTS THE TERMS AND CONDITIONS OF THIS
+LICENSE AGREEMENT. INDICATE ACCEPTANCE BY SELECTING
+THE "ACCEPT" BUTTON AT THE BOTTOM OF THIS AGREEMENT.
+IF LICENSEE IS NOT WILLING TO BE BOUND BY ALL THE
+TERMS, SELECT THE "DECLINE" BUTTON AT THE BOTTOM OF
+THE AGREEMENT AND THE DOWNLOAD OR INSTALL PROCESS WILL
+NOT CONTINUE.
+....
+Do you agree to the above license terms? [yes or no]
+<font color="red"><b>yes</b></font>
+Unpacking...
+....
+inflating: lg3d/usr/share/lg3d-jdk/include/jdwpTransport.h
+inflating: lg3d/usr/share/lg3d-jdk/include/classfile_constants.h
+inflating: lg3d/usr/share/lg3d-jdk/COPYRIGHT
+Done.
+~ $
+     </pre>
+    </td></tr></table><br>
+	これで LG3D 1.0 のインストールは終了です。<br>
+	ユーザのホームディレクトリに<font color="red"><b> lg3d </b></font>というディレクトリが作られています。<br>
+	LG3D 1.0 に必要なすべてのコンポーネント(JDK 6.0など)がこのディレクトリに入っています。<br><br>
+  <blockquote>
+	<font color="red">補足 1:</font><br>
+	<ul>
+    <li>Daily Builds版のLG3Dをインストールする場合は、JDKおよびJava3Dを別途ダウンロードする必要があります。 
+    </ul>
+  </blockquote>
+  <blockquote>
+   <font color="red"><a name="gdm">補足 2:</a></font><br>
+   <ul>
+    <li>root権限で LG3D を /usr/share にインストールした場合、rootで以下のコマンドを実行することで LG3D を<font color="red">ウインドウマネージャ( A gdm session type )</font>にすることができます(Linuxのみ)。
+	<table border><tr><td><pre>
+# cd /usr/share/lg3d/bin
+# ./postinstall
+	</pre></td></tr></table>
+     </ul>
+  </blockquote>
+<hr>
+<h3>JDKの日本語フォント設定</h3>
+最近の Linux ディストリビューションでは
+Java を使用したアプリケーションが文字化け（日本語が□□化）する場合があります。このような場合、以下の作業を行ってフォントを正しく設定してください。<br>
+<br>
+<p> JDK内のjre/lib/fontsディレクトリにfallbackディレクトリを作成します。<br>
+
+    この中にTrueTypeフォントのコピーまたはシンボリックリンクを作成します。<br><br>
+    
+    <li>/usr/java/jdk1.6.0_01/にJDKをインストールしている場合の例</li>
+
+<br>
+    <table border width="70%"><tr><td>
+     <pre>
+ fallback ディレクトリを作成
+# <font color="red"><b>mkdir /usr/java/jdk1.6.0_01/jre/lib/fonts/fallback</b></font>
+ fallback ディレクトリへ移動
+# <font color="red"><b>cd /usr/java/jdk1.6.0_01/jre/lib/fonts/fallback</b></font>
+ sazanami-gothic.ttfへのシンボリックリンクを作成
+# <font color="red"><b>ln -s /usr/share/fonts/japanese/TrueType/sazanami-gothic.ttf</b></font>
+ sazanami-mincho.ttfへのシンボリックリンクを作成
+# <font color="red"><b>ln -s /usr/share/fonts/japanese/TrueType/sazanami-mincho.ttf</b></font>
+     </pre>
+    </td></tr></table>
+<br>
+<font color="red">注意：</font>上記のsazanami~の部分をそれぞれ使用しているフォントに置き換えて設定してください。<br>
+（例：M+ & IPA Fontを使用している場合sazanami-*.ttfが、M+*.ttfになります。）
+<br>
+上記の設定を行った後、JDK付属のデモなどで動作確認してみてください。<br>
+例えば、SwingSet2を起動する場合は以下のようになります。
+    <table border width="70%"><tr><td>
+     <pre>
+# <font color="red"><b>/usr/java/jdk1.6.0_01/bin/java \</b></font>
+> <font color="red"><b>-jar /usr/java/jdk1.6.0_01/demo/jfc/SwingSet2/SwingSet2.jar</b></font>
+     </pre>
+    </td></tr></table>
+<br><br>
+下図のように日本語が正しく表示されているか確認してください。<br>
+<img src="pictures/SwingSet.jpg">
+<br><br>
+上記の設定で解決できない場合、Java SEのページや各ディストリビューションのページを参考に設定を行ってください。<br>
+<hr>
+    <ul>
+    <li><a href="index.html">メニューに戻る</a>
+    </ul>
+
+  </body>
+</html>
